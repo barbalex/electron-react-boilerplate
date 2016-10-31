@@ -3886,9 +3886,9 @@ html-minifier@^3.1.0:
     relateurl "0.2.x"
     uglify-js "2.7.x"
 
-html-webpack-plugin@2.24.0:
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/html-webpack-plugin/-/html-webpack-plugin-2.24.0.tgz#53697cea79a9f3cd1f8c239ac71f949d5673cacb"
+html-webpack-plugin@2.24.1:
+  version "2.24.1"
+  resolved "https://registry.yarnpkg.com/html-webpack-plugin/-/html-webpack-plugin-2.24.1.tgz#7f45fc678f66eac2d433f22336b4399da023b57e"
   dependencies:
     bluebird "^3.4.6"
     html-minifier "^3.1.0"
@@ -5000,11 +5000,11 @@ lodash.words@^3.0.0:
   dependencies:
     lodash._root "^3.0.0"
 
-lodash@^4.0.0, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.16.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1, lodash@^4.6.1, lodash@^4.8.0, lodash@4.16.4:
+lodash@^4.0.0, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.16.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1, lodash@^4.6.1, lodash@^4.8.0:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.4.tgz#01ce306b9bad1319f2a5528674f88297aeb70127"
 
-lodash@^4.16.2:
+lodash@^4.16.2, lodash@4.16.5:
   version "4.16.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.5.tgz#77d88feac548009b1a5c4ca7b49ac431ce346ae8"
 
@@ -6410,9 +6410,9 @@ react-router@2.8.1:
     loose-envify "^1.2.0"
     warning "^3.0.0"
 
-react-split-pane@0.1.51:
-  version "0.1.51"
-  resolved "https://registry.yarnpkg.com/react-split-pane/-/react-split-pane-0.1.51.tgz#8e792727d06ae28b38ae7342d6707b60ecf684b5"
+react-split-pane@0.1.52:
+  version "0.1.52"
+  resolved "https://registry.yarnpkg.com/react-split-pane/-/react-split-pane-0.1.52.tgz#4a86e1e80b8f6d6c4b904cc7a854ff81eeab5b01"
   dependencies:
     inline-style-prefixer "^2.0.4"
     react-style-proptype "^1.2.0"
