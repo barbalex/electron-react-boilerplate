@@ -1,17 +1,17 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "electron-react-boilerplate",
+  "name": "Kapla",
+  "productName": "Kapla",
   "version": "1.0.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "description": "Instrument, mit dem die Abteilung Recht des AWEL Geschäfte erfasst und Fristen kontrolliert",
   "main": "./main.js",
   "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
+    "name": "Alexander Gabriel",
+    "email": "alex@gabriel-software.ch",
+    "url": "http://gabriel-software.ch"
   },
   "license": "MIT",
   "dependencies": {
-    "font-awesome": "^4.6.3",
-    "source-map-support": "^0.4.3"
+    "font-awesome": "4.6.3",
+    "source-map-support": "0.4.3"
   }
 }
