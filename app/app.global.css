@@ -129,13 +129,28 @@ textarea {
 }
 
 @media print {
+  #root {
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
+  }
+
   .SplitPane.vertical {
     height: auto !important;
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
   }
 
   .Pane.Pane1 {
     display: none;
     width: 0;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+    page-break-before: avoid !important;
+  }
+
+  .Pane.Pane2 {
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
   }
 }
 
