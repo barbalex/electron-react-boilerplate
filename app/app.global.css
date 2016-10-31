@@ -129,6 +129,10 @@ textarea {
 }
 
 @media print {
+  .SplitPane.vertical {
+    height: auto !important;
+  }
+
   .Pane.Pane1 {
     display: none;
     width: 0;
