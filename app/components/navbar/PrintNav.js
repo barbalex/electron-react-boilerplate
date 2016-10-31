@@ -1,11 +1,12 @@
 import { remote } from 'electron'
-const { dialog } = remote
 import fs from 'fs'
 import React, { PropTypes } from 'react'
 import {
   NavItem,
   Glyphicon,
 } from 'react-bootstrap'
+
+const { dialog } = remote
 
 const onClickPrint = (e, path) => {
   e.preventDefault()

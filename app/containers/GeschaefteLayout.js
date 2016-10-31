@@ -10,10 +10,12 @@ function mapStateToProps(state) {
   const {
     activeId,
   } = state.geschaefte
+  const path = state.routing.locationBeforeTransitions.pathname
 
   return {
     config,
     activeId,
+    path,
   }
 }
 
