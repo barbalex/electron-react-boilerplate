@@ -1,0 +1,17 @@
+{
+  "name": "Kapla",
+  "productName": "Kapla",
+  "version": "1.0.0",
+  "description": "Instrument, mit dem die Abteilung Recht des AWEL Geschäfte erfasst und Fristen kontrolliert",
+  "main": "./main.js",
+  "author": {
+    "name": "Alexander Gabriel",
+    "email": "alex@gabriel-software.ch",
+    "url": "http://gabriel-software.ch"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "font-awesome": "4.6.3",
+    "source-map-support": "0.4.3"
+  }
+}
