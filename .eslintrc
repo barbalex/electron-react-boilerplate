@@ -16,7 +16,12 @@
     "no-use-before-define": "off",
     "react/jsx-no-bind": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
-    "react/prefer-stateless-function": "off"
+    "react/prefer-stateless-function": "off",
+    "semi": [2, "never"],
+    "quotes": [2, "single"],
+    "strict": 0,
+    "max-len": ["error", 140, 2, {"ignoreUrls": true}],
+    "linebreak-style": 0
   },
   "plugins": [
     "import",
