@@ -60,18 +60,24 @@ const BerichteNav = ({
         if (eventKey === 7.4) {
           setTimeout(() => {
             geschaefteFilterByFields(filterForVernehmlAngek(), 'angekündigte Vernehmlassungen')
-            pagesInitiate('angekVernehml')
-            geschaefteResetSort()
-            geschaefteSortByFields('idGeschaeft', 'DESCENDING')
+            // only do this after former is finished
+            setTimeout(() => {
+              pagesInitiate('angekVernehml')
+              geschaefteResetSort()
+              geschaefteSortByFields('idGeschaeft', 'DESCENDING')
+            }, 0)
           }, 0)
         }
         if (eventKey === 7.5) {
           setTimeout(() => {
             geschaefteFilterByFields(filterForVernehmlLaeuft(), 'laufende Vernehmlassungen')
-            pagesInitiate('laufendeVernehml')
-            geschaefteResetSort()
-            geschaefteSortByFields('fristMitarbeiter', 'DESCENDING')
-            geschaefteSortByFields('idGeschaeft', 'DESCENDING')
+            // only do this after former is finished
+            setTimeout(() => {
+              pagesInitiate('laufendeVernehml')
+              geschaefteResetSort()
+              geschaefteSortByFields('fristMitarbeiter', 'DESCENDING')
+              geschaefteSortByFields('idGeschaeft', 'DESCENDING')
+            })
           }, 0)
         }
         if (eventKey === 7.6) {
