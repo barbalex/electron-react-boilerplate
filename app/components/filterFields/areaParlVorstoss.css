@@ -1,0 +1,44 @@
+.areaTitle {
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.areaForGeschaeftsart {
+  grid-area: areaForGeschaeftsart;
+  background-color: rgb(255, 237, 199);
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "areaParlVorstTitle areaParlVorstTitle"
+    "fieldParlVorstossTyp fieldParlVorstossTyp"
+    "fieldStufe fieldEbene"
+    "fieldZustaendigkeit fieldErlassform";
+  grid-gap: 15px 8px;
+  padding: 8px;
+}
+
+.areaParlVorstTitle {
+  composes: areaTitle;
+  grid-area: areaParlVorstTitle;
+}
+
+.fieldParlVorstossTyp {
+  grid-area: fieldParlVorstossTyp;
+}
+
+.fieldStufe {
+  grid-area: fieldStufe;
+}
+
+.fieldEbene {
+  grid-area: fieldEbene;
+}
+
+.fieldZustaendigkeit {
+  grid-area: fieldZustaendigkeit;
+}
+
+.fieldErlassform {
+  grid-area: fieldErlassform;
+}

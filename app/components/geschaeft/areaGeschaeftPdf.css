@@ -1,0 +1,83 @@
+.areaTitle {
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.areaGeschaeft {
+  grid-area: areaGeschaeft;
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(12, calc((100% - 55px) / 12));
+  grid-template-rows: auto;
+  grid-template-areas:
+    "areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle"
+    "fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand"
+    "fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser"
+    "fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt"
+    "fieldGeschaeftsart fieldGeschaeftsart fieldGeschaeftsart fieldGeschaeftsart fieldGeschaeftsart fieldStatus fieldStatus fieldStatus fieldStatus fieldStatus fieldAbteilung fieldAbteilung"
+    "fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails"
+    "fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt"
+    "fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk"
+    "fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern";
+  grid-column-gap: 5px;
+  grid-row-gap: 2px;
+  padding: 8px;
+  border: 1px solid #CCC;
+}
+
+.areaGeschaeftTitle {
+  composes: areaTitle;
+  grid-area: areaGeschaeftTitle;
+}
+
+.fieldGegenstand {
+  grid-area: fieldGegenstand;
+}
+
+.fieldAusloeser {
+  grid-area: fieldAusloeser;
+}
+
+.fieldOrt {
+  grid-area: fieldOrt;
+}
+
+.fieldGeschaeftsart {
+  grid-area: fieldGeschaeftsart;
+}
+
+.fieldStatus {
+  grid-area: fieldStatus;
+}
+
+.fieldAbteilung {
+  grid-area: fieldAbteilung;
+}
+
+.fieldDetails {
+  grid-area: fieldDetails;
+}
+
+.fieldNaechsterSchritt {
+  grid-area: fieldNaechsterSchritt;
+}
+
+.fieldVermerk {
+  grid-area: fieldVermerk;
+}
+
+.fieldVermerkIntern {
+  grid-area: fieldVermerkIntern;
+  display: none;
+}
+
+.textarea {
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  line-height: 1.42857143;
+  color: #555;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}

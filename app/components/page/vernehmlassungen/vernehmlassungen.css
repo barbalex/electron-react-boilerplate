@@ -1,0 +1,57 @@
+
+.tableHeader {
+  border-bottom: 2px solid #717171;
+}
+
+.tableHeaderRow,
+.tableBodyRow {
+  display: flex;
+  padding: 3px;
+}
+
+.tableBodyRow {
+  border-bottom: 1px solid #BBBBBB;
+}
+
+.tableBodyRowShaded {
+  composes: tableBodyRow;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.tableHeaderRow {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.tableHeaderCell,
+.tableBodyCell {
+  flex: 1;
+  padding: 2px;
+}
+
+.fieldGegenstand {
+  font-weight: 700;
+}
+
+.columnIdGeschaeft {
+  min-width: 50px;
+  max-width: 50px;
+}
+
+.columnGegenstand {
+  width: calc(100% - 290px);
+}
+
+.columnStatus {
+  min-width: 140px;
+  max-width: 140px;
+}
+
+.columnKontaktIntern {
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.fieldNaechserSchritt {
+  font-style: italic;
+}

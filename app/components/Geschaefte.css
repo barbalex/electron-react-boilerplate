@@ -1,0 +1,105 @@
+.table {
+  top: 52px;
+  width: 100%;
+  -webkit-user-select: none;
+}
+
+.tableHeader {
+  border-bottom: 2px solid #717171;
+  font-weight: 700;
+}
+
+.tableBody {
+  overflow: auto;
+  height: calc(100vh - 82px);
+}
+
+.tableHeaderRow,
+.tableBodyRow {
+  display: flex;
+  padding: 5px;
+}
+
+.tableBodyRow {
+  border-bottom: 1px solid #BBBBBB;
+  cursor: pointer;
+  min-height: 77px;
+  max-height: 77px;
+}
+
+.tableHeaderRow {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.tableHeaderCell,
+.tableBodyCell {
+  flex: 1;
+  padding: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.active {
+  background-color: #FFBF73;
+}
+
+.body {
+  background-image: linear-gradient(45deg, rgba(235, 255, 229, .5) 10%, rgba(216, 255, 200, .7));
+  height: 100vh;
+}
+
+.fieldGegenstand {
+  font-weight: 700;
+  /**
+   * show ellipsis ... when text
+   * overflows three lines
+   * source: http://stackoverflow.com/a/18458345/712005;
+   */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  max-height: 4.1em;
+  overflow: hidden;
+}
+
+.columnIdGeschaeft {
+  composes: tableBodyCell;
+  min-width: 44px;
+  max-width: 44px;
+}
+
+.columnGegenstand {
+  composes: tableBodyCell;
+  width: 100%;
+}
+
+.columnStatus {
+  composes: tableBodyCell;
+  min-width: 120px;
+  max-width: 120px;
+}
+
+.columnKontaktIntern {
+  composes: tableBodyCell;
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.fieldFristIn {
+  font-weight: 900;
+  letter-spacing: 0.35em;
+  font-size: 16px;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: 1.3px;
+}
+
+.fieldFristInFaellig {
+  composes: fieldFristIn;
+  -webkit-text-fill-color: red;
+}
+
+.fieldFristInHeute {
+  composes: fieldFristIn;
+  -webkit-text-fill-color: yellow;
+}

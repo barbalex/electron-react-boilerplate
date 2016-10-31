@@ -1,0 +1,11 @@
+.field {
+  grid-column: 1;
+}
+
+.fieldEntscheidDatum {
+  grid-area: fieldEntscheidDatum;
+}
+
+.datePicker {
+  cursor: pointer;
+}

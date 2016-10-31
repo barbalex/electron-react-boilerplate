@@ -1,0 +1,165 @@
+.areaTitle {
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.labelHorizontal {
+  margin-top: 11px;
+  text-align: right;
+}
+
+
+.areaNummern {
+  grid-area: areaNummern;
+  background-color: rgba(239, 239, 239, 1);
+  display: grid;
+  /* can't use 1fr for first column - does not work correctly, no idea why */
+  grid-template-columns: calc(100% - 366px) 8px 175px 8px 175px;
+  grid-template-rows: auto;
+  grid-template-areas:
+   "areaNummernTitle areaNummernTitle areaNummernTitle areaNummernTitle labelNr"
+   ". . labelIdGeschaeft . fieldIdGeschaeft"
+   ". . labelGekoNr . fieldGekoNr"
+   ". . . . labelJahre"
+   "labelEntscheidAwel . fieldEntscheidAwelNr slashAwel fieldEntscheidAwelJahr"
+   "labelEntscheidBdv . fieldEntscheidBdvNr slashBdv fieldEntscheidBdvJahr"
+   "labelEntscheidKr . fieldEntscheidKrNr slashKr fieldEntscheidKrJahr"
+   "labelEntscheidRrb . fieldEntscheidRrbNr slashRrb fieldEntscheidRrbJahr"
+   "fieldAktenstandort fieldAktenstandort fieldAktenstandort . fieldAktennummer";
+  grid-row-gap: 2px;
+  padding: 8px;
+}
+
+.label {
+  color: #757575;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.labelJahre {
+  composes: label;
+  grid-area: labelJahre;
+  position: relative;
+  min-height: 16px;
+}
+
+.labelNr {
+  grid-area: labelNr;
+  position: relative;
+  min-height: 16px;
+}
+
+.labelNrDiv {
+  position: absolute;
+  bottom: 1px;
+}
+
+.slash {
+  margin-top: 2px;
+  font-size: 22px;
+  color: #757575;
+  margin-left: 1px;
+}
+
+.slashAwel {
+  composes: slash;
+  grid-area: slashAwel;
+}
+
+.slashBdv {
+  composes: slash;
+  grid-area: slashBdv;
+}
+
+.slashKr {
+  composes: slash;
+  grid-area: slashKr;
+}
+
+.slashRrb {
+  composes: slash;
+  grid-area: slashRrb;
+}
+
+.areaNummernTitle {
+  composes: areaTitle;
+  grid-area: areaNummernTitle;
+}
+
+.fieldIdGeschaeft {
+  grid-area: fieldIdGeschaeft;
+}
+
+.labelIdGeschaeft {
+  composes: labelHorizontal;
+  grid-area: labelIdGeschaeft;
+}
+
+.fieldGekoNr {
+  grid-area: fieldGekoNr;
+}
+
+.labelGekoNr {
+  composes: labelHorizontal;
+  grid-area: labelGekoNr
+}
+
+.fieldEntscheidAwelNr {
+  grid-area: fieldEntscheidAwelNr;
+}
+
+.labelEntscheidAwel {
+  composes: labelHorizontal;
+  grid-area: labelEntscheidAwel
+}
+
+.fieldEntscheidAwelJahr {
+  grid-area: fieldEntscheidAwelJahr;
+}
+
+.fieldEntscheidBdvNr {
+  grid-area: fieldEntscheidBdvNr;
+}
+
+.labelEntscheidBdv {
+  composes: labelHorizontal;
+  grid-area: labelEntscheidBdv
+}
+
+.fieldEntscheidBdvJahr {
+  grid-area: fieldEntscheidBdvJahr;
+}
+
+.fieldEntscheidKrNr {
+  grid-area: fieldEntscheidKrNr;
+}
+
+.labelEntscheidKr {
+  composes: labelHorizontal;
+  grid-area: labelEntscheidKr
+}
+
+.fieldEntscheidKrJahr {
+  grid-area: fieldEntscheidKrJahr;
+}
+
+.fieldEntscheidRrbNr {
+  grid-area: fieldEntscheidRrbNr;
+}
+
+.labelEntscheidRrb {
+  composes: labelHorizontal;
+  grid-area: labelEntscheidRrb
+}
+
+.fieldEntscheidRrbJahr {
+  grid-area: fieldEntscheidRrbJahr;
+}
+
+.fieldAktenstandort {
+  grid-area: fieldAktenstandort;
+}
+
+.fieldAktennummer {
+  grid-area: fieldAktennummer;
+}

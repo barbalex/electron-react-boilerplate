@@ -1,0 +1,23 @@
+.body {
+  grid-column: 1 / span 2;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 0;
+}
+
+.rowfVDropdown {
+  grid-column: 1 / span 1;
+  display: grid;
+  grid-template-columns: 160px calc(100% - 160px);
+  grid-gap: 4px;
+  margin-top: 5px;
+}
+
+.fVDropdown {
+  grid-column: 1 / span 1;
+}
+
+/* need monospace to line up text vertically */
+.dropdown {
+  font-family: "Lucida Console", Monaco, monospace;
+}

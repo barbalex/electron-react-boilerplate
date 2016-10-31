@@ -1,0 +1,9 @@
+.comparator {
+  width: 45px !important;
+  margin-right: -1px !important;
+  border-radius: 0 !important;
+  padding-left: 3px;
+  padding-right: 0;
+  font-weight: 900;
+  font-size: 14px;
+}

@@ -20,7 +20,6 @@
   },
   "plugins": [
     "import",
-    "promise",
     "react"
   ],
   "settings": {

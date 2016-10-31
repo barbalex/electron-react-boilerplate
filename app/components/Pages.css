@@ -1,0 +1,24 @@
+.body {
+  background-color: #eee;
+  font-size: 9pt;
+  cursor: default;
+  /* 
+   * need defined height and overflow
+   * to make the pages scrollable in UI
+   * is removed in print
+   */
+  overflow-y: auto;
+  height: 100vh;
+}
+
+/* When the document is actually printed */
+@media print {
+  .body {
+    /* remove grey backgrond set for nice UI */
+    background-color: #fff;
+    /* with overflow auto an empty page is inserted between each page */
+    overflow-y: visible;
+    /* make sure body grows as needed */
+    height: auto !important;
+  }
+}

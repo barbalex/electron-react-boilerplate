@@ -41,3 +41,8 @@ app/style.css.map
 dist
 main.js
 main.js.map
+
+# more stuff
+npm-debug.log*
+installer
+electron-packager

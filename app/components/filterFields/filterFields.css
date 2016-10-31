@@ -1,0 +1,51 @@
+.scrollContainer {
+  overflow: auto;
+  height: calc(100vh - 52px);
+}
+
+.wrapperNarrow {
+  display: grid;
+  grid-template-columns: repeat(1, 100%);
+  grid-template-rows: auto;
+  grid-template-areas:
+    "areaNummern"
+    "areaGeschaeft"
+    "areaForGeschaeftsart"
+    "areaFristen"
+    "areaPersonen"
+    "areaHistory"
+    "areaZuletztMutiert";
+}
+
+.wrapperNarrowNoAreaForGeschaeftsart {
+  composes: wrapperNarrow;
+  grid-template-areas:
+    "areaNummern"
+    "areaGeschaeft"
+    "areaFristen"
+    "areaPersonen"
+    "areaHistory"
+    "areaZuletztMutiert";
+}
+
+.wrapperWide {
+  display: grid;
+  grid-template-columns: repeat(12, 8.33333%);
+  grid-template-rows: auto;
+  grid-template-areas:
+    "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern areaNummern"
+    "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaForGeschaeftsart areaForGeschaeftsart areaForGeschaeftsart areaForGeschaeftsart areaForGeschaeftsart"
+    "areaFristen areaFristen areaFristen areaFristen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen"
+    "areaFristen areaFristen areaFristen areaFristen areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory"
+    "areaFristen areaFristen areaFristen areaFristen areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert";
+}
+
+.wrapperWideNoAreaForGeschaeftsart {
+  composes: wrapperWide;
+  grid-template-areas:
+    "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern areaNummern"
+    "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern areaNummern"
+    "areaFristen areaFristen areaFristen areaFristen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen"
+    "areaFristen areaFristen areaFristen areaFristen areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory"
+    "areaFristen areaFristen areaFristen areaFristen areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert";
+}
