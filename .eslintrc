@@ -17,6 +17,7 @@
     "react/jsx-no-bind": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "react/prefer-stateless-function": "off",
+    "react/forbid-prop-types": 0,
     "semi": [2, "never"],
     "quotes": [2, "single"],
     "strict": 0,
