@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Glyphicon } from 'react-bootstrap'
 import _ from 'lodash'
+import Linkify from 'react-linkify'
 import regularStyles from './kontakteExternItems.css'
 import pdfStyles from './kontakteExternItemsPdf.css'
 
@@ -16,9 +17,9 @@ const verantwortlichData = (gkI, externeOptions) => {
   if (!data) return ''
   let info = ''
   info = addValueToInfo(info, data.firma)
-  info = addValueToInfo(info, data.email)
+  info = addValueToInfo(info, data.eMail)
   info = addValueToInfo(info, data.telefon)
-  return info
+  return <Linkify>{info}</Linkify>
 }
 
 const titleText = (idKontakt, externeOptions) => {

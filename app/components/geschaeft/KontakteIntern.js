@@ -109,10 +109,7 @@ GeschaefteKontakteIntern.displayName = 'GeschaefteKontakteIntern'
 GeschaefteKontakteIntern.propTypes = {
   interneOptions: PropTypes.array,
   geschaefteKontakteIntern: PropTypes.array,
-  activeIdGeschaeft: PropTypes.number,
-  activeIdKontakt: PropTypes.number,
   geschaeftKontaktInternNewCreate: PropTypes.func.isRequired,
-  geschaeftKontaktInternRemove: PropTypes.func.isRequired,
   activeId: PropTypes.number.isRequired,
   tabIndex: PropTypes.number.isRequired,
   isPrintPreview: PropTypes.bool.isRequired,

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Glyphicon } from 'react-bootstrap'
 import _ from 'lodash'
+import Linkify from 'react-linkify'
 import regularStyles from './kontakteInternItems.css'
 import pdfStyles from './kontakteInternItemsPdf.css'
 
@@ -21,7 +22,8 @@ const verantwortlichData = (gkI, interneOptions) => {
   const abt = data.abteilung ? `, ${data.abteilung}` : ''
   const eMail = data.eMail ? `, ${data.eMail}` : ''
   const telefon = data.telefon ? `, ${data.telefon}` : ''
-  return `${name}${abt}${eMail}${telefon}`
+  const string = `${name}${abt}${eMail}${telefon}`
+  return <Linkify>{string}</Linkify>
 }
 
 const GeschaefteKontakteInternItems = ({
