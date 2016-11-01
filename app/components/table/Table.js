@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import ReactList from 'react-list'
-import ReactDOM from 'react-dom'
 import _ from 'lodash'
 import $ from 'jquery'
+import Linkify from 'react-linkify'
 import styles from './Table.css'
 
 class Table extends Component {
@@ -89,7 +89,11 @@ class Table extends Component {
           style={widthClass}
           className={styles.tableBodyCell}
         >
-          {val}
+          {
+            <Linkify>
+              {val}
+            </Linkify>
+          }
         </div>
       )
     })

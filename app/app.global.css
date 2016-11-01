@@ -203,3 +203,8 @@ Resizer.disabled {
 Resizer.disabled:hover {
   border-color: transparent;
 }
+
+/* dont make email-links blue */
+a {
+  color: #333;
+}
