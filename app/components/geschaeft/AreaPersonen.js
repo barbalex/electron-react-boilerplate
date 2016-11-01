@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { FormControl } from 'react-bootstrap'
 import _ from 'lodash'
+import Linkify from 'react-linkify'
 import regularStyles from './areaPersonen.css'
 import pdfStyles from './areaPersonenPdf.css'
 import KontakteIntern from '../../containers/geschaeft/KontakteIntern'
@@ -41,7 +42,8 @@ const verantwortlichData = (geschaeft, interneOptions) => {
   const abt = data.abteilung ? `, ${data.abteilung}` : ''
   const eMail = data.eMail ? `, ${data.eMail}` : ''
   const telefon = data.telefon ? `, ${data.telefon}` : ''
-  return `${name}${abt}${eMail}${telefon}`
+  const string = `${name}${abt}${eMail}${telefon}`
+  return <Linkify>{string}</Linkify>
 }
 
 const AreaPersonen = ({
