@@ -22,7 +22,6 @@
 * **Note: requires a node version >= 6 and an npm version >= 3.**
 * **If you have installation or compilation issues with this project, please see [our debugging guide](https://github.com/chentsulin/electron-react-boilerplate/issues/400)**
 
-
 First, clone the repo via git:
 
 ```bash
@@ -35,6 +34,8 @@ And then install dependencies.
 ```bash
 $ cd your-project-name && npm install
 ```
+
+:bulb: *In order to remove boilerplate sample code, simply run `npm run cleanup`. After this is run, the initial sample boilerplate code will be removed in order for a clean project for starting custom dev*
 
 ## Run
 
@@ -107,17 +108,9 @@ externals: [
 ]
 ```
 
-For a common example, to install Bootstrap, `npm i --save bootstrap` and link them in the head of app.html
-
-```html
-<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css" />
-<link rel="image/svg+xml" href="../node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.eot" />
-...
-```
-
-Make sure to list bootstrap in externals in `webpack.config.base.js` or the app won't include them in the package:
+For a common example, to install bcrypt, `npm i --save bcrypt`, and make sure to list bcrypt in externals in `webpack.config.base.js` or the app won't include them in the package:
 ```js
-externals: ['bootstrap']
+externals: ['bcrypt']
 ```
 
 
@@ -130,6 +123,12 @@ All `.css` file extensions will use css-modules unless it has `.global.css`.
 
 If you need global styles, stylesheets with `.global.css` will not go through the
 css-modules loader. e.g. `app.global.css`
+
+If you want to import global css libraries (like `bootstrap`), you can just write the following code in `.global.css`:
+
+```css
+@import "~bootstrap/dist/css/bootstrap.css";
+```
 
 
 ## Packaging
