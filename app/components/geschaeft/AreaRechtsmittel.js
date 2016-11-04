@@ -3,6 +3,7 @@ import {
   FormControl,
   ControlLabel,
 } from 'react-bootstrap'
+import Textarea from 'react-textarea-autosize'
 import regularStyles from './areaRechtsmittel.css'
 import pdfStyles from './areaRechtsmittelPdf.css'
 import DateField from '../../containers/geschaeft/DateField'
@@ -78,6 +79,19 @@ const AreaRechtsmittel = ({
         >
           {createOptions(rechtsmittelErledigungOptions)}
         </FormControl>
+      </div>
+      <div className={styles.fieldRechtsmittelTxt}>
+        <ControlLabel>
+          Bemerkungen
+        </ControlLabel>
+        <Textarea
+          value={geschaeft.rechtsmittelTxt || ''}
+          name="rechtsmittelTxt"
+          onChange={change}
+          onBlur={blur}
+          tabIndex={5 + nrOfFieldsBeforePv}
+          className={styles.textarea}
+        />
       </div>
     </div>
   )

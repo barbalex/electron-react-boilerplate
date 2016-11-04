@@ -3,6 +3,7 @@ import {
   FormControl,
   ControlLabel,
   InputGroup,
+  Input,
 } from 'react-bootstrap'
 import moment from 'moment'
 import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
@@ -92,6 +93,18 @@ const AreaRechtsmittel = ({
           {createOptions(rechtsmittelErledigungOptions)}
         </FormControl>
       </InputGroup>
+    </div>
+    <div className={styles.fieldBemerkungen}>
+      <ControlLabel>
+        Bemerkungen
+      </ControlLabel>
+      <Input
+        name="rechtsmittelTxt"
+        change={change}
+        values={values}
+        changeComparator={changeComparator}
+        tabIndex={5 + firstTabIndex}
+      />
     </div>
   </div>
 

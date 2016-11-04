@@ -75,6 +75,7 @@ CREATE TABLE geschaefte (
   rechtsmittelErledigung TEXT REFERENCES rechtsmittelErledigung(rechtsmittelErledigung) ON UPDATE CASCADE ON DELETE RESTRICT,
   rechtsmittelEntscheidNr INTEGER,
   rechtsmittelEntscheidDatum TEXT,
+  rechtsmittelTxt TEXT,
   status TEXT REFERENCES status(status) ON UPDATE CASCADE ON DELETE RESTRICT,
   -- first correct data before referencing
   verantwortlich TEXT REFERENCES interne(kurzzeichen) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -156,7 +157,7 @@ DROP TABLE IF EXISTS geschaeftsart;
 CREATE TABLE geschaeftsart (
   id integer PRIMARY KEY,
   geschaeftsart TEXT UNIQUE,
-  historisch integer DEFAULT 0, 
+  historisch integer DEFAULT 0,
   sort INTEGER
 );
 
@@ -167,7 +168,7 @@ CREATE INDEX iGeschaeftsartSort ON geschaeftsart (sort);
 -- contained in geschaefte are included
 INSERT INTO
   geschaeftsart(geschaeftsart)
-SELECT 
+SELECT
   geschaeftsart
 FROM
   geschaefte
@@ -177,7 +178,7 @@ HAVING
   geschaeftsart IS NOT NULL;
 
 -- but only ones to be used actively
--- are not historical 
+-- are not historical
 UPDATE
   geschaeftsart
 SET
@@ -233,7 +234,7 @@ DROP TABLE IF EXISTS status;
 CREATE TABLE status (
   id integer PRIMARY KEY,
   status TEXT UNIQUE,
-  historisch integer DEFAULT 0, 
+  historisch integer DEFAULT 0,
   sort INTEGER
 );
 
@@ -244,7 +245,7 @@ CREATE INDEX iStatusSort ON status (sort);
 -- contained in geschaefte are included
 INSERT INTO
   status(status)
-SELECT 
+SELECT
   status
 FROM
   geschaefte
@@ -254,7 +255,7 @@ HAVING
   status IS NOT NULL;
 
 -- but only ones to be used actively
--- are not historical 
+-- are not historical
 UPDATE
   status
 SET
@@ -300,7 +301,7 @@ DROP TABLE IF EXISTS parlVorstossTyp;
 CREATE TABLE parlVorstossTyp (
   id integer PRIMARY KEY,
   parlVorstossTyp TEXT UNIQUE,
-  historisch integer DEFAULT 0, 
+  historisch integer DEFAULT 0,
   sort INTEGER
 );
 
@@ -311,7 +312,7 @@ CREATE INDEX iParlVorstossTypSort ON parlVorstossTyp (sort);
 -- contained in geschaefte are included
 INSERT INTO
   parlVorstossTyp(parlVorstossTyp)
-SELECT 
+SELECT
   parlVorstossTyp
 FROM
   geschaefte
@@ -321,7 +322,7 @@ HAVING
   parlVorstossTyp IS NOT NULL;
 
 -- but only ones to be used actively
--- are not historical 
+-- are not historical
 UPDATE
   parlVorstossTyp
 SET
@@ -390,7 +391,7 @@ DROP TABLE IF EXISTS rechtsmittelErledigung;
 CREATE TABLE rechtsmittelErledigung (
   id integer PRIMARY KEY,
   rechtsmittelErledigung TEXT UNIQUE,
-  historisch integer DEFAULT 0, 
+  historisch integer DEFAULT 0,
   sort INTEGER
 );
 
@@ -401,7 +402,7 @@ CREATE INDEX iRechtsmittelErledigungSort ON rechtsmittelErledigung (sort);
 -- contained in geschaefte are included
 INSERT INTO
   rechtsmittelErledigung(rechtsmittelErledigung)
-SELECT 
+SELECT
   rechtsmittelErledigung
 FROM
   geschaefte
@@ -411,7 +412,7 @@ HAVING
   rechtsmittelErledigung IS NOT NULL;
 
 -- but only ones to be used actively
--- are not historical 
+-- are not historical
 UPDATE
   rechtsmittelErledigung
 SET
@@ -487,7 +488,7 @@ DROP TABLE IF EXISTS rechtsmittelInstanz;
 CREATE TABLE rechtsmittelInstanz (
   id integer PRIMARY KEY,
   rechtsmittelInstanz TEXT UNIQUE,
-  historisch integer DEFAULT 0, 
+  historisch integer DEFAULT 0,
   sort INTEGER
 );
 
@@ -498,7 +499,7 @@ CREATE INDEX iRechtsmittelInstanzSort ON rechtsmittelInstanz (sort);
 -- contained in geschaefte are included
 INSERT INTO
   rechtsmittelInstanz(rechtsmittelInstanz)
-SELECT 
+SELECT
   rechtsmittelInstanz
 FROM
   geschaefte
@@ -508,7 +509,7 @@ HAVING
   rechtsmittelInstanz IS NOT NULL;
 
 -- but only ones to be used actively
--- are not historical 
+-- are not historical
 UPDATE
   rechtsmittelInstanz
 SET
@@ -542,7 +543,7 @@ DROP TABLE IF EXISTS abteilung;
 CREATE TABLE abteilung (
   id integer PRIMARY KEY,
   abteilung TEXT UNIQUE,
-  historisch integer DEFAULT 0, 
+  historisch integer DEFAULT 0,
   sort INTEGER
 );
 

@@ -33,6 +33,7 @@ const exportGeschaefteRechtsmittelVorjahre = (
     'rechtsmittelErledigung',
     'rechtsmittelEntscheidDatum',
     'rechtsmittelEntscheidNr',
+    'rechtsmittelTxt',
     'idGeschaeft',
   ]
   // now reduce fields to wanted
