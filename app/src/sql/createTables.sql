@@ -37,7 +37,7 @@ DROP TABLE IF EXISTS geschaefte;
 CREATE TABLE geschaefte (
   abteilung TEXT,
   aktennummer TEXT,
-  aktenstandort TEXT,
+  aktenstandort TEXT REFERENCES aktenstandort(aktenstandort) ON UPDATE CASCADE ON DELETE RESTRICT,
   ausloeser TEXT,
   benutzer TEXT,
   datumAusgangAwel TEXT,
@@ -97,6 +97,8 @@ DROP INDEX IF EXISTS iGeschaefteRechtsmittelErledigung;
 CREATE INDEX iGeschaefteRechtsmittelErledigung ON geschaefte (rechtsmittelErledigung);
 DROP INDEX IF EXISTS iGeschaefteStatus;
 CREATE INDEX iGeschaefteStatus ON geschaefte (status);
+DROP INDEX IF EXISTS iGeschaefteAktenstandort;
+CREATE INDEX iGeschaefteAktenstandort ON geschaefte (aktenstandort);
 
 -------------------------------------------
 
@@ -294,6 +296,82 @@ SET
   sort = 5
 WHERE
   status = 'erledigt';
+
+-------------------------------------------
+
+
+
+
+
+DROP TABLE IF EXISTS aktenstandort;
+CREATE TABLE aktenstandort (
+  id integer PRIMARY KEY,
+  aktenstandort TEXT UNIQUE,
+  historisch integer DEFAULT 0,
+  sort INTEGER
+);
+
+DROP INDEX IF EXISTS iAktenstandortSort;
+CREATE INDEX iAktenstandortSort ON aktenstandort (sort);
+
+-- now make sure all types
+-- contained in geschaefte are included
+INSERT INTO
+  aktenstandort(aktenstandort)
+SELECT
+  aktenstandort
+FROM
+  geschaefte
+GROUP BY
+  aktenstandort
+HAVING
+  aktenstandort IS NOT NULL;
+
+-- but only ones to be used actively
+-- are not historical
+-- TODO
+UPDATE
+  aktenstandort
+SET
+  historisch = 1
+WHERE
+  aktenstandort NOT IN ('angekündigt', 'pendent', 'überwachen int.', 'überwachen ext.', 'erledigt');
+
+-- and actively used ones have a sort value
+UPDATE
+  aktenstandort
+SET
+  sort = 1
+WHERE
+  aktenstandort = 'angekündigt';
+UPDATE
+  aktenstandort
+SET
+  sort = 2
+WHERE
+  aktenstandort = 'pendent';
+UPDATE
+  aktenstandort
+SET
+  sort = 3
+WHERE
+  aktenstandort = 'überwachen int.';
+UPDATE
+  aktenstandort
+SET
+  sort = 4
+WHERE
+  aktenstandort = 'überwachen ext.';
+UPDATE
+  aktenstandort
+SET
+  sort = 5
+WHERE
+  aktenstandort = 'erledigt';
+
+
+
+
 
 -------------------------------------------
 
