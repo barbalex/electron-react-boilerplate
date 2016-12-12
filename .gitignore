@@ -46,3 +46,4 @@ main.js.map
 npm-debug.log*
 installer
 electron-packager
+.idea

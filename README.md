@@ -2,10 +2,11 @@
 =======
 # electron-react-boilerplate
 
-[![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Appveyor Build Status][appveyor-image]][appveyor-url]
 [![Dependency Status][david_img]][david_site]
+[![NPM version][npm-image]][npm-url]
+[![Join the chat at https://gitter.im/electron-react-boilerplate/Lobby](https://badges.gitter.im/electron-react-boilerplate/Lobby.svg)](https://gitter.im/electron-react-boilerplate/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ![](./erb-logo.png)
 
@@ -55,7 +56,7 @@ $ npm run dev
 ## Editor Configuration
 **Atom**
 ```bash
-apm install editorconfig es6-javascript autocomplete-flow javascript-snippets linter linter-eslint language-babel
+apm install editorconfig es6-javascript atom-ternjs javascript-snippets linter linter-eslint language-babel autocomplete-modules
 ```
 
 **Sublime**
@@ -96,21 +97,6 @@ $ UPGRADE_EXTENSIONS=1 npm run dev
 
 # For Windows
 $ set UPGRADE_EXTENSIONS=1 && npm run dev
-```
-
-## Externals
-
-If you use any 3rd party libraries which can't or won't be built with webpack, you must list them in your `webpack.config.base.js`：
-
-```javascript
-externals: [
-  // put your node 3rd party libraries which can't be built with webpack here (mysql, mongodb, and so on..)
-]
-```
-
-For a common example, to install bcrypt, `npm i --save bcrypt`, and make sure to list bcrypt in externals in `webpack.config.base.js` or the app won't include them in the package:
-```js
-externals: ['bcrypt']
 ```
 
 
@@ -154,6 +140,22 @@ To package apps with options:
 $ npm run package -- --[option]
 ```
 
+## Further commands
+
+To run the application without packaging run
+
+```bash
+$ npm run build
+$ npm start
+```
+
+To run End-to-End Test
+
+```bash
+$ npm run build
+$ npm run test-e2e
+```
+
 #### Options
 
 See [electron-builder CLI Usage](https://github.com/electron-userland/electron-builder#cli-usage)
@@ -162,9 +164,8 @@ See [electron-builder CLI Usage](https://github.com/electron-userland/electron-b
 
 This boilerplate uses a [two package.json structure](https://github.com/electron-userland/electron-builder#two-packagejson-structure).
 
-#### Building windows apps from non-windows platforms
-1. If the module is native to a platform or otherwise should be included with the published package (i.e. bootstrap, openbci), it should be listed under `dependencies` in `./app/package.json`.
-2. If a module is `import`ed by another module, include it in `dependencies` in `./package.json`.   See [this ESLint rule](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md)
+1. If the module is native to a platform or otherwise should be included with the published package (i.e. bcrypt, openbci), it should be listed under `dependencies` in `./app/package.json`.
+2. If a module is `import`ed by another module, include it in `dependencies` in `./package.json`.   See [this ESLint rule](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md).
 3. Otherwise, modules used for building, testing and debugging should be included in `devDependencies` in `./package.json`.
 
 ## Static Type Checking

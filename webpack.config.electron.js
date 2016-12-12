@@ -2,10 +2,10 @@
  * Build config for electron 'Main Process' file
  */
 
-import webpack from 'webpack';
-import validate from 'webpack-validator';
-import merge from 'webpack-merge';
-import baseConfig from './webpack.config.base';
+import webpack from 'webpack'
+import validate from 'webpack-validator'
+import merge from 'webpack-merge'
+import baseConfig from './webpack.config.base'
 
 export default validate(merge(baseConfig, {
   devtool: 'source-map',
@@ -39,7 +39,7 @@ export default validate(merge(baseConfig, {
   ],
 
   /**
-   * Set targed to Electron speciffic node.js env.
+   * Set target to Electron specific node.js env.
    * https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
    */
   target: 'electron-main',
