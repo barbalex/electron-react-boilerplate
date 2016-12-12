@@ -8,7 +8,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div ref="app">
+      <div ref={(app) => { this.app = app }}>
         <Navbar />
         {this.props.children}
       </div>
