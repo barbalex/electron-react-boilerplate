@@ -96,7 +96,7 @@ const AreaRechtsmittel = ({
         </FormControl>
       </InputGroup>
     </div>
-    {/*<div className={styles.fieldRechtsmittelTxt}>
+    <div className={styles.fieldRechtsmittelTxt}>
       <ControlLabel>
         Bemerkungen
       </ControlLabel>
@@ -107,7 +107,7 @@ const AreaRechtsmittel = ({
         changeComparator={changeComparator}
         tabIndex={5 + firstTabIndex}
       />
-    </div>*/}
+    </div>
   </div>
 
 AreaRechtsmittel.displayName = 'AreaRechtsmittel'
