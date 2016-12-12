@@ -5,13 +5,15 @@ import {
   Glyphicon,
 } from 'react-bootstrap'
 
-const onClickPrint = (e) => {
+const onClickPrint = (e, path) => {
   e.preventDefault()
   const win = remote.getCurrentWindow()
-
+  // const landscape = path !== '/geschaeftPdf'
+  // console.log('landscape:', landscape)
+  // sadly, the landscape setting only works in printToPdf
   const options = {
     silent: false,
-    printBackground: false
+    printBackground: false,
   }
   win.webContents.print(options, (error, data) => {
     if (error) throw error

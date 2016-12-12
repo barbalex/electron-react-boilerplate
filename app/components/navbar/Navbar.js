@@ -95,6 +95,10 @@ class NavbarComponent extends Component {
             }
             {
               showPrint &&
+              <PrintNav />  // eslint-disable-line react/jsx-indent
+            }
+            {
+              showPrint &&
               <PrintToPdfNav />  // eslint-disable-line react/jsx-indent
             }
             <StammdatenNav />

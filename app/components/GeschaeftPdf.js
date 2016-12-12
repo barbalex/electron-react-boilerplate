@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import Geschaeft from '../containers/geschaeft/Geschaeft.js'
+import Geschaeft from '../containers/geschaeft/Geschaeft'
 import styles from './geschaeftPdf.css'
 // import logoImg from 'file!../etc/logo.png'
 

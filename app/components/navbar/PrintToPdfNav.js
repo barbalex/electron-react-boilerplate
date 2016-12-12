@@ -44,9 +44,9 @@ const NavbarPrintNav = ({ path }) =>
     onClick={e =>
       onClickPrint(e, path)
     }
-    title="Drucken"
+    title="PDF erzeugen"
   >
-    <Glyphicon glyph="print" />
+    <Glyphicon glyph="file" />
   </NavItem>
 
 NavbarPrintNav.displayName = 'NavbarPrintNav'
