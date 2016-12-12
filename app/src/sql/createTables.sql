@@ -327,6 +327,10 @@ GROUP BY
 HAVING
   aktenstandort IS NOT NULL;
 
+INSERT INTO
+  aktenstandort(aktenstandort)
+VALUES ('Archiv');
+
 -- but only ones to be used actively
 -- are not historical
 -- TODO
@@ -335,7 +339,14 @@ UPDATE
 SET
   historisch = 1
 WHERE
-  aktenstandort NOT IN ('angekündigt', 'pendent', 'überwachen int.', 'überwachen ext.', 'erledigt');
+  aktenstandort NOT IN ('Archiv', 'W102 aktiv');
+
+UPDATE
+  aktenstandort
+SET
+  historisch = 0
+WHERE
+  aktenstandort IN ('Archiv', 'W102 aktiv');
 
 -- and actively used ones have a sort value
 UPDATE
@@ -343,31 +354,13 @@ UPDATE
 SET
   sort = 1
 WHERE
-  aktenstandort = 'angekündigt';
+  aktenstandort = 'Archiv';
 UPDATE
   aktenstandort
 SET
   sort = 2
 WHERE
-  aktenstandort = 'pendent';
-UPDATE
-  aktenstandort
-SET
-  sort = 3
-WHERE
-  aktenstandort = 'überwachen int.';
-UPDATE
-  aktenstandort
-SET
-  sort = 4
-WHERE
-  aktenstandort = 'überwachen ext.';
-UPDATE
-  aktenstandort
-SET
-  sort = 5
-WHERE
-  aktenstandort = 'erledigt';
+  aktenstandort = 'W102 aktiv';
 
 
 

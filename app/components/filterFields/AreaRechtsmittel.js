@@ -65,14 +65,16 @@ const AreaRechtsmittel = ({
         />
       </InputGroup>
     </div>
-    <DateField
-      name="rechtsmittelEntscheidDatum"
-      label="Entscheid Datum"
-      tabIndex={3 + firstTabIndex}
-      values={values}
-      change={change}
-      changeComparator={changeComparator}
-    />
+    <div className={styles.fieldEntscheidDatum}>
+      <DateField
+        name="rechtsmittelEntscheidDatum"
+        label="Entscheid Datum"
+        tabIndex={3 + firstTabIndex}
+        values={values}
+        change={change}
+        changeComparator={changeComparator}
+      />
+    </div>
     <div className={styles.fieldErledigung}>
       <ControlLabel>
         Erledigung
@@ -94,7 +96,7 @@ const AreaRechtsmittel = ({
         </FormControl>
       </InputGroup>
     </div>
-    <div className={styles.fieldBemerkungen}>
+    {/*<div className={styles.fieldRechtsmittelTxt}>
       <ControlLabel>
         Bemerkungen
       </ControlLabel>
@@ -105,7 +107,7 @@ const AreaRechtsmittel = ({
         changeComparator={changeComparator}
         tabIndex={5 + firstTabIndex}
       />
-    </div>
+    </div>*/}
   </div>
 
 AreaRechtsmittel.displayName = 'AreaRechtsmittel'

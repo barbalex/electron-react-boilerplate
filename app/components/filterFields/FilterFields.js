@@ -31,17 +31,6 @@ class FilterFields extends Component {
     config: PropTypes.object.isRequired,
   }
 
-  onChangeDatePicker = (name, e, picker) => {
-    const rVal = {
-      target: {
-        type: 'text',
-        name,
-        value: picker.startDate
-      }
-    }
-    this.change(rVal)
-  }
-
   changeComparator = (value, name) => {
     const { filterFields, geschaefteFilterByFields } = this.props
     const newFilterFields = []
@@ -177,7 +166,6 @@ class FilterFields extends Component {
             <AreaRechtsmittel  // eslint-disable-line react/jsx-indent
               firstTabIndex={nrOfFieldsBeforePv}
               change={this.change}
-              onChangeDatePicker={this.onChangeDatePicker}
               changeComparator={this.changeComparator}
               values={values}
             />
