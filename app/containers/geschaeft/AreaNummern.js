@@ -5,6 +5,7 @@ import * as GeschaefteActions from '../../actions/geschaefte'
 
 function mapStateToProps(state, props) {
   const {
+    aktenstandortOptions,
     geschaefte,
     activeId,
   } = state.geschaefte
@@ -21,6 +22,7 @@ function mapStateToProps(state, props) {
   )
 
   return {
+    aktenstandortOptions,
     geschaeft,
     blur,
     change,

@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react'
 import { ControlLabel } from 'react-bootstrap'
 import Input from '../../containers/filterFields/Input'
+import SelectInput from '../../containers/filterFields/SelectInput'
 import styles from './areaNummern.css'
 
 const AreaNummern = ({
+  aktenstandortOptions,
   values,
   firstTabIndex,
   change,
@@ -157,13 +159,13 @@ const AreaNummern = ({
       <ControlLabel>
         Aktenstandort
       </ControlLabel>
-      <Input
-        type="text"
+      <SelectInput
         name="aktenstandort"
         change={change}
         values={values}
         changeComparator={changeComparator}
         tabIndex={11 + firstTabIndex}
+        options={aktenstandortOptions}
       />
     </div>
     <div className={styles.fieldAktennummer}>
@@ -184,6 +186,7 @@ const AreaNummern = ({
 AreaNummern.displayName = 'AreaNummern'
 
 AreaNummern.propTypes = {
+  aktenstandortOptions: PropTypes.array,
   values: PropTypes.object,
   change: PropTypes.func.isRequired,
   firstTabIndex: PropTypes.number.isRequired,

@@ -5,6 +5,9 @@ import * as GeschaefteActions from '../../actions/geschaefte'
 
 function mapStateToProps(state, props) {
   const {
+    aktenstandortOptions,
+  } = state.geschaefte
+  const {
     values,
     change,
     firstTabIndex,
@@ -12,6 +15,7 @@ function mapStateToProps(state, props) {
   } = props
 
   return {
+    aktenstandortOptions,
     values,
     change,
     firstTabIndex,

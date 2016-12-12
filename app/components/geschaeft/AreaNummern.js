@@ -2,8 +2,10 @@ import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel } from 'react-bootstrap'
 import regularStyles from './areaNummern.css'
 import pdfStyles from './areaNummernPdf.css'
+import createOptions from '../../src/createOptions'
 
 const AreaNummern = ({
+  aktenstandortOptions,
   geschaeft,
   wrapperClass,
   nrOfGFields,
@@ -177,14 +179,16 @@ const AreaNummern = ({
           Aktenstandort
         </ControlLabel>
         <FormControl
-          type="text"
+          componentClass="select"
           value={geschaeft.aktenstandort || ''}
           name="aktenstandort"
           onChange={change}
           onBlur={blur}
           bsSize="small"
           tabIndex={10 + tabsToAdd}
-        />
+        >
+          {createOptions(aktenstandortOptions)}
+        </FormControl>
       </div>
       <div className={styles.fieldAktennummer}>
         <ControlLabel>
@@ -207,6 +211,7 @@ const AreaNummern = ({
 AreaNummern.displayName = 'AreaNummern'
 
 AreaNummern.propTypes = {
+  aktenstandortOptions: PropTypes.array,
   geschaeft: PropTypes.object.isRequired,
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,
