@@ -2,8 +2,8 @@
 // see: https://github.com/mapbox/node-sqlite3/issues/621
 // see: https://github.com/mapbox/node-pre-gyp/pull/187
 // solve with: http://verysimple.com/2015/05/30/using-node_sqlite3-with-electron/
-import getTableFromDb from '../src/getTableFromDb.js'
-import updateTableRow from '../src/updateTableRow.js'
+import getTableFromDb from '../src/getTableFromDb'
+import updateTableRow from '../src/updateTableRow'
 import * as GeschaefteActions from './geschaefte'
 
 export const TABLE_RESET = 'TABLE_RESET'
@@ -51,8 +51,8 @@ const tableGetError = error => ({
  */
 
 import { push } from 'react-router-redux'
-import newTableRowInDb from '../src/newTableRowInDb.js'
-import deleteTableRow from '../src/deleteTableRow.js'
+import newTableRowInDb from '../src/newTableRowInDb'
+import deleteTableRow from '../src/deleteTableRow'
 
 export const rowNewCreate = table =>
   (dispatch, getState) => {

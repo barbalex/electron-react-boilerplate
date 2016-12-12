@@ -373,6 +373,30 @@ const geschaeftsartOptionsGetError = error => ({
   error
 })
 
+export const aktenstandortOptionsGet = () =>
+  (dispatch, getState) => {
+    const { app } = getState()
+    getDropdownOptions(app.db, 'aktenstandort')
+      .then(aktenstandortOptions =>
+        dispatch(aktenstandortOptionsGetSuccess(aktenstandortOptions))
+      )
+      .catch(error =>
+        dispatch(aktenstandortOptionsGetError(error))
+      )
+  }
+
+export const AKTENSTANDORT_OPTIONS_GET_SUCCESS = 'AKTENSTANDORT_OPTIONS_GET_SUCCESS'
+const aktenstandortOptionsGetSuccess = aktenstandortOptions => ({
+  type: AKTENSTANDORT_OPTIONS_GET_SUCCESS,
+  aktenstandortOptions
+})
+
+export const AKTENSTANDORT_OPTIONS_GET_ERROR = 'AKTENSTANDORT_OPTIONS_GET_ERROR'
+const aktenstandortOptionsGetError = error => ({
+  type: AKTENSTANDORT_OPTIONS_GET_ERROR,
+  error
+})
+
 export const interneOptionsGet = () =>
   (dispatch, getState) => {
     const { app } = getState()

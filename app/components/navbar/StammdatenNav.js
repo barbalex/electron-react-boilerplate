@@ -9,6 +9,7 @@ const stammdatenTitle = (table, rows) => {
   const tableNameObject = {
     interne: 'Stammdaten: Interne',
     externe: 'Stammdaten: Externe',
+    aktenstandort: 'Stammdaten: Aktenstandort',
     geschaeftsart: 'Stammdaten: Geschäftsart',
     parlVorstossTyp: 'Stammdaten: Parl. Vorstoss Typ',
     rechtsmittelInstanz: 'Stammdaten: Rechtsmittel-Instanz',
@@ -60,6 +61,12 @@ const NavbarStammdatenNav = ({
       <MenuItem divider />
       <MenuItem header>
         Auswahllisten:
+      </MenuItem>
+      <MenuItem
+        onClick={() => getTable('aktenstandort')}
+        active={table === 'aktenstandort'}
+      >
+        Aktenstandort
       </MenuItem>
       <MenuItem
         onClick={() => getTable('geschaeftsart')}

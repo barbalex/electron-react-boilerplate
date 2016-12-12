@@ -110,6 +110,7 @@ const dbChooseSuccess = (dbPath, db) =>
     dispatch(GeschaefteActions.parlVorstossTypOptionsGet())
     dispatch(GeschaefteActions.statusOptionsGet())
     dispatch(GeschaefteActions.geschaeftsartOptionsGet())
+    dispatch(GeschaefteActions.aktenstandortOptionsGet())
     dispatch(GeschaefteActions.rechtsmittelInstanzOptionsGet())
     dispatch(GeschaefteActions.abteilungOptionsGet())
     dispatch(GeschaefteActions.interneOptionsGet())

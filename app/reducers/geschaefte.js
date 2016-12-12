@@ -27,6 +27,8 @@ import {
   STATUS_OPTIONS_GET_ERROR,
   GESCHAEFTSART_OPTIONS_GET_SUCCESS,
   GESCHAEFTSART_OPTIONS_GET_ERROR,
+  AKTENSTANDORT_OPTIONS_GET_SUCCESS,
+  AKTENSTANDORT_OPTIONS_GET_ERROR,
   RECHTSMITTEL_INSTANZ_OPTIONS_GET_SUCCESS,
   RECHTSMITTEL_INSTANZ_OPTIONS_GET_ERROR,
   ABTEILUNG_OPTIONS_GET_SUCCESS,
@@ -51,6 +53,7 @@ const standardState = {
   parlVorstossTypOptions: [],
   statusOptions: [],
   geschaeftsartOptions: [],
+  aktenstandortOptions: [],
   interneOptions: [],
   externeOptions: [],
   // following: state for active geschaeft
@@ -221,6 +224,11 @@ const geschaefte = (state = standardState, action) => {
       return {
         ...state,
         geschaeftsartOptions: action.geschaeftsartOptions,
+      }
+    case AKTENSTANDORT_OPTIONS_GET_SUCCESS:
+      return {
+        ...state,
+        aktenstandortOptions: action.aktenstandortOptions,
       }
     case RECHTSMITTEL_INSTANZ_OPTIONS_GET_SUCCESS:
       return {
