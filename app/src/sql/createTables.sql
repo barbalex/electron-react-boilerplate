@@ -174,6 +174,9 @@ SELECT
   geschaeftsart
 FROM
   geschaefte
+WHERE geschaeftsart NOT IN (
+	SELECT geschaeftsart FROM geschaeftsart
+)
 GROUP BY
   geschaeftsart
 HAVING
@@ -232,6 +235,22 @@ WHERE
   geschaeftsart = 'Diverses';
 -------------------------------------------
 
+INSERT INTO
+  interne(kurzzeichen)
+SELECT
+  verantwortlich
+FROM
+  geschaefte
+WHERE verantwortlich NOT IN (
+	SELECT kurzzeichen FROM interne
+)
+GROUP BY
+  verantwortlich;
+
+
+-------------------------------------------
+
+
 DROP TABLE IF EXISTS status;
 CREATE TABLE status (
   id integer PRIMARY KEY,
@@ -251,6 +270,9 @@ SELECT
   status
 FROM
   geschaefte
+WHERE status NOT IN (
+	SELECT status FROM status
+)
 GROUP BY
   status
 HAVING
@@ -322,6 +344,9 @@ SELECT
   aktenstandort
 FROM
   geschaefte
+WHERE aktenstandort NOT IN (
+	SELECT aktenstandort from aktenstandort
+)
 GROUP BY
   aktenstandort
 HAVING
@@ -387,6 +412,9 @@ SELECT
   parlVorstossTyp
 FROM
   geschaefte
+WHERE parlVorstossTyp NOT IN (
+	SELECT parlVorstossTyp FROM parlVorstossTyp
+)
 GROUP BY
   parlVorstossTyp
 HAVING
@@ -477,6 +505,9 @@ SELECT
   rechtsmittelErledigung
 FROM
   geschaefte
+WHERE rechtsmittelErledigung NOT IN (
+	SELECT rechtsmittelErledigung FROM rechtsmittelErledigung
+)
 GROUP BY
   rechtsmittelErledigung
 HAVING
@@ -574,6 +605,9 @@ SELECT
   rechtsmittelInstanz
 FROM
   geschaefte
+WHERE rechtsmittelInstanz NOT IN (
+	SELECT rechtsmittelInstanz from rechtsmittelInstanz
+)
 GROUP BY
   rechtsmittelInstanz
 HAVING
