@@ -1,46 +1,21 @@
 import { remote } from 'electron'
-import fs from 'fs'
 import React, { PropTypes } from 'react'
 import {
   NavItem,
   Glyphicon,
 } from 'react-bootstrap'
 
-const { dialog } = remote
-
-const onClickPrint = (e, path) => {
+const onClickPrint = (e) => {
   e.preventDefault()
-  const landscape = path === '/pages'
   const win = remote.getCurrentWindow()
-  const printToPDFOptions = {
-    marginsType: 1,
-    pageSize: 'A4',
-    landscape,
-    printBackground: true
+
+  const options = {
+    silent: false,
+    printBackground: false
   }
-  const dialogOptions = {
-    title: 'pdf speichern',
-    filters: [{
-      name: 'pdf',
-      extensions: ['pdf']
-    }]
-  }
-  /* not working ?!
-  win.webContents.print({ silent: false, printBackground: false }, (error, data) => {
+  win.webContents.print(options, (error, data) => {
     if (error) throw error
     console.log('data', data)
-  })
-  */
-  // first remove navbar
-  win.webContents.printToPDF(printToPDFOptions, (error, data) => {
-    if (error) throw error
-    dialog.showSaveDialog(dialogOptions, (filePath) => {
-      if (filePath) {
-        fs.writeFile(filePath, data, (err) => {
-          if (err) throw err
-        })
-      }
-    })
   })
 }
 

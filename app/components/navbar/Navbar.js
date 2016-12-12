@@ -13,6 +13,7 @@ import GeschaeftLoeschenNav from '../../containers/navbar/GeschaeftDeleteNav'
 import TableRowNeuNav from '../../containers/navbar/TableRowNewNav'
 import TableRowDeleteNav from '../../containers/navbar/TableRowDeleteNav'
 import ExportGeschaefteNav from '../../containers/navbar/ExportGeschaefteNav'
+import PrintToPdfNav from '../../containers/navbar/PrintToPdfNav'
 import PrintNav from '../../containers/navbar/PrintNav'
 import StammdatenNav from '../../containers/navbar/StammdatenNav'
 import FilterNav from '../../containers/navbar/FilterNav'
@@ -94,7 +95,7 @@ class NavbarComponent extends Component {
             }
             {
               showPrint &&
-              <PrintNav />  // eslint-disable-line react/jsx-indent
+              <PrintToPdfNav />  // eslint-disable-line react/jsx-indent
             }
             <StammdatenNav />
             {
