@@ -56,14 +56,16 @@ const AreaRechtsmittel = ({
           tabIndex={2 + nrOfFieldsBeforePv}
         />
       </div>
-      <DateField  // eslint-disable-line react/jsx-indent
-        name="rechtsmittelEntscheidDatum"
-        label="Entscheid Datum"
-        change={change}
-        blur={blur}
-        onChangeDatePicker={onChangeDatePicker}
-        tabIndex={3 + nrOfFieldsBeforePv}
-      />
+      <div className={styles.fieldEntscheidDatum}>
+        <DateField  // eslint-disable-line react/jsx-indent
+          name="rechtsmittelEntscheidDatum"
+          label="Entscheid Datum"
+          change={change}
+          blur={blur}
+          onChangeDatePicker={onChangeDatePicker}
+          tabIndex={3 + nrOfFieldsBeforePv}
+        />
+      </div>
       <div className={styles.fieldErledigung}>
         <ControlLabel>
           Erledigung
