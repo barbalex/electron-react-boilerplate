@@ -12,6 +12,7 @@ import AreaParlVorstoss from '../../containers/geschaeft/AreaParlVorstoss'
 import AreaRechtsmittel from '../../containers/geschaeft/AreaRechtsmittel'
 import AreaPersonen from '../../containers/geschaeft/AreaPersonen'
 import AreaHistory from '../../containers/geschaeft/AreaHistory'
+import AreaLinks from '../../containers/geschaeft/AreaLinks'
 import AreaZuletztMutiert from '../../containers/geschaeft/AreaZuletztMutiert'
 
 moment.locale('de')
@@ -173,6 +174,10 @@ class Geschaeft extends Component {
             nrOfFieldsBeforePersonen={nrOfFieldsBeforePersonen}
             change={this.change}
             blur={this.blur}
+          />
+          <AreaLinks
+            blur={this.blur}
+            change={this.change}
           />
           <AreaHistory
             blur={this.blur}

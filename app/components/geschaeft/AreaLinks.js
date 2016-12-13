@@ -19,31 +19,17 @@ const AreaHistory = ({
       </div>
       <div className={styles.links}>
         {
-          links.map((id, index) => {
-            const geschaeft = geschaefte.find(g =>
-              g.idGeschaeft === id
-            )
-            if (!geschaeft) {
-              return null
-            }
+          links.map((link, index) => {
             return (
               <div
                 key={index}
                 className={styles.fields}
-                style={{
-                  cursor: id === activeId ? 'default' : 'pointer'
-                }}
-                onClick={() => {
-                  if (id !== activeId) {
-                    return geschaeftToggleActivated(id)
-                  }
-                }}
               >
                 <div className={styles.url}>
-                  {id}
+                  {link.url}
                 </div>
                 <div className={styles.txt}>
-                  {geschaeft.gegenstand}
+                  {link.txt}
                 </div>
               </div>
             )
