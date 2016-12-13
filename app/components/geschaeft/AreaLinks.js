@@ -40,10 +40,15 @@ const AreaLinks = ({
           )
         }
       </div>
-      <Dropzone onDrop={onDrop} multiple={false} className={styles.dropzone}>
-        <div>Datei hierhin ziehen...</div>
-        <div>...oder klicken, um eine Datei zu wählen.</div>
-      </Dropzone>
+      <div className={styles.dropzoneContainer}>
+        <Dropzone
+          onDrop={onDrop}
+          className={styles.dropzone}
+        >
+          <div>Datei hierhin ziehen...</div>
+          <div>...oder klicken, um sie zu wählen.</div>
+        </Dropzone>
+      </div>
     </div>
   )
 }
