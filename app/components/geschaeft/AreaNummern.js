@@ -47,7 +47,7 @@ const AreaNummern = ({
       </ControlLabel>
       <div className={styles.fieldGekoNr}>
         <FormControl
-          type="number"
+          type="text"
           value={geschaeft.GekoNr}
           name="gekoNr"
           onChange={change}
