@@ -207,31 +207,31 @@ const gekoGetError = error => ({
   error
 })
 
-export const getLink = () =>
+export const getLinks = () =>
 (dispatch, getState) => {
   const { app } = getState()
-  dispatch(linkGet())
+  dispatch(linksGet())
   getLinkFromDb(app.db)
-    .then((link) => {
-      dispatch(linkGetSuccess(link))
+    .then((links) => {
+      dispatch(linksGetSuccess(links))
     })
-    .catch(error => dispatch(linkGetError(error)))
+    .catch(error => dispatch(linksGetError(error)))
 }
 
-export const LINK_GET = 'LINK_GET'
-const linkGet = () => ({
-  type: LINK_GET
+export const LINKS_GET = 'LINKS_GET'
+const linksGet = () => ({
+  type: LINKS_GET
 })
 
-export const LINK_GET_SUCCESS = 'LINK_GET_SUCCESS'
-const linkGetSuccess = linkArray => ({
-  type: LINK_GET_SUCCESS,
-  link: linkArray,
+export const LINKS_GET_SUCCESS = 'LINKS_GET_SUCCESS'
+const linksGetSuccess = links => ({
+  type: LINKS_GET_SUCCESS,
+  links,
 })
 
-export const LINK_GET_ERROR = 'LINK_GET_ERROR'
-const linkGetError = error => ({
-  type: LINK_GET_ERROR,
+export const LINKS_GET_ERROR = 'LINKS_GET_ERROR'
+const linksGetError = error => ({
+  type: LINKS_GET_ERROR,
   error
 })
 

@@ -11,13 +11,14 @@ function mapStateToProps(state, props) {
     links,
     activeId,
   } = state.geschaefte
+  console.log(`state.geschaefte:`, state.geschaefte)
   const {
     blur,
     change,
   } = props
   const path = state.routing.locationBeforeTransitions.pathname
   const isPrintPreview = path === '/geschaeftPdf'
-  const linksDesGeschaefts = links.find(l =>
+  const linksDesGeschaefts = links.filter(l =>
     l.idGeschaeft === activeId
   )
 

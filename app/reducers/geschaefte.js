@@ -24,9 +24,9 @@ import {
   GEKO_GET_ERROR,
   GEKO_DELETE,
   GEKO_NEW,
-  LINK_GET,
-  LINK_GET_SUCCESS,
-  LINK_GET_ERROR,
+  LINKS_GET,
+  LINKS_GET_SUCCESS,
+  LINKS_GET_ERROR,
   LINK_DELETE,
   LINK_NEW,
   RECHTSMITTELERLEDIGUNG_OPTIONS_GET_SUCCESS,
@@ -53,6 +53,8 @@ const standardState = {
   fetching: false,
   error: [],
   geschaefte: [],
+  links: [],
+  geko: [],
   geschaefteGefilterteIds: [],
   filterFields: [],
   filterFulltext: '',
@@ -297,20 +299,20 @@ const geschaefte = (state = standardState, action) => {
           ...state.geko,
         ],
       }
-    case LINK_GET:
+    case LINKS_GET:
       return {
         ...state,
         fetching: true,
         error: [],
       }
-    case LINK_GET_SUCCESS:
+    case LINKS_GET_SUCCESS:
       return {
         ...state,
         fetching: false,
         error: [],
-        link: action.link,
+        links: action.links,
       }
-    case LINK_GET_ERROR:
+    case LINKS_GET_ERROR:
       return {
         ...state,
         fetching: false,
@@ -319,8 +321,8 @@ const geschaefte = (state = standardState, action) => {
     case LINK_DELETE:
       return {
         ...state,
-        link: [
-          ...state.link.filter(g => (
+        links: [
+          ...state.links.filter(g => (
             (g.idGeschaeft !== action.idGeschaeft) ||
             (g.url !== action.url)
           ))
@@ -329,9 +331,9 @@ const geschaefte = (state = standardState, action) => {
     case LINK_NEW:
       return {
         ...state,
-        link: [
+        links: [
           action.link,
-          ...state.link,
+          ...state.links,
         ],
       }
     case RECHTSMITTELERLEDIGUNG_OPTIONS_GET_ERROR:

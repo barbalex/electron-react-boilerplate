@@ -5,12 +5,12 @@
 
 .areaLinks {
   grid-area: areaLinks;
-  background-color: rgb(227, 232, 255);
+  background-color: #e3fff0;
   display: grid;
-  grid-template-columns: calc(100% - 156px) 70px 70px;
+  grid-template-columns: calc(100% - 308px) 300px;
   grid-template-areas:
-    "title"
-    "links";
+    "title dropzone"
+    "links dropzone";
   grid-column-gap: 8px;
   grid-row-gap: 8px;
   padding: 8px;
@@ -23,8 +23,17 @@
 
 .links {
   grid-area: links;
-  display: grid;
-  grid-template-columns: 100%;
+}
+
+.dropzone {
+  grid-area: dropzone;
+  width: '100%';
+  height: '100%';
+  borderWidth: 2;
+  borderColor: '#666';
+  borderStyle: 'dashed';
+  borderRadius: 5px;
+  padding: 5px;
 }
 
 .fields {

@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
+import Dropzone from 'react-dropzone'
 import { FormControl, ControlLabel } from 'react-bootstrap'
 import regularStyles from './areaLinks.css'
 import pdfStyles from './areaLinksPdf.css'
 
-const AreaHistory = ({
+const AreaLinks = ({
   links,
   activeId,
   blur,
@@ -12,37 +13,44 @@ const AreaHistory = ({
 }) => {
   const styles = isPrintPreview ? pdfStyles : regularStyles
 
+  const onDrop = (files) => {
+    console.log('Received files: ', files)
+    console.log('path: ', files[0].path)
+  }
+
   return (
     <div className={styles.areaLinks}>
-      <div className={styles.areaLinksTitle}>
+      <div className={styles.title}>
         Links
       </div>
       <div className={styles.links}>
         {
-          links.map((link, index) => {
-            return (
-              <div
-                key={index}
-                className={styles.fields}
-              >
-                <div className={styles.url}>
-                  {link.url}
-                </div>
-                <div className={styles.txt}>
-                  {link.txt}
-                </div>
+          links.map((link, index) =>
+            <div
+              key={index}
+              className={styles.fields}
+            >
+              <div className={styles.url}>
+                {link.url}
               </div>
-            )
-          })
+              <div className={styles.txt}>
+                {link.txt}
+              </div>
+            </div>
+          )
         }
       </div>
+      <Dropzone onDrop={onDrop} multiple={false} className={styles.dropzone}>
+        <div>Datei hierhin ziehen...</div>
+        <div>...oder klicken, um eine Datei zu wählen.</div>
+      </Dropzone>
     </div>
   )
 }
 
-AreaHistory.displayName = 'AreaHistory'
+AreaLinks.displayName = 'AreaLinks'
 
-AreaHistory.propTypes = {
+AreaLinks.propTypes = {
   links: PropTypes.array.isRequired,
   activeId: PropTypes.number.isRequired,
   blur: PropTypes.func.isRequired,
@@ -50,4 +58,4 @@ AreaHistory.propTypes = {
   isPrintPreview: PropTypes.bool.isRequired,
 }
 
-export default AreaHistory
+export default AreaLinks

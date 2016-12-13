@@ -106,6 +106,8 @@ const dbChooseSuccess = (dbPath, db) =>
     // get data
     dispatch(UserActions.fetchUsername())
     dispatch(GeschaefteActions.getGeschaefte())
+    dispatch(GeschaefteActions.getGeko())
+    dispatch(GeschaefteActions.getLinks())
     dispatch(GeschaefteActions.rechtsmittelErledigungOptionsGet())
     dispatch(GeschaefteActions.parlVorstossTypOptionsGet())
     dispatch(GeschaefteActions.statusOptionsGet())
