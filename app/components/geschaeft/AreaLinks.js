@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel } from 'react-bootstrap'
 import regularStyles from './areaLinks.css'
 import pdfStyles from './areaLinksPdf.css'
-import AreaHistoryRows from '../../containers/geschaeft/AreaHistoryRows'
 
 const AreaHistory = ({
   links,
@@ -20,7 +19,7 @@ const AreaHistory = ({
       </div>
       <div className={styles.links}>
         {
-          history.map((id, index) => {
+          links.map((id, index) => {
             const geschaeft = geschaefte.find(g =>
               g.idGeschaeft === id
             )
