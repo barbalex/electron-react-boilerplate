@@ -1,0 +1,30 @@
+.areaTitle {
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.areaLinks {
+  grid-area: areaLinks;
+  background-color: rgb(227, 232, 255);
+  display: grid;
+  grid-template-columns: calc(100% - 156px) 70px 70px;
+  grid-template-areas:
+    "title"
+    "links";
+  grid-column-gap: 8px;
+  grid-row-gap: 1px;
+  padding: 8px;
+  border: 1px solid #CCC;
+  font-size: 10px;
+}
+
+.title {
+  composes: areaTitle;
+  grid-area: title;
+}
+
+.links {
+  grid-area: links;
+  display: grid;
+  grid-template-columns: 100%;
+}
