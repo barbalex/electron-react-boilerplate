@@ -61,31 +61,6 @@ const AreaParlVorstoss = ({
         2: überwiesen
       </Radio>
     </div>
-    <div className={styles.fieldEbene}>
-      <ControlLabel>
-        Ebene
-      </ControlLabel>
-      <Radio
-        data-value="Kanton"
-        checked={values.parlVorstossEbene === 'Kanton'}
-        name="parlVorstossEbene"
-        onChange={change}
-        bsSize="small"
-        tabIndex={4 + firstTabIndex}
-      >
-        Kanton
-      </Radio>
-      <Radio
-        data-value="Bund"
-        checked={values.parlVorstossEbene === 'Bund'}
-        onChange={change}
-        name="parlVorstossEbene"
-        bsSize="small"
-        tabIndex={5 + firstTabIndex}
-      >
-        Bund
-      </Radio>
-    </div>
     <div className={styles.fieldZustaendigkeit}>
       <ControlLabel>
         Zuständigkeit

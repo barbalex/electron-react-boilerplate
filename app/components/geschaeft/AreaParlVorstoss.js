@@ -64,31 +64,6 @@ const AreaParlVorstoss = ({
           2: überwiesen
         </Radio>
       </div>
-      <div className={styles.fieldEbene}>
-        <ControlLabel>
-          Ebene
-        </ControlLabel>
-        <Radio
-          data-value="Kanton"
-          checked={geschaeft.parlVorstossEbene === 'Kanton'}
-          name="parlVorstossEbene"
-          onChange={change}
-          bsSize="small"
-          tabIndex={4 + nrOfFieldsBeforePv}
-        >
-          Kanton
-        </Radio>
-        <Radio
-          data-value="Bund"
-          checked={geschaeft.parlVorstossEbene === 'Bund'}
-          onChange={change}
-          name="parlVorstossEbene"
-          bsSize="small"
-          tabIndex={5 + nrOfFieldsBeforePv}
-        >
-          Bund
-        </Radio>
-      </div>
       <div className={styles.fieldZustaendigkeit}>
         <ControlLabel>
           Zuständigkeit
@@ -112,31 +87,6 @@ const AreaParlVorstoss = ({
           tabIndex={7 + nrOfFieldsBeforePv}
         >
           mitbericht
-        </Radio>
-      </div>
-      <div className={styles.fieldErlassform}>
-        <ControlLabel>
-          Erlassform
-        </ControlLabel>
-        <Radio
-          data-value="Gesetz"
-          checked={geschaeft.erlassform === 'Gesetz'}
-          name="erlassform"
-          onChange={change}
-          bsSize="small"
-          tabIndex={8 + nrOfFieldsBeforePv}
-        >
-          Gesetz
-        </Radio>
-        <Radio
-          data-value="Verordnung"
-          checked={geschaeft.erlassform === 'Verordnung'}
-          name="erlassform"
-          onChange={change}
-          bsSize="small"
-          tabIndex={9 + nrOfFieldsBeforePv}
-        >
-          Verordnung
         </Radio>
       </div>
     </div>

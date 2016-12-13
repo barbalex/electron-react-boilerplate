@@ -1,0 +1,1 @@
+ALTER TABLE geschaefte ADD COLUMN parlVorstossZustaendigkeitAwel TEXT;

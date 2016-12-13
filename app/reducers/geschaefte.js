@@ -19,6 +19,16 @@ import {
   GESCHAEFTE_CHANGE_STATE,
   GESCHAEFTE_CHANGE_DB_ERROR,
   GESCHAEFT_NEW,
+  GEKO_GET,
+  GEKO_GET_SUCCESS,
+  GEKO_GET_ERROR,
+  GEKO_DELETE,
+  GEKO_NEW,
+  LINK_GET,
+  LINK_GET_SUCCESS,
+  LINK_GET_ERROR,
+  LINK_DELETE,
+  LINK_NEW,
   RECHTSMITTELERLEDIGUNG_OPTIONS_GET_SUCCESS,
   RECHTSMITTELERLEDIGUNG_OPTIONS_GET_ERROR,
   PARLVORSTOSSTYP_OPTIONS_GET_SUCCESS,
@@ -249,6 +259,80 @@ const geschaefte = (state = standardState, action) => {
       return {
         ...state,
         externeOptions: action.externeOptions,
+      }
+    case GEKO_GET:
+      return {
+        ...state,
+        fetching: true,
+        error: [],
+      }
+    case GEKO_GET_SUCCESS:
+      return {
+        ...state,
+        fetching: false,
+        error: [],
+        geko: action.geko,
+      }
+    case GEKO_GET_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        error: [...state.error, action.error],
+      }
+    case GEKO_DELETE:
+      return {
+        ...state,
+        geko: [
+          ...state.geko.filter(g => (
+            (g.idGeschaeft !== action.idGeschaeft) ||
+            (g.gekoNr !== action.gekoNr)
+          ))
+        ],
+      }
+    case GEKO_NEW:
+      return {
+        ...state,
+        geko: [
+          action.geko,
+          ...state.geko,
+        ],
+      }
+    case LINK_GET:
+      return {
+        ...state,
+        fetching: true,
+        error: [],
+      }
+    case LINK_GET_SUCCESS:
+      return {
+        ...state,
+        fetching: false,
+        error: [],
+        link: action.link,
+      }
+    case LINK_GET_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        error: [...state.error, action.error],
+      }
+    case LINK_DELETE:
+      return {
+        ...state,
+        link: [
+          ...state.link.filter(g => (
+            (g.idGeschaeft !== action.idGeschaeft) ||
+            (g.url !== action.url)
+          ))
+        ],
+      }
+    case LINK_NEW:
+      return {
+        ...state,
+        link: [
+          action.link,
+          ...state.link,
+        ],
       }
     case RECHTSMITTELERLEDIGUNG_OPTIONS_GET_ERROR:
     case PARLVORSTOSSTYP_OPTIONS_GET_ERROR:

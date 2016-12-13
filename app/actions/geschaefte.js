@@ -5,15 +5,23 @@
 
 import { push } from 'react-router-redux'
 import getGeschaefteFromDb from '../src/getGeschaefteFromDb'
+import getGekoFromDb from '../src/getGekoFromDb'
+import getLinkFromDb from '../src/getLinksFromDb'
 import getDropdownOptions from '../src/getDropdownOptions'
 import getInterneOptions from '../src/getInterneOptions'
 import getExterneOptions from '../src/getExterneOptions'
 import updateGeschaeft from '../src/updateGeschaeft'
+import updateGeko from '../src/updateGeko'
+import updateLink from '../src/updateLink'
 import filterGeschaefte from '../src/filterGeschaefte'
 import sortIdsBySortFields from '../src/sortIdsBySortFields'
 import * as pagesActions from './pages'
 import newGeschaeftInDb from '../src/newGeschaeftInDb'
+import newGekoInDb from '../src/newGekoInDb'
+import newLinkInDb from '../src/newLinkInDb'
 import deleteGeschaeft from '../src/deleteGeschaeft'
+import deleteGeko from '../src/deleteGeko'
+import deleteLink from '../src/deleteLink'
 
 export const geschaeftPdfShow = () =>
   dispatch => dispatch(push('/geschaeftPdf'))
@@ -165,11 +173,66 @@ export const geschaefteFilterByFulltext = (filterFulltext, filterType = 'nach Vo
     }
   }
 
-
 export const GESCHAEFTE_REMOVE_FILTERS = 'GESCHAEFTE_REMOVE_FILTERS'
 
 export const geschaefteRemoveFilters = () => ({
   type: GESCHAEFTE_REMOVE_FILTERS
+})
+
+export const getGeko = () =>
+(dispatch, getState) => {
+  const { app } = getState()
+  dispatch(gekoGet())
+  getGekoFromDb(app.db)
+    .then((geko) => {
+      dispatch(gekoGetSuccess(geko))
+    })
+    .catch(error => dispatch(gekoGetError(error)))
+}
+
+export const GEKO_GET = 'GEKO_GET'
+const gekoGet = () => ({
+  type: GEKO_GET
+})
+
+export const GEKO_GET_SUCCESS = 'GEKO_GET_SUCCESS'
+const gekoGetSuccess = gekoArray => ({
+  type: GEKO_GET_SUCCESS,
+  geko: gekoArray,
+})
+
+export const GEKO_GET_ERROR = 'GEKO_GET_ERROR'
+const gekoGetError = error => ({
+  type: GEKO_GET_ERROR,
+  error
+})
+
+export const getLink = () =>
+(dispatch, getState) => {
+  const { app } = getState()
+  dispatch(linkGet())
+  getLinkFromDb(app.db)
+    .then((link) => {
+      dispatch(linkGetSuccess(link))
+    })
+    .catch(error => dispatch(linkGetError(error)))
+}
+
+export const LINK_GET = 'LINK_GET'
+const linkGet = () => ({
+  type: LINK_GET
+})
+
+export const LINK_GET_SUCCESS = 'LINK_GET_SUCCESS'
+const linkGetSuccess = linkArray => ({
+  type: LINK_GET_SUCCESS,
+  link: linkArray,
+})
+
+export const LINK_GET_ERROR = 'LINK_GET_ERROR'
+const linkGetError = error => ({
+  type: LINK_GET_ERROR,
+  error
 })
 
 /*
@@ -492,3 +555,185 @@ const abteilungOptionsGetError = error => ({
   type: ABTEILUNG_OPTIONS_GET_ERROR,
   error
 })
+
+export const gekoNewCreate = () =>
+  (dispatch, getState) => {
+    const { app, user } = getState()
+    newGekoInDb(app.db, user.username)
+      .then((geko) =>
+        dispatch(gekoNew(geko))
+      )
+      .catch(error => dispatch(gekoNewError(error)))
+  }
+
+export const GEKO_NEW = 'GEKO_NEW'
+export const gekoNew = geko => ({
+  type: GEKO_NEW,
+  geko
+})
+
+export const GEKO_NEW_ERROR = 'GEKO_NEW_ERROR'
+export const gekoNewError = error => ({
+  type: GEKO_NEW_ERROR,
+  error
+})
+
+export const gekoRemove = (idGeschaeft, gekoNr) =>
+  (dispatch, getState) => {
+    const { app } = getState()
+    deleteGeko(app.db, idGeschaeft, gekoNr)
+      .then(() => {
+        dispatch(gekoRemoveDeleteIntended(idGeschaeft, gekoNr))
+        dispatch(gekoDelete(idGeschaeft, gekoNr))
+      })
+      .catch(error => dispatch(gekoDeleteError(error)))
+  }
+
+export const GEKO_SET_DELETE_INTENDED = 'GEKO_SET_DELETE_INTENDED'
+export const gekoSetDeleteIntended = (idGeschaeft, gekoNr) => ({
+  type: GEKO_SET_DELETE_INTENDED,
+  idGeschaeft,
+  gekoNr,
+})
+
+export const GEKO_REMOVE_DELETE_INTENDED = 'GEKO_REMOVE_DELETE_INTENDED'
+export const gekoRemoveDeleteIntended = () => ({
+  type: GEKO_REMOVE_DELETE_INTENDED
+})
+
+export const GEKO_DELETE = 'GEKO_DELETE'
+export const gekoDelete = (idGeschaeft, gekoNr) => ({
+  type: GEKO_DELETE,
+  idGeschaeft,
+  gekoNr,
+})
+
+export const GEKO_DELETE_ERROR = 'GEKO_DELETE_ERROR'
+export const gekoDeleteError = error => ({
+  type: GEKO_DELETE_ERROR,
+  error
+})
+
+export const GEKO_CHANGE_STATE = 'GEKO_CHANGE_STATE'
+export const gekoChangeState = (idGeschaeft, gekoNr, field, value) =>
+  (dispatch, getState) => {
+    const { user } = getState()
+    const username = user.username
+    dispatch({
+      type: GEKO_CHANGE_STATE,
+      idGeschaeft,
+      gekoNr,
+      field,
+      value,
+      username
+    })
+  }
+
+export const GEKO_CHANGE_DB_ERROR = 'GEKO_CHANGE_DB_ERROR'
+export const gekoChangeDbError = error => ({
+  type: GEKO_CHANGE_DB_ERROR,
+  error
+})
+
+export const changeGekoInDb = (idGeschaeft, gekoNr, field, value) =>
+  (dispatch, getState) => {
+    const { app } = getState()
+    // no need to do something on then
+    // ui was updated on GEKO_CHANGE_STATE
+    updateGeko(app.db, idGeschaeft, gekoNr, field, value)
+      .catch((error) => {
+        // TODO: reset ui
+        dispatch(gekoChangeDbError(error))
+      })
+  }
+
+export const linkNewCreate = () =>
+  (dispatch, getState) => {
+    const { app, user } = getState()
+    newLinkInDb(app.db, user.username)
+      .then((link) =>
+        dispatch(linkNew(link))
+      )
+      .catch(error => dispatch(linkNewError(error)))
+  }
+
+export const LINK_NEW = 'LINK_NEW'
+export const linkNew = link => ({
+  type: LINK_NEW,
+  link
+})
+
+export const LINK_NEW_ERROR = 'LINK_NEW_ERROR'
+export const linkNewError = error => ({
+  type: LINK_NEW_ERROR,
+  error
+})
+
+export const linkRemove = (idGeschaeft, url) =>
+  (dispatch, getState) => {
+    const { app } = getState()
+    deleteLink(app.db, idGeschaeft, url)
+      .then(() => {
+        dispatch(linkRemoveDeleteIntended(idGeschaeft, url))
+        dispatch(linkDelete(idGeschaeft, url))
+      })
+      .catch(error => dispatch(linkDeleteError(error)))
+  }
+
+export const LINK_SET_DELETE_INTENDED = 'LINK_SET_DELETE_INTENDED'
+export const linkSetDeleteIntended = (idGeschaeft, url) => ({
+  type: LINK_SET_DELETE_INTENDED,
+  idGeschaeft,
+  url,
+})
+
+export const LINK_REMOVE_DELETE_INTENDED = 'LINK_REMOVE_DELETE_INTENDED'
+export const linkRemoveDeleteIntended = () => ({
+  type: LINK_REMOVE_DELETE_INTENDED
+})
+
+export const LINK_DELETE = 'LINK_DELETE'
+export const linkDelete = (idGeschaeft, url) => ({
+  type: LINK_DELETE,
+  idGeschaeft,
+  url,
+})
+
+export const LINK_DELETE_ERROR = 'LINK_DELETE_ERROR'
+export const linkDeleteError = error => ({
+  type: LINK_DELETE_ERROR,
+  error
+})
+
+export const LINK_CHANGE_STATE = 'LINK_CHANGE_STATE'
+export const linkChangeState = (idGeschaeft, url, field, value) =>
+  (dispatch, getState) => {
+    const { user } = getState()
+    const username = user.username
+    dispatch({
+      type: LINK_CHANGE_STATE,
+      idGeschaeft,
+      url,
+      field,
+      value,
+      username
+    })
+  }
+
+export const LINK_CHANGE_DB_ERROR = 'LINK_CHANGE_DB_ERROR'
+export const linkChangeDbError = error => ({
+  type: LINK_CHANGE_DB_ERROR,
+  error
+})
+
+export const changeLinkInDb = (idGeschaeft, url, field, value) =>
+  (dispatch, getState) => {
+    const { app } = getState()
+    // no need to do something on then
+    // ui was updated on LINK_CHANGE_STATE
+    updateLink(app.db, idGeschaeft, url, field, value)
+      .catch((error) => {
+        // TODO: reset ui
+        dispatch(linkChangeDbError(error))
+      })
+  }

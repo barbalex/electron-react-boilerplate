@@ -1,5 +1,5 @@
 import moment from 'moment'
-import getGeschaeftFromDb from './getGeschaeftFromDb.js'
+import getGeschaeftFromDb from './getGeschaeftFromDb'
 
 export default function (db, username) {
   return new Promise((resolve, reject) => {

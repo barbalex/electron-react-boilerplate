@@ -33,6 +33,25 @@ CREATE INDEX iInterneVornameName ON interne (vorname, name);
 
 -------------------------------------------
 
+DROP TABLE IF EXISTS geko;
+CREATE TABLE geko (
+  idGeschaeft INTEGER REFERENCES geschaefte(idGeschaeft) ON UPDATE CASCADE ON DELETE CASCADE,
+  gekoNr TEXT,
+  PRIMARY KEY (gekoNr, idGeschaeft)
+);
+
+-------------------------------------------
+
+DROP TABLE IF EXISTS links;
+CREATE TABLE links (
+  idGeschaeft INTEGER REFERENCES geschaefte(idGeschaeft) ON UPDATE CASCADE ON DELETE CASCADE,
+  url TEXT,
+  txt TEXT,
+  PRIMARY KEY (url, idGeschaeft)
+);
+
+-------------------------------------------
+
 DROP TABLE IF EXISTS geschaefte;
 CREATE TABLE geschaefte (
   abteilung TEXT,
@@ -59,6 +78,7 @@ CREATE TABLE geschaefte (
   fristDirektion TEXT,
   fristMitarbeiter TEXT,
   gegenstand TEXT,
+  -- gekoNr to be moved to table geko after first import and dropped thereafter
   gekoNr TEXT,
   geschaeftsart TEXT REFERENCES geschaeftsart(geschaeftsart) ON UPDATE CASCADE ON DELETE RESTRICT,
   idGeschaeft INTEGER PRIMARY KEY,
@@ -70,6 +90,7 @@ CREATE TABLE geschaefte (
   naechsterSchritt TEXT,
   ort TEXT,
   parlVorstossStufe TEXT,
+  parlVorstossZustaendigkeitAwel TEXT,
   parlVorstossTyp TEXT REFERENCES parlVorstossTyp(parlVorstossTyp) ON UPDATE CASCADE ON DELETE RESTRICT,
   rechtsmittelInstanz TEXT REFERENCES rechtsmittelInstanz(rechtsmittelInstanz) ON UPDATE CASCADE ON DELETE RESTRICT,
   rechtsmittelErledigung TEXT REFERENCES rechtsmittelErledigung(rechtsmittelErledigung) ON UPDATE CASCADE ON DELETE RESTRICT,
