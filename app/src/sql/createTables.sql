@@ -634,6 +634,29 @@ GROUP BY
 HAVING
   rechtsmittelInstanz IS NOT NULL;
 
+-- now insert all wanted values, if not yet included
+INSERT OR IGNORE INTO
+  rechtsmittelInstanz(rechtsmittelInstanz,sort)
+VALUES ('Baurekursgericht', 1);
+INSERT OR IGNORE INTO
+  rechtsmittelInstanz(rechtsmittelInstanz,sort)
+VALUES ('Verwaltungsgericht', 2);
+INSERT OR IGNORE INTO
+  rechtsmittelInstanz(rechtsmittelInstanz,sort)
+VALUES ('Bundesverwaltungsgericht', 3);
+INSERT OR IGNORE INTO
+  rechtsmittelInstanz(rechtsmittelInstanz,sort)
+VALUES ('Bundesgericht', 4);
+INSERT OR IGNORE INTO
+  rechtsmittelInstanz(rechtsmittelInstanz,sort)
+VALUES ('Baudirektion', 5);
+INSERT OR IGNORE INTO
+  rechtsmittelInstanz(rechtsmittelInstanz,sort)
+VALUES ('Regierungsrat', 6);
+INSERT OR IGNORE INTO
+  rechtsmittelInstanz(rechtsmittelInstanz,sort)
+VALUES ('andere Instanz', 7);
+
 -- but only ones to be used actively
 -- are not historical
 UPDATE
@@ -641,7 +664,7 @@ UPDATE
 SET
   historisch = 1
 WHERE
-  rechtsmittelInstanz NOT IN ('Instanz 2', 'Instanz 3');
+  rechtsmittelInstanz NOT IN ('Baurekursgericht', 'Verwaltungsgericht', 'Bundesverwaltungsgericht', 'Bundesgericht', 'Baudirektion', 'Regierungsrat', 'andere Instanz');
 
 -- and actively used ones have a sort value
 UPDATE
