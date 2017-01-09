@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import Dropzone from 'react-dropzone'
 import { Glyphicon } from 'react-bootstrap'
+import Linkify from 'react-linkify'
 
 import regularStyles from './areaLinks.css'
 import pdfStyles from './areaLinksPdf.css'
@@ -30,7 +31,13 @@ const AreaLinks = ({
               className={styles.fields}
             >
               <div className={styles.url}>
-                {link.url}
+                <Linkify
+                  properties={{
+                    target: '_blank',
+                  }}
+                >
+                  {link.url}
+                </Linkify>
               </div>
               <div className={styles.deleteGlyphiconDiv}>
                 <Glyphicon
