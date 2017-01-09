@@ -126,7 +126,7 @@ class Geschaeft extends Component {
 
     // prepare tab indexes
     const nrOfGFields = 10
-    const nrOfNrFields = 10
+    const nrOfNrFields = 13
     const nrOfFieldsBeforePv = nrOfGFields + nrOfNrFields
     const nrOfPvFields = 9
     const nrOfFieldsBeforeFristen = nrOfFieldsBeforePv + nrOfPvFields

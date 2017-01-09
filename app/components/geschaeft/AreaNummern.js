@@ -118,34 +118,6 @@ const AreaNummern = ({
           tabIndex={5 + tabsToAdd}
         />
       </div>
-      <ControlLabel className={styles.labelEntscheidKr}>
-        KR
-      </ControlLabel>
-      <div className={styles.fieldEntscheidKrNr}>
-        <FormControl
-          type="number"
-          value={geschaeft.entscheidKrNr || ''}
-          name="entscheidKrNr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={6 + tabsToAdd}
-        />
-      </div>
-      <div className={styles.slashKr}>
-        <div>/</div>
-      </div>
-      <div className={styles.fieldEntscheidKrJahr}>
-        <FormControl
-          type="number"
-          value={geschaeft.entscheidKrJahr || ''}
-          name="entscheidKrJahr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={7 + tabsToAdd}
-        />
-      </div>
       <ControlLabel className={styles.labelEntscheidRrb}>
         RRB
       </ControlLabel>
@@ -157,7 +129,7 @@ const AreaNummern = ({
           onChange={change}
           onBlur={blur}
           bsSize="small"
-          tabIndex={8 + tabsToAdd}
+          tabIndex={6 + tabsToAdd}
         />
       </div>
       <div className={styles.slashRrb}>
@@ -171,7 +143,63 @@ const AreaNummern = ({
           onChange={change}
           onBlur={blur}
           bsSize="small"
+          tabIndex={7 + tabsToAdd}
+        />
+      </div>
+      <ControlLabel className={styles.labelEntscheidBvv}>
+        BVV
+      </ControlLabel>
+      <div className={styles.fieldEntscheidBvvNr}>
+        <FormControl
+          type="number"
+          value={geschaeft.entscheidBvvNr || ''}
+          name="entscheidBvvNr"
+          onChange={change}
+          onBlur={blur}
+          bsSize="small"
+          tabIndex={8 + tabsToAdd}
+        />
+      </div>
+      <div className={styles.slashBvv}>
+        <div>/</div>
+      </div>
+      <div className={styles.fieldEntscheidBvvJahr}>
+        <FormControl
+          type="number"
+          value={geschaeft.entscheidBvvJahr || ''}
+          name="entscheidBvvJahr"
+          onChange={change}
+          onBlur={blur}
+          bsSize="small"
           tabIndex={9 + tabsToAdd}
+        />
+      </div>
+      <ControlLabel className={styles.labelEntscheidKr}>
+        KR
+      </ControlLabel>
+      <div className={styles.fieldEntscheidKrNr}>
+        <FormControl
+          type="number"
+          value={geschaeft.entscheidKrNr || ''}
+          name="entscheidKrNr"
+          onChange={change}
+          onBlur={blur}
+          bsSize="small"
+          tabIndex={10 + tabsToAdd}
+        />
+      </div>
+      <div className={styles.slashKr}>
+        <div>/</div>
+      </div>
+      <div className={styles.fieldEntscheidKrJahr}>
+        <FormControl
+          type="number"
+          value={geschaeft.entscheidKrJahr || ''}
+          name="entscheidKrJahr"
+          onChange={change}
+          onBlur={blur}
+          bsSize="small"
+          tabIndex={11 + tabsToAdd}
         />
       </div>
       <div className={styles.fieldAktenstandort}>
@@ -185,7 +213,7 @@ const AreaNummern = ({
           onChange={change}
           onBlur={blur}
           bsSize="small"
-          tabIndex={10 + tabsToAdd}
+          tabIndex={12 + tabsToAdd}
         >
           {createOptions(aktenstandortOptions)}
         </FormControl>
@@ -201,7 +229,7 @@ const AreaNummern = ({
           onChange={change}
           onBlur={blur}
           bsSize="small"
-          tabIndex={11 + tabsToAdd}
+          tabIndex={13 + tabsToAdd}
         />
       </div>
     </div>
