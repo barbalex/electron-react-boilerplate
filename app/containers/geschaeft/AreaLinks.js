@@ -11,7 +11,7 @@ function mapStateToProps(state, props) {
     links,
     activeId,
   } = state.geschaefte
-  console.log(`state.geschaefte:`, state.geschaefte)
+  // console.log(`state.geschaefte:`, state.geschaefte)
   const {
     blur,
     change,

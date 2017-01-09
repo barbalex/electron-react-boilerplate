@@ -9,23 +9,18 @@ import KontakteExtern from '../../containers/geschaeft/KontakteExtern'
 
 const verwantwortlichOptions = (interneOptions) => {
   // sort interneOptions by kurzzeichen
-  const interneOptionsSorted = _.sortBy(interneOptions, o =>
-    o.kurzzeichen.toLowerCase()
-  )
-  const options = interneOptionsSorted.map((o, index) => {
-    let times = 5 - o.kurzzeichen.length
-    // make sure, times is never < 0
-    if (times < 0) {
-      times = 0
-    }
-    const space = '\xa0'.repeat(times)
-    const name = `${o.vorname || ''} ${o.name || ''}`
+  const interneOptionsSorted = _.sortBy(interneOptions, o => {
+    const sort = `${o.name || 'zz'} ${o.vorname || 'zz'} (${o.kurzzeichen})`
+    return sort.toLowerCase()
+  })
+  const options = interneOptionsSorted.map((o) => {
+    const name = `${o.name || '(kein Name)'} ${o.vorname || '(kein Vorname)'} (${o.kurzzeichen})`
     return (
       <option
-        key={index + 1}
+        key={o.id}
         value={o.kurzzeichen}
       >
-        {`${o.kurzzeichen}${space}${'\xa0\xa0\xa0'}${name}`}
+        {name}
       </option>
     )
   })
@@ -38,11 +33,10 @@ const verantwortlichData = (geschaeft, interneOptions) => {
     o.kurzzeichen === geschaeft.verantwortlich
   )
   if (!data) return ''
-  const name = `${data.vorname || ''} ${data.name || ''}`
-  const abt = data.abteilung ? `, ${data.abteilung}` : ''
+  const abt = data.abteilung ? `${data.abteilung}` : ''
   const eMail = data.eMail ? `, ${data.eMail}` : ''
   const telefon = data.telefon ? `, ${data.telefon}` : ''
-  const string = `${name}${abt}${eMail}${telefon}`
+  const string = `${abt}${eMail}${telefon}`
   return <Linkify>{string}</Linkify>
 }
 

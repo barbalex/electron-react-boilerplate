@@ -18,7 +18,7 @@ const verantwortlichData = (gkI, interneOptions) => {
     o.id === gkI.idKontakt
   )
   if (!data) return ''
-  const name = `${data.vorname} ${data.name}`
+  const name = `${data.name} ${data.vorname}, ${data.kurzzeichen}`
   const abt = data.abteilung ? `, ${data.abteilung}` : ''
   const eMail = data.eMail ? `, ${data.eMail}` : ''
   const telefon = data.telefon ? `, ${data.telefon}` : ''
@@ -42,38 +42,30 @@ const GeschaefteKontakteInternItems = ({
     const intOption = interneOptions.find(o =>
       o.id === g.idKontakt
     )
-    return intOption.kurzzeichen.toLowerCase()
+    const sort = `${intOption.name} ${intOption.vorname}, ${intOption.kurzzeichen}`
+    return sort.toLowerCase()
   })
   return (
     <div className={styles.body}>
       {
-        gkISorted.map((gkI, index) => {
-          const intOption = interneOptions.find(o =>
-            o.id === gkI.idKontakt
-          )
-          const kurzzeichen = intOption.kurzzeichen
-          return (
-            <div
-              key={index + 1}
-              className={styles.row}
-            >
-              <div className={styles.fV}>
-                {kurzzeichen}
-              </div>
-              <div className={styles.fVN}>
-                  {verantwortlichData(gkI, interneOptions)}
-              </div>
-              <div className={styles.deleteGlyphiconDiv}>
-                <Glyphicon
-                  glyph="remove-circle"
-                  onClick={() => geschaeftKontaktInternRemove(activeId, gkI.idKontakt)}
-                  className={styles.removeGlyphicon}
-                  title={titleText(gkI.idKontakt, interneOptions)}
-                />
-              </div>
+        gkISorted.map(gkI =>
+          <div
+            key={`${gkI.idGeschaeft}${gkI.idKontakt}`}
+            className={styles.row}
+          >
+            <div className={styles.fV}>
+              {verantwortlichData(gkI, interneOptions)}
             </div>
-          )
-        })
+            <div className={styles.deleteGlyphiconDiv}>
+              <Glyphicon
+                glyph="remove-circle"
+                onClick={() => geschaeftKontaktInternRemove(activeId, gkI.idKontakt)}
+                className={styles.removeGlyphicon}
+                title={titleText(gkI.idKontakt, interneOptions)}
+              />
+            </div>
+          </div>
+        )
       }
     </div>
   )

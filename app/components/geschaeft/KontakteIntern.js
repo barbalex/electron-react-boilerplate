@@ -35,19 +35,19 @@ const optionsList = (
   const interneOptionsSorted = _.sortBy(
     interneOptionsFiltered,
     o => {
-      const name = o.name ? o.name.toLowerCase() : `ZZ`
-      const vorname = o.vorname ? o.vorname.toLowerCase() : `ZZ`
+      const name = o.name ? o.name.toLowerCase() : 'zz'
+      const vorname = o.vorname ? o.vorname.toLowerCase() : 'zz'
       return `${name} ${vorname} ${o.kurzzeichen}`
     }
   )
-  const options = interneOptionsSorted.map((o, index) => (
+  const options = interneOptionsSorted.map(o =>
     <option
-      key={index + 1}
+      key={o.id}
       value={o.id}
     >
-      {`${o.name ? o.name : `(kein Name)`} ${o.vorname ? o.vorname : `(kein Vorname)`} (${o.kurzzeichen})`}
+      {`${o.name ? o.name : '(kein Name)'} ${o.vorname ? o.vorname : '(kein Vorname)'} (${o.kurzzeichen})`}
     </option>
-  ))
+  )
   options.unshift(
     <option
       key={0}

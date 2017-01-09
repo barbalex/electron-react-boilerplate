@@ -24,11 +24,7 @@
 }
 
 .fV {
-  grid-column: 1 / span 1;
-}
-
-.fVN {
-  grid-column: 2 / span 1;
+  grid-column: 1 / span 2;
 }
 
 /**
