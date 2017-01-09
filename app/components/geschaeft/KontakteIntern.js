@@ -32,24 +32,22 @@ const optionsList = (
     !idKontakteOfGkiOfActiveGeschaeft.includes(o.id)
   )
   // sort interneOptions by kurzzeichen
-  const interneOptionsSorted = _.sortBy(interneOptionsFiltered, o =>
-    o.kurzzeichen.toLowerCase()
+  const interneOptionsSorted = _.sortBy(
+    interneOptionsFiltered,
+    o => {
+      const name = o.name ? o.name.toLowerCase() : `ZZ`
+      const vorname = o.vorname ? o.vorname.toLowerCase() : `ZZ`
+      return `${name} ${vorname} ${o.kurzzeichen}`
+    }
   )
-  const options = interneOptionsSorted.map((o, index) => {
-    let times = 5 - o.kurzzeichen.length
-    // make sure, times is never < 0
-    if (times < 0) times = 0
-    const space = '\xa0'.repeat(times)
-    const name = `${o.vorname || ''} ${o.name || ''}`
-    return (
-      <option
-        key={index + 1}
-        value={o.id}
-      >
-        {`${o.kurzzeichen}${space}${'\xa0\xa0\xa0'}${name}`}
-      </option>
-    )
-  })
+  const options = interneOptionsSorted.map((o, index) => (
+    <option
+      key={index + 1}
+      value={o.id}
+    >
+      {`${o.name ? o.name : `(kein Name)`} ${o.vorname ? o.vorname : `(kein Vorname)`} (${o.kurzzeichen})`}
+    </option>
+  ))
   options.unshift(
     <option
       key={0}
@@ -79,7 +77,6 @@ const GeschaefteKontakteIntern = ({
           <FormControl
             componentClass="select"
             bsSize="small"
-            className={styles.dropdown}
             onChange={e =>
               onChangeNewKontaktIntern(
                 e,
