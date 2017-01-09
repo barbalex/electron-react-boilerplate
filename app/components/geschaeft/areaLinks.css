@@ -47,9 +47,7 @@
   grid-template-columns: calc(100% - 20px) 20px;
   grid-gap: 0;
   border-bottom: thin solid #CECBCB;
-  padding-left: 13px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 3px;
   align-items: center;
 }
 
