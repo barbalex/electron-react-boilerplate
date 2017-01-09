@@ -332,7 +332,10 @@ const geschaefte = (state = standardState, action) => {
       return {
         ...state,
         links: [
-          action.link,
+          {
+            idGeschaeft: action.idGeschaeft,
+            url: action.url,
+          },
           ...state.links,
         ],
       }

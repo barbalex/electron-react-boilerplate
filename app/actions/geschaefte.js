@@ -647,20 +647,21 @@ export const changeGekoInDb = (idGeschaeft, gekoNr, field, value) =>
       })
   }
 
-export const linkNewCreate = () =>
+export const linkNewCreate = (idGeschaeft, url) =>
   (dispatch, getState) => {
-    const { app, user } = getState()
-    newLinkInDb(app.db, user.username)
-      .then((link) =>
-        dispatch(linkNew(link))
+    const { app } = getState()
+    newLinkInDb(app.db, idGeschaeft, url)
+      .then(() =>
+        dispatch(linkNew(idGeschaeft, url))
       )
       .catch(error => dispatch(linkNewError(error)))
   }
 
 export const LINK_NEW = 'LINK_NEW'
-export const linkNew = link => ({
+export const linkNew = (idGeschaeft, url) => ({
   type: LINK_NEW,
-  link
+  url,
+  idGeschaeft,
 })
 
 export const LINK_NEW_ERROR = 'LINK_NEW_ERROR'

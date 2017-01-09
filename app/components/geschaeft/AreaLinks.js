@@ -5,6 +5,7 @@ import pdfStyles from './areaLinksPdf.css'
 
 const AreaLinks = ({
   links,
+  linkNewCreate,
   activeId,
   blur,
   change,
@@ -15,6 +16,7 @@ const AreaLinks = ({
   const onDrop = (files) => {
     console.log('Received files: ', files)
     console.log('path: ', files[0].path)
+    linkNewCreate(activeId, files[0].path)
   }
 
   return (
@@ -56,6 +58,7 @@ AreaLinks.displayName = 'AreaLinks'
 
 AreaLinks.propTypes = {
   links: PropTypes.array.isRequired,
+  linkNewCreate: PropTypes.func.isRequired,
   activeId: PropTypes.number.isRequired,
   blur: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,

@@ -4,7 +4,7 @@ export default function (db, idGeschaeft, url) {
   return new Promise((resolve, reject) => {
     const sql = `
       INSERT INTO
-        geko (idGeschaeft, url)
+        links (idGeschaeft, url)
       VALUES
         (${idGeschaeft}, '${url}')`
 
