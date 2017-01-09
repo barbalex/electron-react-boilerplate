@@ -8,7 +8,6 @@
   },
   "rules": {
     "arrow-parens": ["off"],
-    "compat/compat": 2,
     "consistent-return": "off",
     "comma-dangle": "off",
     "generator-star-spacing": "off",
