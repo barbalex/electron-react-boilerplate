@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import Dropzone from 'react-dropzone'
-import { FormControl, ControlLabel } from 'react-bootstrap'
 import regularStyles from './areaLinks.css'
 import pdfStyles from './areaLinksPdf.css'
 
@@ -25,9 +24,9 @@ const AreaLinks = ({
       </div>
       <div className={styles.links}>
         {
-          links.map((link, index) =>
+          links.map(link =>
             <div
-              key={index}
+              key={`${link.idGeschaeft}${link.url}`}
               className={styles.fields}
             >
               <div className={styles.url}>
