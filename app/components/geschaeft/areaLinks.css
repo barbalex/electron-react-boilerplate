@@ -44,7 +44,7 @@
 .fields {
   grid-column: 1;
   display: grid;
-  grid-template-columns: 60px calc(100% - 60px);
+  grid-template-columns: 100%;
   grid-gap: 0;
   border-bottom: thin solid #CECBCB;
   padding-left: 13px;
@@ -63,8 +63,4 @@
 
 .url {
   grid-column: 1;
-}
-
-.txt {
-  grid-column: 2;
 }

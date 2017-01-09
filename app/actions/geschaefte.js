@@ -675,23 +675,10 @@ export const linkRemove = (idGeschaeft, url) =>
     const { app } = getState()
     deleteLink(app.db, idGeschaeft, url)
       .then(() => {
-        dispatch(linkRemoveDeleteIntended(idGeschaeft, url))
         dispatch(linkDelete(idGeschaeft, url))
       })
       .catch(error => dispatch(linkDeleteError(error)))
   }
-
-export const LINK_SET_DELETE_INTENDED = 'LINK_SET_DELETE_INTENDED'
-export const linkSetDeleteIntended = (idGeschaeft, url) => ({
-  type: LINK_SET_DELETE_INTENDED,
-  idGeschaeft,
-  url,
-})
-
-export const LINK_REMOVE_DELETE_INTENDED = 'LINK_REMOVE_DELETE_INTENDED'
-export const linkRemoveDeleteIntended = () => ({
-  type: LINK_REMOVE_DELETE_INTENDED
-})
 
 export const LINK_DELETE = 'LINK_DELETE'
 export const linkDelete = (idGeschaeft, url) => ({

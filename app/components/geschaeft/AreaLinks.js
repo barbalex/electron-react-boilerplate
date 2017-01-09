@@ -1,23 +1,21 @@
 import React, { PropTypes } from 'react'
 import Dropzone from 'react-dropzone'
+import { Glyphicon } from 'react-bootstrap'
+
 import regularStyles from './areaLinks.css'
 import pdfStyles from './areaLinksPdf.css'
 
 const AreaLinks = ({
   links,
   linkNewCreate,
+  linkRemove,
   activeId,
-  blur,
-  change,
   isPrintPreview,
 }) => {
   const styles = isPrintPreview ? pdfStyles : regularStyles
 
-  const onDrop = (files) => {
-    console.log('Received files: ', files)
-    console.log('path: ', files[0].path)
+  const onDrop = files =>
     linkNewCreate(activeId, files[0].path)
-  }
 
   return (
     <div className={styles.areaLinks}>
@@ -34,8 +32,13 @@ const AreaLinks = ({
               <div className={styles.url}>
                 {link.url}
               </div>
-              <div className={styles.txt}>
-                {link.txt}
+              <div className={styles.deleteGlyphiconDiv}>
+                <Glyphicon
+                  glyph="remove-circle"
+                  onClick={() => linkRemove(activeId, link.url)}
+                  className={styles.removeGlyphicon}
+                  title="Link entfernen"
+                />
               </div>
             </div>
           )
@@ -59,9 +62,8 @@ AreaLinks.displayName = 'AreaLinks'
 AreaLinks.propTypes = {
   links: PropTypes.array.isRequired,
   linkNewCreate: PropTypes.func.isRequired,
+  linkRemove: PropTypes.func.isRequired,
   activeId: PropTypes.number.isRequired,
-  blur: PropTypes.func.isRequired,
-  change: PropTypes.func.isRequired,
   isPrintPreview: PropTypes.bool.isRequired,
 }
 
