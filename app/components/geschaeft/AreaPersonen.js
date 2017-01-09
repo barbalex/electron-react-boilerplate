@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { FormControl } from 'react-bootstrap'
 import _ from 'lodash'
-import Linkify from 'react-linkify'
+
 import regularStyles from './areaPersonen.css'
 import pdfStyles from './areaPersonenPdf.css'
 import KontakteIntern from '../../containers/geschaeft/KontakteIntern'
@@ -34,10 +34,20 @@ const verantwortlichData = (geschaeft, interneOptions) => {
   )
   if (!data) return ''
   const abt = data.abteilung ? `${data.abteilung}` : ''
-  const eMail = data.eMail ? `, ${data.eMail}` : ''
+  const emailHtml = (
+    <a
+      href={`mailto:${data.eMail}`}
+    >
+      {data.eMail}
+    </a>
+  )
   const telefon = data.telefon ? `, ${data.telefon}` : ''
-  const string = `${abt}${eMail}${telefon}`
-  return <Linkify>{string}</Linkify>
+  if (data.eMail) {
+    return (
+      <span>{`${abt}, `}{emailHtml}{`${telefon}`}</span>
+    )
+  }
+  return <span>{`${abt}${telefon}`}</span>
 }
 
 const AreaPersonen = ({
@@ -67,7 +77,6 @@ const AreaPersonen = ({
             onBlur={blur}
             bsSize="small"
             tabIndex={1 + nrOfFieldsBeforePersonen}
-            className={styles.verantwDropdown}
           >
             {verwantwortlichOptions(interneOptions)}
           </FormControl>

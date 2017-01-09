@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Dropzone from 'react-dropzone'
 import { Glyphicon } from 'react-bootstrap'
-import Linkify from 'react-linkify'
+import { shell } from 'electron'
 
 import regularStyles from './areaLinks.css'
 import pdfStyles from './areaLinksPdf.css'
@@ -31,13 +31,15 @@ const AreaLinks = ({
               className={styles.fields}
             >
               <div className={styles.url}>
-                <Linkify
-                  properties={{
-                    target: '_blank',
+                <a
+                  href={link.url}
+                  onClick={(event) => {
+                    event.preventDefault()
+                    shell.openItem(link.url)
                   }}
                 >
                   {link.url}
-                </Linkify>
+                </a>
               </div>
               <div className={styles.deleteGlyphiconDiv}>
                 <Glyphicon
