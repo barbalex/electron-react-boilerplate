@@ -145,8 +145,8 @@ const PageFristenRows = ({
 PageFristenRows.displayName = 'PageFristenRows'
 
 PageFristenRows.propTypes = {
-  geschaeft: PropTypes.object,
-  rowIndex: PropTypes.number,
+  geschaeft: PropTypes.object.isRequired,
+  rowIndex: PropTypes.number.isRequired,
 }
 
 export default PageFristenRows

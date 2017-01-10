@@ -103,8 +103,9 @@ class Page extends Component {
 
     // don't do anything on not active pages
     if (pageIndex === activePageIndex) {
-      const offsetHeight = this[`rowsContainer${pageIndex}`].offsetHeight
-      const scrollHeight = this[`rowsContainer${pageIndex}`].scrollHeight
+      const rowsContainerPageIndex = this[`rowsContainer${pageIndex}`]
+      const offsetHeight = rowsContainerPageIndex ? rowsContainerPageIndex.offsetHeight : null
+      const scrollHeight = rowsContainerPageIndex ? rowsContainerPageIndex.scrollHeight : null
       const activePageIsFull = pages[pageIndex].full
 
       if (!activePageIsFull && remainingGeschaefte.length > 0) {
