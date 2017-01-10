@@ -186,7 +186,7 @@ class Page extends Component {
         return (
           <FaelligeGeschaefteRows
             geschaeft={geschaeft}
-            key={index}
+            key={geschaeft.idGeschaeft}
             rowIndex={index}
           />
         )
@@ -199,7 +199,7 @@ class Page extends Component {
         return (
           <VernehmlassungenRows
             geschaeft={geschaeft}
-            key={index}
+            key={geschaeft.idGeschaeft}
             rowIndex={index}
           />
         )
@@ -208,7 +208,7 @@ class Page extends Component {
         return (
           <List1Rows
             geschaeft={geschaeft}
-            key={index}
+            key={geschaeft.idGeschaeft}
             rowIndex={index}
           />
         )
