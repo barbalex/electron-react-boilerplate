@@ -13,10 +13,12 @@ export const PAGES_MODAL_SHOW = 'PAGES_MODAL_SHOW'
 export const pagesModalShow = (
   showPagesModal,
   modalTextLine1,
+  modalTextLine2,
 ) => ({
   type: PAGES_MODAL_SHOW,
   showPagesModal,
   modalTextLine1,
+  modalTextLine2,
 })
 
 export const PAGES_INITIATE = 'PAGES_INITIATE'

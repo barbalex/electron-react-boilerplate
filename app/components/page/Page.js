@@ -26,6 +26,7 @@ class Page extends Component {
     geschaefteGefilterteIds: PropTypes.array.isRequired,
     activePageIndex: PropTypes.number.isRequired,
     pageIndex: PropTypes.number.isRequired,
+    pagesStop: PropTypes.func.isRequired,
     pageAddGeschaeft: PropTypes.func.isRequired,
     pagesMoveGeschaeftToNewPage: PropTypes.func.isRequired,
     pagesQueryTitle: PropTypes.func.isRequired,
@@ -33,13 +34,13 @@ class Page extends Component {
     pagesFinishedBuilding: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     queryTitle: PropTypes.bool.isRequired,
-    messageShow: PropTypes.func.isRequired,
+    pagesModalShow: PropTypes.func.isRequired,
     building: PropTypes.bool.isRequired,
     reportType: PropTypes.string.isRequired,
   }
 
   componentDidMount = () => {
-    this.showMessage()
+    this.showPagesModal()
     // wait with next stepp until message is shown
     setTimeout(() => {
       this.nextStepp()
@@ -67,16 +68,16 @@ class Page extends Component {
     if (title) pagesQueryTitle(false)
   }
 
-  showMessage = () => {
+  showPagesModal = () => {
     const {
-      messageShow,
+      pagesModalShow,
       pages,
       geschaefteGefilterteIds,
       remainingGeschaefte,
     } = this.props
     const msgLine2Txt = `Bisher ${pages.length} Seiten, ${remainingGeschaefte.length} Geschäfte noch zu verarbeiten`
     const msgLine2 = geschaefteGefilterteIds.length > 50 ? msgLine2Txt : ''
-    messageShow(true, 'Der Bericht wird aufgebaut...', msgLine2)
+    pagesModalShow(true, 'Der Bericht wird aufgebaut...', msgLine2)
   }
 
   nextStepp = () => {
@@ -98,7 +99,7 @@ class Page extends Component {
       pageAddGeschaeft,
       pagesMoveGeschaeftToNewPage,
       pagesFinishedBuilding,
-      messageShow,
+      pagesModalShow,
     } = this.props
 
     // don't do anything on not active pages
@@ -112,13 +113,13 @@ class Page extends Component {
         if (offsetHeight < scrollHeight) {
           const lastGeschaeft = geschaefte[geschaefte.length - 1]
           pagesMoveGeschaeftToNewPage(lastGeschaeft)
-          this.showMessage()
+          this.showPagesModal()
         } else {
           pageAddGeschaeft()
         }
       }
       if (remainingGeschaefte.length === 0) {
-        messageShow(false, '', '')
+        pagesModalShow(false, '', '')
         pagesFinishedBuilding()
       }
     }
