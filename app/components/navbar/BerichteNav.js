@@ -6,6 +6,7 @@ import {
 import styles from './Navbar.css'
 import filterForVernehmlAngek from '../../src/filterForVernehmlAngek'
 import filterForVernehmlLaeuft from '../../src/filterForVernehmlLaeuft'
+import filterForFaelligeGeschaefte from '../../src/filterForFaelligeGeschaefte'
 
 const BerichteNav = ({
   pagesInitiate,
@@ -42,14 +43,20 @@ const BerichteNav = ({
          * this is an elaborate hack
          * to get the menu item to close immediately
          */
-        if (eventKey === 7.1) {
-          setTimeout(() => {
-            pagesInitiate('typFaelligeGeschaefte')
-          }, 0)
-        }
         if (eventKey === 7.2) {
           setTimeout(() => {
             pagesInitiate('list1')
+          }, 0)
+        }
+        if (eventKey === 7.7) {
+          setTimeout(() => {
+            geschaefteFilterByFields(filterForFaelligeGeschaefte(), 'fällige')
+            // only do this after former is finished
+            setTimeout(() => {
+              pagesInitiate('typFaelligeGeschaefte')
+              geschaefteResetSort()
+              geschaefteSortByFields('idGeschaeft', 'DESCENDING')
+            }, 0)
           }, 0)
         }
         if (eventKey === 7.3) {
@@ -85,15 +92,15 @@ const BerichteNav = ({
       <MenuItem header>
         Vorlagen,<br />übernehmen den gesetzten Filter:
       </MenuItem>
-      <MenuItem eventKey={7.1}>
-        {'Vorlage "fällige Geschäfte"'}
-      </MenuItem>
       <MenuItem eventKey={7.2}>
         {'Vorlage "einfache Liste"'}
       </MenuItem>
       <MenuItem divider />
       <MenuItem header>
         Pfannenfertige,<br />setzen einen eigenen Filter:
+      </MenuItem>
+      <MenuItem eventKey={7.7}>
+        fällige Geschäfte
       </MenuItem>
       <MenuItem eventKey={7.3}>
         angekündigte Vernehmlassungen
