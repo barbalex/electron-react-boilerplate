@@ -5,7 +5,9 @@
 
 .areaFristen {
   grid-area: areaFristen;
-  background-color: rgb(252, 255, 194);
+  background-color: white;
+  box-shadow: inset 0 0 4em rgb(252, 255, 194);
+  outline: 1px solid #efefef;
   display: grid;
   grid-template-columns: 100%;
   grid-gap: 2px;
