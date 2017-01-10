@@ -49,15 +49,10 @@ const BerichteNav = ({
         }
         if (eventKey === 7.2) {
           setTimeout(() => {
-            pagesInitiate('typVernehmlassungen')
-          }, 0)
-        }
-        if (eventKey === 7.3) {
-          setTimeout(() => {
             pagesInitiate('list1')
           }, 0)
         }
-        if (eventKey === 7.4) {
+        if (eventKey === 7.3) {
           setTimeout(() => {
             geschaefteFilterByFields(filterForVernehmlAngek(), 'angekündigte Vernehmlassungen')
             // only do this after former is finished
@@ -68,7 +63,7 @@ const BerichteNav = ({
             }, 0)
           }, 0)
         }
-        if (eventKey === 7.5) {
+        if (eventKey === 7.4) {
           setTimeout(() => {
             geschaefteFilterByFields(filterForVernehmlLaeuft(), 'laufende Vernehmlassungen')
             // only do this after former is finished
@@ -80,7 +75,7 @@ const BerichteNav = ({
             })
           }, 0)
         }
-        if (eventKey === 7.6) {
+        if (eventKey === 7.5) {
           setTimeout(() => {
             geschaeftPdfShow()
           }, 0)
@@ -94,19 +89,16 @@ const BerichteNav = ({
         {'Vorlage "fällige Geschäfte"'}
       </MenuItem>
       <MenuItem eventKey={7.2}>
-        {'Vorlage "Vernehmlassungen"'}
-      </MenuItem>
-      <MenuItem eventKey={7.3}>
         {'Vorlage "einfache Liste"'}
       </MenuItem>
       <MenuItem divider />
       <MenuItem header>
         Pfannenfertige,<br />setzen einen eigenen Filter:
       </MenuItem>
-      <MenuItem eventKey={7.4}>
+      <MenuItem eventKey={7.3}>
         angekündigte Vernehmlassungen
       </MenuItem>
-      <MenuItem eventKey={7.5}>
+      <MenuItem eventKey={7.4}>
         laufende Vernehmlassungen
       </MenuItem>
       {
@@ -122,7 +114,7 @@ const BerichteNav = ({
       {
         activeId &&
         <MenuItem  // eslint-disable-line react/jsx-indent
-          eventKey={7.6}
+          eventKey={7.5}
         >
           Deckblatt
         </MenuItem>
