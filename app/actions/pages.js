@@ -2,11 +2,11 @@ import { push } from 'react-router-redux'
 
 export const PAGES_STOP = 'PAGES_STOP'
 export const pagesStop = () =>
-  (dispatch, getState) => {
+  (dispatch) => {
     dispatch({
       type: PAGES_STOP
     })
-    dispatch(push('/pages'))
+    // dispatch(push('/geschaefte'))
   }
 
 export const PAGES_INITIATE = 'PAGES_INITIATE'

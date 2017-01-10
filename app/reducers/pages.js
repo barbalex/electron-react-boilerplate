@@ -1,4 +1,5 @@
 import {
+  PAGES_STOP,
   PAGES_NEW_PAGE,
   PAGES_SET_TITLE,
   PAGES_INITIATE,
@@ -30,8 +31,13 @@ const page = (
   pageIndex,
 ) => {
   switch (action.type) {
+    case PAGES_STOP:
+      return {
+        remainingGeschaefte: [],
+        building: false,
+      }
     case PAGE_ADD_GESCHAEFT:
-      if (pageIndex === pagesState.activePageIndex) {
+      if (pageIndex === pagesState.activePageIndex && pagesState.building) {
         const geschaefte = [
           ...state.geschaefte,
           pagesState.remainingGeschaefte[0],
@@ -43,7 +49,7 @@ const page = (
       }
       return state
     case PAGE_REMOVE_GESCHAEFT:
-      if (pageIndex === action.pageIndex) {
+      if (pageIndex === action.pageIndex && pagesState.building) {
         const geschaefte = state.geschaefte.filter(g =>
           g.idGeschaeft !== action.geschaeft.idGeschaeft
         )
@@ -89,26 +95,32 @@ const pages = (state = standardPagesState, action) => {
         ],
       }
     case PAGE_ADD_GESCHAEFT:
-      return {
-        ...state,
-        pages: state.pages.map((p, pageIndex) =>
-          page(p, action, state, pageIndex)
-        ),
-        remainingGeschaefte: state.remainingGeschaefte.filter(
-          (g, index) => index !== 0
-        ),
+      if (state.building) {
+        return {
+          ...state,
+          pages: state.pages.map((p, pageIndex) =>
+            page(p, action, state, pageIndex)
+          ),
+          remainingGeschaefte: state.remainingGeschaefte.filter(
+            (g, index) => index !== 0
+          ),
+        }
       }
+      return state
     case PAGE_REMOVE_GESCHAEFT:
-      return {
-        ...state,
-        pages: state.pages.map((p, pageIndex) =>
-          page(p, action, state, pageIndex)
-        ),
-        remainingGeschaefte: [
-          action.geschaeft,
-          ...state.remainingGeschaefte,
-        ],
+      if (state.building) {
+        return {
+          ...state,
+          pages: state.pages.map((p, pageIndex) =>
+            page(p, action, state, pageIndex)
+          ),
+          remainingGeschaefte: [
+            action.geschaeft,
+            ...state.remainingGeschaefte,
+          ],
+        }
       }
+      return state
     case PAGES_FINISHED_BUILDING:
       return {
         ...state,
