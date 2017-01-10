@@ -12,6 +12,9 @@ function mapStateToProps(state) {
   const {
     showMessageModal,
   } = state.app
+  const {
+    showPagesModal,
+  } = state.pages
   const path = state.routing.locationBeforeTransitions.pathname
   return {
     geschaefte,
@@ -19,6 +22,7 @@ function mapStateToProps(state) {
     willDeleteGeschaeft: willDelete,
     path,
     showMessageModal,
+    showPagesModal,
   }
 }
 

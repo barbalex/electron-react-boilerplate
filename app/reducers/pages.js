@@ -1,4 +1,5 @@
 import {
+  PAGES_MODAL_SHOW,
   PAGES_STOP,
   PAGES_NEW_PAGE,
   PAGES_SET_TITLE,
@@ -22,6 +23,9 @@ const standardPagesState = {
   queryTitle: true,
   reportType: 'fristen',
   building: false,
+  showPagesModal: false,
+  modalTextLine1: '',
+  modalTextLine2: '',
 }
 
 const page = (
@@ -31,11 +35,6 @@ const page = (
   pageIndex,
 ) => {
   switch (action.type) {
-    case PAGES_STOP:
-      return {
-        remainingGeschaefte: [],
-        building: false,
-      }
     case PAGE_ADD_GESCHAEFT:
       if (pageIndex === pagesState.activePageIndex && pagesState.building) {
         const geschaefte = [
@@ -68,6 +67,18 @@ const page = (
 
 const pages = (state = standardPagesState, action) => {
   switch (action.type) {
+    case PAGES_STOP:
+      return {
+        remainingGeschaefte: [],
+        building: false,
+      }
+    case PAGES_MODAL_SHOW:
+      return {
+        ...state,
+        showPagesModal: action.showPagesModal,
+        modalTextLine1: action.modalTextLine1,
+        modalTextLine2: action.modalTextLine2,
+      }
     case PAGES_INITIATE:
       return {
         ...standardPagesState,

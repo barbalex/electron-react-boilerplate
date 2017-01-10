@@ -9,6 +9,16 @@ export const pagesStop = () =>
     // dispatch(push('/geschaefte'))
   }
 
+export const PAGES_MODAL_SHOW = 'PAGES_MODAL_SHOW'
+export const pagesModalShow = (
+  showPagesModal,
+  modalTextLine1,
+) => ({
+  type: PAGES_MODAL_SHOW,
+  showPagesModal,
+  modalTextLine1,
+})
+
 export const PAGES_INITIATE = 'PAGES_INITIATE'
 export const pagesInitiate = reportType =>
   (dispatch, getState) => {

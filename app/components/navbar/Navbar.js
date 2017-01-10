@@ -7,6 +7,7 @@ import {
 import { LinkContainer } from 'react-router-bootstrap'
 import ModalGeschaeftDelete from '../../containers/ModalGeschaeftDelete'
 import ModalMessage from '../../containers/ModalMessage'
+import PagesModal from '../../containers/PagesModal'
 import BerichteNav from '../../containers/navbar/BerichteNav'
 import GeschaeftNeuNav from '../../containers/navbar/GeschaeftNewNav'
 import GeschaeftLoeschenNav from '../../containers/navbar/GeschaeftDeleteNav'
@@ -25,6 +26,7 @@ class NavbarComponent extends Component {
     geschaefte: PropTypes.array.isRequired,
     geschaefteGefilterteIds: PropTypes.array.isRequired,
     showMessageModal: PropTypes.bool.isRequired,
+    showPagesModal: PropTypes.bool.isRequired,
     configGet: PropTypes.func.isRequired,
     willDeleteGeschaeft: PropTypes.bool.isRequired,
     path: PropTypes.string.isRequired,
@@ -40,6 +42,7 @@ class NavbarComponent extends Component {
       geschaefte,
       geschaefteGefilterteIds,
       showMessageModal,
+      showPagesModal,
       willDeleteGeschaeft,
       path,
     } = this.props
@@ -63,6 +66,10 @@ class NavbarComponent extends Component {
         {
           showMessageModal &&
           <ModalMessage />  // eslint-disable-line react/jsx-indent
+        }
+        {
+          showPagesModal &&
+          <PagesModal />  // eslint-disable-line react/jsx-indent
         }
         <Navbar
           inverse
