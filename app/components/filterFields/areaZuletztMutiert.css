@@ -1,7 +1,7 @@
 .areaZuletztMutiert {
   grid-area: areaZuletztMutiert;
   background-color: white;
-  box-shadow: inset 0 0 4em rgb(239, 239, 239);
+  box-shadow: inset 1em 1em 2em rgb(239, 239, 239), inset -1em -1em 2em rgb(239, 239, 239);
   outline: 1px solid #efefef;
   display: grid;
   grid-template-columns: 175px calc((100% - 10px) - 175px);

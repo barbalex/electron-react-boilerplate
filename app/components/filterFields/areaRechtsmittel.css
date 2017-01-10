@@ -6,7 +6,7 @@
 .areaForGeschaeftsart {
   grid-area: areaForGeschaeftsart;
   background-color: white;
-  box-shadow: inset 0 0 4em rgb(255, 237, 199);
+  box-shadow: inset 1em 1em 2em rgb(255, 237, 199), inset -1em -1em 2em rgb(255, 237, 199);
   outline: 1px solid #efefef;
   display: grid;
   grid-template-columns: calc((100% - 8px) * 0.4) calc((100% - 8px) * 0.6);
