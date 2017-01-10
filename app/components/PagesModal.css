@@ -1,11 +1,18 @@
-.modal {
-  /* has no influence
-  height: 10px;
-  max-height: 10px;
-  */
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left {
+}
+
+.right {
+  padding-left: 30px;
 }
 
 .p {
   text-align: center;
-  margin-top: 8px;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }

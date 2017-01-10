@@ -26,7 +26,6 @@ class Page extends Component {
     geschaefteGefilterteIds: PropTypes.array.isRequired,
     activePageIndex: PropTypes.number.isRequired,
     pageIndex: PropTypes.number.isRequired,
-    pagesStop: PropTypes.func.isRequired,
     pageAddGeschaeft: PropTypes.func.isRequired,
     pagesMoveGeschaeftToNewPage: PropTypes.func.isRequired,
     pagesQueryTitle: PropTypes.func.isRequired,

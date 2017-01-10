@@ -140,7 +140,7 @@ BerichteNav.propTypes = {
   geschaeftPdfShow: PropTypes.func.isRequired,
   path: PropTypes.string.isRequired,
   pages: PropTypes.object.isRequired,
-  activeId: PropTypes.number
+  activeId: PropTypes.number,
 }
 
 export default BerichteNav

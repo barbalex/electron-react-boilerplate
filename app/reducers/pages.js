@@ -69,6 +69,7 @@ const pages = (state = standardPagesState, action) => {
   switch (action.type) {
     case PAGES_STOP:
       return {
+        ...state,
         remainingGeschaefte: [],
         building: false,
       }
@@ -97,14 +98,17 @@ const pages = (state = standardPagesState, action) => {
         title: action.title,
       }
     case PAGES_NEW_PAGE:
-      return {
-        ...state,
-        activePageIndex: state.activePageIndex + 1,
-        pages: [
-          ...state.pages,
-          Object.assign(standardPageState),
-        ],
+      if (state.building) {
+        return {
+          ...state,
+          activePageIndex: state.activePageIndex + 1,
+          pages: [
+            ...state.pages,
+            Object.assign(standardPageState),
+          ],
+        }
       }
+      return state
     case PAGE_ADD_GESCHAEFT:
       if (state.building) {
         return {

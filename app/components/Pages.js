@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
-import Page from '../containers/page/Page.js'
+import Page from '../containers/page/Page'
 import styles from './Pages.css'
 
 
-const Pages = ({ pages }) =>
+const Pages = ({ pages = [] }) =>
   <div className={styles.body}>
     {
       pages.map((page, pageIndex) =>
