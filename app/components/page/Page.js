@@ -18,11 +18,11 @@ import logoImg from 'file!../../etc/logo.png'  // eslint-disable-line
 
 class Page extends Component {
   static propTypes = {
-    pages: PropTypes.array,
-    geschaefte: PropTypes.array,
-    filterFields: PropTypes.array,
+    pages: PropTypes.array.isRequired,
+    geschaefte: PropTypes.array.isRequired,
+    filterFields: PropTypes.array.isRequired,
     sortFields: PropTypes.array.isRequired,
-    remainingGeschaefte: PropTypes.array,
+    remainingGeschaefte: PropTypes.array.isRequired,
     geschaefteGefilterteIds: PropTypes.array,
     activePageIndex: PropTypes.number,
     pageIndex: PropTypes.number.isRequired,
