@@ -27,7 +27,7 @@
   },
   "build": {
     "productName": "Kapla",
-    "appId": "ch.zh.awel",
+    "appId": "ch.zh.awel.kapla",
     "category": "public.app-category.tools",
     "dmg": {
       "contents": [
