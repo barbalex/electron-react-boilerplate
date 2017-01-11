@@ -8,8 +8,9 @@ const AreaHistory = ({
   geschaeft,
   blur,
   change,
-  isPrintPreview,
+  path,
 }) => {
+  const isPrintPreview = path === '/geschaeftPdf'
   const styles = isPrintPreview ? pdfStyles : regularStyles
   console.log(`AreaHistory: isPrintPreview:`, isPrintPreview)
 
@@ -44,7 +45,7 @@ AreaHistory.propTypes = {
   geschaeft: PropTypes.object.isRequired,
   blur: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
-  isPrintPreview: PropTypes.bool.isRequired,
+  path: PropTypes.string.isRequired,
 }
 
 export default AreaHistory
