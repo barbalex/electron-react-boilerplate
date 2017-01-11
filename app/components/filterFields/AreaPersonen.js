@@ -1,29 +1,26 @@
 import React, { PropTypes } from 'react'
 import { FormControl, InputGroup } from 'react-bootstrap'
 import _ from 'lodash'
+import Linkify from 'react-linkify'
+
 import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
 import SortSelector from '../../containers/filterFields/SortSelector'
 import styles from './areaPersonen.css'
 
 const interneOptionsList = (interneOptions) => {
   // sort interneOptions by kurzzeichen
-  const interneOptionsSorted = _.sortBy(interneOptions, o =>
-    o.kurzzeichen.toLowerCase()
-  )
+  const interneOptionsSorted = _.sortBy(interneOptions, o => {
+    const sort = `${o.name || 'zz'} ${o.vorname || 'zz'} (${o.kurzzeichen})`
+    return sort.toLowerCase()
+  })
   const options = interneOptionsSorted.map((o, index) => {
-    let times = 5 - o.kurzzeichen.length
-    // make sure, times is never < 0
-    if (times < 0) {
-      times = 0
-    }
-    const space = '\xa0'.repeat(times)
     const name = `${o.vorname || ''} ${o.name || ''}`
     return (
       <option
         key={index + 1}
         value={name}
       >
-        {`${o.kurzzeichen}${space}${'\xa0\xa0\xa0'}${name}`}
+        {`${o.name || '(kein Name)'} ${o.vorname || '(kein Vorname)'} (${o.kurzzeichen})`}
       </option>
     )
   })
@@ -33,26 +30,18 @@ const interneOptionsList = (interneOptions) => {
 
 const verantwortlichOptionsList = (interneOptions) => {
   // sort interneOptions by kurzzeichen
-  const interneOptionsSorted = _.sortBy(interneOptions, o =>
-    o.kurzzeichen.toLowerCase()
-  )
-  const options = interneOptionsSorted.map((o, index) => {
-    let times = 5 - o.kurzzeichen.length
-    // make sure, times is never < 0
-    if (times < 0) {
-      times = 0
-    }
-    const space = '\xa0'.repeat(times)
-    const name = `${o.vorname || ''} ${o.name || ''}`
-    return (
-      <option
-        key={index + 1}
-        value={o.kurzzeichen}
-      >
-        {`${o.kurzzeichen}${space}${'\xa0\xa0\xa0'}${name}`}
-      </option>
-    )
+  const interneOptionsSorted = _.sortBy(interneOptions, o => {
+    const sort = `${o.name || 'zz'} ${o.vorname || 'zz'} (${o.kurzzeichen})`
+    return sort.toLowerCase()
   })
+  const options = interneOptionsSorted.map((o, index) => (
+    <option
+      key={index + 1}
+      value={o.kurzzeichen}
+    >
+      {`${o.name || '(kein Name)'} ${o.vorname || '(kein Vorname)'} (${o.kurzzeichen})`}
+    </option>
+  ))
   options.unshift(<option key={0} value="" />)
   return options
 }
@@ -84,11 +73,10 @@ const verantwortlichData = (values, interneOptions) => {
     o.kurzzeichen === values.verantwortlich
   )
   if (!data) return ''
-  const name = `${data.vorname || ''} ${data.name || ''}`
-  const abt = data.abteilung ? `, ${data.abteilung}` : ''
+  const abt = data.abteilung ? `${data.abteilung}` : ''
   const eMail = data.eMail ? `, ${data.eMail}` : ''
   const telefon = data.telefon ? `, ${data.telefon}` : ''
-  return `${name}${abt}${eMail}${telefon}`
+  return <Linkify>{`${abt}${eMail}${telefon}`}</Linkify>
 }
 
 const interneData = (values, interneOptions) => {
@@ -97,11 +85,10 @@ const interneData = (values, interneOptions) => {
     return name === values.kontaktInternVornameName
   })
   if (!data) return ''
-  const name = `${data.vorname || ''} ${data.name || ''}`
-  const abt = data.abteilung ? `, ${data.abteilung}` : ''
+  const abt = data.abteilung ? `${data.abteilung}` : ''
   const eMail = data.eMail ? `, ${data.eMail}` : ''
   const telefon = data.telefon ? `, ${data.telefon}` : ''
-  return `${name}${abt}${eMail}${telefon}`
+  return <Linkify>{`${abt}${eMail}${telefon}`}</Linkify>
 }
 
 const externeData = (values, externeOptions) => {
@@ -115,11 +102,10 @@ const externeData = (values, externeOptions) => {
   )
   if (!data) return ''
   let info = ''
-  info = addValueToInfo(info, data.nameVorname)
   info = addValueToInfo(info, data.firma)
   info = addValueToInfo(info, data.email)
   info = addValueToInfo(info, data.telefon)
-  return info
+  return <Linkify>{info}</Linkify>
 }
 
 const AreaPersonen = ({

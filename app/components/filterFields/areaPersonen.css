@@ -18,7 +18,7 @@
 
 .areaPersonen {
   display: grid;
-  grid-template-columns: 175px calc((100% - 10px) - 175px);
+  grid-template-columns: 360px calc((100% - 10px) - 360px);
   grid-column-gap: 8px;
   grid-row-gap: 2px;
   padding: 8px;
@@ -53,12 +53,6 @@
   grid-column: 1 / span 2;
 }
 
-/* need monospace to line up text vertically */
-.verantwDropdown {
-  font-family: "Lucida Console", Monaco, monospace;
-}
-
 .narrowVerantwDropdown {
-  composes: verantwDropdown;
   width: 80px;
 }
