@@ -19,14 +19,14 @@
   grid-template-columns: calc(100% - 366px) 8px 175px 8px 175px;
   grid-template-rows: auto;
   grid-template-areas:
-   "areaNummernTitle areaNummernTitle labelNr . ."
+   "areaNummernTitle areaNummernTitle labelNr . labelJahre"
    "labelIdGeschaeft . fieldIdGeschaeft . ."
    "labelGekoNr . fieldGekoNr . ."
-   ". . . . labelJahre"
    "labelEntscheidAwel . fieldEntscheidAwelNr slashAwel fieldEntscheidAwelJahr"
    "labelEntscheidBdv . fieldEntscheidBdvNr slashBdv fieldEntscheidBdvJahr"
-   "labelEntscheidKr . fieldEntscheidKrNr slashKr fieldEntscheidKrJahr"
    "labelEntscheidRrb . fieldEntscheidRrbNr slashRrb fieldEntscheidRrbJahr"
+   "labelEntscheidBvv . fieldEntscheidBvvNr slashBvv fieldEntscheidBvvJahr"
+   "labelEntscheidKr . fieldEntscheidKrNr slashKr fieldEntscheidKrJahr"
    "fieldAktenstandort . fieldAktennummer . .";
   grid-row-gap: 2px;
   padding: 8px;
@@ -76,6 +76,11 @@
 .slashKr {
   composes: slash;
   grid-area: slashKr;
+}
+
+.slashBvv {
+  composes: slash;
+  grid-area: slashBvv;
 }
 
 .slashRrb {
@@ -143,6 +148,19 @@
 
 .fieldEntscheidKrJahr {
   grid-area: fieldEntscheidKrJahr;
+}
+
+.fieldEntscheidBvvNr {
+  grid-area: fieldEntscheidBvvNr;
+}
+
+.labelEntscheidBvv {
+  composes: labelHorizontal;
+  grid-area: labelEntscheidBvv
+}
+
+.fieldEntscheidBvvJahr {
+  grid-area: fieldEntscheidBvvJahr;
 }
 
 .fieldEntscheidRrbNr {

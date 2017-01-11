@@ -129,7 +129,7 @@ class FilterFields extends Component {
 
     // prepare tab indexes
     const nrOfGFields = 10
-    const nrOfNrFields = 12
+    const nrOfNrFields = 14
     const nrOfFieldsBeforePv = nrOfGFields + nrOfNrFields
     const nrOfPvFields = 9
     const nrOfFieldsBeforeFristen = nrOfFieldsBeforePv + nrOfPvFields

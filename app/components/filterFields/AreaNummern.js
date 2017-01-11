@@ -103,32 +103,6 @@ const AreaNummern = ({
         tabIndex={6 + firstTabIndex}
       />
     </div>
-    <ControlLabel className={styles.labelEntscheidKr}>
-      KR
-    </ControlLabel>
-    <div className={styles.fieldEntscheidKrNr}>
-      <Input
-        type="number"
-        name="entscheidKrNr"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={7 + firstTabIndex}
-      />
-    </div>
-    <div className={styles.slashKr}>
-      <div>/</div>
-    </div>
-    <div className={styles.fieldEntscheidKrJahr}>
-      <Input
-        type="number"
-        name="entscheidKrJahr"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={8 + firstTabIndex}
-      />
-    </div>
     <ControlLabel className={styles.labelEntscheidRrb}>
       RRB
     </ControlLabel>
@@ -139,7 +113,7 @@ const AreaNummern = ({
         change={change}
         values={values}
         changeComparator={changeComparator}
-        tabIndex={9 + firstTabIndex}
+        tabIndex={7 + firstTabIndex}
       />
     </div>
     <div className={styles.slashRrb}>
@@ -152,7 +126,59 @@ const AreaNummern = ({
         change={change}
         values={values}
         changeComparator={changeComparator}
+        tabIndex={8 + firstTabIndex}
+      />
+    </div>
+    <ControlLabel className={styles.labelEntscheidBvv}>
+      BVV
+    </ControlLabel>
+    <div className={styles.fieldEntscheidBvvNr}>
+      <Input
+        type="number"
+        name="entscheidBvvNr"
+        change={change}
+        values={values}
+        changeComparator={changeComparator}
+        tabIndex={9 + firstTabIndex}
+      />
+    </div>
+    <div className={styles.slashBvv}>
+      <div>/</div>
+    </div>
+    <div className={styles.fieldEntscheidBvvJahr}>
+      <Input
+        type="number"
+        name="entscheidBvvJahr"
+        change={change}
+        values={values}
+        changeComparator={changeComparator}
         tabIndex={10 + firstTabIndex}
+      />
+    </div>
+    <ControlLabel className={styles.labelEntscheidKr}>
+      KR
+    </ControlLabel>
+    <div className={styles.fieldEntscheidKrNr}>
+      <Input
+        type="number"
+        name="entscheidKrNr"
+        change={change}
+        values={values}
+        changeComparator={changeComparator}
+        tabIndex={11 + firstTabIndex}
+      />
+    </div>
+    <div className={styles.slashKr}>
+      <div>/</div>
+    </div>
+    <div className={styles.fieldEntscheidKrJahr}>
+      <Input
+        type="number"
+        name="entscheidKrJahr"
+        change={change}
+        values={values}
+        changeComparator={changeComparator}
+        tabIndex={12 + firstTabIndex}
       />
     </div>
     <div className={styles.fieldAktenstandort}>
@@ -164,7 +190,7 @@ const AreaNummern = ({
         change={change}
         values={values}
         changeComparator={changeComparator}
-        tabIndex={11 + firstTabIndex}
+        tabIndex={13 + firstTabIndex}
         options={aktenstandortOptions}
       />
     </div>
@@ -178,7 +204,7 @@ const AreaNummern = ({
         change={change}
         values={values}
         changeComparator={changeComparator}
-        tabIndex={12 + firstTabIndex}
+        tabIndex={14 + firstTabIndex}
       />
     </div>
   </div>
