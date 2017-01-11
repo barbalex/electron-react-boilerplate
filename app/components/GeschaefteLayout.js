@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import SplitPane from 'react-split-pane'
 import Geschaeft from '../containers/geschaeft/Geschaeft'
 import Pages from '../containers/Pages'
+import GeschaeftPdf from '../components/GeschaeftPdf'
 import Geschaefte from '../containers/Geschaefte'
 
 class GeschaefteLayout extends Component {
@@ -24,6 +25,7 @@ class GeschaefteLayout extends Component {
       && activeId
     )
     const showPages = path === '/pages'
+    const showGeschaeftPdf = path === '/geschaeftPdf' && activeId
     return (
       <SplitPane
         split="vertical"
@@ -40,6 +42,10 @@ class GeschaefteLayout extends Component {
           {
             showPages
             && <Pages />
+          }
+          {
+            showGeschaeftPdf
+            && <GeschaeftPdf />
           }
         </div>
       </SplitPane>

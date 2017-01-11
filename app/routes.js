@@ -4,7 +4,6 @@ import App from './containers/App'
 import GeschaefteLayout from './containers/GeschaefteLayout'
 import FilterFieldsLayout from './containers/FilterFieldsLayout'
 import TableLayout from './containers/TableLayout'
-import GeschaeftPdf from './components/GeschaeftPdf'
 
 export default (
   <Route path="/" component={App}>
@@ -13,6 +12,6 @@ export default (
     <Route path="/filterFields" component={FilterFieldsLayout} />
     <Route path="/table" component={TableLayout} />
     <Route path="/pages" component={GeschaefteLayout} />
-    <Route path="/geschaeftPdf" component={GeschaeftPdf} />
+    <Route path="/geschaeftPdf" component={GeschaefteLayout} />
   </Route>
 )
