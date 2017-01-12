@@ -120,9 +120,11 @@ class Geschaeft extends Component {
     const nrOfFieldsBeforePersonen = nrOfFieldsBeforeFristen + 7
     const ScrollContainer = styled.div`
       overflow: ${isPrintPreview ? 'visible' : 'auto'};
-      height: ${isPrintPreview ? '26.2cm' : 'calc(100vh - 52px)'};
+      height: ${isPrintPreview ? '26cm' : 'calc(100vh - 52px)'};
     `
     const WrapperNarrow = styled.div`
+      max-height: ${isPrintPreview ? '26cm' : 'auto'};
+      overflow: ${isPrintPreview ? 'hidden' : 'auto'};
       display: grid;
       grid-template-columns: repeat(1, 100%);
       grid-template-rows: auto;
@@ -147,6 +149,8 @@ class Geschaeft extends Component {
         "areaZuletztMutiert";
     `
     const WrapperWide = styled.div`
+      max-height: ${isPrintPreview ? '26cm' : 'auto'};
+      overflow: ${isPrintPreview ? 'hidden' : 'auto'};
       display: grid;
       grid-template-columns: repeat(12, 8.33333%);
       grid-template-rows: auto;

@@ -71,17 +71,17 @@ const GeschaefteItem = ({
         geschaeftToggleActivated(geschaeft.idGeschaeft)
       }}
     >
-      <div className={styles.columnIdGeschaeft}>
+      <div className={styles.bodyColumnIdGeschaeft}>
         <div>
           {geschaeft.idGeschaeft}
         </div>
       </div>
-      <div className={styles.columnGegenstand}>
+      <div className={styles.bodyColumnGegenstand}>
         <div className={styles.fieldGegenstand}>
           {geschaeft.gegenstand}
         </div>
       </div>
-      <div className={styles.columnStatus}>
+      <div className={styles.bodyColumnStatus}>
         <div>
           {geschaeft.status}
         </div>
@@ -94,7 +94,7 @@ const GeschaefteItem = ({
           {statusFristIn}
         </div>
       </div>
-      <div className={styles.columnKontaktIntern}>
+      <div className={styles.bodyColumnKontaktIntern}>
         <div>
           {geschaeft.verantwortlichVornameName}
         </div>

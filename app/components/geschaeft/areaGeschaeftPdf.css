@@ -34,6 +34,10 @@
   grid-area: fieldGegenstand;
 }
 
+.fieldGegenstand > textarea::-webkit-scrollbar {
+  display: none;
+}
+
 .fieldAusloeser {
   grid-area: fieldAusloeser;
 }
