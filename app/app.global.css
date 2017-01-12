@@ -102,7 +102,10 @@ textarea {
 }
 
 .geschaeftPdf {
-  background-color: transparent !important;
+  /*background-color: white !important;*/
+}
+.geschaeftPdf > div {
+  background-color: white !important;
 }
 .geschaeftPdf * {
   background-color: transparent !important;

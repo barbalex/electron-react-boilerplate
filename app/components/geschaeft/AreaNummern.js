@@ -19,7 +19,7 @@ const AreaNummern = ({
     background-color: ${isPrintPreview ? 'transparant' : 'rgba(239, 239, 239, 1)'};
     display: grid;
     /* can't use 1fr for first column - does not work correctly, no idea why */
-    grid-template-columns: ${isPrintPreview ? 'calc(100% - 166px) 8px 75px 8px 75px' : 'calc(100% - 196px) 8px 90px 8px 90px'};
+    grid-template-columns: ${isPrintPreview ? 'calc(100% - 166px) 8px 75px 8px 45px' : 'calc(100% - 196px) 8px 90px 8px 90px'};
     grid-template-rows: auto;
     grid-template-areas:
        "areaNummernTitle areaNummernTitle labelNr . labelJahre"
@@ -36,10 +36,11 @@ const AreaNummern = ({
   `
   const ContainerPdf = styled(ContainerView)`
     grid-template-areas:
-      "areaNummernTitle areaNummernTitle areaNummernTitle areaNummernTitle labelNr"
-      ". . labelIdGeschaeft . fieldIdGeschaeft"
-      ". . labelGekoNr . fieldGekoNr"
-      ". . . . labelJahre"
+      "areaNummernTitle areaNummernTitle areaNummernTitle areaNummernTitle areaNummernTitle"
+      ". . labelNr . labelJahre"
+      "labelIdGeschaeft . fieldIdGeschaeft . ."
+      "labelGekoNr . fieldGekoNr . ."
+      ". . . . ."
       "labelEntscheidAwel . fieldEntscheidAwelNr slashAwel fieldEntscheidAwelJahr"
       "labelEntscheidBdv . fieldEntscheidBdvNr slashBdv fieldEntscheidBdvJahr"
       "labelEntscheidRrb . fieldEntscheidRrbNr slashRrb fieldEntscheidRrbJahr"
@@ -69,10 +70,11 @@ const AreaNummern = ({
     bottom: 1px;
   `
   const Slash = styled.div`
-    margin-top: 2px;
-    font-size: 22px;
+    margin-top: ${isPrintPreview ? '-3px' : '2px'};
+    font-size: ${isPrintPreview ? '18px' : '22px'};
     color: #757575;
     margin-left: 1px;
+    height: ${isPrintPreview ? '17px' : 'auto'}
   `
   const SlashAwel = styled(Slash)`
     grid-area: slashAwel;
@@ -90,15 +92,23 @@ const AreaNummern = ({
     grid-area: slashRrb;
   `
   const LabelHorizontal = styled(ControlLabel)`
-    margin-top: 11px;
+    margin-top: ${isPrintPreview ? 0 : '11px'};
     text-align: right;
+    font-size: ${isPrintPreview ? '10px' : '11px'};
+    height: ${isPrintPreview ? '17px' : 'auto'}
   `
   const AreaNummernTitle = styled.div`
     font-weight: 900;
     font-size: 16px;
     grid-area: areaNummernTitle;
   `
-  const FieldIdGeschaeft = styled.div`
+  const Field = styled.div`
+    height: ${isPrintPreview ? '17px' : 'auto'}
+    input {
+      font-size: ${isPrintPreview ? '10px' : 'inherit'};
+    }
+  `
+  const FieldIdGeschaeft = styled(Field)`
     grid-area: fieldIdGeschaeft;
   `
   const LabelIdGeschaeft = styled(LabelHorizontal)`
@@ -107,62 +117,70 @@ const AreaNummern = ({
   const InputIdGeschaeft = styled(FormControl)`
     background: transparent !important;
   `
-  const FieldGekoNr = styled.div`
+  const FieldGekoNr = styled(Field)`
     grid-area: fieldGekoNr;
   `
   const LabelGekoNr = styled(LabelHorizontal)`
     grid-area: labelGekoNr
   `
-  const FieldEntscheidAwelNr = styled.div`
+  const FieldEntscheidAwelNr = styled(Field)`
     grid-area: fieldEntscheidAwelNr;
   `
   const LabelEntscheidAwel = styled(LabelHorizontal)`
     grid-area: labelEntscheidAwel
   `
-  const FieldEntscheidAwelJahr = styled.div`
+  const FieldEntscheidAwelJahr = styled(Field)`
     grid-area: fieldEntscheidAwelJahr;
   `
-  const FieldEntscheidBdvNr = styled.div`
+  const FieldEntscheidBdvNr = styled(Field)`
     grid-area: fieldEntscheidBdvNr;
   `
   const LabelEntscheidBdv = styled(LabelHorizontal)`
     grid-area: labelEntscheidBdv;
   `
-  const FieldEntscheidBdvJahr = styled.div`
+  const FieldEntscheidBdvJahr = styled(Field)`
     grid-area: fieldEntscheidBdvJahr;
   `
-  const FieldEntscheidKrNr = styled.div`
+  const FieldEntscheidKrNr = styled(Field)`
     grid-area: fieldEntscheidKrNr;
   `
   const LabelEntscheidKr = styled(LabelHorizontal)`
     grid-area: labelEntscheidKr;
   `
-  const FieldEntscheidKrJahr = styled.div`
+  const FieldEntscheidKrJahr = styled(Field)`
     grid-area: fieldEntscheidKrJahr;
   `
-  const FieldEntscheidBvvNr = styled.div`
+  const FieldEntscheidBvvNr = styled(Field)`
     grid-area: fieldEntscheidBvvNr;
   `
   const LabelEntscheidBvv = styled(LabelHorizontal)`
     grid-area: labelEntscheidBvv;
   `
-  const FieldEntscheidBvvJahr = styled.div`
+  const FieldEntscheidBvvJahr = styled(Field)`
     grid-area: fieldEntscheidBvvJahr;
   `
-  const FieldEntscheidRrbNr = styled.div`
+  const FieldEntscheidRrbNr = styled(Field)`
     grid-area: fieldEntscheidRrbNr;
   `
   const LabelEntscheidRrb = styled(LabelHorizontal)`
     grid-area: labelEntscheidRrb;
   `
-  const FieldEntscheidRrbJahr = styled.div`
+  const FieldEntscheidRrbJahr = styled(Field)`
     grid-area: fieldEntscheidRrbJahr;
   `
-  const FieldAktenstandort = styled.div`
+  const FieldAktenstandort = styled(Field)`
     grid-area: fieldAktenstandort;
+    font-size: ${isPrintPreview ? '10px' : 'inherit'};
+    input, label {
+      font-size: ${isPrintPreview ? '10px' : 'inherit'};
+    }
   `
-  const FieldAktennummer = styled.div`
+  const FieldAktennummer = styled(Field)`
     grid-area: fieldAktennummer;
+    font-size: ${isPrintPreview ? '10px' : 'inherit'};
+    input, label {
+      font-size: ${isPrintPreview ? '10px' : 'inherit'};
+    }
   `
 
   return (

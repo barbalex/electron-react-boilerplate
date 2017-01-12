@@ -65,7 +65,7 @@ const GeschaefteItem = ({
         // if path is not '/geschaefte', make it that
         // because this is also called from '/fieldFilter'
         // no idea why but using 'router' passed by 'withRouter' did not work here
-        if (path !== '/geschaefte') {
+        if (path === '/filterFields') {
           hashHistory.push('/geschaefte')
         }
         geschaeftToggleActivated(geschaeft.idGeschaeft)
@@ -80,11 +80,6 @@ const GeschaefteItem = ({
         <div className={styles.fieldGegenstand}>
           {geschaeft.gegenstand}
         </div>
-        {/*
-          <div>
-            {geschaeft.details}
-          </div>
-        */}
       </div>
       <div className={styles.columnStatus}>
         <div>
