@@ -21,10 +21,10 @@ const AreaHistoryRows = ({
   const HistoryField = styled.div`
     grid-column: 1;
     display: grid;
-    grid-template-columns: ${isPrintPreview ? '40px calc(100% - 40px)' : '60px calc(100% - 60px)'};
+    grid-template-columns: ${isPrintPreview ? '35px calc(100% - 35px)' : '60px calc(100% - 60px)'};
     grid-gap: 0;
     border-bottom: thin solid #CECBCB;
-    padding-left: 13px;
+    padding-left: ${isPrintPreview ? 0 : '13px'};
     padding-top: ${isPrintPreview ? '2px' : '10px'};
     padding-bottom: ${isPrintPreview ? '2px' : '10px'};
     align-items: center;

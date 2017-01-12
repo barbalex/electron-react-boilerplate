@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react'
 import { FormControl } from 'react-bootstrap'
 import _ from 'lodash'
+import styled from 'styled-components'
 
-import regularStyles from './areaPersonen.css'
-import pdfStyles from './areaPersonenPdf.css'
 import KontakteIntern from '../../containers/geschaeft/KontakteIntern'
 import KontakteExtern from '../../containers/geschaeft/KontakteExtern'
 
@@ -58,17 +57,51 @@ const AreaPersonen = ({
   interneOptions,
   isPrintPreview,
 }) => {
-  const styles = isPrintPreview ? pdfStyles : regularStyles
+  const Container = styled.div`
+    grid-area: areaPersonen;
+    background-color: ${isPrintPreview ? 'inherit' : 'rgb(246, 255, 245)'};
+    border: ${isPrintPreview ? '1px solid #CCC' : 'inherit'};
+  `
+  const AreaPersonenDiv = styled.div`
+    background-color: ${isPrintPreview ? 'inherit' : 'rgb(246, 255, 245)'};
+    display: grid;
+    grid-template-columns: ${isPrintPreview ? 'inherit' : '260px calc((100% - 10px) - 260px)'};
+    grid-column-gap: 10px;
+    grid-row-gap: 2px;
+    padding: 8px;
+    align-items: end;
+  `
+  const Title = styled.div`
+    font-weight: 900;
+    font-size: ${isPrintPreview ? '16px' : '16px'};
+    grid-column: 1 / span 2;
+  `
+  const Subtitle = styled.div`
+    font-weight: 900;
+    font-size: ${isPrintPreview ? '10px' : '12px'};
+    margin-top: 5px;
+  `
+  const SubTitle = styled(Subtitle)`
+    grid-column: 1 / span 2;
+  `
+  const Verantwortlich = styled.div`
+    grid-column: 1 / span 1;
+    display: ${isPrintPreview ? 'none' : 'inherit'}
+  `
+  const VerantwortlichName = styled.div`
+    grid-column: ${isPrintPreview ? '1 / span 1' : '2 / span 1'};
+  `
+
   return (
-    <div className={styles.container}>
-      <div className={styles.areaPersonen}>
-        <div className={styles.areaPersonenTitle}>
+    <Container>
+      <AreaPersonenDiv>
+        <Title>
           Personen
-        </div>
-        <div className={styles.areaVerantwortlichSubTitle}>
+        </Title>
+        <SubTitle>
           Verantwortlich
-        </div>
-        <div className={styles.fieldVerantwortlich}>
+        </SubTitle>
+        <Verantwortlich>
           <FormControl
             componentClass="select"
             value={geschaeft.verantwortlich || ''}
@@ -80,26 +113,26 @@ const AreaPersonen = ({
           >
             {verwantwortlichOptions(interneOptions)}
           </FormControl>
-        </div>
-        <div className={styles.fieldVerantwortlichName}>
+        </Verantwortlich>
+        <VerantwortlichName>
           <FormControl.Static>
             {verantwortlichData(geschaeft, interneOptions)}
           </FormControl.Static>
-        </div>
-        <div className={styles.areaInterneKontakteSubTitle}>
+        </VerantwortlichName>
+        <SubTitle>
           Interne Kontakte
-        </div>
+        </SubTitle>
         <KontakteIntern
           tabIndex={nrOfFieldsBeforePersonen + 1}
         />
-        <div className={styles.areaExterneKontakteSubTitle}>
+        <SubTitle>
           Externe Kontakte
-        </div>
+        </SubTitle>
         <KontakteExtern
           tabIndex={nrOfFieldsBeforePersonen + 2}
         />
-      </div>
-    </div>
+      </AreaPersonenDiv>
+    </Container>
   )
 }
 
