@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel } from 'react-bootstrap'
-import regularStyles from './areaHistory.css'
-import pdfStyles from './areaHistoryPdf.css'
+import styled from 'styled-components'
+
 import AreaHistoryRows from '../../containers/geschaeft/AreaHistoryRows'
 
 const AreaHistory = ({
@@ -11,18 +11,44 @@ const AreaHistory = ({
   path,
 }) => {
   const isPrintPreview = path === '/geschaeftPdf'
-  const styles = isPrintPreview ? pdfStyles : regularStyles
+  const Container = styled.div`
+    grid-area: areaHistory;
+    background-color: rgb(227, 232, 255);
+    display: grid;
+    grid-template-columns: calc(100% - 156px) 70px 70px;
+    grid-template-areas:
+      "areaHistoryTitle labelVorgeschaeft fieldVorgeschaeft"
+      "areaHistoryFieldsContainer areaHistoryFieldsContainer areaHistoryFieldsContainer";
+    grid-column-gap: 8px;
+    grid-row-gap: ${isPrintPreview ? '1px' : '8px'};
+    padding: 8px;
+    border: ${isPrintPreview ? '1px solid #CCC' : 'inherit'};
+    font-size: ${isPrintPreview ? '10px' : 'inherit'};
+  `
+  const Title = styled.div`
+    font-weight: 900;
+    font-size: 16px;
+    grid-area: areaHistoryTitle;
+  `
+  const FieldVorgeschaeft = styled.div`
+    grid-area: fieldVorgeschaeft;
+  `
+  const LabelVorgeschaeft = styled(ControlLabel)`
+    grid-area: labelVorgeschaeft;
+    margin-top: ${isPrintPreview ? 0 : '10px'};
+    text-align: right;
+  `
   console.log(`AreaHistory: isPrintPreview:`, isPrintPreview)
 
   return (
-    <div className={styles.areaHistory}>
-      <div className={styles.areaHistoryTitle}>
+    <Container>
+      <Title>
         Historie
-      </div>
-      <ControlLabel className={styles.labelVorgeschaeft}>
+      </Title>
+      <LabelVorgeschaeft>
         Vorgeschäft
-      </ControlLabel>
-      <div className={styles.fieldVorgeschaeft}>
+      </LabelVorgeschaeft>
+      <FieldVorgeschaeft>
         <FormControl
           type="number"
           value={geschaeft.idVorgeschaeft || ''}
@@ -33,9 +59,9 @@ const AreaHistory = ({
           placeholder={isPrintPreview ? null : 'ID'}
           tabIndex={99}
         />
-      </div>
+      </FieldVorgeschaeft>
       <AreaHistoryRows />
-    </div>
+    </Container>
   )
 }
 

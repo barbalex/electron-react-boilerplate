@@ -1,17 +1,51 @@
 import React, { PropTypes } from 'react'
-import styles from './areaHistory.css'
+import styled from 'styled-components'
+
 import getHistoryOfGeschaeft from '../../src/getHistoryOfGeschaeft'
 
 const AreaHistoryRows = ({
   geschaefte,
   activeId,
   geschaeftToggleActivated,
+  path,
 }) => {
+  const isPrintPreview = path === '/geschaeftPdf'
   const history = getHistoryOfGeschaeft(geschaefte, activeId)
   // sort descending
   history.reverse()
+  const FieldsContainer = styled.div`
+    grid-area: areaHistoryFieldsContainer;
+    display: grid;
+    grid-template-columns: 100%;
+  `
+  const HistoryField = styled.div`
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: ${isPrintPreview ? '40px calc(100% - 40px)' : '60px calc(100% - 60px)'};
+    grid-gap: 0;
+    border-bottom: thin solid #CECBCB;
+    padding-left: 13px;
+    padding-top: ${isPrintPreview ? '2px' : '10px'};
+    padding-bottom: ${isPrintPreview ? '2px' : '10px'};
+    align-items: center;
+    font-size: ${isPrintPreview ? '10px' : 'inherit'};
+
+    &:first-of-type {
+      border-top: thin solid #CECBCB;
+    }
+    &:hover {
+      background-color: rgb(227, 232, 255);
+    }
+  `
+  const IdGeschaeft = styled.div`
+    grid-column: 1;
+  `
+  const Gegenstand = styled.div`
+    grid-column: 2;
+  `
+
   return (
-    <div className={styles.areaHistoryFieldsContainer}>
+    <FieldsContainer>
       {
         history.map((id, index) => {
           const geschaeft = geschaefte.find(g =>
@@ -21,9 +55,8 @@ const AreaHistoryRows = ({
             return null
           }
           return (
-            <div
+            <HistoryField
               key={index}
-              className={styles.areaHistoryFields}
               style={{
                 cursor: id === activeId ? 'default' : 'pointer'
               }}
@@ -33,17 +66,17 @@ const AreaHistoryRows = ({
                 }
               }}
             >
-              <div className={styles.historyIdGeschaeft}>
+              <IdGeschaeft>
                 {id}
-              </div>
-              <div className={styles.historyGegenstand}>
+              </IdGeschaeft>
+              <Gegenstand>
                 {geschaeft.gegenstand}
-              </div>
-            </div>
+              </Gegenstand>
+            </HistoryField>
           )
         })
       }
-    </div>
+    </FieldsContainer>
   )
 }
 
@@ -53,6 +86,7 @@ AreaHistoryRows.propTypes = {
   geschaefte: PropTypes.array.isRequired,
   activeId: PropTypes.number.isRequired,
   geschaeftToggleActivated: PropTypes.func.isRequired,
+  path: PropTypes.string.isRequired,
 }
 
 export default AreaHistoryRows
