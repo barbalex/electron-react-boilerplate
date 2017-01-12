@@ -188,9 +188,9 @@ class Geschaeft extends Component {
     let Wrapper
     if (isPrintPreview) {
       if (showAreaForGeschaeftsart) {
-        Wrapper = WrapperWideNoAreaForGeschaeftsartPdf
-      } else {
         Wrapper = WrapperWidePdf
+      } else {
+        Wrapper = WrapperWideNoAreaForGeschaeftsartPdf
       }
     } else if (viewIsNarrow) {
       if (showAreaForGeschaeftsart) {

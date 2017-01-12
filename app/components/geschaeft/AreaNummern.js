@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel } from 'react-bootstrap'
-import regularStyles from './areaNummern.css'
-import pdfStyles from './areaNummernPdf.css'
+import styled from 'styled-components'
+
 import createOptions from '../../src/createOptions'
 
 const AreaNummern = ({
@@ -13,35 +13,183 @@ const AreaNummern = ({
   blur,
   isPrintPreview,
 }) => {
-  const styles = isPrintPreview ? pdfStyles : regularStyles
   const tabsToAdd = viewIsNarrow ? 0 : nrOfGFields
+  const ContainerView = styled.div`
+    grid-area: areaNummern;
+    background-color: ${isPrintPreview ? 'transparant' : 'rgba(239, 239, 239, 1)'};
+    display: grid;
+    /* can't use 1fr for first column - does not work correctly, no idea why */
+    grid-template-columns: ${isPrintPreview ? 'calc(100% - 166px) 8px 75px 8px 75px' : 'calc(100% - 196px) 8px 90px 8px 90px'};
+    grid-template-rows: auto;
+    grid-template-areas:
+       "areaNummernTitle areaNummernTitle labelNr . labelJahre"
+       "labelIdGeschaeft . fieldIdGeschaeft . ."
+       "labelGekoNr . fieldGekoNr . ."
+       "labelEntscheidAwel . fieldEntscheidAwelNr slashAwel fieldEntscheidAwelJahr"
+       "labelEntscheidBdv . fieldEntscheidBdvNr slashBdv fieldEntscheidBdvJahr"
+       "labelEntscheidRrb . fieldEntscheidRrbNr slashRrb fieldEntscheidRrbJahr"
+       "labelEntscheidBvv . fieldEntscheidBvvNr slashBvv fieldEntscheidBvvJahr"
+       "labelEntscheidKr . fieldEntscheidKrNr slashKr fieldEntscheidKrJahr"
+       "fieldAktenstandort . fieldAktennummer . .";
+    grid-row-gap: 2px;
+    padding: 8px;
+  `
+  const ContainerPdf = styled(ContainerView)`
+    grid-template-areas:
+      "areaNummernTitle areaNummernTitle areaNummernTitle areaNummernTitle labelNr"
+      ". . labelIdGeschaeft . fieldIdGeschaeft"
+      ". . labelGekoNr . fieldGekoNr"
+      ". . . . labelJahre"
+      "labelEntscheidAwel . fieldEntscheidAwelNr slashAwel fieldEntscheidAwelJahr"
+      "labelEntscheidBdv . fieldEntscheidBdvNr slashBdv fieldEntscheidBdvJahr"
+      "labelEntscheidRrb . fieldEntscheidRrbNr slashRrb fieldEntscheidRrbJahr"
+      "labelEntscheidBvv . fieldEntscheidBvvNr slashBvv fieldEntscheidBvvJahr"
+      "labelEntscheidKr . fieldEntscheidKrNr slashKr fieldEntscheidKrJahr"
+      "fieldAktenstandort fieldAktenstandort fieldAktenstandort . fieldAktennummer";
+    border: 1px solid #CCC;
+  `
+  const Container = isPrintPreview ? ContainerPdf : ContainerView
+  const Label = styled.div`
+    color: #757575;
+    font-size: 11px;
+    font-weight: 500;
+  `
+  const LabelJahre = styled(Label)`
+    grid-area: labelJahre;
+    position: relative;
+    min-height: 16px;
+  `
+  const LabelNr = styled(ControlLabel)`
+    grid-area: labelNr;
+    position: relative;
+    min-height: 16px;
+  `
+  const LabelNrDiv = styled.div`
+    position: absolute;
+    bottom: 1px;
+  `
+  const Slash = styled.div`
+    margin-top: 2px;
+    font-size: 22px;
+    color: #757575;
+    margin-left: 1px;
+  `
+  const SlashAwel = styled(Slash)`
+    grid-area: slashAwel;
+  `
+  const SlashBdv = styled(Slash)`
+    grid-area: slashBdv;
+  `
+  const SlashKr = styled(Slash)`
+    grid-area: slashKr;
+  `
+  const SlashBvv = styled(Slash)`
+    grid-area: slashBvv;
+  `
+  const SlashRrb = styled(Slash)`
+    grid-area: slashRrb;
+  `
+  const LabelHorizontal = styled(ControlLabel)`
+    margin-top: 11px;
+    text-align: right;
+  `
+  const AreaNummernTitle = styled.div`
+    font-weight: 900;
+    font-size: 16px;
+    grid-area: areaNummernTitle;
+  `
+  const FieldIdGeschaeft = styled.div`
+    grid-area: fieldIdGeschaeft;
+  `
+  const LabelIdGeschaeft = styled(LabelHorizontal)`
+    grid-area: labelIdGeschaeft;
+  `
+  const InputIdGeschaeft = styled(FormControl)`
+    background: transparent !important;
+  `
+  const FieldGekoNr = styled.div`
+    grid-area: fieldGekoNr;
+  `
+  const LabelGekoNr = styled(LabelHorizontal)`
+    grid-area: labelGekoNr
+  `
+  const FieldEntscheidAwelNr = styled.div`
+    grid-area: fieldEntscheidAwelNr;
+  `
+  const LabelEntscheidAwel = styled(LabelHorizontal)`
+    grid-area: labelEntscheidAwel
+  `
+  const FieldEntscheidAwelJahr = styled.div`
+    grid-area: fieldEntscheidAwelJahr;
+  `
+  const FieldEntscheidBdvNr = styled.div`
+    grid-area: fieldEntscheidBdvNr;
+  `
+  const LabelEntscheidBdv = styled(LabelHorizontal)`
+    grid-area: labelEntscheidBdv;
+  `
+  const FieldEntscheidBdvJahr = styled.div`
+    grid-area: fieldEntscheidBdvJahr;
+  `
+  const FieldEntscheidKrNr = styled.div`
+    grid-area: fieldEntscheidKrNr;
+  `
+  const LabelEntscheidKr = styled(LabelHorizontal)`
+    grid-area: labelEntscheidKr;
+  `
+  const FieldEntscheidKrJahr = styled.div`
+    grid-area: fieldEntscheidKrJahr;
+  `
+  const FieldEntscheidBvvNr = styled.div`
+    grid-area: fieldEntscheidBvvNr;
+  `
+  const LabelEntscheidBvv = styled(LabelHorizontal)`
+    grid-area: labelEntscheidBvv;
+  `
+  const FieldEntscheidBvvJahr = styled.div`
+    grid-area: fieldEntscheidBvvJahr;
+  `
+  const FieldEntscheidRrbNr = styled.div`
+    grid-area: fieldEntscheidRrbNr;
+  `
+  const LabelEntscheidRrb = styled(LabelHorizontal)`
+    grid-area: labelEntscheidRrb;
+  `
+  const FieldEntscheidRrbJahr = styled.div`
+    grid-area: fieldEntscheidRrbJahr;
+  `
+  const FieldAktenstandort = styled.div`
+    grid-area: fieldAktenstandort;
+  `
+  const FieldAktennummer = styled.div`
+    grid-area: fieldAktennummer;
+  `
 
   return (
-    <div className={styles.areaNummern}>
-      <div className={styles.areaNummernTitle}>
+    <Container>
+      <AreaNummernTitle>
         Nummern
-      </div>
-      <ControlLabel className={styles.labelNr}>
-        <div className={styles.labelNrDiv}>
+      </AreaNummernTitle>
+      <LabelNr>
+        <LabelNrDiv>
           Nr.
-        </div>
-      </ControlLabel>
-      <ControlLabel className={styles.labelIdGeschaeft}>
+        </LabelNrDiv>
+      </LabelNr>
+      <LabelIdGeschaeft>
         ID
-      </ControlLabel>
-      <div className={styles.fieldIdGeschaeft}>
-        <FormControl
+      </LabelIdGeschaeft>
+      <FieldIdGeschaeft>
+        <InputIdGeschaeft
           type="number"
           value={geschaeft.idGeschaeft}
           bsSize="small"
           disabled
-          className={[styles.typeNr, styles.inputIdGeschaeft].join(' ')}
         />
-      </div>
-      <ControlLabel className={styles.labelGekoNr}>
+      </FieldIdGeschaeft>
+      <LabelGekoNr>
         Geko
-      </ControlLabel>
-      <div className={styles.fieldGekoNr}>
+      </LabelGekoNr>
+      <FieldGekoNr>
         <FormControl
           type="text"
           value={geschaeft.GekoNr}
@@ -52,16 +200,16 @@ const AreaNummern = ({
           tabIndex={1 + tabsToAdd}
           autoFocus={viewIsNarrow}
         />
-      </div>
-      <div className={styles.labelJahre}>
-        <div className={styles.labelNrDiv}>
+      </FieldGekoNr>
+      <LabelJahre>
+        <LabelNrDiv>
           Jahr
-        </div>
-      </div>
-      <ControlLabel className={styles.labelEntscheidAwel}>
+        </LabelNrDiv>
+      </LabelJahre>
+      <LabelEntscheidAwel>
         AWEL
-      </ControlLabel>
-      <div className={styles.fieldEntscheidAwelNr}>
+      </LabelEntscheidAwel>
+      <FieldEntscheidAwelNr>
         <FormControl
           type="number"
           value={geschaeft.entscheidAwelNr || ''}
@@ -71,11 +219,11 @@ const AreaNummern = ({
           bsSize="small"
           tabIndex={2 + tabsToAdd}
         />
-      </div>
-      <div className={styles.slashAwel}>
+      </FieldEntscheidAwelNr>
+      <SlashAwel>
         <div>/</div>
-      </div>
-      <div className={styles.fieldEntscheidAwelJahr}>
+      </SlashAwel>
+      <FieldEntscheidAwelJahr>
         <FormControl
           type="number"
           value={geschaeft.entscheidAwelJahr || ''}
@@ -85,11 +233,11 @@ const AreaNummern = ({
           bsSize="small"
           tabIndex={3 + tabsToAdd}
         />
-      </div>
-      <ControlLabel className={styles.labelEntscheidBdv}>
+      </FieldEntscheidAwelJahr>
+      <LabelEntscheidBdv>
         BDV
-      </ControlLabel>
-      <div className={styles.fieldEntscheidBdvNr}>
+      </LabelEntscheidBdv>
+      <FieldEntscheidBdvNr>
         <FormControl
           type="number"
           value={geschaeft.entscheidBdvNr || ''}
@@ -99,11 +247,11 @@ const AreaNummern = ({
           bsSize="small"
           tabIndex={4 + tabsToAdd}
         />
-      </div>
-      <div className={styles.slashBdv}>
+      </FieldEntscheidBdvNr>
+      <SlashBdv>
         <div>/</div>
-      </div>
-      <div className={styles.fieldEntscheidBdvJahr}>
+      </SlashBdv>
+      <FieldEntscheidBdvJahr>
         <FormControl
           type="number"
           value={geschaeft.entscheidBdvJahr || ''}
@@ -113,11 +261,11 @@ const AreaNummern = ({
           bsSize="small"
           tabIndex={5 + tabsToAdd}
         />
-      </div>
-      <ControlLabel className={styles.labelEntscheidRrb}>
+      </FieldEntscheidBdvJahr>
+      <LabelEntscheidRrb>
         RRB
-      </ControlLabel>
-      <div className={styles.fieldEntscheidRrbNr}>
+      </LabelEntscheidRrb>
+      <FieldEntscheidRrbNr>
         <FormControl
           type="number"
           value={geschaeft.entscheidRrbNr || ''}
@@ -127,11 +275,11 @@ const AreaNummern = ({
           bsSize="small"
           tabIndex={6 + tabsToAdd}
         />
-      </div>
-      <div className={styles.slashRrb}>
+      </FieldEntscheidRrbNr>
+      <SlashRrb>
         <div>/</div>
-      </div>
-      <div className={styles.fieldEntscheidRrbJahr}>
+      </SlashRrb>
+      <FieldEntscheidRrbJahr>
         <FormControl
           type="number"
           value={geschaeft.entscheidRrbJahr || ''}
@@ -141,11 +289,11 @@ const AreaNummern = ({
           bsSize="small"
           tabIndex={7 + tabsToAdd}
         />
-      </div>
-      <ControlLabel className={styles.labelEntscheidBvv}>
+      </FieldEntscheidRrbJahr>
+      <LabelEntscheidBvv>
         BVV
-      </ControlLabel>
-      <div className={styles.fieldEntscheidBvvNr}>
+      </LabelEntscheidBvv>
+      <FieldEntscheidBvvNr>
         <FormControl
           type="number"
           value={geschaeft.entscheidBvvNr || ''}
@@ -155,11 +303,11 @@ const AreaNummern = ({
           bsSize="small"
           tabIndex={8 + tabsToAdd}
         />
-      </div>
-      <div className={styles.slashBvv}>
+      </FieldEntscheidBvvNr>
+      <SlashBvv>
         <div>/</div>
-      </div>
-      <div className={styles.fieldEntscheidBvvJahr}>
+      </SlashBvv>
+      <FieldEntscheidBvvJahr>
         <FormControl
           type="number"
           value={geschaeft.entscheidBvvJahr || ''}
@@ -169,11 +317,11 @@ const AreaNummern = ({
           bsSize="small"
           tabIndex={9 + tabsToAdd}
         />
-      </div>
-      <ControlLabel className={styles.labelEntscheidKr}>
+      </FieldEntscheidBvvJahr>
+      <LabelEntscheidKr>
         KR
-      </ControlLabel>
-      <div className={styles.fieldEntscheidKrNr}>
+      </LabelEntscheidKr>
+      <FieldEntscheidKrNr>
         <FormControl
           type="number"
           value={geschaeft.entscheidKrNr || ''}
@@ -183,11 +331,11 @@ const AreaNummern = ({
           bsSize="small"
           tabIndex={10 + tabsToAdd}
         />
-      </div>
-      <div className={styles.slashKr}>
+      </FieldEntscheidKrNr>
+      <SlashKr>
         <div>/</div>
-      </div>
-      <div className={styles.fieldEntscheidKrJahr}>
+      </SlashKr>
+      <FieldEntscheidKrJahr>
         <FormControl
           type="number"
           value={geschaeft.entscheidKrJahr || ''}
@@ -197,8 +345,8 @@ const AreaNummern = ({
           bsSize="small"
           tabIndex={11 + tabsToAdd}
         />
-      </div>
-      <div className={styles.fieldAktenstandort}>
+      </FieldEntscheidKrJahr>
+      <FieldAktenstandort>
         <ControlLabel>
           Aktenstandort
         </ControlLabel>
@@ -213,8 +361,8 @@ const AreaNummern = ({
         >
           {createOptions(aktenstandortOptions)}
         </FormControl>
-      </div>
-      <div className={styles.fieldAktennummer}>
+      </FieldAktenstandort>
+      <FieldAktennummer>
         <ControlLabel>
           Nr.
         </ControlLabel>
@@ -227,8 +375,8 @@ const AreaNummern = ({
           bsSize="small"
           tabIndex={13 + tabsToAdd}
         />
-      </div>
-    </div>
+      </FieldAktennummer>
+    </Container>
   )
 }
 
