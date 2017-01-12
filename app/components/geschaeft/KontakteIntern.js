@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import { FormControl } from 'react-bootstrap'
 import _ from 'lodash'
-import regularStyles from './kontakteIntern.css'
-import pdfStyles from './kontakteInternPdf.css'
+import styled from 'styled-components'
+
 import KontakteInternItems from '../../containers/geschaeft/KontakteInternItems'
 
 const onChangeNewKontaktIntern = (
@@ -65,15 +65,29 @@ const GeschaefteKontakteIntern = ({
   geschaefteKontakteIntern,
   isPrintPreview,
 }) => {
-  const styles = isPrintPreview ? pdfStyles : regularStyles
+  const Container = styled.div`
+    grid-column: 1 / span 2;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-gap: 0;
+  `
+  const RowfVDropdown = styled.div`
+    grid-column: 1 / span 1;
+    display: grid;
+    grid-template-columns: ${isPrintPreview ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)'};
+    grid-gap: 4px;
+    margin-top: 5px;
+  `
+  const FvDropdown = styled.div`
+    grid-column: 1 / span 1;
+    display: ${isPrintPreview ? 'none' : 'inherit'};
+  `
+
   return (
-    <div className={styles.body}>
+    <Container>
       <KontakteInternItems />
-      <div
-        key={0}
-        className={styles.rowfVDropdown}
-      >
-        <div className={styles.fVDropdown}>
+      <RowfVDropdown>
+        <FvDropdown>
           <FormControl
             componentClass="select"
             bsSize="small"
@@ -95,9 +109,9 @@ const GeschaefteKontakteIntern = ({
               )
             }
           </FormControl>
-        </div>
-      </div>
-    </div>
+        </FvDropdown>
+      </RowfVDropdown>
+    </Container>
   )
 }
 

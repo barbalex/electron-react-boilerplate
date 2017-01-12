@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import { Glyphicon } from 'react-bootstrap'
 import _ from 'lodash'
 import Linkify from 'react-linkify'
+import styled from 'styled-components'
+
 import regularStyles from './kontakteInternItems.css'
 import pdfStyles from './kontakteInternItemsPdf.css'
 

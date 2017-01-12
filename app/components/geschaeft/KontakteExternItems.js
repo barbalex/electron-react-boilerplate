@@ -80,6 +80,7 @@ const GeschaefteKontakteExtern = ({
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+      padding: ${isPrintPreview ? 0 : '7px'};
     }
   `
   const GlyphiconDiv = styled.div`

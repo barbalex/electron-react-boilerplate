@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import { FormControl } from 'react-bootstrap'
 import _ from 'lodash'
-import regularStyles from './kontakteExtern.css'
-import pdfStyles from './kontakteExternPdf.css'
+import styled from 'styled-components'
+
 import KontakteExternItems from '../../containers/geschaeft/KontakteExternItems'
 
 const onChangeNewKontaktExtern = (e, geschaeftKontaktExternNewCreate, activeId) => {
@@ -56,15 +56,29 @@ const GeschaefteKontakteExtern = ({
   externeOptions,
   isPrintPreview,
 }) => {
-  const styles = isPrintPreview ? pdfStyles : regularStyles
+  const Container = styled.div`
+    grid-column: 1 / span 2;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-gap: 0;
+  `
+  const RowFvDropdown = styled.div`
+    grid-column: 1 / span 1;
+    display: grid;
+    grid-template-columns: ${isPrintPreview ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)'};
+    grid-gap: 4px;
+    margin-top: 5px;
+  `
+  const FvDropdown = styled.div`
+    grid-column: 1 / span 1;
+    display: ${isPrintPreview ? 'none' : 'inherit'}
+  `
+
   return (
-    <div className={styles.body}>
+    <Container>
       <KontakteExternItems />
-      <div
-        key={0}
-        className={styles.rowfVDropdown}
-      >
-        <div className={styles.fVDropdown}>
+      <RowFvDropdown>
+        <FvDropdown>
           <FormControl
             componentClass="select"
             bsSize="small"
@@ -86,9 +100,9 @@ const GeschaefteKontakteExtern = ({
               )
             }
           </FormControl>
-        </div>
-      </div>
-    </div>
+        </FvDropdown>
+      </RowFvDropdown>
+    </Container>
   )
 }
 
