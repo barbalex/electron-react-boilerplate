@@ -83,9 +83,7 @@ const AreaPersonen = ({
   const Subtitle = styled.div`
     font-weight: 900;
     font-size: ${isPrintPreview ? '10px' : '12px'};
-    margin-top: 5px;
-  `
-  const SubTitle = styled(Subtitle)`
+    margin-top: ${isPrintPreview ? '2px' : '5px'};
     grid-column: ${isPrintPreview ? '1' : '1 / span 2'};
   `
   const Verantwortlich = styled.div`
@@ -102,9 +100,9 @@ const AreaPersonen = ({
         <Title>
           Personen
         </Title>
-        <SubTitle>
+        <Subtitle>
           Verantwortlich
-        </SubTitle>
+        </Subtitle>
         <Verantwortlich>
           <FormControl
             componentClass="select"
@@ -123,15 +121,15 @@ const AreaPersonen = ({
             {verantwortlichData(geschaeft, interneOptions, isPrintPreview)}
           </FormControl.Static>
         </VerantwortlichName>
-        <SubTitle>
+        <Subtitle>
           Interne Kontakte
-        </SubTitle>
+        </Subtitle>
         <KontakteIntern
           tabIndex={nrOfFieldsBeforePersonen + 1}
         />
-        <SubTitle>
+        <Subtitle>
           Externe Kontakte
-        </SubTitle>
+        </Subtitle>
         <KontakteExtern
           tabIndex={nrOfFieldsBeforePersonen + 2}
         />
