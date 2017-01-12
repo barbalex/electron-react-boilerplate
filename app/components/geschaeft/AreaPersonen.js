@@ -27,11 +27,15 @@ const verwantwortlichOptions = (interneOptions) => {
   return options
 }
 
-const verantwortlichData = (geschaeft, interneOptions) => {
+const verantwortlichData = (geschaeft, interneOptions, isPrintPreview) => {
   const data = interneOptions.find(o =>
     o.kurzzeichen === geschaeft.verantwortlich
   )
   if (!data) return ''
+  let name = ''
+  if (isPrintPreview) {
+    name = `${data.name || '(kein Name)'} ${data.vorname || '(kein Vorname)'}, `
+  }
   const abt = data.abteilung ? `${data.abteilung}` : ''
   const emailHtml = (
     <a
@@ -43,10 +47,10 @@ const verantwortlichData = (geschaeft, interneOptions) => {
   const telefon = data.telefon ? `, ${data.telefon}` : ''
   if (data.eMail) {
     return (
-      <span>{`${abt}, `}{emailHtml}{`${telefon}`}</span>
+      <span>{`${name}${abt}, `}{emailHtml}{`${telefon}`}</span>
     )
   }
-  return <span>{`${abt}${telefon}`}</span>
+  return <span>{`${name}${abt}${telefon}`}</span>
 }
 
 const AreaPersonen = ({
@@ -65,11 +69,11 @@ const AreaPersonen = ({
   const AreaPersonenDiv = styled.div`
     background-color: ${isPrintPreview ? 'inherit' : 'rgb(246, 255, 245)'};
     display: grid;
-    grid-template-columns: ${isPrintPreview ? 'inherit' : '260px calc((100% - 10px) - 260px)'};
+    grid-template-columns: ${isPrintPreview ? '100%' : '260px calc((100% - 10px) - 260px)'};
     grid-column-gap: 10px;
     grid-row-gap: 2px;
     padding: 8px;
-    align-items: end;
+    align-items: ${isPrintPreview ? 'flex-start' : 'end'};
   `
   const Title = styled.div`
     font-weight: 900;
@@ -82,14 +86,14 @@ const AreaPersonen = ({
     margin-top: 5px;
   `
   const SubTitle = styled(Subtitle)`
-    grid-column: 1 / span 2;
+    grid-column: ${isPrintPreview ? '1' : '1 / span 2'};
   `
   const Verantwortlich = styled.div`
-    grid-column: 1 / span 1;
+    grid-column: ${isPrintPreview ? '1' : '1 / span 1'};
     display: ${isPrintPreview ? 'none' : 'inherit'}
   `
   const VerantwortlichName = styled.div`
-    grid-column: ${isPrintPreview ? '1 / span 1' : '2 / span 1'};
+    grid-column: ${isPrintPreview ? '1' : '2 / span 1'};
   `
 
   return (
@@ -116,7 +120,7 @@ const AreaPersonen = ({
         </Verantwortlich>
         <VerantwortlichName>
           <FormControl.Static>
-            {verantwortlichData(geschaeft, interneOptions)}
+            {verantwortlichData(geschaeft, interneOptions, isPrintPreview)}
           </FormControl.Static>
         </VerantwortlichName>
         <SubTitle>
