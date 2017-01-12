@@ -2,20 +2,21 @@ import React, { PropTypes } from 'react'
 import { Glyphicon } from 'react-bootstrap'
 import _ from 'lodash'
 import Linkify from 'react-linkify'
-import regularStyles from './kontakteExternItems.css'
-import pdfStyles from './kontakteExternItemsPdf.css'
+import styled from 'styled-components'
 
-const verantwortlichData = (gkI, externeOptions) => {
+const verantwortlichData = (gKE, externeOptions) => {
   function addValueToInfo(info, value) {
     if (!value) return info
     if (info) return `${info}, ${value}`
     return value
   }
   const data = externeOptions.find(o =>
-    o.id === gkI.idKontakt
+    o.id === gKE.idKontakt
   )
   if (!data) return ''
   let info = ''
+  const name = `${data.name || '(kein Name)'} ${data.vorname || '(kein Vorname)'}`
+  info = addValueToInfo(info, name)
   info = addValueToInfo(info, data.firma)
   info = addValueToInfo(info, data.eMail)
   info = addValueToInfo(info, data.telefon)
@@ -37,7 +38,6 @@ const GeschaefteKontakteExtern = ({
   geschaeftKontaktExternRemove,
   isPrintPreview,
 }) => {
-  const styles = isPrintPreview ? pdfStyles : regularStyles
   // filter for this geschaeft
   const gkIFiltered = geschaefteKontakteExtern.filter(g =>
     g.idGeschaeft === activeId
@@ -48,40 +48,72 @@ const GeschaefteKontakteExtern = ({
     )
     return `${intOption.name} ${intOption.vorname}`.toLowerCase()
   })
+  const Container = styled.div`
+    grid-column: 1 / span 2;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-gap: 0;
+  `
+  const Row = styled.div`
+    grid-column: 1 / span 1;
+    display: grid;
+    grid-template-columns: calc(100% - 20px) 20px;
+    grid-gap: 0;
+    border-bottom: thin solid #CECBCB;
+    padding: 3px;
+    align-items: center;
+    min-height: 35px;
+    &:first-of-type {
+      border-top: thin solid #CECBCB;
+    }
+    &:hover {
+      background-color: rgba(208, 255, 202, 0.5);
+    }
+  `
+  /**
+   * prevent pushing of following kontakt
+   * when text breaks to next line
+   */
+  const Field = styled.div`
+    grid-column: 1 / span 1;
+    &p {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  `
+  const GlyphiconDiv = styled.div`
+    grid-column: 2 / span 1;
+    margin-top: 4px;
+    display: ${isPrintPreview ? 'none' : 'inherit'};
+  `
+  const StyledGlyphicon = styled(Glyphicon)`
+    color: red;
+    font-size: 18px;
+    cursor: pointer;
+  `
+
   return (
-    <div className={styles.body}>
+    <Container>
       {
-        gKISorted.map((gkI, index) => {
-          const intOption = externeOptions.find(o =>
-            o.id === gkI.idKontakt
-          )
-          const nameVorname = intOption.nameVorname
-          return (
-            <div
-              key={index + 1}
-              className={styles.row}
-            >
-              <div className={styles.fV}>
-                {nameVorname}
-              </div>
-              <div className={styles.fVN}>
-                {verantwortlichData(gkI, externeOptions)}
-              </div>
-              <div className={styles.deleteGlyphiconDiv}>
-                <Glyphicon
-                  glyph="remove-circle"
-                  onClick={() =>
-                    geschaeftKontaktExternRemove(activeId, gkI.idKontakt)
-                  }
-                  className={styles.removeGlyphicon}
-                  title={titleText(gkI.idKontakt, externeOptions)}
-                />
-              </div>
-            </div>
-          )
-        })
+        gKISorted.map(gKE =>
+          <Row key={`${gKE.idGeschaeft}${gKE.idKontakt}`}>
+            <Field>
+              {verantwortlichData(gKE, externeOptions)}
+            </Field>
+            <GlyphiconDiv>
+              <StyledGlyphicon
+                glyph="remove-circle"
+                onClick={() =>
+                  geschaeftKontaktExternRemove(activeId, gKE.idKontakt)
+                }
+                title={titleText(gKE.idKontakt, externeOptions)}
+              />
+            </GlyphiconDiv>
+          </Row>
+        )
       }
-    </div>
+    </Container>
   )
 }
 
