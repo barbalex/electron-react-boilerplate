@@ -57,12 +57,13 @@ const GeschaefteKontakteExtern = ({
   const Row = styled.div`
     grid-column: 1 / span 1;
     display: grid;
-    grid-template-columns: calc(100% - 20px) 20px;
+    grid-template-columns: ${isPrintPreview ? 'calc(100% - 10px)' : 'calc(100% - 20px) 20px'};
     grid-gap: 0;
-    border-bottom: thin solid #CECBCB;
     padding: 3px;
+    margin-right: ${isPrintPreview ? '8px' : 'inherit'};
     align-items: center;
-    min-height: 35px;
+    min-height: ${isPrintPreview ? 0 : '35px'};
+    border-bottom: thin solid #CECBCB;
     &:first-of-type {
       border-top: thin solid #CECBCB;
     }

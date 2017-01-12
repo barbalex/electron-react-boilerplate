@@ -4,9 +4,6 @@ import _ from 'lodash'
 import Linkify from 'react-linkify'
 import styled from 'styled-components'
 
-import regularStyles from './kontakteInternItems.css'
-import pdfStyles from './kontakteInternItemsPdf.css'
-
 const titleText = (idKontakt, interneOptions) => {
   const data = interneOptions.find(o =>
     o.id === idKontakt
@@ -35,7 +32,6 @@ const GeschaefteKontakteInternItems = ({
   geschaeftKontaktInternRemove,
   isPrintPreview,
 }) => {
-  const styles = isPrintPreview ? pdfStyles : regularStyles
   // filter for this geschaeft
   const gkIFiltered = geschaefteKontakteIntern.filter(g =>
     g.idGeschaeft === activeId
@@ -47,29 +43,73 @@ const GeschaefteKontakteInternItems = ({
     const sort = `${intOption.name} ${intOption.vorname}, ${intOption.kurzzeichen}`
     return sort.toLowerCase()
   })
+  const Container = styled.div`
+    grid-column: 1 / span 2;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-gap: 0;
+  `
+  const Row = styled.div`
+    grid-column: 1 / span 1;
+    display: grid;
+    grid-template-columns: ${isPrintPreview ? '100%' : 'calc(100% - 20px) 20px'};
+    grid-gap: 0;
+    padding: 3px;
+    margin-right: ${isPrintPreview ? '8px' : 'inherit'};
+    align-items: center;
+    min-height: ${isPrintPreview ? 0 : '35px'};
+    border-bottom: thin solid #CECBCB;
+    &:first-of-type  {
+      border-top: thin solid #CECBCB;
+    }
+    &:hover {
+      background-color: rgba(208, 255, 202, 0.5);
+    }
+  `
+  /**
+   * prevent pushing of following kontakt
+   * when text breaks to next line
+   */
+  const Fv = styled.div`
+    grid-column: 1 / span 1;
+    &p {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  `
+  const DeleteGlyphiconDiv = styled.div`
+    grid-column: 2 / span 1;
+    margin-top: 4px;
+    display: ${isPrintPreview ? 'none' : 'inherit'};
+  `
+  const RemoveGlyphicon = styled(Glyphicon)`
+    color: red;
+    font-size: 18px;
+    cursor: pointer;
+  `
+
   return (
-    <div className={styles.body}>
+    <Container>
       {
         gkISorted.map(gkI =>
-          <div
+          <Row
             key={`${gkI.idGeschaeft}${gkI.idKontakt}`}
-            className={styles.row}
           >
-            <div className={styles.fV}>
+            <Fv>
               {verantwortlichData(gkI, interneOptions)}
-            </div>
-            <div className={styles.deleteGlyphiconDiv}>
-              <Glyphicon
+            </Fv>
+            <DeleteGlyphiconDiv>
+              <RemoveGlyphicon
                 glyph="remove-circle"
                 onClick={() => geschaeftKontaktInternRemove(activeId, gkI.idKontakt)}
-                className={styles.removeGlyphicon}
                 title={titleText(gkI.idKontakt, interneOptions)}
               />
-            </div>
-          </div>
+            </DeleteGlyphiconDiv>
+          </Row>
         )
       }
-    </div>
+    </Container>
   )
 }
 

@@ -101,9 +101,13 @@ textarea {
   }
 }
 
-.geschaeftPdf div {
-  background-color: white !important;
+.geschaeftPdf {
+  background-color: transparent !important;
 }
+.geschaeftPdf * {
+  background-color: transparent !important;
+}
+
 .geschaeftPdf input,
 .geschaeftPdf textarea,
 .geschaeftPdf select {

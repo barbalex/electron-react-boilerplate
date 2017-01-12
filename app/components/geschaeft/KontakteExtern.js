@@ -65,7 +65,7 @@ const GeschaefteKontakteExtern = ({
   const RowFvDropdown = styled.div`
     grid-column: 1 / span 1;
     display: grid;
-    grid-template-columns: ${isPrintPreview ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)'};
+    grid-template-columns: ${isPrintPreview ? '160px calc((100% - 10px) - 160px)' : '260px calc((100% - 10px) - 260px)'};
     grid-gap: 4px;
     margin-top: 5px;
   `
