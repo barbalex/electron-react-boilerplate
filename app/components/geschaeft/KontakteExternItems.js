@@ -60,9 +60,10 @@ const GeschaefteKontakteExtern = ({
     grid-template-columns: ${isPrintPreview ? 'calc(100% - 10px)' : 'calc(100% - 20px) 20px'};
     grid-gap: 0;
     padding: 3px;
-    margin-right: ${isPrintPreview ? '8px' : 'inherit'};
+    margin-right: ${isPrintPreview ? '9px' : 'inherit'};
     align-items: center;
     min-height: ${isPrintPreview ? 0 : '35px'};
+    font-size: ${isPrintPreview ? '10px' : 'inherit'};
     border-bottom: thin solid #CECBCB;
     &:first-of-type {
       border-top: thin solid #CECBCB;
@@ -71,12 +72,12 @@ const GeschaefteKontakteExtern = ({
       background-color: rgba(208, 255, 202, 0.5);
     }
   `
-  /**
-   * prevent pushing of following kontakt
-   * when text breaks to next line
-   */
   const Field = styled.div`
     grid-column: 1 / span 1;
+    /**
+     * prevent pushing of following kontakt
+     * when text breaks to next line
+     */
     &p {
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -86,7 +87,7 @@ const GeschaefteKontakteExtern = ({
   `
   const GlyphiconDiv = styled.div`
     grid-column: 2 / span 1;
-    margin-top: 4px;
+    margin-top: -2px;
     display: ${isPrintPreview ? 'none' : 'inherit'};
   `
   const StyledGlyphicon = styled(Glyphicon)`

@@ -1,8 +1,10 @@
+/* eslint-disable max-len */
+
 import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import $ from 'jquery'
-import regularStyles from './geschaeft.css'
-import pdfStyles from './geschaeftPdf.css'
+import styled from 'styled-components'
+
 import isDateField from '../../src/isDateField'
 import validateDate from '../../src/validateDate'
 import AreaGeschaeft from '../../containers/geschaeft/AreaGeschaeft'
@@ -94,8 +96,6 @@ class Geschaeft extends Component {
       isPrintPreview,
     } = this.props
 
-    const styles = isPrintPreview ? pdfStyles : regularStyles
-
     // return immediately if no geschaeft
     const showGeschaeft = geschaeft && geschaeft.idGeschaeft
     if (!showGeschaeft) return null
@@ -110,19 +110,6 @@ class Geschaeft extends Component {
     // need width to adapt layout to differing widths
     const windowWidth = $(window).width()
     const areaGeschaefteWidth = windowWidth - config.geschaefteColumnWidth
-    const wrapperClassBaseString = (
-      areaGeschaefteWidth < 750 && !isPrintPreview ?
-      'wrapperNarrow' :
-      'wrapperWide'
-    )
-
-    // layout needs to work with or without area for geschaeftsart
-    const wrapperClassString = (
-      showAreaForGeschaeftsart ?
-      wrapperClassBaseString :
-      `${wrapperClassBaseString}NoAreaForGeschaeftsart`
-    )
-    const wrapperClass = styles[wrapperClassString]
 
     // prepare tab indexes
     const nrOfGFields = 10
@@ -131,18 +118,103 @@ class Geschaeft extends Component {
     const nrOfPvFields = 9
     const nrOfFieldsBeforeFristen = nrOfFieldsBeforePv + nrOfPvFields
     const nrOfFieldsBeforePersonen = nrOfFieldsBeforeFristen + 7
+    const ScrollContainer = styled.div`
+      overflow: ${isPrintPreview ? 'visible' : 'auto'};
+      height: ${isPrintPreview ? '26.2cm' : 'calc(100vh - 52px)'};
+    `
+    const WrapperNarrow = styled.div`
+      display: grid;
+      grid-template-columns: repeat(1, 100%);
+      grid-template-rows: auto;
+      grid-template-areas:
+        "areaNummern"
+        "areaGeschaeft"
+        "areaForGeschaeftsart"
+        "areaFristen"
+        "areaPersonen"
+        "areaLinks"
+        "areaHistory"
+        "areaZuletztMutiert";
+    `
+    const WrapperNarrowNoAreaForGeschaeftsart = styled(WrapperNarrow)`
+      grid-template-areas:
+        "areaNummern"
+        "areaGeschaeft"
+        "areaFristen"
+        "areaPersonen"
+        "areaLinks"
+        "areaHistory"
+        "areaZuletztMutiert";
+    `
+    const WrapperWide = styled.div`
+      display: grid;
+      grid-template-columns: repeat(12, 8.33333%);
+      grid-template-rows: auto;
+      grid-template-areas:
+        "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern"
+        "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaForGeschaeftsart areaForGeschaeftsart areaForGeschaeftsart areaForGeschaeftsart"
+        "areaFristen areaFristen areaFristen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen"
+        "areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks"
+        "areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory"
+        "areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert";
+    `
+    const WrapperWidePdf = styled(WrapperWide)`
+      grid-gap: 2px;
+      grid-template-areas:
+        "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern"
+        "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaForGeschaeftsart areaForGeschaeftsart areaForGeschaeftsart areaForGeschaeftsart"
+        "areaFristen areaFristen areaFristen areaFristen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen"
+        "areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory"
+        "areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert";
+    `
+    const WrapperWideNoAreaForGeschaeftsart = styled(WrapperWide)`
+      grid-template-areas:
+        "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern"
+        "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern"
+        "areaFristen areaFristen areaFristen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen"
+        "areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks areaLinks"
+        "areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory"
+        "areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert";
+    `
+    const WrapperWideNoAreaForGeschaeftsartPdf = styled(WrapperWide)`
+    grid-template-areas:
+      "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern"
+      "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern"
+      "areaFristen areaFristen areaFristen areaFristen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen"
+      "areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory"
+      "areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert";
+    `
+    const viewIsNarrow = areaGeschaefteWidth < 860
+    let Wrapper
+    if (isPrintPreview) {
+      if (showAreaForGeschaeftsart) {
+        Wrapper = WrapperWideNoAreaForGeschaeftsartPdf
+      } else {
+        Wrapper = WrapperWidePdf
+      }
+    } else if (viewIsNarrow) {
+      if (showAreaForGeschaeftsart) {
+        Wrapper = WrapperNarrow
+      } else {
+        Wrapper = WrapperNarrowNoAreaForGeschaeftsart
+      }
+    } else if (showAreaForGeschaeftsart) {
+      Wrapper = WrapperWide
+    } else {
+      Wrapper = WrapperWideNoAreaForGeschaeftsart
+    }
 
     return (
-      <div className={styles.scrollContainer}>
-        <div className={wrapperClass}>
+      <ScrollContainer>
+        <Wrapper>
           <AreaGeschaeft
-            wrapperClass={wrapperClass}
+            viewIsNarrow={viewIsNarrow}
             nrOfGFields={nrOfGFields}
             change={this.change}
             blur={this.blur}
           />
           <AreaNummern
-            wrapperClass={wrapperClass}
+            viewIsNarrow={viewIsNarrow}
             nrOfGFields={nrOfGFields}
             change={this.change}
             blur={this.blur}
@@ -184,8 +256,8 @@ class Geschaeft extends Component {
             change={this.change}
           />
           <AreaZuletztMutiert />
-        </div>
-      </div>
+        </Wrapper>
+      </ScrollContainer>
     )
   }
 }

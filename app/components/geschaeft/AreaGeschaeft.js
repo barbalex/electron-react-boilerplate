@@ -10,18 +10,14 @@ const AreaGeschaeft = ({
   statusOptions,
   geschaeftsartOptions,
   abteilungOptions,
-  wrapperClass,
+  viewIsNarrow,
   change,
   blur,
   nrOfGFields,
   isPrintPreview,
 }) => {
   const styles = isPrintPreview ? pdfStyles : regularStyles
-  const tabsToAdd = (
-    wrapperClass === styles.wrapperNarrow ?
-    nrOfGFields :
-    0
-  )
+  const tabsToAdd = viewIsNarrow ? nrOfGFields : 0
 
   return (
     <div className={styles.areaGeschaeft}>
@@ -38,7 +34,7 @@ const AreaGeschaeft = ({
           onChange={change}
           onBlur={blur}
           tabIndex={1 + tabsToAdd}
-          autoFocus={wrapperClass !== styles.wrapperNarrow && !isPrintPreview}
+          autoFocus={!viewIsNarrow && !isPrintPreview}
           className={styles.textarea}
         />
       </div>
@@ -226,7 +222,7 @@ AreaGeschaeft.propTypes = {
   geschaeftsartOptions: PropTypes.array,
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,
-  wrapperClass: PropTypes.string.isRequired,
+  viewIsNarrow: PropTypes.bool.isRequired,
   nrOfGFields: PropTypes.number.isRequired,
   isPrintPreview: PropTypes.bool.isRequired,
 }

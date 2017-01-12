@@ -73,7 +73,7 @@ const AreaPersonen = ({
     grid-column-gap: 10px;
     grid-row-gap: 2px;
     padding: 8px;
-    align-items: ${isPrintPreview ? 'flex-start' : 'end'};
+    align-items: ${isPrintPreview ? 'flex-start' : 'center'};
   `
   const Title = styled.div`
     font-weight: 900;
@@ -88,10 +88,16 @@ const AreaPersonen = ({
   `
   const Verantwortlich = styled.div`
     grid-column: ${isPrintPreview ? '1' : '1 / span 1'};
-    display: ${isPrintPreview ? 'none' : 'inherit'}
+    display: ${isPrintPreview ? 'none' : 'inherit'};
   `
   const VerantwortlichName = styled.div`
     grid-column: ${isPrintPreview ? '1' : '2 / span 1'};
+    font-size: ${isPrintPreview ? '10px' : '12px'};
+  `
+  const StyledFormcontrolStatic = styled(FormControl.Static)`
+    padding-top: ${isPrintPreview ? '2px' : '9px'};
+    padding-bottom: ${isPrintPreview ? '2px' : '7px'};
+    min-height: ${isPrintPreview ? 0 : '35px'};
   `
 
   return (
@@ -117,9 +123,9 @@ const AreaPersonen = ({
           </FormControl>
         </Verantwortlich>
         <VerantwortlichName>
-          <FormControl.Static>
+          <StyledFormcontrolStatic>
             {verantwortlichData(geschaeft, interneOptions, isPrintPreview)}
-          </FormControl.Static>
+          </StyledFormcontrolStatic>
         </VerantwortlichName>
         <Subtitle>
           Interne Kontakte

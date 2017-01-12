@@ -7,18 +7,14 @@ import createOptions from '../../src/createOptions'
 const AreaNummern = ({
   aktenstandortOptions,
   geschaeft,
-  wrapperClass,
+  viewIsNarrow,
   nrOfGFields,
   change,
   blur,
   isPrintPreview,
 }) => {
   const styles = isPrintPreview ? pdfStyles : regularStyles
-  const tabsToAdd = (
-    wrapperClass === styles.wrapperNarrow ?
-    0 :
-    nrOfGFields
-  )
+  const tabsToAdd = viewIsNarrow ? 0 : nrOfGFields
 
   return (
     <div className={styles.areaNummern}>
@@ -54,7 +50,7 @@ const AreaNummern = ({
           onBlur={blur}
           bsSize="small"
           tabIndex={1 + tabsToAdd}
-          autoFocus={wrapperClass === styles.wrapperNarrow}
+          autoFocus={viewIsNarrow}
         />
       </div>
       <div className={styles.labelJahre}>
@@ -243,7 +239,7 @@ AreaNummern.propTypes = {
   geschaeft: PropTypes.object.isRequired,
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,
-  wrapperClass: PropTypes.string.isRequired,
+  viewIsNarrow: PropTypes.bool.isRequired,
   nrOfGFields: PropTypes.number.isRequired,
   isPrintPreview: PropTypes.bool.isRequired,
 }

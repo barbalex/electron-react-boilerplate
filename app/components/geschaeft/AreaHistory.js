@@ -38,7 +38,6 @@ const AreaHistory = ({
     margin-top: ${isPrintPreview ? 0 : '10px'};
     text-align: right;
   `
-  console.log(`AreaHistory: isPrintPreview:`, isPrintPreview)
 
   return (
     <Container>
