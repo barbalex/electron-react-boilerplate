@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel } from 'react-bootstrap'
 import Textarea from 'react-textarea-autosize'
+
 import regularStyles from './areaGeschaeft.css'
 import pdfStyles from './areaGeschaeftPdf.css'
 import createOptions from '../../src/createOptions'
@@ -217,9 +218,9 @@ AreaGeschaeft.displayName = 'AreaGeschaeft'
  */
 AreaGeschaeft.propTypes = {
   geschaeft: PropTypes.object.isRequired,
-  statusOptions: PropTypes.array,
-  abteilungOptions: PropTypes.array,
-  geschaeftsartOptions: PropTypes.array,
+  statusOptions: PropTypes.array.isRequired,
+  abteilungOptions: PropTypes.array.isRequired,
+  geschaeftsartOptions: PropTypes.array.isRequired,
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,
   viewIsNarrow: PropTypes.bool.isRequired,
