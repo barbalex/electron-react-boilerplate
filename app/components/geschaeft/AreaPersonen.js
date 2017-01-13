@@ -53,6 +53,74 @@ const verantwortlichData = (geschaeft, interneOptions, isPrintPreview) => {
   return <span>{`${name}${abt}${telefon}`}</span>
 }
 
+const ContainerBase = styled.div`
+  grid-area: areaPersonen;
+`
+const ContainerView = styled(ContainerBase)`
+  background-color: rgb(246, 255, 245);
+`
+const ContainerPrint = styled(ContainerBase)`
+  border: 1px solid #CCC;
+  border-bottom: none;
+  border-left: none;
+`
+const AreaPersonenDivBase = styled.div`
+  display: grid;
+  grid-column-gap: 10px;
+  grid-row-gap: 2px;
+  padding: 8px;
+`
+const AreaPersonenDivView = styled(AreaPersonenDivBase)`
+  background-color: rgb(246, 255, 245);
+  grid-template-columns: 260px calc((100% - 10px) - 260px);
+  align-items: center;
+`
+const AreaPersonenDivPrint = styled(AreaPersonenDivBase)`
+  grid-template-columns: 100%;
+  align-items: flex-start;
+`
+const Title = styled.div`
+  font-weight: 900;
+  grid-column: 1 / span 2;
+`
+const SubtitleBase = styled.div`
+  font-weight: 900;
+`
+const SubtitleView = styled(SubtitleBase)`
+  font-size: 12px;
+  margin-top: 5px;
+  grid-column: 1 / span 2;
+`
+const SubtitlePrint = styled(SubtitleBase)`
+  font-size: 10px;
+  margin-top: 2px;
+  grid-column: 1;
+`
+const VerantwortlichView = styled.div`
+  grid-column: 1 / span 1;
+`
+const VerantwortlichPrint = styled.div`
+  grid-column: 1;
+  display: none;
+`
+const VerantwortlichNameView = styled.div`
+  grid-column: 2 / span 1;
+  font-size: 12px;
+`
+const VerantwortlichNamePrint = styled.div`
+  grid-column: 1;
+  font-size: 10px;
+`
+const StyledFormcontrolStaticView = styled(FormControl.Static)`
+  padding-top: 9px;
+  padding-bottom: 7px;
+  min-height: 35px;
+`
+const StyledFormcontrolStaticPrint = styled(FormControl.Static)`
+  padding-top: 2px;
+  padding-bottom: 2px;
+`
+
 const AreaPersonen = ({
   geschaeft,
   nrOfFieldsBeforePersonen = 0,
@@ -61,46 +129,12 @@ const AreaPersonen = ({
   interneOptions,
   isPrintPreview,
 }) => {
-  const Container = styled.div`
-    grid-area: areaPersonen;
-    background-color: ${isPrintPreview ? 'inherit' : 'rgb(246, 255, 245)'};
-    border: ${isPrintPreview ? '1px solid #CCC' : 'inherit'};
-    border-bottom: ${isPrintPreview ? 'none' : 'inherit'};
-    border-left: ${isPrintPreview ? 'none' : 'inherit'};
-  `
-  const AreaPersonenDiv = styled.div`
-    background-color: ${isPrintPreview ? 'inherit' : 'rgb(246, 255, 245)'};
-    display: grid;
-    grid-template-columns: ${isPrintPreview ? '100%' : '260px calc((100% - 10px) - 260px)'};
-    grid-column-gap: 10px;
-    grid-row-gap: 2px;
-    padding: 8px;
-    align-items: ${isPrintPreview ? 'flex-start' : 'center'};
-  `
-  const Title = styled.div`
-    font-weight: 900;
-    font-size: ${isPrintPreview ? '16px' : '16px'};
-    grid-column: 1 / span 2;
-  `
-  const Subtitle = styled.div`
-    font-weight: 900;
-    font-size: ${isPrintPreview ? '10px' : '12px'};
-    margin-top: ${isPrintPreview ? '2px' : '5px'};
-    grid-column: ${isPrintPreview ? '1' : '1 / span 2'};
-  `
-  const Verantwortlich = styled.div`
-    grid-column: ${isPrintPreview ? '1' : '1 / span 1'};
-    display: ${isPrintPreview ? 'none' : 'inherit'};
-  `
-  const VerantwortlichName = styled.div`
-    grid-column: ${isPrintPreview ? '1' : '2 / span 1'};
-    font-size: ${isPrintPreview ? '10px' : '12px'};
-  `
-  const StyledFormcontrolStatic = styled(FormControl.Static)`
-    padding-top: ${isPrintPreview ? '2px' : '9px'};
-    padding-bottom: ${isPrintPreview ? '2px' : '7px'};
-    min-height: ${isPrintPreview ? 0 : '35px'};
-  `
+  const Container = isPrintPreview ? ContainerPrint : ContainerView
+  const AreaPersonenDiv = isPrintPreview ? AreaPersonenDivPrint : AreaPersonenDivView
+  const Subtitle = isPrintPreview ? SubtitlePrint : SubtitleView
+  const Verantwortlich = isPrintPreview ? VerantwortlichPrint : VerantwortlichView
+  const VerantwortlichName = isPrintPreview ? VerantwortlichNamePrint : VerantwortlichNameView
+  const StyledFormcontrolStatic = isPrintPreview ? StyledFormcontrolStaticPrint : StyledFormcontrolStaticView
 
   return (
     <Container>
