@@ -65,43 +65,31 @@ const LabelNrDiv = styled.div`
   bottom: 1px;
 `
 const Slash = styled.div`
+  margin-top: ${(props) => (props.isPrintPreview ? '-3px' : '2px')};
+  font-size: ${(props) => (props.isPrintPreview ? '18px' : '22px')};
+  height: ${(props) => (props.isPrintPreview ? '17px' : 'auto')};
   color: #757575;
   margin-left: 1px;
 `
 const SlashAwel = styled(Slash)`
-  margin-top: ${(props) => (props.isPrintPreview ? '-3px' : '2px')};
-  font-size: ${(props) => (props.isPrintPreview ? '18px' : '22px')};
-  height: ${(props) => (props.isPrintPreview ? '17px' : 'auto')};
   grid-area: slashAwel;
 `
 const SlashBdv = styled(Slash)`
-  margin-top: ${(props) => (props.isPrintPreview ? '-3px' : '2px')};
-  font-size: ${(props) => (props.isPrintPreview ? '18px' : '22px')};
-  height: ${(props) => (props.isPrintPreview ? '17px' : 'auto')};
   grid-area: slashBdv;
 `
 const SlashKr = styled(Slash)`
-  margin-top: ${(props) => (props.isPrintPreview ? '-3px' : '2px')};
-  font-size: ${(props) => (props.isPrintPreview ? '18px' : '22px')};
-  height: ${(props) => (props.isPrintPreview ? '17px' : 'auto')};
   grid-area: slashKr;
 `
 const SlashBvv = styled(Slash)`
-  margin-top: ${(props) => (props.isPrintPreview ? '-3px' : '2px')};
-  font-size: ${(props) => (props.isPrintPreview ? '18px' : '22px')};
-  height: ${(props) => (props.isPrintPreview ? '17px' : 'auto')};
   grid-area: slashBvv;
 `
 const SlashRrb = styled(Slash)`
-  margin-top: ${(props) => (props.isPrintPreview ? '-3px' : '2px')};
-  font-size: ${(props) => (props.isPrintPreview ? '18px' : '22px')};
-  height: ${(props) => (props.isPrintPreview ? '17px' : 'auto')};
   grid-area: slashRrb;
 `
 const LabelHorizontal = styled(ControlLabel)`
   margin-top: ${(props) => (props.isPrintPreview ? 0 : '11px')};
   text-align: right;
-  font-size: ${(props) => (props.isPrintPreview ? '10px' : '11px')};
+  font-size: ${(props) => (props.isPrintPreview ? '10px !important' : '11px')};
   height: ${(props) => (props.isPrintPreview ? '17px' : 'auto')};
 `
 const AreaNummernTitle = styled.div`
@@ -176,13 +164,18 @@ const FieldEntscheidRrbJahr = styled(Field)`
   grid-area: fieldEntscheidRrbJahr;
 `
 const FieldAktenstandort = styled(Field)`
+  height: ${(props) => (props.isPrintPreview ? '29px' : 'auto')};
   grid-area: fieldAktenstandort;
   font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
   select, label {
     font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
   }
+  select {
+    height: ${(props) => (props.isPrintPreview ? '15px !important' : '34px')};
+  }
 `
 const FieldAktennummer = styled(Field)`
+  height: ${(props) => (props.isPrintPreview ? '29px' : 'auto')};
   grid-area: fieldAktennummer;
   font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
   input, label {
@@ -207,8 +200,8 @@ const AreaNummern = ({
       <AreaNummernTitle>
         Nummern
       </AreaNummernTitle>
-      <LabelNr isPrintPreview={isPrintPreview}>
-        <LabelNrDiv isPrintPreview={isPrintPreview}>
+      <LabelNr>
+        <LabelNrDiv>
           Nr.
         </LabelNrDiv>
       </LabelNr>
@@ -238,8 +231,8 @@ const AreaNummern = ({
           autoFocus={viewIsNarrow}
         />
       </FieldGekoNr>
-      <LabelJahre isPrintPreview={isPrintPreview}>
-        <LabelNrDiv isPrintPreview={isPrintPreview}>
+      <LabelJahre>
+        <LabelNrDiv>
           Jahr
         </LabelNrDiv>
       </LabelJahre>
