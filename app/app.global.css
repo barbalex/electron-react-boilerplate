@@ -99,6 +99,9 @@ textarea {
     height: auto !important;
     overflow: visible !important;
   }
+  * {
+    transition: none !important;
+  }
 }
 
 .geschaeftPdf {

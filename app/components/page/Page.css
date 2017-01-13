@@ -11,7 +11,7 @@
 
   width: 29.7cm;
   height: 21cm;
-  padding: 2cm;
+  padding: 1.5cm;
 
   overflow-y: visible;
 }
@@ -40,7 +40,7 @@
     width: 29.7cm !important;
     height: 21cm !important;
     margin: 0 !important;
-    padding: 2cm !important;
+    padding: 1.5cm !important;
     overflow-y: hidden !important;
     /* no idea why this is not necessary: */
     /*page-break-after: always !important;

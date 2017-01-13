@@ -17,7 +17,7 @@ const Container = styled.div`
   overflow-y: auto;
   height: 100vh;
 
-  &@media print {
+  @media print {
     /* remove grey backgrond set for nice UI */
     background-color: #fff;
     /* with overflow auto an empty page is inserted between each page */
@@ -47,7 +47,7 @@ const PageContainer = styled.div`
 
   overflow-y: visible;
 
-  &@media print {
+  @media print {
     /**
      * something seems to change the measurements
      * if they are not repeated here using important
