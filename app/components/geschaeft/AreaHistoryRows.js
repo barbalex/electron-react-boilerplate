@@ -3,6 +3,38 @@ import styled from 'styled-components'
 
 import getHistoryOfGeschaeft from '../../src/getHistoryOfGeschaeft'
 
+
+const FieldsContainer = styled.div`
+  grid-area: areaHistoryFieldsContainer;
+  display: grid;
+  grid-template-columns: 100%;
+`
+const HistoryField = styled.div`
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: ${(props) => (props.isPrintPreview ? '35px calc(100% - 35px)' : '60px calc(100% - 60px)')};
+  grid-gap: 0;
+  border-bottom: thin solid #CECBCB;
+  padding-left: ${(props) => (props.isPrintPreview ? 0 : '13px')};
+  padding-top: ${(props) => (props.isPrintPreview ? '2px' : '10px')};
+  padding-bottom: ${(props) => (props.isPrintPreview ? '2px' : '10px')};
+  align-items: center;
+  font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+
+  &:first-of-type {
+    border-top: thin solid #CECBCB;
+  }
+  &:hover {
+    background-color: rgb(227, 232, 255);
+  }
+`
+const IdGeschaeft = styled.div`
+  grid-column: 1;
+`
+const Gegenstand = styled.div`
+  grid-column: 2;
+`
+
 const AreaHistoryRows = ({
   geschaefte,
   activeId,
@@ -13,41 +45,11 @@ const AreaHistoryRows = ({
   const history = getHistoryOfGeschaeft(geschaefte, activeId)
   // sort descending
   history.reverse()
-  const FieldsContainer = styled.div`
-    grid-area: areaHistoryFieldsContainer;
-    display: grid;
-    grid-template-columns: 100%;
-  `
-  const HistoryField = styled.div`
-    grid-column: 1;
-    display: grid;
-    grid-template-columns: ${isPrintPreview ? '35px calc(100% - 35px)' : '60px calc(100% - 60px)'};
-    grid-gap: 0;
-    border-bottom: thin solid #CECBCB;
-    padding-left: ${isPrintPreview ? 0 : '13px'};
-    padding-top: ${isPrintPreview ? '2px' : '10px'};
-    padding-bottom: ${isPrintPreview ? '2px' : '10px'};
-    align-items: center;
-    font-size: ${isPrintPreview ? '10px' : 'inherit'};
-
-    &:first-of-type {
-      border-top: thin solid #CECBCB;
-    }
-    &:hover {
-      background-color: rgb(227, 232, 255);
-    }
-  `
-  const IdGeschaeft = styled.div`
-    grid-column: 1;
-  `
-  const Gegenstand = styled.div`
-    grid-column: 2;
-  `
 
   return (
     <FieldsContainer>
       {
-        history.map((id, index) => {
+        history.map((id) => {
           const geschaeft = geschaefte.find(g =>
             g.idGeschaeft === id
           )
@@ -56,7 +58,7 @@ const AreaHistoryRows = ({
           }
           return (
             <HistoryField
-              key={index}
+              key={id}
               style={{
                 cursor: id === activeId ? 'default' : 'pointer'
               }}
@@ -65,6 +67,7 @@ const AreaHistoryRows = ({
                   return geschaeftToggleActivated(id)
                 }
               }}
+              isPrintPreview={isPrintPreview}
             >
               <IdGeschaeft>
                 {id}
