@@ -18,6 +18,8 @@
   grid-row-gap: 8px;
   padding: 8px;
   border: 1px solid #CCC;
+  border-bottom: none;
+  border-left: none;
 }
 
 .areaRechtsmittelTitle {

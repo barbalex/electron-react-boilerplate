@@ -15,6 +15,7 @@
   grid-row-gap: 1px;
   padding: 8px;
   border: 1px solid #CCC;
+  border-bottom: none;
   font-size: 10px;
 }
 

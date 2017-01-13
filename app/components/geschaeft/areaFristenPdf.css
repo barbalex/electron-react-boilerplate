@@ -11,6 +11,7 @@
   grid-gap: 2px;
   padding: 8px;
   border: 1px solid #CCC;
+  border-bottom: none;
 }
 
 .areaFristenTitle {

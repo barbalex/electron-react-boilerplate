@@ -111,6 +111,10 @@ textarea {
   background-color: transparent !important;
 }
 
+textarea::-webkit-scrollbar {
+  display: none;
+}
+
 .geschaeftPdf input,
 .geschaeftPdf textarea,
 .geschaeftPdf select {

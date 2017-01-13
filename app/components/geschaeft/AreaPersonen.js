@@ -65,6 +65,8 @@ const AreaPersonen = ({
     grid-area: areaPersonen;
     background-color: ${isPrintPreview ? 'inherit' : 'rgb(246, 255, 245)'};
     border: ${isPrintPreview ? '1px solid #CCC' : 'inherit'};
+    border-bottom: ${isPrintPreview ? 'none' : 'inherit'};
+    border-left: ${isPrintPreview ? 'none' : 'inherit'};
   `
   const AreaPersonenDiv = styled.div`
     background-color: ${isPrintPreview ? 'inherit' : 'rgb(246, 255, 245)'};

@@ -48,6 +48,8 @@ const AreaNummern = ({
       "labelEntscheidKr . fieldEntscheidKrNr slashKr fieldEntscheidKrJahr"
       "fieldAktenstandort fieldAktenstandort fieldAktenstandort . fieldAktennummer";
     border: 1px solid #CCC;
+    border-bottom: none;
+    border-left: none;
   `
   const Container = isPrintPreview ? ContainerPdf : ContainerView
   const Label = styled.div`
