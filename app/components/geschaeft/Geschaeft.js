@@ -42,6 +42,7 @@ class Geschaeft extends Component {
 
   change = (e) => {
     const {
+      geschaeft,
       activeId,
       geschaefteChangeState,
     } = this.props
@@ -52,7 +53,12 @@ class Geschaeft extends Component {
     } = e.target
     let { value } = e.target
     if (type === 'radio') {
-      value = dataset.value
+      // need to set null if existing value was clicked
+      if (geschaeft[name] === dataset.value) {
+        value = null
+      } else {
+        value = dataset.value
+      }
       // blur does not occur in radio
       this.blur(e)
     }
@@ -61,6 +67,7 @@ class Geschaeft extends Component {
 
   blur = (e) => {
     const {
+      geschaeft,
       activeId,
       changeGeschaeftInDb,
       geschaefteChangeState,
@@ -71,7 +78,14 @@ class Geschaeft extends Component {
       dataset,
     } = e.target
     let { value } = e.target
-    if (type === 'radio') value = dataset.value
+    if (type === 'radio') {
+      // need to set null if existing value was clicked
+      if (geschaeft[name] === dataset.value) {
+        value = null
+      } else {
+        value = dataset.value
+      }
+    }
     if (isDateField(name)) {
       if (validateDate(value)) {
         // if correct date, save to db
