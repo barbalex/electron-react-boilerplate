@@ -32,6 +32,7 @@ const Container = styled.div`
 `
 const PageContainer = styled.div`
   /* Divide single pages with some space and center all pages horizontally */
+  /* will be removed in @media print */
   margin: 1cm auto;
   /* Define a white paper background that sticks out from the darker overall background */
   background: #fff;
@@ -41,6 +42,7 @@ const PageContainer = styled.div`
   /* enable placing footer absolute */
   position: relative;
 
+  /* set dimensions */
   height: 29.7cm;
   width: 21cm;
   padding: 1.5cm;
@@ -70,7 +72,7 @@ const Footer = styled.div`
    * push down so it is never covered
    * by content
    */
-  bottom: 1.5cm;
+  bottom: 1.2cm;
 
   &p {
     position: relative;
