@@ -97,7 +97,7 @@ AreaParlVorstoss.displayName = 'AreaParlVorstoss'
 
 AreaParlVorstoss.propTypes = {
   geschaeft: PropTypes.object.isRequired,
-  parlVorstossTypOptions: PropTypes.array,
+  parlVorstossTypOptions: PropTypes.array.isRequired,
   nrOfFieldsBeforePv: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,

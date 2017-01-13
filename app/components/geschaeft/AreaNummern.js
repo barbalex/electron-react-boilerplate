@@ -413,7 +413,7 @@ const AreaNummern = ({
 AreaNummern.displayName = 'AreaNummern'
 
 AreaNummern.propTypes = {
-  aktenstandortOptions: PropTypes.array,
+  aktenstandortOptions: PropTypes.array.isRequired,
   geschaeft: PropTypes.object.isRequired,
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,

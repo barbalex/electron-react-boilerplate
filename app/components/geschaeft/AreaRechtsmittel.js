@@ -103,8 +103,8 @@ AreaRechtsmittel.displayName = 'AreaRechtsmittel'
 
 AreaRechtsmittel.propTypes = {
   geschaeft: PropTypes.object.isRequired,
-  rechtsmittelErledigungOptions: PropTypes.array,
-  rechtsmittelInstanzOptions: PropTypes.array,
+  rechtsmittelErledigungOptions: PropTypes.array.isRequired,
+  rechtsmittelInstanzOptions: PropTypes.array.isRequired,
   nrOfFieldsBeforePv: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,

@@ -42,7 +42,7 @@ AreaZuletztMutiert.displayName = 'AreaZuletztMutiert'
 
 AreaZuletztMutiert.propTypes = {
   geschaeft: PropTypes.object.isRequired,
-  interneOptions: PropTypes.array,
+  interneOptions: PropTypes.array.isRequired,
 }
 
 export default AreaZuletztMutiert

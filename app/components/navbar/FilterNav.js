@@ -222,8 +222,8 @@ FilterNav.propTypes = {
   geschaefteRemoveFilters: PropTypes.func.isRequired,
   geschaefteSortByFields: PropTypes.func.isRequired,
   geschaefteResetSort: PropTypes.func.isRequired,
-  filterFulltext: PropTypes.string,
-  username: PropTypes.string,
+  filterFulltext: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
   router: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,
