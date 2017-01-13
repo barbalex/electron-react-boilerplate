@@ -31,6 +31,55 @@ const titleText = (idKontakt, externeOptions) => {
   return `${data.name} ${data.vorname} entfernen`
 }
 
+
+const Container = styled.div`
+  grid-column: 1 / span 2;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 0;
+`
+const Row = styled.div`
+  grid-column: 1 / span 1;
+  display: grid;
+  grid-template-columns: ${(props) => (props.isPrintPreview ? 'calc(100% - 10px)' : 'calc(100% - 20px) 20px')};
+  grid-gap: 0;
+  padding: 3px;
+  margin-right: ${(props) => (props.isPrintPreview ? '9px' : 'inherit')};
+  align-items: center;
+  min-height: ${(props) => (props.isPrintPreview ? 0 : '35px')};
+  font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+  border-bottom: thin solid #CECBCB;
+  &:first-of-type {
+    border-top: thin solid #CECBCB;
+  }
+  &:hover {
+    background-color: rgba(208, 255, 202, 0.5);
+  }
+`
+const Field = styled.div`
+  grid-column: 1 / span 1;
+  /**
+   * prevent pushing of following kontakt
+   * when text breaks to next line
+   */
+  &p {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: ${(props) => (props.isPrintPreview ? 0 : '7px')};
+  }
+`
+const GlyphiconDiv = styled.div`
+  grid-column: 2 / span 1;
+  margin-top: -2px;
+  display: ${(props) => (props.isPrintPreview ? 'none' : 'inherit')};
+`
+const StyledGlyphicon = styled(Glyphicon)`
+  color: red;
+  font-size: 18px;
+  cursor: pointer;
+`
+
 const GeschaefteKontakteExtern = ({
   geschaefteKontakteExtern,
   activeId,
@@ -48,63 +97,19 @@ const GeschaefteKontakteExtern = ({
     )
     return `${intOption.name} ${intOption.vorname}`.toLowerCase()
   })
-  const Container = styled.div`
-    grid-column: 1 / span 2;
-    display: grid;
-    grid-template-columns: 100%;
-    grid-gap: 0;
-  `
-  const Row = styled.div`
-    grid-column: 1 / span 1;
-    display: grid;
-    grid-template-columns: ${isPrintPreview ? 'calc(100% - 10px)' : 'calc(100% - 20px) 20px'};
-    grid-gap: 0;
-    padding: 3px;
-    margin-right: ${isPrintPreview ? '9px' : 'inherit'};
-    align-items: center;
-    min-height: ${isPrintPreview ? 0 : '35px'};
-    font-size: ${isPrintPreview ? '10px' : 'inherit'};
-    border-bottom: thin solid #CECBCB;
-    &:first-of-type {
-      border-top: thin solid #CECBCB;
-    }
-    &:hover {
-      background-color: rgba(208, 255, 202, 0.5);
-    }
-  `
-  const Field = styled.div`
-    grid-column: 1 / span 1;
-    /**
-     * prevent pushing of following kontakt
-     * when text breaks to next line
-     */
-    &p {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      padding: ${isPrintPreview ? 0 : '7px'};
-    }
-  `
-  const GlyphiconDiv = styled.div`
-    grid-column: 2 / span 1;
-    margin-top: -2px;
-    display: ${isPrintPreview ? 'none' : 'inherit'};
-  `
-  const StyledGlyphicon = styled(Glyphicon)`
-    color: red;
-    font-size: 18px;
-    cursor: pointer;
-  `
 
   return (
     <Container>
       {
         gKISorted.map(gKE =>
-          <Row key={`${gKE.idGeschaeft}${gKE.idKontakt}`}>
-            <Field>
+          <Row
+            key={`${gKE.idGeschaeft}${gKE.idKontakt}`}
+            isPrintPreview={isPrintPreview}
+          >
+            <Field isPrintPreview={isPrintPreview}>
               {verantwortlichData(gKE, externeOptions)}
             </Field>
-            <GlyphiconDiv>
+            <GlyphiconDiv isPrintPreview={isPrintPreview}>
               <StyledGlyphicon
                 glyph="remove-circle"
                 onClick={() =>
@@ -123,8 +128,8 @@ const GeschaefteKontakteExtern = ({
 GeschaefteKontakteExtern.displayName = 'GeschaefteKontakteExtern'
 
 GeschaefteKontakteExtern.propTypes = {
-  externeOptions: PropTypes.array,
-  geschaefteKontakteExtern: PropTypes.array,
+  externeOptions: PropTypes.array.isRequired,
+  geschaefteKontakteExtern: PropTypes.array.isRequired,
   geschaeftKontaktExternRemove: PropTypes.func.isRequired,
   activeId: PropTypes.number.isRequired,
   isPrintPreview: PropTypes.bool.isRequired,

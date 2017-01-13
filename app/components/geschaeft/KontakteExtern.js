@@ -31,14 +31,15 @@ const optionsList = (
   const externeOptionsSorted = _.sortBy(externeOptionsFiltered, o =>
     o.nameVorname.toLowerCase()
   )
-  const options = externeOptionsSorted.map((o, index) =>
+  const options = externeOptionsSorted.map(o =>
     <option
-      key={index + 1}
+      key={o.id}
       value={o.id}
     >
       {o.nameVorname}
     </option>
   )
+
   options.unshift(
     <option
       key={0}
@@ -48,6 +49,24 @@ const optionsList = (
   return options
 }
 
+const Container = styled.div`
+  grid-column: 1 / span 2;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 0;
+`
+const RowFvDropdown = styled.div`
+  grid-column: 1 / span 1;
+  display: grid;
+  grid-template-columns: ${(props) => (props.isPrintPreview ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)')};
+  grid-gap: 4px;
+  margin-top: 5px;
+`
+const FvDropdown = styled.div`
+  grid-column: 1 / span 1;
+  display: ${(props) => (props.isPrintPreview ? 'none' : 'inherit')};
+`
+
 const GeschaefteKontakteExtern = ({
   geschaefteKontakteExtern,
   tabIndex,
@@ -55,62 +74,41 @@ const GeschaefteKontakteExtern = ({
   activeId,
   externeOptions,
   isPrintPreview,
-}) => {
-  const Container = styled.div`
-    grid-column: 1 / span 2;
-    display: grid;
-    grid-template-columns: 100%;
-    grid-gap: 0;
-  `
-  const RowFvDropdown = styled.div`
-    grid-column: 1 / span 1;
-    display: grid;
-    grid-template-columns: ${isPrintPreview ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)'};
-    grid-gap: 4px;
-    margin-top: 5px;
-  `
-  const FvDropdown = styled.div`
-    grid-column: 1 / span 1;
-    display: ${isPrintPreview ? 'none' : 'inherit'}
-  `
-
-  return (
-    <Container>
-      <KontakteExternItems />
-      <RowFvDropdown>
-        <FvDropdown>
-          <FormControl
-            componentClass="select"
-            bsSize="small"
-            onChange={e =>
-              onChangeNewKontaktExtern(
-                e,
-                geschaeftKontaktExternNewCreate,
-                activeId,
-              )
-            }
-            title="Neuen Kontakt hinzufügen"
-            tabIndex={tabIndex}
-          >
-            {
-              optionsList(
-                externeOptions,
-                geschaefteKontakteExtern,
-                activeId,
-              )
-            }
-          </FormControl>
-        </FvDropdown>
-      </RowFvDropdown>
-    </Container>
-  )
-}
+}) =>
+  <Container>
+    <KontakteExternItems />
+    <RowFvDropdown isPrintPreview={isPrintPreview}>
+      <FvDropdown isPrintPreview={isPrintPreview}>
+        <FormControl
+          componentClass="select"
+          bsSize="small"
+          onChange={e =>
+            onChangeNewKontaktExtern(
+              e,
+              geschaeftKontaktExternNewCreate,
+              activeId,
+            )
+          }
+          title="Neuen Kontakt hinzufügen"
+          tabIndex={tabIndex}
+        >
+          {
+            optionsList(
+              externeOptions,
+              geschaefteKontakteExtern,
+              activeId,
+            )
+          }
+        </FormControl>
+      </FvDropdown>
+    </RowFvDropdown>
+  </Container>
 
 GeschaefteKontakteExtern.displayName = 'GeschaefteKontakteExtern'
 
 GeschaefteKontakteExtern.propTypes = {
-  externeOptions: PropTypes.array,
-  geschaefteKontakteExtern: PropTypes.array,
+  externeOptions: PropTypes.array.isRequired,
+  geschaefteKontakteExtern: PropTypes.array.isRequired,
   geschaeftKontaktExternNewCreate: PropTypes.func.isRequired,
   activeId: PropTypes.number.isRequired,
   tabIndex: PropTypes.number.isRequired,

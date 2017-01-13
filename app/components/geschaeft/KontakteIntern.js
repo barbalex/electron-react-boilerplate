@@ -56,6 +56,23 @@ const optionsList = (
   )
   return options
 }
+const Container = styled.div`
+  grid-column: 1 / span 2;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 0;
+`
+const RowfVDropdown = styled.div`
+  grid-column: 1 / span 1;
+  display: grid;
+  grid-template-columns: ${(props) => (props.isPrintPreview ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)')};
+  grid-gap: 4px;
+  margin-top: 5px;
+`
+const FvDropdown = styled.div`
+  grid-column: 1 / span 1;
+  display: ${(props) => (props.isPrintPreview ? 'none' : 'inherit')};
+`
 
 const GeschaefteKontakteIntern = ({
   tabIndex,
@@ -64,62 +81,41 @@ const GeschaefteKontakteIntern = ({
   interneOptions,
   geschaefteKontakteIntern,
   isPrintPreview,
-}) => {
-  const Container = styled.div`
-    grid-column: 1 / span 2;
-    display: grid;
-    grid-template-columns: 100%;
-    grid-gap: 0;
-  `
-  const RowfVDropdown = styled.div`
-    grid-column: 1 / span 1;
-    display: grid;
-    grid-template-columns: ${isPrintPreview ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)'};
-    grid-gap: 4px;
-    margin-top: 5px;
-  `
-  const FvDropdown = styled.div`
-    grid-column: 1 / span 1;
-    display: ${isPrintPreview ? 'none' : 'inherit'};
-  `
-
-  return (
-    <Container>
-      <KontakteInternItems />
-      <RowfVDropdown>
-        <FvDropdown>
-          <FormControl
-            componentClass="select"
-            bsSize="small"
-            onChange={e =>
-              onChangeNewKontaktIntern(
-                e,
-                geschaeftKontaktInternNewCreate,
-                activeId,
-              )
-            }
-            title="Neuen Kontakt hinzufügen"
-            tabIndex={tabIndex}
-          >
-            {
-              optionsList(
-                interneOptions,
-                geschaefteKontakteIntern,
-                activeId,
-              )
-            }
-          </FormControl>
-        </FvDropdown>
-      </RowfVDropdown>
-    </Container>
-  )
-}
+}) =>
+  <Container>
+    <KontakteInternItems />
+    <RowfVDropdown isPrintPreview={isPrintPreview}>
+      <FvDropdown isPrintPreview={isPrintPreview}>
+        <FormControl
+          componentClass="select"
+          bsSize="small"
+          onChange={e =>
+            onChangeNewKontaktIntern(
+              e,
+              geschaeftKontaktInternNewCreate,
+              activeId,
+            )
+          }
+          title="Neuen Kontakt hinzufügen"
+          tabIndex={tabIndex}
+        >
+          {
+            optionsList(
+              interneOptions,
+              geschaefteKontakteIntern,
+              activeId,
+            )
+          }
+        </FormControl>
+      </FvDropdown>
+    </RowfVDropdown>
+  </Container>
 
 GeschaefteKontakteIntern.displayName = 'GeschaefteKontakteIntern'
 
 GeschaefteKontakteIntern.propTypes = {
-  interneOptions: PropTypes.array,
-  geschaefteKontakteIntern: PropTypes.array,
+  interneOptions: PropTypes.array.isRequired,
+  geschaefteKontakteIntern: PropTypes.array.isRequired,
   geschaeftKontaktInternNewCreate: PropTypes.func.isRequired,
   activeId: PropTypes.number.isRequired,
   tabIndex: PropTypes.number.isRequired,

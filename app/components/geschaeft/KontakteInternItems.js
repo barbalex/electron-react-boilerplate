@@ -25,6 +25,54 @@ const verantwortlichData = (gkI, interneOptions) => {
   return <Linkify>{string}</Linkify>
 }
 
+
+const Container = styled.div`
+  grid-column: 1 / span 2;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 0;
+`
+const Row = styled.div`
+  grid-column: 1 / span 1;
+  display: grid;
+  grid-template-columns: ${(props) => (props.isPrintPreview ? '100%' : 'calc(100% - 20px) 20px')};
+  grid-gap: 0;
+  padding: 3px;
+  margin-right: ${(props) => (props.isPrintPreview ? '9px' : 'inherit')};
+  align-items: center;
+  min-height: ${(props) => (props.isPrintPreview ? 0 : '35px')};
+  border-bottom: thin solid #CECBCB;
+  font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+  &:first-of-type  {
+    border-top: thin solid #CECBCB;
+  }
+  &:hover {
+    background-color: rgba(208, 255, 202, 0.5);
+  }
+`
+const Fv = styled.div`
+  grid-column: 1 / span 1;
+  /**
+   * prevent pushing of following kontakt
+   * when text breaks to next line
+   */
+  &p {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+`
+const DeleteGlyphiconDiv = styled.div`
+  grid-column: 2 / span 1;
+  margin-top: -2px;
+  display: ${(props) => (props.isPrintPreview ? 'none' : 'inherit')};
+`
+const RemoveGlyphicon = styled(Glyphicon)`
+  color: red;
+  font-size: 18px;
+  cursor: pointer;
+`
+
 const GeschaefteKontakteInternItems = ({
   geschaefteKontakteIntern,
   activeId,
@@ -43,52 +91,6 @@ const GeschaefteKontakteInternItems = ({
     const sort = `${intOption.name} ${intOption.vorname}, ${intOption.kurzzeichen}`
     return sort.toLowerCase()
   })
-  const Container = styled.div`
-    grid-column: 1 / span 2;
-    display: grid;
-    grid-template-columns: 100%;
-    grid-gap: 0;
-  `
-  const Row = styled.div`
-    grid-column: 1 / span 1;
-    display: grid;
-    grid-template-columns: ${isPrintPreview ? '100%' : 'calc(100% - 20px) 20px'};
-    grid-gap: 0;
-    padding: 3px;
-    margin-right: ${isPrintPreview ? '9px' : 'inherit'};
-    align-items: center;
-    min-height: ${isPrintPreview ? 0 : '35px'};
-    border-bottom: thin solid #CECBCB;
-    font-size: ${isPrintPreview ? '10px' : 'inherit'};
-    &:first-of-type  {
-      border-top: thin solid #CECBCB;
-    }
-    &:hover {
-      background-color: rgba(208, 255, 202, 0.5);
-    }
-  `
-  const Fv = styled.div`
-    grid-column: 1 / span 1;
-    /**
-     * prevent pushing of following kontakt
-     * when text breaks to next line
-     */
-    &p {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-  `
-  const DeleteGlyphiconDiv = styled.div`
-    grid-column: 2 / span 1;
-    margin-top: -2px;
-    display: ${isPrintPreview ? 'none' : 'inherit'};
-  `
-  const RemoveGlyphicon = styled(Glyphicon)`
-    color: red;
-    font-size: 18px;
-    cursor: pointer;
-  `
 
   return (
     <Container>
@@ -96,11 +98,12 @@ const GeschaefteKontakteInternItems = ({
         gkISorted.map(gkI =>
           <Row
             key={`${gkI.idGeschaeft}${gkI.idKontakt}`}
+            isPrintPreview={isPrintPreview}
           >
             <Fv>
               {verantwortlichData(gkI, interneOptions)}
             </Fv>
-            <DeleteGlyphiconDiv>
+            <DeleteGlyphiconDiv isPrintPreview={isPrintPreview}>
               <RemoveGlyphicon
                 glyph="remove-circle"
                 onClick={() => geschaeftKontaktInternRemove(activeId, gkI.idKontakt)}
