@@ -21,8 +21,8 @@ moment.locale('de')
 
 class Geschaeft extends Component {
   static propTypes = {
-    geschaeft: PropTypes.object,
-    activeId: PropTypes.number,
+    geschaeft: PropTypes.object.isRequired,
+    activeId: PropTypes.number.isRequired,
     geschaefteChangeState: PropTypes.func.isRequired,
     changeGeschaeftInDb: PropTypes.func.isRequired,
     config: PropTypes.object.isRequired,
