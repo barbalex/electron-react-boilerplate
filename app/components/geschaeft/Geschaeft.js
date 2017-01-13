@@ -51,6 +51,7 @@ class Geschaeft extends Component {
       name,
       dataset,
     } = e.target
+    console.log('change: e.target.name:', e.target.name)
     let { value } = e.target
     if (type === 'radio') {
       // need to set null if existing value was clicked
@@ -78,6 +79,7 @@ class Geschaeft extends Component {
       dataset,
     } = e.target
     let { value } = e.target
+    console.log('blur: e.target.name:', e.target.name)
     if (type === 'radio') {
       // need to set null if existing value was clicked
       if (geschaeft[name] === dataset.value) {
