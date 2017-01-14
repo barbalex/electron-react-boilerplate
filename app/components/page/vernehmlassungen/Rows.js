@@ -12,6 +12,7 @@ function isOdd(num) {
 const PageFristenRows = ({
   geschaeft,
   rowIndex,
+  interneOptions,
 }) => {
   const fristMitarbeiter = (
     geschaeft.fristMitarbeiter ?
@@ -64,6 +65,9 @@ const PageFristenRows = ({
     styles.tableBodyRowShaded :
     styles.tableBodyRow
   )
+
+  const verantwortlichRow = interneOptions.find(o => o.kurzzeichen === geschaeft.verantwortlich)
+  const verantwortlichName = verantwortlichRow ? `${verantwortlichRow.vorname} ${verantwortlichRow.name}` : ''
 
   return (
     <div
@@ -125,7 +129,7 @@ const PageFristenRows = ({
           {geschaeft.verantwortlich}
         </div>
         <div>
-          {geschaeft.verantwortlichVornameName}
+          {verantwortlichName}
         </div>
       </div>
     </div>
@@ -137,6 +141,7 @@ PageFristenRows.displayName = 'PageFristenRows'
 PageFristenRows.propTypes = {
   geschaeft: PropTypes.object.isRequired,
   rowIndex: PropTypes.number.isRequired,
+  interneOptions: PropTypes.array.isRequired,
 }
 
 export default PageFristenRows

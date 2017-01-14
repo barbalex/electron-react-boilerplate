@@ -13,6 +13,7 @@ const actions = Object.assign(
 
 function mapStateToProps(state, props) {
   const {
+    geschaefte,
     pages,
   } = state
   const {
@@ -30,7 +31,8 @@ function mapStateToProps(state, props) {
     geschaefteGefilterteIds,
     filterFields,
     sortFields,
-  } = state.geschaefte
+    interneOptions,
+  } = geschaefte
   const myGeschaefte = pages.pages[pageIndex].geschaefte
 
   return {
@@ -46,6 +48,7 @@ function mapStateToProps(state, props) {
     queryTitle,
     reportType,
     geschaefteGefilterteIds,
+    interneOptions,
   }
 }
 

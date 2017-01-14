@@ -29,6 +29,7 @@ const GeschaefteItem = ({
   geschaefte,
   geschaefteGefilterteIds,
   activeId,
+  interneOptions,
   path,
   geschaeftToggleActivated,
   index,
@@ -56,6 +57,9 @@ const GeschaefteItem = ({
   const dauerBisFristMitarbeiter = getDauerBisFristMitarbeiter(geschaeft)
   const statusFristInText = getStatusFristInText(dauerBisFristMitarbeiter)
   const statusFristIn = geschaeft.fristMitarbeiter ? statusFristInText : null
+
+  const verantwortlichRow = interneOptions.find(o => o.kurzzeichen === geschaeft.verantwortlich)
+  const verantwortlichName = verantwortlichRow ? `${verantwortlichRow.vorname} ${verantwortlichRow.name}` : ''
 
   return (
     <div
@@ -96,7 +100,7 @@ const GeschaefteItem = ({
       </div>
       <div className={styles.bodyColumnKontaktIntern}>
         <div>
-          {geschaeft.verantwortlichVornameName}
+          {verantwortlichName}
         </div>
         <div>
           {geschaeft.verantwortlich}
@@ -113,6 +117,7 @@ GeschaefteItem.propTypes = {
   geschaefteGefilterteIds: PropTypes.array.isRequired,
   geschaeftToggleActivated: PropTypes.func.isRequired,
   activeId: PropTypes.number,
+  interneOptions: PropTypes.array.isRequired,
   path: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   keyPassed: PropTypes.number.isRequired,

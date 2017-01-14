@@ -5,6 +5,7 @@
 import React, { Component, PropTypes } from 'react'
 import { FormGroup, FormControl } from 'react-bootstrap'
 import moment from 'moment'
+
 import styles from './Page.css'
 import FaelligeGeschaefteHeader from './faelligeGeschaefte/Header'
 import FaelligeGeschaefteRows from './faelligeGeschaefte/Rows'
@@ -21,6 +22,7 @@ class Page extends Component {
     pages: PropTypes.array.isRequired,
     geschaefte: PropTypes.array.isRequired,
     filterFields: PropTypes.array.isRequired,
+    interneOptions: PropTypes.array.isRequired,
     sortFields: PropTypes.array.isRequired,
     remainingGeschaefte: PropTypes.array.isRequired,
     geschaefteGefilterteIds: PropTypes.array.isRequired,
@@ -180,6 +182,7 @@ class Page extends Component {
     const {
       geschaefte,
       reportType,
+      interneOptions,
     } = this.props
 
     return geschaefte.map((geschaeft, index) => {
@@ -189,6 +192,7 @@ class Page extends Component {
             geschaeft={geschaeft}
             key={geschaeft.idGeschaeft}
             rowIndex={index}
+            interneOptions={interneOptions}
           />
         )
       }
@@ -202,6 +206,7 @@ class Page extends Component {
             geschaeft={geschaeft}
             key={geschaeft.idGeschaeft}
             rowIndex={index}
+            interneOptions={interneOptions}
           />
         )
       }
