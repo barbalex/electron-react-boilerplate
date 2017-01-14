@@ -269,22 +269,29 @@ export const geschaeftNewError = error => ({
 
 export const geschaeftRemove = idGeschaeft =>
   (dispatch, getState) => {
-    const { app, geschaefteKontakteIntern, geschaefteKontakteExtern } = getState()
+    const { app, geschaefteKontakteIntern, geschaefteKontakteExtern, geschaefte } = getState()
     deleteGeschaeft(app.db, idGeschaeft)
       .then(() => {
         dispatch(geschaeftRemoveDeleteIntended(idGeschaeft))
         dispatch(geschaeftDelete(idGeschaeft))
-        // need to delete geschaefteKontakteIntern and geschaefteKontakteExtern in store
+        // need to delete geschaefteKontakteIntern in store
         const geschaefteKontakteInternToDelete = geschaefteKontakteIntern.geschaefteKontakteIntern
           .filter(g => g.idGeschaeft === idGeschaeft)
         geschaefteKontakteInternToDelete.forEach(g =>
           dispatch(geschaefteKontakteInternActions.geschaeftKontaktInternDelete(idGeschaeft, g.idKontakt))
         )
+        // need to delete geschaefteKontakteExtern in store
         const geschaefteKontakteExternToDelete = geschaefteKontakteExtern.geschaefteKontakteExtern
           .filter(g => g.idGeschaeft === idGeschaeft)
         geschaefteKontakteExternToDelete.forEach(g =>
           dispatch(geschaefteKontakteExternActions.geschaeftKontaktExternDelete(idGeschaeft, g.idKontakt))
         )
+        // need to delete geKo in store
+        const gekoToRemove = geschaefte.geko.filter(g => g.idGeschaeft === idGeschaeft)
+        gekoToRemove.forEach(g => gekoRemove(idGeschaeft, g.gekoNr))
+        // need to delete links in store
+        const linksToRemove = geschaefte.links.filter(l => l.idGeschaeft === idGeschaeft)
+        linksToRemove.forEach(l => linkDelete(idGeschaeft, l.url))
       })
       .catch(error => dispatch(geschaeftDeleteError(error)))
   }
