@@ -293,8 +293,6 @@ export const geschaeftRemove = idGeschaeft =>
         )
         // need to delete links in store
         const linksToRemove = geschaefte.links.filter(l => l.idGeschaeft === idGeschaeft)
-        console.log('geschaefte.links:', geschaefte.links)
-        console.log('linksToRemove:', linksToRemove)
         linksToRemove.forEach(l =>
           dispatch(linkDelete(idGeschaeft, l.url))
         )

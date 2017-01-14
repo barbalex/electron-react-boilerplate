@@ -5,7 +5,7 @@ import GeschaefteItem from '../containers/GeschaefteItem'
 
 class Geschaefte extends Component {
   static propTypes = {
-    geschaefteGefilterteIds: PropTypes.array,
+    geschaefteGefilterteIds: PropTypes.array.isRequired,
     path: PropTypes.string.isRequired,
   }
 

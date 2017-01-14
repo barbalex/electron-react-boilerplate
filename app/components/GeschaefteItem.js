@@ -59,7 +59,7 @@ const GeschaefteItem = ({
   const statusFristIn = geschaeft.fristMitarbeiter ? statusFristInText : null
 
   const verantwortlichRow = interneOptions.find(o => o.kurzzeichen === geschaeft.verantwortlich)
-  const verantwortlichName = verantwortlichRow ? `${verantwortlichRow.vorname} ${verantwortlichRow.name}` : ''
+  const verantwortlichName = verantwortlichRow && verantwortlichRow.name ? `${verantwortlichRow.vorname} ${verantwortlichRow.name}` : ''
 
   return (
     <div
