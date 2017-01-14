@@ -23,7 +23,7 @@ const verwantwortlichOptions = (interneOptions) => {
       </option>
     )
   })
-  options.unshift(<option key={0} value="" />)
+  options.unshift(<option key={0} value={undefined} />)
   return options
 }
 
@@ -148,7 +148,7 @@ const AreaPersonen = ({
         <Verantwortlich>
           <FormControl
             componentClass="select"
-            value={geschaeft.verantwortlich || ''}
+            value={geschaeft.verantwortlich || undefined}
             name="verantwortlich"
             onChange={change}
             onBlur={blur}
