@@ -3,7 +3,9 @@
  */
 
 import React, { PropTypes } from 'react'
+
 import styles from './FaelligeGeschaefte.css'
+import shorten from '../../../src/shortenGegenstandField'
 
 function isOdd(num) {
   return num % 2
@@ -24,36 +26,18 @@ const PageFristenRows = ({
    * if a field contains more text than fits on a page
    * the page is (re-)created infinitely...
    */
-  const maxStringLength = 2000
-  let gegenstand = geschaeft.gegenstand
-  if (gegenstand && gegenstand.length > maxStringLength) {
-    gegenstand = gegenstand.substring(0, maxStringLength)
-    gegenstand += '... (Text für die Ausgabe gekürzt)'
-  }
-  let ausloeser = geschaeft.ausloeser
-  if (ausloeser && ausloeser.length > maxStringLength) {
-    ausloeser = ausloeser.substring(0, maxStringLength)
-    ausloeser += '... (Text für die Ausgabe gekürzt)'
-  }
-  let naechsterSchritt = ''
-  if (
-    geschaeft.naechsterSchritt &&
-    geschaeft.naechsterSchritt.length > 0 &&
-    geschaeft.naechsterSchritt.replace(/ /g, '')
-  ) {
-    naechsterSchritt += '=> '
-    if (naechsterSchritt.length > maxStringLength) {
-      naechsterSchritt += naechsterSchritt.substring(0, maxStringLength)
-      naechsterSchritt += '... (Text für die Ausgabe gekürzt)'
-    } else {
-      naechsterSchritt += geschaeft.naechsterSchritt
-    }
-  }
-  let details = geschaeft.details
-  if (details && details.length > maxStringLength) {
-    details = details.substring(0, maxStringLength)
-    details += '... (Text für die Ausgabe gekürzt)'
-  }
+  const totalString = `
+    ${geschaeft.gegenstand || ''}
+    ${geschaeft.ausloeser || ''}
+    ${geschaeft.details || ''}
+    ${geschaeft.naechsterSchritt || ''}
+  `
+  const maxStringLength = totalString.length > 2000 ? 700 : 2000
+  const gegenstand = shorten(geschaeft.gegenstand, '', maxStringLength)
+  const ausloeser = shorten(geschaeft.ausloeser, 'Auslöser', maxStringLength)
+  const naechsterSchritt = shorten(geschaeft.naechsterSchritt, 'Nächster Schritt', maxStringLength)
+  const details = shorten(geschaeft.details, 'Details', maxStringLength)
+
   let faelligkeitText = geschaeft.faelligkeitText
   if (faelligkeitText && faelligkeitText.length > maxStringLength) {
     faelligkeitText = faelligkeitText.substring(0, maxStringLength)

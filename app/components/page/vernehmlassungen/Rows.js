@@ -3,22 +3,12 @@
  */
 
 import React, { PropTypes } from 'react'
+
 import styles from './vernehmlassungen.css'
+import shorten from '../../../src/shortenGegenstandField'
 
 const isOdd = (num) =>
   num % 2
-
-const shorten = (valuePassed, label, maxStringLength) => {
-  let value = valuePassed
-  if (value) {
-    value = label ? `${label}: ` : ''
-    value += valuePassed.substring(0, maxStringLength)
-    if (valuePassed.length > maxStringLength) {
-      value += '... (Text gekürzt)'
-    }
-  }
-  return value
-}
 
 
 const PageFristenRows = ({
