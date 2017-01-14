@@ -4,11 +4,23 @@ export default function (db, idGeschaeft) {
       DELETE FROM
         geschaefte
       WHERE
-        idGeschaeft = ${idGeschaeft}`
+        idGeschaeft = $id`
 
-    db.run(sql, (error) => {
-      if (error) reject(error)
-      resolve(true)
-    })
+    db.run(
+      'PRAGMA foreign_keys = ON;',
+      (error) => {
+        if (error) reject(error)
+        db.run(
+          sql,
+          {
+            $id: idGeschaeft,
+          },
+          (err) => {
+            if (err) reject(err)
+            resolve(true)
+          }
+        )
+      }
+    )
   })
 }

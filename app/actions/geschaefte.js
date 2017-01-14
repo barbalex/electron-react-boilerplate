@@ -16,6 +16,8 @@ import updateLink from '../src/updateLink'
 import filterGeschaefte from '../src/filterGeschaefte'
 import sortIdsBySortFields from '../src/sortIdsBySortFields'
 import * as pagesActions from './pages'
+import * as geschaefteKontakteInternActions from './geschaefteKontakteIntern'
+import * as geschaefteKontakteExternActions from './geschaefteKontakteExtern'
 import newGeschaeftInDb from '../src/newGeschaeftInDb'
 import newGekoInDb from '../src/newGekoInDb'
 import newLinkInDb from '../src/newLinkInDb'
@@ -267,11 +269,22 @@ export const geschaeftNewError = error => ({
 
 export const geschaeftRemove = idGeschaeft =>
   (dispatch, getState) => {
-    const { app } = getState()
+    const { app, geschaefteKontakteIntern, geschaefteKontakteExtern } = getState()
     deleteGeschaeft(app.db, idGeschaeft)
       .then(() => {
         dispatch(geschaeftRemoveDeleteIntended(idGeschaeft))
         dispatch(geschaeftDelete(idGeschaeft))
+        // need to delete geschaefteKontakteIntern and geschaefteKontakteExtern in store
+        const geschaefteKontakteInternToDelete = geschaefteKontakteIntern.geschaefteKontakteIntern
+          .filter(g => g.idGeschaeft === idGeschaeft)
+        geschaefteKontakteInternToDelete.forEach(g =>
+          dispatch(geschaefteKontakteInternActions.geschaeftKontaktInternDelete(idGeschaeft, g.idKontakt))
+        )
+        const geschaefteKontakteExternToDelete = geschaefteKontakteExtern.geschaefteKontakteExtern
+          .filter(g => g.idGeschaeft === idGeschaeft)
+        geschaefteKontakteExternToDelete.forEach(g =>
+          dispatch(geschaefteKontakteExternActions.geschaeftKontaktExternDelete(idGeschaeft, g.idKontakt))
+        )
       })
       .catch(error => dispatch(geschaeftDeleteError(error)))
   }
