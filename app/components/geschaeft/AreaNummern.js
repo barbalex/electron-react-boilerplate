@@ -383,7 +383,6 @@ const AreaNummern = ({
           value={geschaeft.aktenstandort || ''}
           name="aktenstandort"
           onChange={change}
-          onBlur={blur}
           bsSize="small"
           tabIndex={12 + tabsToAdd}
         >

@@ -13,7 +13,6 @@ const AreaParlVorstoss = ({
   parlVorstossTypOptions,
   nrOfFieldsBeforePv,
   change,
-  blur,
   isPrintPreview,
 }) => {
   const styles = isPrintPreview ? pdfStyles : regularStyles
@@ -32,7 +31,6 @@ const AreaParlVorstoss = ({
           value={geschaeft.parlVorstossTyp || ''}
           name="parlVorstossTyp"
           onChange={change}
-          onBlur={blur}
           bsSize="small"
           tabIndex={1 + nrOfFieldsBeforePv}
         >
@@ -100,7 +98,6 @@ AreaParlVorstoss.propTypes = {
   parlVorstossTypOptions: PropTypes.array.isRequired,
   nrOfFieldsBeforePv: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
-  blur: PropTypes.func.isRequired,
   isPrintPreview: PropTypes.bool.isRequired,
 }
 

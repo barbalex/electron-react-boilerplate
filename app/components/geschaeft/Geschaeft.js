@@ -122,6 +122,7 @@ class Geschaeft extends Component {
       geschaeft,
       activeId,
       geschaefteChangeState,
+      changeGeschaeftInDb,
     } = this.props
     const {
       type,
@@ -137,14 +138,16 @@ class Geschaeft extends Component {
         value = dataset.value
       }
       // blur does not occur in radio
-      this.blur(e)
+      changeGeschaeftInDb(activeId, name, value)
+    }
+    if (type === 'select-one') {
+      changeGeschaeftInDb(activeId, name, value)
     }
     geschaefteChangeState(activeId, name, value)
   }
 
   blur = (e) => {
     const {
-      geschaeft,
       activeId,
       changeGeschaeftInDb,
       geschaefteChangeState,
@@ -152,31 +155,24 @@ class Geschaeft extends Component {
     const {
       type,
       name,
-      dataset,
     } = e.target
-    let { value } = e.target
-    if (type === 'radio') {
-      // need to set null if existing value was clicked
-      if (geschaeft[name] === dataset.value) {
-        value = null
+    const { value } = e.target
+    if (type !== 'radio' && type !== 'select-one') {
+      if (isDateField(name)) {
+        if (validateDate(value)) {
+          // if correct date, save to db
+          changeGeschaeftInDb(activeId, name, value)
+        }
+        // else: give user hint
+        let value2 = ''
+        if (value) value2 = moment(value, 'DD.MM.YYYY').format('DD.MM.YYYY')
+        if (value2.includes('Invalid date')) {
+          value2 = value2.replace('Invalid date', 'Format: DD.MM.YYYY')
+        }
+        geschaefteChangeState(activeId, name, value2)
       } else {
-        value = dataset.value
-      }
-    }
-    if (isDateField(name)) {
-      if (validateDate(value)) {
-        // if correct date, save to db
         changeGeschaeftInDb(activeId, name, value)
       }
-      // else: give user hint
-      let value2 = ''
-      if (value) value2 = moment(value, 'DD.MM.YYYY').format('DD.MM.YYYY')
-      if (value2.includes('Invalid date')) {
-        value2 = value2.replace('Invalid date', 'Format: DD.MM.YYYY')
-      }
-      geschaefteChangeState(activeId, name, value2)
-    } else {
-      changeGeschaeftInDb(activeId, name, value)
     }
   }
 

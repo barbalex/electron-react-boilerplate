@@ -151,7 +151,6 @@ const AreaPersonen = ({
             value={geschaeft.verantwortlich || undefined}
             name="verantwortlich"
             onChange={change}
-            onBlur={blur}
             bsSize="small"
             tabIndex={1 + nrOfFieldsBeforePersonen}
           >

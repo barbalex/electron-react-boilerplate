@@ -35,7 +35,6 @@ const AreaRechtsmittel = ({
           value={geschaeft.rechtsmittelInstanz || ''}
           name="rechtsmittelInstanz"
           onChange={change}
-          onBlur={blur}
           bsSize="small"
           tabIndex={1 + nrOfFieldsBeforePv}
         >
@@ -75,7 +74,6 @@ const AreaRechtsmittel = ({
           value={geschaeft.rechtsmittelErledigung || ''}
           name="rechtsmittelErledigung"
           onChange={change}
-          onBlur={blur}
           bsSize="small"
           tabIndex={4 + nrOfFieldsBeforePv}
         >

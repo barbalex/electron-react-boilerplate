@@ -288,10 +288,16 @@ export const geschaeftRemove = idGeschaeft =>
         )
         // need to delete geKo in store
         const gekoToRemove = geschaefte.geko.filter(g => g.idGeschaeft === idGeschaeft)
-        gekoToRemove.forEach(g => gekoRemove(idGeschaeft, g.gekoNr))
+        gekoToRemove.forEach(g =>
+          dispatch(gekoRemove(idGeschaeft, g.gekoNr))
+        )
         // need to delete links in store
         const linksToRemove = geschaefte.links.filter(l => l.idGeschaeft === idGeschaeft)
-        linksToRemove.forEach(l => linkDelete(idGeschaeft, l.url))
+        console.log('geschaefte.links:', geschaefte.links)
+        console.log('linksToRemove:', linksToRemove)
+        linksToRemove.forEach(l =>
+          dispatch(linkDelete(idGeschaeft, l.url))
+        )
       })
       .catch(error => dispatch(geschaeftDeleteError(error)))
   }

@@ -89,7 +89,6 @@ const AreaGeschaeft = ({
             value={geschaeft.geschaeftsart || ''}
             name="geschaeftsart"
             onChange={change}
-            onBlur={blur}
             bsSize="small"
             tabIndex={4 + tabsToAdd}
           >
@@ -110,7 +109,6 @@ const AreaGeschaeft = ({
             value={geschaeft.status || ''}
             name="status"
             onChange={change}
-            onBlur={blur}
             bsSize="small"
             tabIndex={5 + tabsToAdd}
           >
@@ -131,7 +129,6 @@ const AreaGeschaeft = ({
             value={geschaeft.abteilung || ''}
             name="abteilung"
             onChange={change}
-            onBlur={blur}
             bsSize="small"
             tabIndex={6 + tabsToAdd}
           >
