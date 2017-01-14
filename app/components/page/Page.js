@@ -23,6 +23,7 @@ class Page extends Component {
     geschaefte: PropTypes.array.isRequired,
     filterFields: PropTypes.array.isRequired,
     interneOptions: PropTypes.array.isRequired,
+    geko: PropTypes.array.isRequired,
     sortFields: PropTypes.array.isRequired,
     remainingGeschaefte: PropTypes.array.isRequired,
     geschaefteGefilterteIds: PropTypes.array.isRequired,
@@ -183,6 +184,7 @@ class Page extends Component {
       geschaefte,
       reportType,
       interneOptions,
+      geko,
     } = this.props
 
     return geschaefte.map((geschaeft, index) => {
@@ -207,6 +209,7 @@ class Page extends Component {
             key={geschaeft.idGeschaeft}
             rowIndex={index}
             interneOptions={interneOptions}
+            geko={geko}
           />
         )
       }

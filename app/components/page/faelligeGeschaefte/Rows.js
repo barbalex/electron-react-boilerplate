@@ -74,7 +74,7 @@ const PageFristenRows = ({
           styles.tableBodyCell,
         ].join(' ')}
       >
-        <div className={styles.fieldGegenstand}>
+        <div className={styles.fieldBold}>
           {gegenstand}
         </div>
         <div>

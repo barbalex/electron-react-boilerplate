@@ -29,13 +29,13 @@
   padding: 2px;
 }
 
-.fieldGegenstand {
+.fieldBold {
   font-weight: 700;
 }
 
 .columnIdGeschaeft {
-  min-width: 50px;
-  max-width: 50px;
+  min-width: 60px;
+  max-width: 60px;
 }
 
 .columnGegenstand {

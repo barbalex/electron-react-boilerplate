@@ -32,6 +32,7 @@ function mapStateToProps(state, props) {
     filterFields,
     sortFields,
     interneOptions,
+    geko,
   } = geschaefte
   const myGeschaefte = pages.pages[pageIndex].geschaefte
 
@@ -49,6 +50,7 @@ function mapStateToProps(state, props) {
     reportType,
     geschaefteGefilterteIds,
     interneOptions,
+    geko,
   }
 }
 

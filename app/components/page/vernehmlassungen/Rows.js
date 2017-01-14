@@ -11,10 +11,11 @@ const isOdd = (num) =>
   num % 2
 
 
-const PageFristenRows = ({
+const PageVernehmlassungenRows = ({
   geschaeft,
   rowIndex,
   interneOptions,
+  geko,
 }) => {
   const fristMitarbeiter = (
     geschaeft.fristMitarbeiter ?
@@ -59,6 +60,13 @@ const PageFristenRows = ({
     '(kein Name)'
   )
 
+  const gekoValues = geko.filter(g => g.idGeschaeft === geschaeft.idGeschaeft).map(g => g.gekoNr)
+  const gekoValue = gekoValues.map(val => (
+    <div>
+      {val}
+    </div>
+  ))
+
   return (
     <div
       key={geschaeft.idGeschaeft}
@@ -70,9 +78,15 @@ const PageFristenRows = ({
           styles.tableBodyCell,
         ].join(' ')}
       >
-        <div>
+        <div className={styles.fieldBold}>
           {geschaeft.idGeschaeft}
         </div>
+        {
+          gekoValue.length > 0 &&
+          <div className={styles.verticallyStackedFields}>
+            {gekoValue}
+          </div>
+        }
       </div>
       <div
         className={[
@@ -80,7 +94,7 @@ const PageFristenRows = ({
           styles.tableBodyCell,
         ].join(' ')}
       >
-        <div className={styles.fieldGegenstand}>
+        <div className={styles.fieldBold}>
           {gegenstand}
         </div>
         {
@@ -114,7 +128,7 @@ const PageFristenRows = ({
           styles.tableBodyCell,
         ].join(' ')}
       >
-        <div className={styles.fieldGegenstand}>
+        <div className={styles.fieldBold}>
           {geschaeft.status}
         </div>
         {
@@ -136,7 +150,7 @@ const PageFristenRows = ({
           styles.tableBodyCell,
         ].join(' ')}
       >
-        <div className={styles.fieldGegenstand}>
+        <div className={styles.fieldBold}>
           {`${verantwortlichName}${geschaeft.verantwortlich ? ` (${geschaeft.verantwortlich})` : ''}`}
         </div>
         {
@@ -150,12 +164,13 @@ const PageFristenRows = ({
   )
 }
 
-PageFristenRows.displayName = 'PageFristenRows'
+PageVernehmlassungenRows.displayName = 'PageVernehmlassungenRows'
 
-PageFristenRows.propTypes = {
+PageVernehmlassungenRows.propTypes = {
   geschaeft: PropTypes.object.isRequired,
   rowIndex: PropTypes.number.isRequired,
   interneOptions: PropTypes.array.isRequired,
+  geko: PropTypes.array.isRequired,
 }
 
-export default PageFristenRows
+export default PageVernehmlassungenRows
