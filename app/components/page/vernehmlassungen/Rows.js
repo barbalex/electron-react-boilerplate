@@ -61,11 +61,11 @@ const PageVernehmlassungenRows = ({
   )
 
   const gekoValues = geko.filter(g => g.idGeschaeft === geschaeft.idGeschaeft).map(g => g.gekoNr)
-  const gekoValue = gekoValues.map(val => (
-    <div>
+  const gekoValue = gekoValues.map(val =>
+    <div key={val}>
       {val}
     </div>
-  ))
+  )
 
   return (
     <div

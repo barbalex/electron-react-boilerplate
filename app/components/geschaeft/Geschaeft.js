@@ -21,6 +21,8 @@ moment.locale('de')
 
 const ScrollContainerRegular = styled.div`
   height: calc(100vh - 52px);
+  overflow-y: auto;
+  overflow-x: hidden;
 `
 const ScrollContainerPdf = styled.div`
   overflow: visible;
