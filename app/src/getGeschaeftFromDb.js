@@ -4,7 +4,7 @@ export default function (db, idGeschaeft) {
       SELECT
         *
       FROM
-        v_geschaefte
+        geschaefte
       WHERE
         idGeschaeft = ${idGeschaeft}`
 

@@ -7,7 +7,7 @@ export default function (db) {
       SELECT
         *
       FROM
-        v_geschaefte
+        geschaefte
       ORDER BY
         idGeschaeft DESC`
 
