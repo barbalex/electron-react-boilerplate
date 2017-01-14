@@ -45,15 +45,13 @@ const ContainerPrint = styled(ContainerBase)`
   border-bottom: none;
   border-left: none;
 `
-const Label = styled.div`
-  color: #757575;
-  font-size: 11px;
-  font-weight: 500;
-`
-const LabelJahre = styled(Label)`
+const LabelJahre = styled.div`
   grid-area: labelJahre;
   position: relative;
   min-height: 16px;
+  color: #757575;
+  font-size: 11px;
+  font-weight: 500;
 `
 const LabelNr = styled(ControlLabel)`
   grid-area: labelNr;
