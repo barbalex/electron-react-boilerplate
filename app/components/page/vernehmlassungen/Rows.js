@@ -93,18 +93,30 @@ const PageFristenRows = ({
         <div className={styles.fieldGegenstand}>
           {gegenstand}
         </div>
-        <div>
-          {ausloeser}
-        </div>
-        <div>
-          {details}
-        </div>
-        <div>
-          {vermerk}
-        </div>
-        <div>
-          {naechsterSchritt}
-        </div>
+        {
+          ausloeser &&
+          <div className={styles.verticallyStackedFields}>
+            {ausloeser}
+          </div>
+        }
+        {
+          details &&
+          <div className={styles.verticallyStackedFields}>
+            {details}
+          </div>
+        }
+        {
+          vermerk &&
+          <div className={styles.verticallyStackedFields}>
+            {vermerk}
+          </div>
+        }
+        {
+          naechsterSchritt &&
+          <div className={styles.verticallyStackedFields}>
+            {naechsterSchritt}
+          </div>
+        }
       </div>
       <div
         className={[
@@ -115,12 +127,18 @@ const PageFristenRows = ({
         <div className={styles.fieldGegenstand}>
           {geschaeft.status}
         </div>
-        <div>
-          {fristMitarbeiter}
-        </div>
-        <div>
-          {faelligkeitText}
-        </div>
+        {
+          fristMitarbeiter &&
+          <div className={styles.verticallyStackedFields}>
+            {fristMitarbeiter}
+          </div>
+        }
+        {
+          faelligkeitText &&
+          <div className={styles.verticallyStackedFields}>
+            {faelligkeitText}
+          </div>
+        }
       </div>
       <div
         className={[
@@ -129,11 +147,14 @@ const PageFristenRows = ({
         ].join(' ')}
       >
         <div className={styles.fieldGegenstand}>
-          {`${verantwortlichName} (${geschaeft.verantwortlich})`}
+          {`${verantwortlichName}${geschaeft.verantwortlich ? ` (${geschaeft.verantwortlich})` : ''}`}
         </div>
-        <div>
-          {geschaeft.abteilung}
-        </div>
+        {
+          geschaeft.abteilung &&
+          <div className={styles.verticallyStackedFields}>
+            {geschaeft.abteilung}
+          </div>
+        }
       </div>
     </div>
   )
