@@ -33,8 +33,8 @@ const verantwortlichData = (geschaeft, interneOptions, isPrintPreview) => {
   )
   if (!data) return ''
   let name = ''
-  if (isPrintPreview) {
-    name = `${data.name || '(kein Name)'} ${data.vorname || '(kein Vorname)'}, `
+  if (isPrintPreview && data.name) {
+    name = `${data.name} ${data.vorname}, `
   }
   const abt = data.abteilung ? `${data.abteilung}` : ''
   const emailHtml = (
@@ -119,13 +119,13 @@ const StyledFormcontrolStaticView = styled(FormControl.Static)`
 const StyledFormcontrolStaticPrint = styled(FormControl.Static)`
   padding-top: 2px;
   padding-bottom: 2px;
+  min-height: 0;
 `
 
 const AreaPersonen = ({
   geschaeft,
   nrOfFieldsBeforePersonen = 0,
   change,
-  blur,
   interneOptions,
   isPrintPreview,
 }) => {
@@ -190,7 +190,6 @@ AreaPersonen.propTypes = {
   interneOptions: PropTypes.array,
   nrOfFieldsBeforePersonen: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
-  blur: PropTypes.func.isRequired,
   isPrintPreview: PropTypes.bool.isRequired,
 }
 

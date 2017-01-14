@@ -48,7 +48,7 @@ const parlVorstossStufe = ({ isPrintPreview, geschaeft, change, nrOfFieldsBefore
       </ControlLabel>
       <FormControl
         type="text"
-        value={value}
+        defaultValue={value}
         bsSize="small"
         tabIndex={2 + nrOfFieldsBeforePv}
       />
@@ -98,7 +98,7 @@ const parlVorstossZustaendigkeit = ({ isPrintPreview, geschaeft, change, nrOfFie
       </ControlLabel>
       <FormControl
         type="text"
-        value={value}
+        defaultValue={value}
         bsSize="small"
         tabIndex={6 + nrOfFieldsBeforePv}
       />
