@@ -5,9 +5,21 @@
 import React, { PropTypes } from 'react'
 import styles from './vernehmlassungen.css'
 
-function isOdd(num) {
-  return num % 2
+const isOdd = (num) =>
+  num % 2
+
+const shorten = (valuePassed, label, maxStringLength) => {
+  let value = valuePassed
+  if (value) {
+    value = label ? `${label}: ` : ''
+    value += valuePassed.substring(0, maxStringLength)
+    if (valuePassed.length > maxStringLength) {
+      value += '... (Text gekürzt)'
+    }
+  }
+  return value
 }
+
 
 const PageFristenRows = ({
   geschaeft,
@@ -24,40 +36,24 @@ const PageFristenRows = ({
    * if a field contains more text than fits on a page
    * the page is (re-)created infinitely...
    */
-  const maxStringLength = 2000
-  let gegenstand = geschaeft.gegenstand
-  if (gegenstand && gegenstand.length > maxStringLength) {
-    gegenstand = gegenstand.substring(0, maxStringLength)
-    gegenstand += '... (Text für die Ausgabe gekürzt)'
-  }
-  let ausloeser = geschaeft.ausloeser
-  if (ausloeser && ausloeser.length > maxStringLength) {
-    ausloeser = ausloeser.substring(0, maxStringLength)
-    ausloeser += '... (Text für die Ausgabe gekürzt)'
-  }
-  let naechsterSchritt = ''
-  if (
-    geschaeft.naechsterSchritt &&
-    geschaeft.naechsterSchritt.length > 0 &&
-    geschaeft.naechsterSchritt.replace(/ /g, '')
-  ) {
-    naechsterSchritt += '=> '
-    if (naechsterSchritt.length > maxStringLength) {
-      naechsterSchritt += naechsterSchritt.substring(0, maxStringLength)
-      naechsterSchritt += '... (Text für die Ausgabe gekürzt)'
-    } else {
-      naechsterSchritt += geschaeft.naechsterSchritt
-    }
-  }
-  let details = geschaeft.details
-  if (details && details.length > maxStringLength) {
-    details = details.substring(0, maxStringLength)
-    details += '... (Text für die Ausgabe gekürzt)'
-  }
+  const totalString = `
+    ${geschaeft.gegenstand || ''}
+    ${geschaeft.ausloeser || ''}
+    ${geschaeft.details || ''}
+    ${geschaeft.vermerk || ''}
+    ${geschaeft.naechsterSchritt || ''}
+  `
+  const maxStringLength = totalString.length > 2000 ? 700 : 2000
+  const gegenstand = shorten(geschaeft.gegenstand, '', maxStringLength)
+  const ausloeser = shorten(geschaeft.ausloeser, 'Auslöser', maxStringLength)
+  const naechsterSchritt = shorten(geschaeft.naechsterSchritt, 'Nächster Schritt', maxStringLength)
+  const details = shorten(geschaeft.details, 'Details', maxStringLength)
+  const vermerk = shorten(geschaeft.vermerk, 'Vermerk', maxStringLength)
+
   let faelligkeitText = geschaeft.faelligkeitText
   if (faelligkeitText && faelligkeitText.length > maxStringLength) {
     faelligkeitText = faelligkeitText.substring(0, maxStringLength)
-    faelligkeitText += '... (Text für die Ausgabe gekürzt)'
+    faelligkeitText += '... (Text gekürzt)'
   }
 
   const rowClassName = (
@@ -67,7 +63,11 @@ const PageFristenRows = ({
   )
 
   const verantwortlichRow = interneOptions.find(o => o.kurzzeichen === geschaeft.verantwortlich)
-  const verantwortlichName = verantwortlichRow && verantwortlichRow.name ? `${verantwortlichRow.vorname} ${verantwortlichRow.name}` : ''
+  const verantwortlichName = (
+    verantwortlichRow && verantwortlichRow.name ?
+    `${verantwortlichRow.vorname} ${verantwortlichRow.name}` :
+    '(kein Name)'
+  )
 
   return (
     <div
@@ -99,7 +99,10 @@ const PageFristenRows = ({
         <div>
           {details}
         </div>
-        <div className={styles.fieldNaechserSchritt}>
+        <div>
+          {vermerk}
+        </div>
+        <div>
           {naechsterSchritt}
         </div>
       </div>
@@ -109,7 +112,7 @@ const PageFristenRows = ({
           styles.tableBodyCell,
         ].join(' ')}
       >
-        <div>
+        <div className={styles.fieldGegenstand}>
           {geschaeft.status}
         </div>
         <div>
@@ -125,11 +128,11 @@ const PageFristenRows = ({
           styles.tableBodyCell,
         ].join(' ')}
       >
-        <div>
-          {geschaeft.verantwortlich}
+        <div className={styles.fieldGegenstand}>
+          {`${verantwortlichName} (${geschaeft.verantwortlich})`}
         </div>
         <div>
-          {verantwortlichName}
+          {geschaeft.abteilung}
         </div>
       </div>
     </div>
