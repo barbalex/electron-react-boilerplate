@@ -3,13 +3,13 @@ import {
   FormControl,
   ControlLabel,
   InputGroup,
-  Input,
 } from 'react-bootstrap'
 import moment from 'moment'
 import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
 import styles from './areaRechtsmittel.css'
 import createOptions from '../../src/createOptions'
 import DateField from '../../containers/filterFields/DateField'
+import Input from '../../containers/filterFields/Input'
 
 moment.locale('de')
 
