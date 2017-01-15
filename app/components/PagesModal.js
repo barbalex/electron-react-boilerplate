@@ -1,6 +1,20 @@
 import React, { PropTypes } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import styles from './PagesModal.css'
+import styled from 'styled-components'
+
+const Body = styled(Modal.Body)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+const RightDiv = styled.div`
+  padding-left: 30px;
+`
+const P = styled.p`
+  text-align: center;
+  margin-top: 3px;
+  margin-bottom: 3px;
+`
 
 const PagesModal = ({
   modalTextLine1,
@@ -9,28 +23,25 @@ const PagesModal = ({
 }) =>
   <Modal.Dialog
     bsSize={modalTextLine2 ? 'large' : 'small'}
-    dialogClassName={styles.modal}
   >
-    <Modal.Body className={styles.body}>
-      <div className={styles.left}>
-        <p className={styles.p}>
+    <Body>
+      <div>
+        <P>
           {modalTextLine1}
-        </p>
+        </P>
         {
           modalTextLine2 &&
-          <p  // eslint-disable-line react/jsx-indent
-            className={styles.p}
-          >
+          <P>
             {modalTextLine2}
-          </p>
+          </P>
         }
       </div>
-      <div className={styles.right}>
+      <RightDiv>
         <Button onClick={() => pagesStop()}>
           Abbrechen
         </Button>
-      </div>
-    </Modal.Body>
+      </RightDiv>
+    </Body>
   </Modal.Dialog>
 
 PagesModal.displayName = 'PagesModal'

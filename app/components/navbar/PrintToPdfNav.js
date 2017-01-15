@@ -1,4 +1,4 @@
-import { remote } from 'electron'
+import { remote, shell } from 'electron'
 import fs from 'fs'
 import React, { PropTypes } from 'react'
 import {
@@ -27,16 +27,26 @@ const onClickPrint = (e, path) => {
   }
 
   // first remove navbar
-  win.webContents.printToPDF(printToPDFOptions, (error, data) => {
-    if (error) throw error
-    dialog.showSaveDialog(dialogOptions, (filePath) => {
-      if (filePath) {
-        fs.writeFile(filePath, data, (err) => {
-          if (err) throw err
-        })
-      }
-    })
-  })
+  win.webContents.printToPDF(
+    printToPDFOptions,
+    (error, data) => {
+      if (error) throw error
+      dialog.showSaveDialog(
+        dialogOptions,
+        (filePath) => {
+          if (filePath) {
+            fs.writeFile(
+              filePath,
+              data, (err) => {
+                if (err) throw err
+                shell.openItem(filePath)
+              }
+            )
+          }
+        }
+      )
+    }
+  )
 }
 
 const NavbarPrintNav = ({ path }) =>
