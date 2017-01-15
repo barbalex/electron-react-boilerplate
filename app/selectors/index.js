@@ -2,8 +2,8 @@ import { createSelector } from 'reselect'
 import clone from 'lodash/clone'
 
 const getGeschaefte = (state) => state.geschaefte.geschaefte
-const getGki = (state) => state.geschaefteKontakteIntern
-const getGke = (state) => state.geschaefteKontakteExtern
+const getGki = (state) => state.geschaefteKontakteIntern.geschaefteKontakteIntern
+const getGke = (state) => state.geschaefteKontakteExtern.geschaefteKontakteExtern
 const getInterne = (state) => state.geschaefte.interneOptions
 const getExterne = (state) => state.geschaefte.externeOptions
 const getGeko = (state) => state.geschaefte.geko

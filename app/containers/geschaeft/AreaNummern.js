@@ -2,13 +2,12 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import AreaNummern from '../../components/geschaeft/AreaNummern'
 import * as GeschaefteActions from '../../actions/geschaefte'
+import { getGeschaefteWithNSideData } from '../../selectors'
 
 function mapStateToProps(state, props) {
   const {
     aktenstandortOptions,
-    geschaefte,
     activeId,
-    geko,
   } = state.geschaefte
   const {
     blur,
@@ -16,6 +15,7 @@ function mapStateToProps(state, props) {
     wrapperClass,
     nrOfGFields,
   } = props
+  const geschaefte = getGeschaefteWithNSideData(state)
   const path = state.routing.locationBeforeTransitions.pathname
   const isPrintPreview = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g =>
@@ -25,7 +25,6 @@ function mapStateToProps(state, props) {
   return {
     aktenstandortOptions,
     geschaeft,
-    geko,
     blur,
     change,
     wrapperClass,

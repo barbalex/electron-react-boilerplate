@@ -7,6 +7,7 @@ import {
   GESCHAEFTE_GET,
   GESCHAEFTE_GET_SUCCESS,
   GESCHAEFTE_GET_ERROR,
+  GESCHAEFTE_SET_GEFILTERTEIDS,
   GESCHAEFTE_FILTER_BY_FIELDS,
   GESCHAEFTE_SORT_BY_FIELDS,
   GESCHAEFTE_RESET_SORT,
@@ -104,13 +105,17 @@ const geschaefte = (state = standardState, action) => {
         fetching: false,
         error: [],
         geschaefte: action.geschaefte,
-        geschaefteGefilterteIds: action.geschaefteGefilterteIds,
       }
     case GESCHAEFTE_GET_ERROR:
       return {
         ...state,
         fetching: false,
         error: [...state.error, action.error],
+      }
+    case GESCHAEFTE_SET_GEFILTERTEIDS:
+      return {
+        ...state,
+        geschaefteGefilterteIds: action.geschaefteGefilterteIds,
       }
     case GESCHAEFTE_FILTER_BY_FIELDS:
       return {

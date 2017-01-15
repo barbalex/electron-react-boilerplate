@@ -60,8 +60,17 @@ export default function (
       // if all conditions are met, include the geschaeft
       let satisfiesFilter = true
       filterFields.forEach((filterField, index) => {
-        let geschaeftValue = geschaeft[filterField.field]
         let filterValue = filterField.value
+        let geschaeftValue = geschaeft[filterField.field]
+        if (filterField.field === 'gekoNr') {
+          geschaeftValue = geschaeft.geko.map(g => g.gekoNr).join(', ')
+        }
+        if (filterField.field === 'kontaktInternVornameName') {
+          geschaeftValue = geschaeft.interne.map(g => `${g.vorname} ${g.name}`).join(', ')
+        }
+        if (filterField.field === 'kontaktExternNameVorname') {
+          geschaeftValue = geschaeft.externe.map(g => `${g.name} ${g.vorname}`).join(', ')
+        }
         const existsGeschaeftValue = geschaeftValue || geschaeftValue === 0
         if (!existsGeschaeftValue) {
           satisfiesFilter = false

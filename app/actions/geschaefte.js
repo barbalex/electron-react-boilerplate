@@ -24,6 +24,7 @@ import newLinkInDb from '../src/newLinkInDb'
 import deleteGeschaeft from '../src/deleteGeschaeft'
 import deleteGeko from '../src/deleteGeko'
 import deleteLink from '../src/deleteLink'
+import { getGeschaefteWithNSideData } from '../selectors'
 
 export const geschaeftPdfShow = () =>
   dispatch => dispatch(push('/geschaeftPdf'))
@@ -49,21 +50,14 @@ const geschaefteGet = () => ({
 
 export const GESCHAEFTE_GET_SUCCESS = 'GESCHAEFTE_GET_SUCCESS'
 const geschaefteGetSuccess = geschaefteArray =>
-  (dispatch, getState) => {
-    const { geschaefte } = getState()
-    const { filterFields, filterFulltext, sortFields } = geschaefte
-    // create geschaefteGefilterteIds
-    let geschaefteGefilterteIds = filterGeschaefte(
-      geschaefteArray,
-      filterFulltext,
-      filterFields
-    )
-    geschaefteGefilterteIds = sortIdsBySortFields(geschaefteArray, geschaefteGefilterteIds, sortFields)
+  (dispatch) => {
     dispatch({
       type: GESCHAEFTE_GET_SUCCESS,
       geschaefte: geschaefteArray,
-      geschaefteGefilterteIds
     })
+    setTimeout(() =>
+      dispatch(geschaefteSetGefilterteIds())
+    )
   }
 
 export const GESCHAEFTE_GET_ERROR = 'GESCHAEFTE_GET_ERROR'
@@ -72,6 +66,25 @@ const geschaefteGetError = error => ({
   error
 })
 
+export const GESCHAEFTE_SET_GEFILTERTEIDS = 'GESCHAEFTE_SET_GEFILTERTEIDS'
+const geschaefteSetGefilterteIds = () =>
+  (dispatch, getState) => {
+    const { geschaefte } = getState()
+    const geschaefteWithNSideData = getGeschaefteWithNSideData(getState())
+    const { filterFields, filterFulltext, sortFields } = geschaefte
+    // create geschaefteGefilterteIds
+    let geschaefteGefilterteIds = filterGeschaefte(
+      geschaefteWithNSideData,
+      filterFulltext,
+      filterFields
+    )
+    geschaefteGefilterteIds = sortIdsBySortFields(geschaefteWithNSideData, geschaefteGefilterteIds, sortFields)
+    dispatch({
+      type: GESCHAEFTE_SET_GEFILTERTEIDS,
+      geschaefteGefilterteIds
+    })
+  }
+
 export const GESCHAEFTE_FILTER_BY_FIELDS = 'GESCHAEFTE_FILTER_BY_FIELDS'
 export const geschaefteFilterByFields = (
   filterFields,
@@ -79,7 +92,8 @@ export const geschaefteFilterByFields = (
 ) =>
   (dispatch, getState) => {
     const { routing, pages } = getState()
-    const { filterFulltext, geschaefte, sortFields } = getState().geschaefte
+    const { filterFulltext, sortFields } = getState().geschaefte
+    const geschaefte = getGeschaefteWithNSideData(getState())
     // remove filterFields with empty values
     const filterFieldsWithValues = filterFields.filter(ff =>
       ff.value || ff.value === 0 || ff.comparator

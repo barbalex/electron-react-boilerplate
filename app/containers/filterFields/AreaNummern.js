@@ -1,5 +1,6 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+
 import AreaNummern from '../../components/filterFields/AreaNummern'
 import * as GeschaefteActions from '../../actions/geschaefte'
 
