@@ -42,7 +42,7 @@ const AreaParlVorstoss = ({
       </ControlLabel>
       <Radio
         data-value={1}
-        checked={values.parlVorstossStufe === 1}
+        checked={values.parlVorstossStufe === '1'}
         onChange={change}
         bsSize="small"
         name="parlVorstossStufe"
@@ -52,7 +52,7 @@ const AreaParlVorstoss = ({
       </Radio>
       <Radio
         data-value={2}
-        checked={values.parlVorstossStufe === 2}
+        checked={values.parlVorstossStufe === '2'}
         name="parlVorstossStufe"
         onChange={change}
         bsSize="small"
@@ -84,31 +84,6 @@ const AreaParlVorstoss = ({
         tabIndex={7 + firstTabIndex}
       >
         mitbericht
-      </Radio>
-    </div>
-    <div className={styles.fieldErlassform}>
-      <ControlLabel>
-        Erlassform
-      </ControlLabel>
-      <Radio
-        data-value="Gesetz"
-        checked={values.erlassform === 'Gesetz'}
-        name="erlassform"
-        onChange={change}
-        bsSize="small"
-        tabIndex={8 + firstTabIndex}
-      >
-        Gesetz
-      </Radio>
-      <Radio
-        data-value="Verordnung"
-        checked={values.erlassform === 'Verordnung'}
-        name="erlassform"
-        onChange={change}
-        bsSize="small"
-        tabIndex={9 + firstTabIndex}
-      >
-        Verordnung
       </Radio>
     </div>
   </div>

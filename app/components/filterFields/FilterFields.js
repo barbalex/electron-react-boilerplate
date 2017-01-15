@@ -84,7 +84,12 @@ class FilterFields extends Component {
       value = moment(value, 'DD.MM.YYYY').format('YYYY-MM-DD')
     }
     if (type === 'radio') {
-      value = dataset.value
+      // need to set null if existing value was clicked
+      if (changedField.value === dataset.value) {
+        value = null
+      } else {
+        value = dataset.value
+      }
     }
     changedField.value = value
     newFilterFields.push(changedField)
