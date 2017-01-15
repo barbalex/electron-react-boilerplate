@@ -14,7 +14,7 @@ const PageFristenHeader = () =>
           styles.tableHeaderCell,
         ].join(' ')}
       >
-        <b>ID</b>
+        <b>ID</b><br />KR Nr.
       </div>
       <div
         className={[
@@ -22,15 +22,7 @@ const PageFristenHeader = () =>
           styles.tableHeaderCell,
         ].join(' ')}
       >
-        <b>Gegenstand</b> / Auslöser / Details / <em>nächster Schritt</em>
-      </div>
-      <div
-        className={[
-          styles.columnKrNr,
-          styles.tableHeaderCell,
-        ].join(' ')}
-      >
-        <b>KR Nr.</b>
+        <b>Gegenstand</b><br />Auslöser / Details / nächster Schritt
       </div>
       <div
         className={[
@@ -38,7 +30,7 @@ const PageFristenHeader = () =>
           styles.tableHeaderCell,
         ].join(' ')}
       >
-        <b>Status</b>
+        <b>Status</b><br />Frist
       </div>
       <div
         className={[

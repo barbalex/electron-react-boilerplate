@@ -37,12 +37,7 @@ const PageFristenRows = ({
   const ausloeser = shorten(geschaeft.ausloeser, 'Auslöser', maxStringLength)
   const naechsterSchritt = shorten(geschaeft.naechsterSchritt, 'Nächster Schritt', maxStringLength)
   const details = shorten(geschaeft.details, 'Details', maxStringLength)
-
-  let faelligkeitText = geschaeft.faelligkeitText
-  if (faelligkeitText && faelligkeitText.length > maxStringLength) {
-    faelligkeitText = faelligkeitText.substring(0, maxStringLength)
-    faelligkeitText += '... (Text für die Ausgabe gekürzt)'
-  }
+  const faelligkeitText = shorten(geschaeft.faelligkeitText, '', 200)
 
   const rowClassName = (
     !isOdd(rowIndex) ?
@@ -64,9 +59,15 @@ const PageFristenRows = ({
           styles.tableBodyCell,
         ].join(' ')}
       >
-        <div>
+        <div className={styles.fieldBold}>
           {geschaeft.idGeschaeft}
         </div>
+        {
+          geschaeft.entscheidKrNr &&
+          <div className={styles.verticallyStackedFields}>
+            {geschaeft.entscheidKrNr}
+          </div>
+        }
       </div>
       <div
         className={[
@@ -77,25 +78,24 @@ const PageFristenRows = ({
         <div className={styles.fieldBold}>
           {gegenstand}
         </div>
-        <div>
-          {ausloeser}
-        </div>
-        <div>
-          {details}
-        </div>
-        <div className={styles.fieldNaechserSchritt}>
-          {naechsterSchritt}
-        </div>
-      </div>
-      <div
-        className={[
-          styles.columnKrNr,
-          styles.tableBodyCell,
-        ].join(' ')}
-      >
-        <div>
-          {geschaeft.entscheidKrNr}
-        </div>
+        {
+          ausloeser &&
+          <div className={styles.verticallyStackedFields}>
+            {ausloeser}
+          </div>
+        }
+        {
+          details &&
+          <div className={styles.verticallyStackedFields}>
+            {details}
+          </div>
+        }
+        {
+          naechsterSchritt &&
+          <div className={styles.verticallyStackedFields}>
+            {naechsterSchritt}
+          </div>
+        }
       </div>
       <div
         className={[
@@ -103,13 +103,13 @@ const PageFristenRows = ({
           styles.tableBodyCell,
         ].join(' ')}
       >
-        <div>
+        <div className={styles.fieldBold}>
           {geschaeft.status}
         </div>
-        <div>
+        <div className={styles.verticallyStackedFields}>
           {fristMitarbeiter}
         </div>
-        <div>
+        <div className={styles.verticallyStackedFields}>
           {faelligkeitText}
         </div>
       </div>
@@ -119,11 +119,8 @@ const PageFristenRows = ({
           styles.tableBodyCell,
         ].join(' ')}
       >
-        <div>
-          {geschaeft.verantwortlich}
-        </div>
-        <div>
-          {verantwortlichName}
+        <div className={styles.fieldBold}>
+          {`${verantwortlichName}${geschaeft.verantwortlich ? ` (${geschaeft.verantwortlich})` : ''}`}
         </div>
       </div>
     </div>
