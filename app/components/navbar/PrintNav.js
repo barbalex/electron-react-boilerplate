@@ -17,7 +17,7 @@ const onClickPrint = (e, path) => {
   }
   win.webContents.print(options, (error, data) => {
     if (error) throw error
-    console.log('data', data)
+    // console.log('data', data)
   })
 }
 
