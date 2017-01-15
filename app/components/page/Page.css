@@ -10,7 +10,7 @@
   position: relative;
 
   width: 29.7cm;
-  height: 21cm;
+  height: 20.95cm;
   padding: 1.5cm;
 
   overflow-y: visible;
@@ -27,7 +27,8 @@
 }
 
 .rowsContainer {
-  max-height: 16.5cm;
+  max-height: 17cm;
+  overflow: hidden;
 }
 
 /* When the document is actually printed */
@@ -38,14 +39,14 @@
      * if they are not repeated here using important
      */
     width: 29.7cm !important;
-    height: 21cm !important;
+    height: 20.95cm !important;
     margin: 0 !important;
     padding: 1.5cm !important;
     overflow-y: hidden !important;
     /* no idea why this is not necessary: */
-    /*page-break-after: always !important;
+    page-break-after: always !important;
     page-break-inside: avoid !important;
-    page-break-before: avoid !important;*/
+    page-break-before: avoid !important;
   }
 }
 
