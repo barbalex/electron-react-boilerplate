@@ -14,7 +14,7 @@ const PageFristenHeader = () =>
           styles.tableHeaderCell,
         ].join(' ')}
       >
-        <b>ID</b><br />GekoNr
+        <b>ID</b><br />Geko Nr.
       </div>
       <div
         className={[
