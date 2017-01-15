@@ -246,7 +246,6 @@ class Page extends Component {
       <div className={pageContainerStyle}>
         <div
           className={styles.rowsContainer}
-          // ref={`rowsContainer${pageIndex}`}
           ref={(c) => { this[`rowsContainer${pageIndex}`] = c }}
         >
           {

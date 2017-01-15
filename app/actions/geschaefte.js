@@ -580,10 +580,10 @@ const abteilungOptionsGetError = error => ({
   error
 })
 
-export const gekoNewCreate = () =>
+export const gekoNewCreate = (idGeschaeft, gekoNr) =>
   (dispatch, getState) => {
-    const { app, user } = getState()
-    newGekoInDb(app.db, user.username)
+    const { app } = getState()
+    newGekoInDb(app.db, idGeschaeft, gekoNr)
       .then((geko) =>
         dispatch(gekoNew(geko))
       )

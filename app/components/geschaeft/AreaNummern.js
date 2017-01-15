@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel } from 'react-bootstrap'
 import styled from 'styled-components'
+import clone from 'lodash/clone'
 
+import GekoNrField from '../../containers/geschaeft/GekoNrField'
 import createOptions from '../../src/createOptions'
 
 const ContainerBase = styled.div`
@@ -184,6 +186,7 @@ const FieldAktennummer = styled(Field)`
 const AreaNummern = ({
   aktenstandortOptions,
   geschaeft,
+  geko,
   viewIsNarrow,
   nrOfGFields,
   change,
@@ -192,6 +195,27 @@ const AreaNummern = ({
 }) => {
   const tabsToAdd = viewIsNarrow ? 0 : nrOfGFields
   const Container = isPrintPreview ? ContainerPrint : ContainerView
+  const gekoValues = geko
+    .filter(g => g.idGeschaeft === geschaeft.idGeschaeft)
+    .map(g => g.gekoNr)
+    .sort()
+  const gekoValuesString = gekoValues.join(', ')
+  const gekoFields = gekoValues.map(g =>
+    <GekoNrField
+      key={g || 0}
+      idGeschaeft={geschaeft.idGeschaeft}
+      gekoNr={g}
+      tabsToAdd={tabsToAdd}
+    />
+  )
+  gekoFields.push(
+    <GekoNrField
+      key={0}
+      idGeschaeft={geschaeft.idGeschaeft}
+      gekoNr=""
+      tabsToAdd={tabsToAdd}
+    />
+  )
 
   return (
     <Container>
@@ -218,16 +242,22 @@ const AreaNummern = ({
         Geko
       </LabelGekoNr>
       <FieldGekoNr isPrintPreview={isPrintPreview}>
-        <FormControl
-          type="text"
-          value={geschaeft.GekoNr}
-          name="gekoNr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={1 + tabsToAdd}
-          autoFocus={viewIsNarrow}
-        />
+        {
+          isPrintPreview &&
+          <FormControl
+            type="text"
+            defaultValue={gekoValuesString}
+            name="gekoNr"
+            bsSize="small"
+            tabIndex={1 + tabsToAdd}
+          />
+        }
+        {
+          !isPrintPreview &&
+          <div>
+            {gekoFields}
+          </div>
+        }
       </FieldGekoNr>
       <LabelJahre>
         <LabelNrDiv>
@@ -412,11 +442,14 @@ AreaNummern.displayName = 'AreaNummern'
 AreaNummern.propTypes = {
   aktenstandortOptions: PropTypes.array.isRequired,
   geschaeft: PropTypes.object.isRequired,
+  geko: PropTypes.array.isRequired,
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,
   viewIsNarrow: PropTypes.bool.isRequired,
   nrOfGFields: PropTypes.number.isRequired,
   isPrintPreview: PropTypes.bool.isRequired,
+  gekoRemove: PropTypes.func.isRequired,
+  gekoNewCreate: PropTypes.func.isRequired,
 }
 
 export default AreaNummern

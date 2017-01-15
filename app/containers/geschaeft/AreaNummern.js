@@ -8,6 +8,7 @@ function mapStateToProps(state, props) {
     aktenstandortOptions,
     geschaefte,
     activeId,
+    geko,
   } = state.geschaefte
   const {
     blur,
@@ -24,6 +25,7 @@ function mapStateToProps(state, props) {
   return {
     aktenstandortOptions,
     geschaeft,
+    geko,
     blur,
     change,
     wrapperClass,
