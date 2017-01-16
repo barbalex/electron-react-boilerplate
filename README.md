@@ -18,12 +18,12 @@ Für viel mehr Info siehe [Projektbeschreibung.pdf](https://github.com/barbalex/
 
 ## Entwicklungsumgebung installieren ##
 	
-	// Ordner schaffen, z.B. "kapla"
+	# Ordner schaffen, z.B. "kapla"
 	cd kapla
     git clone https://github.com/barbalex/kapla3.git
 	npm install
-	npm run build-sqlite3-win64 // on windows
-	npm run build-sqlite3-mac  // on macOs
+	npm run build-sqlite3-win64 # on windows
+	npm run build-sqlite3-mac  # on macOs
 	npm run dev
 
 ## Release produzieren ##
