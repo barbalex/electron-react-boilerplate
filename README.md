@@ -18,7 +18,7 @@ Für viel mehr Info siehe [Projektbeschreibung.pdf](https://github.com/barbalex/
 
 ## Entwicklungsumgebung installieren ##
 	
-	// create directory, for instance "kapla"
+	// Ordner schaffen, z.B. "kapla"
 	cd kapla
     git clone https://github.com/barbalex/kapla3.git
 	npm install
