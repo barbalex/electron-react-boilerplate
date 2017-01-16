@@ -3,7 +3,11 @@ import {
   NavDropdown,
   MenuItem,
 } from 'react-bootstrap'
-import styles from './optionsNav.css'
+import styled from 'styled-components'
+
+const DbPathDiv = styled.div`
+  font-style: italic;
+`
 
 const OptionsNav = ({
   config,
@@ -21,11 +25,9 @@ const OptionsNav = ({
       Datenbank wählen
       {
         config.dbPath &&
-        <div
-          className={styles.dbPath}
-        >
+        <DbPathDiv>
           Aktuell: {config.dbPath}
-        </div>
+        </DbPathDiv>
       }
     </MenuItem>
     <MenuItem divider />
@@ -33,6 +35,12 @@ const OptionsNav = ({
       onClick={configUiReset}
     >
       Einstellungen zurücksetzen
+    </MenuItem>
+    <MenuItem divider />
+    <MenuItem
+      onClick={configUiReset}
+    >
+      über Kapla
     </MenuItem>
   </NavDropdown>
 
