@@ -30,13 +30,15 @@ const stammdatenTitle = (table, rows) => {
 }
 
 const StyledNavDropdown = styled(NavDropdown)`
-  border-right: dotted #505050 1px;
+  border-left: ${props => props.showTableNavs ? 'solid grey 1px' : 'dotted #505050 1px'}
+  border-right: ${props => props.showTableNavs ? 'none' : 'dotted #505050 1px'};
 `
 
 const NavbarStammdatenNav = ({
   getTable,
   table,
   rows,
+  showTableNavs,
 }) => {
   /**
    * does not work - should keep menu active when table is loaded
@@ -51,6 +53,7 @@ const NavbarStammdatenNav = ({
       id="stammdaten-nav-dropdown"
       active={isStammdatenMenuActive}
       className={isStammdatenMenuActive ? styles.navActive : null}
+      showTableNavs={showTableNavs}
     >
       <MenuItem
         onClick={() => getTable('interne')}
@@ -114,6 +117,7 @@ NavbarStammdatenNav.propTypes = {
   getTable: PropTypes.func.isRequired,
   table: PropTypes.string,
   rows: PropTypes.array,
+  showTableNavs: PropTypes.bool.isRequired,
 }
 
 export default NavbarStammdatenNav

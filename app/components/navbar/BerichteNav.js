@@ -11,8 +11,8 @@ import filterForVernehmlLaeuft from '../../src/filterForVernehmlLaeuft'
 import filterForFaelligeGeschaefte from '../../src/filterForFaelligeGeschaefte'
 
 const StyledNavDropdown = styled(NavDropdown)`
-  border-left: dotted #505050 1px;
-  border-right: ${props => props.showAdditionalBerichteNavs ? 'none' : 'dotted #505050 1px'};
+  border-left: ${props => props.showBerichteNavs ? 'solid grey 1px' : 'dotted #505050 1px'}
+  border-right: ${props => props.showBerichteNavs ? 'none' : 'dotted #505050 1px'};
 `
 
 const BerichteNav = ({
@@ -24,7 +24,7 @@ const BerichteNav = ({
   geschaefteSortByFields,
   geschaefteResetSort,
   activeId,
-  showAdditionalBerichteNavs,
+  showBerichteNavs,
 }) => {
   const isActive = path === '/pages'
   const nameObject = {
@@ -38,7 +38,7 @@ const BerichteNav = ({
   const title = isActive ? name : 'Berichte'
   return (
     <StyledNavDropdown
-      showAdditionalBerichteNavs={showAdditionalBerichteNavs}
+      showBerichteNavs={showBerichteNavs}
       eventKey={7}
       title={title}
       id="reports-nav-dropdown"
@@ -150,7 +150,7 @@ BerichteNav.propTypes = {
   path: PropTypes.string.isRequired,
   pages: PropTypes.object.isRequired,
   activeId: PropTypes.number,  // does NOT always exist
-  showAdditionalBerichteNavs: PropTypes.bool.isRequired,
+  showBerichteNavs: PropTypes.bool.isRequired,
 }
 
 export default BerichteNav

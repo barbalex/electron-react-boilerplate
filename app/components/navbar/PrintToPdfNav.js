@@ -8,7 +8,7 @@ import {
 import styled from 'styled-components'
 
 const StyledNavItem = styled(NavItem)`
-  border-right: dotted #505050 1px;
+  border-right: ${props => props.showBerichteNavs ? 'solid grey 1px' : 'dotted #505050 1px'};
 `
 
 const { dialog } = remote
@@ -54,12 +54,16 @@ const onClickPrint = (e, path) => {
   )
 }
 
-const NavbarPrintNav = ({ path }) =>
+const NavbarPrintNav = ({
+  path,
+  showBerichteNavs,
+}) =>
   <StyledNavItem
     onClick={e =>
       onClickPrint(e, path)
     }
     title="PDF erzeugen"
+    showBerichteNavs={showBerichteNavs}
   >
     <Glyphicon glyph="file" />
   </StyledNavItem>
@@ -68,6 +72,7 @@ NavbarPrintNav.displayName = 'NavbarPrintNav'
 
 NavbarPrintNav.propTypes = {
   path: PropTypes.string.isRequired,
+  showBerichteNavs: PropTypes.bool.isRequired,
 }
 
 export default NavbarPrintNav

@@ -24,8 +24,8 @@ import OptionsNav from '../../containers/navbar/OptionsNav'
 import styles from './Navbar.css'
 
 const GeschaefteLinkContainer = styled(LinkContainer)`
-  border-left: dotted #505050 1px;
-  border-right: ${props => props.showAdditionalGeschaefteNavs ? 'none' : 'dotted #505050 1px'};
+  border-left: ${props => props.showGeschaefteNavs ? 'solid grey 1px' : 'dotted #505050 1px'};
+  border-right: ${props => props.showGeschaefteNavs ? 'none' : 'dotted #505050 1px'};
 `
 
 class NavbarComponent extends Component {
@@ -56,13 +56,13 @@ class NavbarComponent extends Component {
 
     const dataIsFiltered = geschaefte.length !== geschaefteGefilterteIds.length
     const classNameBadge = dataIsFiltered ? styles.active : null
-    const showAdditionalBerichteNavs = path === '/pages' || path === '/geschaeftPdf'
-    const showAdditionalGeschaefteNavs = (
+    const showBerichteNavs = path === '/pages' || path === '/geschaeftPdf'
+    const showGeschaefteNavs = (
       path === '/geschaefte' ||
       path === '/filterFields'
     )
-    const showGeschaefteAndPrint = showAdditionalBerichteNavs || showAdditionalGeschaefteNavs
-    const showTableStuff = path === '/table'
+    const showGeschaefteAndPrint = showBerichteNavs || showGeschaefteNavs
+    const showTableNavs = path === '/table'
 
     return (
       <div>
@@ -86,7 +86,7 @@ class NavbarComponent extends Component {
           <Nav>
             <GeschaefteLinkContainer
               to={{ pathname: '/geschaefte' }}
-              showAdditionalGeschaefteNavs={showAdditionalGeschaefteNavs}
+              showGeschaefteNavs={showGeschaefteNavs}
             >
               <NavItem
                 href="#"
@@ -95,12 +95,12 @@ class NavbarComponent extends Component {
               </NavItem>
             </GeschaefteLinkContainer>
             {
-              showAdditionalGeschaefteNavs &&
+              showGeschaefteNavs &&
               <GeschaeftNeuNav />
             }
             {
-              showAdditionalGeschaefteNavs &&
-              <GeschaeftLoeschenNav />
+              showGeschaefteNavs &&
+              <GeschaeftLoeschenNav showGeschaefteNavs={showGeschaefteNavs} />
             }
             {
               showGeschaefteAndPrint &&
@@ -108,29 +108,29 @@ class NavbarComponent extends Component {
             }
             {
               showGeschaefteAndPrint &&
-              <BerichteNav showAdditionalBerichteNavs={showAdditionalBerichteNavs} />
+              <BerichteNav showBerichteNavs={showBerichteNavs} />
             }
             {
-              showAdditionalBerichteNavs &&
+              showBerichteNavs &&
               <PrintNav />
             }
             {
-              showAdditionalBerichteNavs &&
-              <PrintToPdfNav />
+              showBerichteNavs &&
+              <PrintToPdfNav showBerichteNavs={showBerichteNavs} />
             }
-            <StammdatenNav />
+            <StammdatenNav showTableNavs={showTableNavs} />
             {
-              showTableStuff &&
+              showTableNavs &&
               <TableRowNeuNav />
             }
             {
-              showTableStuff &&
-              <TableRowDeleteNav />
+              showTableNavs &&
+              <TableRowDeleteNav showTableNavs={showTableNavs} />
             }
           </Nav>
           <Nav pullRight>
             {
-              !showTableStuff &&
+              !showTableNavs &&
               <FilterNav />
             }
             <OptionsNav />
