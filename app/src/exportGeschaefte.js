@@ -53,6 +53,7 @@ export default (geschaefte, messageShow) => {
         const dataArray = getDataArrayFromExportObjects(geschaefte)
         writeExport(path, dataArray)
           .then(() => {
+            messageShow(false, '', '')
             shell.openItem(path)
             /*
             // show the message
