@@ -3,12 +3,17 @@ import {
   NavItem,
   Glyphicon,
 } from 'react-bootstrap'
+import styled from 'styled-components'
+
+const StyledNavItem = styled(NavItem)`
+  border-right: dotted #505050 1px;
+`
 
 const NavbarGeschaeftLoeschenNav = ({
   geschaeftSetDeleteIntended,
   activeId,
 }) =>
-  <NavItem
+  <StyledNavItem
     onClick={() =>
       geschaeftSetDeleteIntended(activeId)
     }
@@ -16,13 +21,13 @@ const NavbarGeschaeftLoeschenNav = ({
     disabled={!activeId}
   >
     <Glyphicon glyph="trash" />
-  </NavItem>
+  </StyledNavItem>
 
 NavbarGeschaeftLoeschenNav.displayName = 'NavbarGeschaeftLoeschenNav'
 
 NavbarGeschaeftLoeschenNav.propTypes = {
   geschaeftSetDeleteIntended: PropTypes.func.isRequired,
-  activeId: PropTypes.number,
+  activeId: PropTypes.number,  // does NOT always exist
 }
 
 export default NavbarGeschaeftLoeschenNav

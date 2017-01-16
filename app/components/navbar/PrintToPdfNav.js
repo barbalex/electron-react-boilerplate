@@ -5,6 +5,11 @@ import {
   NavItem,
   Glyphicon,
 } from 'react-bootstrap'
+import styled from 'styled-components'
+
+const StyledNavItem = styled(NavItem)`
+  border-right: dotted #505050 1px;
+`
 
 const { dialog } = remote
 
@@ -50,14 +55,14 @@ const onClickPrint = (e, path) => {
 }
 
 const NavbarPrintNav = ({ path }) =>
-  <NavItem
+  <StyledNavItem
     onClick={e =>
       onClickPrint(e, path)
     }
     title="PDF erzeugen"
   >
     <Glyphicon glyph="file" />
-  </NavItem>
+  </StyledNavItem>
 
 NavbarPrintNav.displayName = 'NavbarPrintNav'
 

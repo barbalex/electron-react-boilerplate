@@ -3,6 +3,8 @@ import {
   NavDropdown,
   MenuItem,
 } from 'react-bootstrap'
+import styled from 'styled-components'
+
 import styles from './Navbar.css'
 
 const stammdatenTitle = (table, rows) => {
@@ -27,6 +29,10 @@ const stammdatenTitle = (table, rows) => {
   return <span>Stammdaten</span>
 }
 
+const StyledNavDropdown = styled(NavDropdown)`
+  border-right: dotted #505050 1px;
+`
+
 const NavbarStammdatenNav = ({
   getTable,
   table,
@@ -40,7 +46,7 @@ const NavbarStammdatenNav = ({
   const isStammdatenMenuActive = !!table
 
   return (
-    <NavDropdown
+    <StyledNavDropdown
       title={stammdatenTitle(table, rows)}
       id="stammdaten-nav-dropdown"
       active={isStammdatenMenuActive}
@@ -98,7 +104,7 @@ const NavbarStammdatenNav = ({
       >
         Status
       </MenuItem>
-    </NavDropdown>
+    </StyledNavDropdown>
   )
 }
 

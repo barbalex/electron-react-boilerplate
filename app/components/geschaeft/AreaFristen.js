@@ -62,7 +62,7 @@ const AreaFristen = ({
       </div>
       {
         !(!geschaeft.datumEingangAwel && isPrintPreview) &&
-        <DateField  // eslint-disable-line react/jsx-indent
+        <DateField
           name="datumEingangAwel"
           label="Datum des Eingangs im AWEL"
           change={change}
@@ -73,7 +73,7 @@ const AreaFristen = ({
       }
       {
         !(!geschaeft.fristAwel && isPrintPreview) &&
-        <DateField  // eslint-disable-line react/jsx-indent
+        <DateField
           name="fristAwel"
           label="Frist für Erledigung durch AWEL"
           change={change}
@@ -84,7 +84,7 @@ const AreaFristen = ({
       }
       {
         !(!geschaeft.fristAmtschef && isPrintPreview) &&
-        <DateField  // eslint-disable-line react/jsx-indent
+        <DateField
           name="fristAmtschef"
           label="Frist Vorlage an Amtschef"
           change={change}
@@ -95,7 +95,7 @@ const AreaFristen = ({
       }
       {
         !(!geschaeft.fristAbteilung && isPrintPreview) &&
-        <DateField  // eslint-disable-line react/jsx-indent
+        <DateField
           name="fristAbteilung"
           label="Frist für Erledigung durch Abteilung"
           change={change}
@@ -106,7 +106,7 @@ const AreaFristen = ({
       }
       {
         !(!geschaeft.fristMitarbeiter && isPrintPreview) &&
-        <DateField  // eslint-disable-line react/jsx-indent
+        <DateField
           name="fristMitarbeiter"
           label="Frist Erledigung nächster Schritt Re"
           change={change}
@@ -118,7 +118,7 @@ const AreaFristen = ({
       {!!geschaeft.fristMitarbeiter && fieldFristDauerBisMitarbeiter(geschaeft, styles)}
       {
         !(!geschaeft.datumAusgangAwel && isPrintPreview) &&
-        <DateField  // eslint-disable-line react/jsx-indent
+        <DateField
           name="datumAusgangAwel"
           label="Datum Ausgang AWEL (erledigt)"
           change={change}
@@ -129,7 +129,7 @@ const AreaFristen = ({
       }
       {
         !(!geschaeft.fristDirektion && isPrintPreview) &&
-        <DateField  // eslint-disable-line react/jsx-indent
+        <DateField
           name="fristDirektion"
           label="Frist für Erledigung durch Direktion"
           change={change}

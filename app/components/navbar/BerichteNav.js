@@ -3,10 +3,17 @@ import {
   NavDropdown,
   MenuItem,
 } from 'react-bootstrap'
+import styled from 'styled-components'
+
 import styles from './Navbar.css'
 import filterForVernehmlAngek from '../../src/filterForVernehmlAngek'
 import filterForVernehmlLaeuft from '../../src/filterForVernehmlLaeuft'
 import filterForFaelligeGeschaefte from '../../src/filterForFaelligeGeschaefte'
+
+const StyledNavDropdown = styled(NavDropdown)`
+  border-left: dotted #505050 1px;
+  border-right: ${props => props.showAdditionalBerichteNavs ? 'none' : 'dotted #505050 1px'};
+`
 
 const BerichteNav = ({
   pagesInitiate,
@@ -17,6 +24,7 @@ const BerichteNav = ({
   geschaefteSortByFields,
   geschaefteResetSort,
   activeId,
+  showAdditionalBerichteNavs,
 }) => {
   const isActive = path === '/pages'
   const nameObject = {
@@ -29,7 +37,8 @@ const BerichteNav = ({
   const name = nameObject[pages.reportType] || 'Berichte'
   const title = isActive ? name : 'Berichte'
   return (
-    <NavDropdown
+    <StyledNavDropdown
+      showAdditionalBerichteNavs={showAdditionalBerichteNavs}
       eventKey={7}
       title={title}
       id="reports-nav-dropdown"
@@ -110,7 +119,7 @@ const BerichteNav = ({
       </MenuItem>
       {
         activeId &&
-        <MenuItem divider />  // eslint-disable-line react/jsx-indent
+        <MenuItem divider />
       }
       {
         activeId &&
@@ -120,13 +129,13 @@ const BerichteNav = ({
       }
       {
         activeId &&
-        <MenuItem  // eslint-disable-line react/jsx-indent
+        <MenuItem
           eventKey={7.5}
         >
           Deckblatt
         </MenuItem>
       }
-    </NavDropdown>
+    </StyledNavDropdown>
   )
 }
 
@@ -140,7 +149,8 @@ BerichteNav.propTypes = {
   geschaeftPdfShow: PropTypes.func.isRequired,
   path: PropTypes.string.isRequired,
   pages: PropTypes.object.isRequired,
-  activeId: PropTypes.number,
+  activeId: PropTypes.number,  // does NOT always exist
+  showAdditionalBerichteNavs: PropTypes.bool.isRequired,
 }
 
 export default BerichteNav

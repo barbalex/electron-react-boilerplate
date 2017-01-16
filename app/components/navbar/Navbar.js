@@ -5,6 +5,8 @@ import {
   NavItem,
 } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import styled from 'styled-components'
+
 import ModalGeschaeftDelete from '../../containers/ModalGeschaeftDelete'
 import ModalMessage from '../../containers/ModalMessage'
 import PagesModal from '../../containers/PagesModal'
@@ -20,6 +22,11 @@ import StammdatenNav from '../../containers/navbar/StammdatenNav'
 import FilterNav from '../../containers/navbar/FilterNav'
 import OptionsNav from '../../containers/navbar/OptionsNav'
 import styles from './Navbar.css'
+
+const GeschaefteLinkContainer = styled(LinkContainer)`
+  border-left: dotted #505050 1px;
+  border-right: ${props => props.showAdditionalGeschaefteNavs ? 'none' : 'dotted #505050 1px'};
+`
 
 class NavbarComponent extends Component {
   static propTypes = {
@@ -49,27 +56,27 @@ class NavbarComponent extends Component {
 
     const dataIsFiltered = geschaefte.length !== geschaefteGefilterteIds.length
     const classNameBadge = dataIsFiltered ? styles.active : null
-    const showPrint = path === '/pages' || path === '/geschaeftPdf'
-    const showGeschaefteStuff = (
+    const showAdditionalBerichteNavs = path === '/pages' || path === '/geschaeftPdf'
+    const showAdditionalGeschaefteNavs = (
       path === '/geschaefte' ||
       path === '/filterFields'
     )
-    const showGeschaefteAndPrint = showPrint || showGeschaefteStuff
+    const showGeschaefteAndPrint = showAdditionalBerichteNavs || showAdditionalGeschaefteNavs
     const showTableStuff = path === '/table'
 
     return (
       <div>
         {
           willDeleteGeschaeft &&
-          <ModalGeschaeftDelete />  // eslint-disable-line react/jsx-indent
+          <ModalGeschaeftDelete />
         }
         {
           showMessageModal &&
-          <ModalMessage />  // eslint-disable-line react/jsx-indent
+          <ModalMessage />
         }
         {
           showPagesModal &&
-          <PagesModal />  // eslint-disable-line react/jsx-indent
+          <PagesModal />
         }
         <Navbar
           inverse
@@ -77,51 +84,54 @@ class NavbarComponent extends Component {
           className={styles.navbar}
         >
           <Nav>
-            <LinkContainer to={{ pathname: '/geschaefte' }}>
+            <GeschaefteLinkContainer
+              to={{ pathname: '/geschaefte' }}
+              showAdditionalGeschaefteNavs={showAdditionalGeschaefteNavs}
+            >
               <NavItem
                 href="#"
               >
                 Geschäfte <sup className={classNameBadge}>{geschaefteGefilterteIds.length}</sup>
               </NavItem>
-            </LinkContainer>
+            </GeschaefteLinkContainer>
             {
-              showGeschaefteStuff &&
-              <GeschaeftNeuNav />  // eslint-disable-line react/jsx-indent
+              showAdditionalGeschaefteNavs &&
+              <GeschaeftNeuNav />
             }
             {
-              showGeschaefteStuff &&
-              <GeschaeftLoeschenNav />  // eslint-disable-line react/jsx-indent
-            }
-            {
-              showGeschaefteAndPrint &&
-              <ExportGeschaefteNav />  // eslint-disable-line react/jsx-indent
+              showAdditionalGeschaefteNavs &&
+              <GeschaeftLoeschenNav />
             }
             {
               showGeschaefteAndPrint &&
-              <BerichteNav />  // eslint-disable-line react/jsx-indent
+              <ExportGeschaefteNav />
             }
             {
-              showPrint &&
-              <PrintNav />  // eslint-disable-line react/jsx-indent
+              showGeschaefteAndPrint &&
+              <BerichteNav showAdditionalBerichteNavs={showAdditionalBerichteNavs} />
             }
             {
-              showPrint &&
-              <PrintToPdfNav />  // eslint-disable-line react/jsx-indent
+              showAdditionalBerichteNavs &&
+              <PrintNav />
+            }
+            {
+              showAdditionalBerichteNavs &&
+              <PrintToPdfNav />
             }
             <StammdatenNav />
             {
               showTableStuff &&
-              <TableRowNeuNav />  // eslint-disable-line react/jsx-indent
+              <TableRowNeuNav />
             }
             {
               showTableStuff &&
-              <TableRowDeleteNav />  // eslint-disable-line react/jsx-indent
+              <TableRowDeleteNav />
             }
           </Nav>
           <Nav pullRight>
             {
               !showTableStuff &&
-              <FilterNav />  // eslint-disable-line react/jsx-indent
+              <FilterNav />
             }
             <OptionsNav />
           </Nav>

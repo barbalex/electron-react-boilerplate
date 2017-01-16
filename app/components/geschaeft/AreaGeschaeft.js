@@ -41,7 +41,7 @@ const AreaGeschaeft = ({
       </div>
       {
         !(!geschaeft.ausloeser && isPrintPreview) &&
-        <div  // eslint-disable-line react/jsx-indent
+        <div
           className={styles.fieldAusloeser}
         >
           <ControlLabel>
@@ -59,7 +59,7 @@ const AreaGeschaeft = ({
       }
       {
         !(!geschaeft.ort && isPrintPreview) &&
-        <div  // eslint-disable-line react/jsx-indent
+        <div
           className={styles.fieldOrt}
         >
           <ControlLabel>
@@ -78,7 +78,7 @@ const AreaGeschaeft = ({
       }
       {
         !(!geschaeft.geschaeftsart && isPrintPreview) &&
-        <div  // eslint-disable-line react/jsx-indent
+        <div
           className={styles.fieldGeschaeftsart}
         >
           <ControlLabel>
@@ -98,7 +98,7 @@ const AreaGeschaeft = ({
       }
       {
         !(!geschaeft.status && isPrintPreview) &&
-        <div  // eslint-disable-line react/jsx-indent
+        <div
           className={styles.fieldStatus}
         >
           <ControlLabel>
@@ -118,7 +118,7 @@ const AreaGeschaeft = ({
       }
       {
         !(!geschaeft.abteilung && isPrintPreview) &&
-        <div  // eslint-disable-line react/jsx-indent
+        <div
           className={styles.fieldAbteilung}
         >
           <ControlLabel>
@@ -138,7 +138,7 @@ const AreaGeschaeft = ({
         }
       {
         !(!geschaeft.details && isPrintPreview) &&
-        <div  // eslint-disable-line react/jsx-indent
+        <div
           className={styles.fieldDetails}
         >
           <ControlLabel>
@@ -156,7 +156,7 @@ const AreaGeschaeft = ({
       }
       {
         !(!geschaeft.naechsterSchritt && isPrintPreview) &&
-        <div  // eslint-disable-line react/jsx-indent
+        <div
           className={styles.fieldNaechsterSchritt}
         >
           <ControlLabel>
@@ -174,7 +174,7 @@ const AreaGeschaeft = ({
       }
       {
         !(!geschaeft.vermerk && isPrintPreview) &&
-        <div  // eslint-disable-line react/jsx-indent
+        <div
           className={styles.fieldVermerk}
         >
           <ControlLabel>

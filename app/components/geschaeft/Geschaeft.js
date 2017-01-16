@@ -246,7 +246,7 @@ class Geschaeft extends Component {
           />
           {
             showAreaParlVorstoss &&
-            <AreaParlVorstoss  // eslint-disable-line react/jsx-indent
+            <AreaParlVorstoss
               nrOfFieldsBeforePv={nrOfFieldsBeforePv}
               change={this.change}
               blur={this.blur}
@@ -254,7 +254,7 @@ class Geschaeft extends Component {
           }
           {
             showAreaRechtsmittel &&
-            <AreaRechtsmittel  // eslint-disable-line react/jsx-indent
+            <AreaRechtsmittel
               nrOfFieldsBeforePv={nrOfFieldsBeforePv}
               change={this.change}
               blur={this.blur}

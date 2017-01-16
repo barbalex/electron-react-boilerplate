@@ -250,7 +250,7 @@ class Page extends Component {
         >
           {
             firstPage &&
-            <img  // eslint-disable-line react/jsx-indent
+            <img
               src={logoImg}
               height="70"
               style={{
@@ -271,7 +271,7 @@ class Page extends Component {
           }
           {
             firstPage &&
-            <div  // eslint-disable-line react/jsx-indent
+            <div
               className={styles.filterCriteria}
             >
               Filterkriterien: {filterCriteriaToArrayOfStrings(filterFields).join(' & ')}
@@ -279,7 +279,7 @@ class Page extends Component {
           }
           {
             firstPage &&
-            <div  // eslint-disable-line react/jsx-indent
+            <div
               className={styles.sortCriteria}
             >
               Sortierkriterien: {sortCriteriaToArrayOfStrings(sortFields).join(' & ')}
@@ -287,7 +287,7 @@ class Page extends Component {
           }
           {
             reportType === 'typFaelligeGeschaefte' &&
-            <FaelligeGeschaefteHeader />  // eslint-disable-line react/jsx-indent
+            <FaelligeGeschaefteHeader />
           }
           {
             (
@@ -295,11 +295,11 @@ class Page extends Component {
               reportType === 'angekVernehml' ||
               reportType === 'laufendeVernehml'
             ) &&
-            <VernehmlassungenHeader />  // eslint-disable-line react/jsx-indent
+            <VernehmlassungenHeader />
           }
           {
             reportType === 'list1' &&
-            <List1Header />  // eslint-disable-line react/jsx-indent
+            <List1Header />
           }
           {this.tableRows()}
         </div>

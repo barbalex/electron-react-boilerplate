@@ -56,7 +56,7 @@ const AreaRechtsmittel = ({
         />
       </div>
       <div className={styles.fieldEntscheidDatum}>
-        <DateField  // eslint-disable-line react/jsx-indent
+        <DateField
           name="rechtsmittelEntscheidDatum"
           label="Entscheid Datum"
           change={change}
