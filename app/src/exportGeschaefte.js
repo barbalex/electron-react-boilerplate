@@ -2,7 +2,7 @@
  * gets save path
  */
 
-import { remote } from 'electron'
+import { remote, shell } from 'electron'
 import writeExport from './writeExport'
 
 const { dialog } = remote
@@ -53,12 +53,15 @@ export default (geschaefte, messageShow) => {
         const dataArray = getDataArrayFromExportObjects(geschaefte)
         writeExport(path, dataArray)
           .then(() => {
+            shell.openItem(path)
+            /*
             // show the message
             const msg = `Die Geschäfte wurden nach ${path} exportiert`
             messageShow(true, msg, '')
             setTimeout(() =>
               messageShow(false, '', ''), 8000
             )
+            */
           })
           .catch((error) => {
             messageShow(true, 'Fehler:', error)
