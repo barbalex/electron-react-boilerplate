@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import React, { PropTypes } from 'react'
 import {
   NavDropdown,
@@ -5,6 +7,7 @@ import {
 } from 'react-bootstrap'
 import moment from 'moment'
 import _ from 'lodash'
+
 import exportGeschaefte from '../../src/exportGeschaefte'
 
 const exportGeschaefteRechtsmittelVorjahre = (
@@ -53,7 +56,33 @@ const exportGeschaefteAll = (
   const geschaefteGefiltert = geschaefte.filter(g =>
     geschaefteGefilterteIds.includes(g.idGeschaeft)
   )
-  exportGeschaefte(geschaefteGefiltert, messageShow)
+  // need to make geko, interne and externe readable
+  const geschaefteReadable = _.clone(geschaefteGefiltert).map((g) => {
+    // make readable
+    g.geko = g.geko
+      .map(geko => geko.gekoNr)
+      .join(', ')
+    g.interne = g.interne
+      .map(i => {
+        const name = `${i.name} ${i.vorname}, ${i.kurzzeichen}`
+        const abt = i.abteilung ? `, ${i.abteilung}` : ''
+        const eMail = i.eMail ? `, ${i.eMail}` : ''
+        const telefon = i.telefon ? `, ${i.telefon}` : ''
+        return `${name}${abt}${eMail}${telefon}`
+      })
+      .join('; ')
+    g.externe = g.externe
+      .map(i => {
+        const name = `${i.name} ${i.vorname}`
+        const firma = i.firma ? `, ${i.firma}` : ''
+        const eMail = i.eMail ? `, ${i.eMail}` : ''
+        const telefon = i.telefon ? `, ${i.telefon}` : ''
+        return `${name}${firma}${eMail}${telefon}`
+      })
+      .join('; ')
+    return g
+  })
+  exportGeschaefte(geschaefteReadable, messageShow)
 }
 
 const NavbarExportGeschaefteNav = ({
