@@ -106,7 +106,7 @@ const BerichteNav = ({
       </MenuItem>
       <MenuItem divider />
       <MenuItem header>
-        Pfannenfertige,<br />setzen einen eigenen Filter:
+        Vorbereitete,<br />setzen einen eigenen Filter:
       </MenuItem>
       <MenuItem eventKey={7.7}>
         fällige Geschäfte
