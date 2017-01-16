@@ -4,10 +4,15 @@ import {
   MenuItem,
 } from 'react-bootstrap'
 import styled from 'styled-components'
+import { shell } from 'electron'
 
 const DbPathDiv = styled.div`
   font-style: italic;
 `
+
+const onGetProjektbeschreibung = () => {
+  shell.openItem('https://github.com/barbalex/kapla3/raw/master/app/etc/Projektbeschreibung.pdf')
+}
 
 const OptionsNav = ({
   config,
@@ -38,9 +43,9 @@ const OptionsNav = ({
     </MenuItem>
     <MenuItem divider />
     <MenuItem
-      onClick={configUiReset}
+      onClick={onGetProjektbeschreibung}
     >
-      über Kapla
+      Projektbeschreibung herunterladen
     </MenuItem>
   </NavDropdown>
 

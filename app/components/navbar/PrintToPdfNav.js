@@ -31,7 +31,6 @@ const onClickPrint = (e, path) => {
     }]
   }
 
-  // first remove navbar
   win.webContents.printToPDF(
     printToPDFOptions,
     (error, data) => {
