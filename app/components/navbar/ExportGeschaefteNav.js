@@ -10,6 +10,7 @@ import _ from 'lodash'
 
 import exportGeschaefte from '../../src/exportGeschaefte'
 import getHistoryOfGeschaeft from '../../src/getHistoryOfGeschaeft'
+import getHistoryIdArray from '../../src/getHistoryIdArray'
 
 const exportGeschaefteRechtsmittelVorjahre = (
   e,
@@ -101,7 +102,7 @@ const exportGeschaefteAll = (
       null
     )
     // creates problems when calculating too many
-    // g.history = getHistoryOfGeschaeft(geschaefte, g.idGeschaeft).join(', ')
+    g.history = getHistoryIdArray(g)
     return g
   })
   exportGeschaefte(geschaefteReadable, messageShow)

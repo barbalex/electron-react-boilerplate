@@ -17,19 +17,27 @@ export const getGeschaefteWithNSideData = createSelector(
     geschaefte.map((g) => {
       const newGeschaeft = _.clone(g)
       newGeschaeft.interne = gki
-        .filter(i => i.idGeschaeft === g.idGeschaeft)
+        .filter(i => i.idGeschaeft === newGeschaeft.idGeschaeft)
         .map((gk) =>
           interne.find(i => i.id === gk.idKontakt) || null
         )
       newGeschaeft.externe = gke
-        .filter(i => i.idGeschaeft === g.idGeschaeft)
+        .filter(i => i.idGeschaeft === newGeschaeft.idGeschaeft)
         .map((gk) =>
           externe.find(i => i.id === gk.idKontakt) || null
         )
       newGeschaeft.geko = geko
-        .filter(gko => gko.idGeschaeft === g.idGeschaeft)
+        .filter(gko => gko.idGeschaeft === newGeschaeft.idGeschaeft)
       newGeschaeft.links = links
-        .filter(link => link.idGeschaeft === g.idGeschaeft)
+        .filter(link => link.idGeschaeft === newGeschaeft.idGeschaeft)
+      newGeschaeft.vorgeschaeft = geschaefte
+        .find(vg =>
+          vg.idGeschaeft === parseInt(newGeschaeft.idVorgeschaeft, 10)
+        )
+      newGeschaeft.nachgeschaeft = geschaefte
+        .find(ng =>
+          parseInt(ng.idVorgeschaeft, 10) === newGeschaeft.idGeschaeft
+        )
       // newGeschaeft.history = getHistoryOfGeschaeft(geschaefte, activeId)
       return newGeschaeft
     })
