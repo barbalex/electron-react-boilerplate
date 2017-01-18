@@ -104,10 +104,13 @@ const dbChooseSuccess = (dbPath, db) =>
       dbPath
     })
     // get data
-    dispatch(UserActions.fetchUsername())
     dispatch(GeschaefteActions.getGeschaefte())
     dispatch(GeschaefteActions.getGeko())
     dispatch(GeschaefteActions.getLinks())
+    dispatch(GeschaefteActions.interneOptionsGet())
+    dispatch(GeschaefteActions.externeOptionsGet())
+    dispatch(GeschaefteKontakteInternActions.getGeschaefteKontakteIntern())
+    dispatch(GeschaefteKontakteExternActions.getGeschaefteKontakteExtern())
     dispatch(GeschaefteActions.rechtsmittelErledigungOptionsGet())
     dispatch(GeschaefteActions.parlVorstossTypOptionsGet())
     dispatch(GeschaefteActions.statusOptionsGet())
@@ -115,10 +118,7 @@ const dbChooseSuccess = (dbPath, db) =>
     dispatch(GeschaefteActions.aktenstandortOptionsGet())
     dispatch(GeschaefteActions.rechtsmittelInstanzOptionsGet())
     dispatch(GeschaefteActions.abteilungOptionsGet())
-    dispatch(GeschaefteActions.interneOptionsGet())
-    dispatch(GeschaefteActions.externeOptionsGet())
-    dispatch(GeschaefteKontakteInternActions.getGeschaefteKontakteIntern())
-    dispatch(GeschaefteKontakteExternActions.getGeschaefteKontakteExtern())
+    dispatch(UserActions.fetchUsername())
     // set filter to fällige
     dispatch(GeschaefteActions.geschaefteFilterByFields(filterForFaelligeGeschaefte(), 'fällige'))
     dispatch(GeschaefteActions.geschaefteSortByFields('fristMitarbeiter', 'DESCENDING'))
