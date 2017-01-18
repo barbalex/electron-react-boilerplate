@@ -102,7 +102,6 @@ class Geschaeft extends Component {
   static propTypes = {
     geschaeft: PropTypes.object.isRequired,
     activeId: PropTypes.number.isRequired,
-    links: PropTypes.array.isRequired,
     geschaefteChangeState: PropTypes.func.isRequired,
     changeGeschaeftInDb: PropTypes.func.isRequired,
     config: PropTypes.object.isRequired,
@@ -182,7 +181,6 @@ class Geschaeft extends Component {
   render = () => {
     const {
       geschaeft,
-      links,
       config,
       isPrintPreview,
     } = this.props
@@ -279,6 +277,7 @@ class Geschaeft extends Component {
           {
             showLinks &&
             <AreaLinks
+              links={geschaeft.links}
               blur={this.blur}
               change={this.change}
             />

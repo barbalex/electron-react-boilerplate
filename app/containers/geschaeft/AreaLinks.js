@@ -6,19 +6,16 @@ import * as AppActions from '../../actions/app'
 
 const actions = Object.assign(GeschaefteActions, AppActions)
 
-function mapStateToProps(state) {
+function mapStateToProps(state, props) {
+  const { links } = props
   const {
-    links,
     activeId,
   } = state.geschaefte
   const path = state.routing.locationBeforeTransitions.pathname
   const isPrintPreview = path === '/geschaeftPdf'
-  const linksDesGeschaefts = links.filter(l =>
-    l.idGeschaeft === activeId
-  )
 
   return {
-    links: linksDesGeschaefts,
+    links,
     activeId,
     isPrintPreview,
   }
