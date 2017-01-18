@@ -9,6 +9,7 @@ import moment from 'moment'
 import _ from 'lodash'
 
 import exportGeschaefte from '../../src/exportGeschaefte'
+import getHistoryOfGeschaeft from '../../src/getHistoryOfGeschaeft'
 
 const exportGeschaefteRechtsmittelVorjahre = (
   e,
@@ -59,30 +60,48 @@ const exportGeschaefteAll = (
   // need to make geko, interne and externe readable
   const geschaefteReadable = _.clone(geschaefteGefiltert).map((g) => {
     // make readable
-    g.geko = g.geko
-      .map(geko => geko.gekoNr)
-      .join(', ')
-    g.interne = g.interne
-      .map(i => {
-        const name = `${i.name} ${i.vorname}, ${i.kurzzeichen}`
-        const abt = i.abteilung ? `, ${i.abteilung}` : ''
-        const eMail = i.eMail ? `, ${i.eMail}` : ''
-        const telefon = i.telefon ? `, ${i.telefon}` : ''
-        return `${name}${abt}${eMail}${telefon}`
-      })
-      .join('; ')
-    g.externe = g.externe
-      .map(i => {
-        const name = `${i.name} ${i.vorname}`
-        const firma = i.firma ? `, ${i.firma}` : ''
-        const eMail = i.eMail ? `, ${i.eMail}` : ''
-        const telefon = i.telefon ? `, ${i.telefon}` : ''
-        return `${name}${firma}${eMail}${telefon}`
-      })
-      .join('; ')
-    g.links = g.links
-      .map(l => l.url)
-      .join(', ')
+    g.geko = (
+      g.geko ?
+      g.geko
+        .map(geko => geko.gekoNr)
+        .join(', ') :
+      null
+    )
+    g.interne = (
+      g.interne ?
+      g.interne
+        .map(i => {
+          const name = `${i.name} ${i.vorname}, ${i.kurzzeichen}`
+          const abt = i.abteilung ? `, ${i.abteilung}` : ''
+          const eMail = i.eMail ? `, ${i.eMail}` : ''
+          const telefon = i.telefon ? `, ${i.telefon}` : ''
+          return `${name}${abt}${eMail}${telefon}`
+        })
+        .join('; ') :
+      null
+    )
+    g.externe = (
+      g.externe ?
+      g.externe
+        .map(i => {
+          const name = `${i.name} ${i.vorname}`
+          const firma = i.firma ? `, ${i.firma}` : ''
+          const eMail = i.eMail ? `, ${i.eMail}` : ''
+          const telefon = i.telefon ? `, ${i.telefon}` : ''
+          return `${name}${firma}${eMail}${telefon}`
+        })
+        .join('; ') :
+      null
+    )
+    g.links = (
+      g.links ?
+      g.links
+        .map(l => l.url)
+        .join(', ') :
+      null
+    )
+    // creates problems when calculating too many
+    // g.history = getHistoryOfGeschaeft(geschaefte, g.idGeschaeft).join(', ')
     return g
   })
   exportGeschaefte(geschaefteReadable, messageShow)
