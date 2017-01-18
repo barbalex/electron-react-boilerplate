@@ -62,14 +62,14 @@ const exportGeschaefteAll = (
   const geschaefteReadable = _.clone(geschaefteGefiltert).map((g) => {
     // make readable
     g.geko = (
-      g.geko ?
+      g.geko && g.geko.map ?
       g.geko
         .map(geko => geko.gekoNr)
         .join(', ') :
       null
     )
     g.interne = (
-      g.interne ?
+      g.interne && g.interne.map ?
       g.interne
         .map(i => {
           const name = `${i.name} ${i.vorname}, ${i.kurzzeichen}`
@@ -82,7 +82,7 @@ const exportGeschaefteAll = (
       null
     )
     g.externe = (
-      g.externe ?
+      g.externe && g.externe.map ?
       g.externe
         .map(i => {
           const name = `${i.name} ${i.vorname}`
@@ -95,14 +95,14 @@ const exportGeschaefteAll = (
       null
     )
     g.links = (
-      g.links ?
+      g.links && g.links.map ?
       g.links
         .map(l => l.url)
         .join(', ') :
       null
     )
     // creates problems when calculating too many
-    g.history = getHistoryIdArray(g)
+    g.history = getHistoryIdArray(g).join(', ')
     return g
   })
   exportGeschaefte(geschaefteReadable, messageShow)
