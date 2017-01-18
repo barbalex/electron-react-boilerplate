@@ -231,7 +231,7 @@ class Geschaeft extends Component {
 
     const showLinks = !(isPrintPreview && geschaeft.links.length === 0)
 
-    console.log('geschaeft:', geschaeft)
+    // console.log('geschaeft:', geschaeft)
 
     return (
       <ScrollContainer>
