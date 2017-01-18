@@ -5,7 +5,7 @@ export default function (geschaefte, idGeschaeft) {
   if (geschaeft && geschaeft.idVorgeschaeft) {
     // idVorgeschaeft arrives as string
     // need to convert it to number
-    return parseInt(geschaeft.idVorgeschaeft, 10)
+    return geschaeft.idVorgeschaeft
   }
   return null
 }
