@@ -84,7 +84,7 @@ CREATE TABLE geschaefte (
   idGeschaeft INTEGER PRIMARY KEY,
   idKontaktExtern_readonly TEXT,
   idKontaktIntern_readonly TEXT,
-  idVorgeschaeft TEXT,
+  idVorgeschaeft INTEGER,
   mutationsdatum TEXT,
   mutationsperson TEXT,
   naechsterSchritt TEXT,
