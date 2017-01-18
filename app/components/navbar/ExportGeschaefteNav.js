@@ -80,6 +80,9 @@ const exportGeschaefteAll = (
         return `${name}${firma}${eMail}${telefon}`
       })
       .join('; ')
+    g.links = g.links
+      .map(l => l.url)
+      .join(', ')
     return g
   })
   exportGeschaefte(geschaefteReadable, messageShow)
