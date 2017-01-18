@@ -8,7 +8,6 @@ function mapStateToProps(state, props) {
   const {
     geschaefteGefilterteIds,
     activeId,
-    interneOptions,
   } = state.geschaefte
   const geschaefte = getGeschaefteWithNSideData(state)
   const path = state.routing.locationBeforeTransitions.pathname
@@ -21,7 +20,6 @@ function mapStateToProps(state, props) {
     geschaefte,
     geschaefteGefilterteIds,
     activeId,
-    interneOptions,
     path,
     index,
     keyPassed,

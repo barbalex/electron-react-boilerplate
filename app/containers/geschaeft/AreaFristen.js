@@ -2,12 +2,13 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import AreaFristen from '../../components/geschaeft/AreaFristen'
 import * as GeschaefteActions from '../../actions/geschaefte'
+import { getGeschaefteWithNSideData } from '../../selectors'
 
 function mapStateToProps(state, props) {
   const {
-    geschaefte,
     activeId,
   } = state.geschaefte
+  const geschaefte = getGeschaefteWithNSideData(state)
   const {
     blur,
     change,

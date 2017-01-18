@@ -20,14 +20,6 @@ const statusFristInStyle = (dauerBisFristMitarbeiter, styles) => {
   return 'formControlStatic'
 }
 
-const fristDauerBisMitarbeiter = (geschaeft) => {
-  const now = moment()
-  const end = moment(geschaeft.fristMitarbeiter, 'DD.MM.YYYY')
-  const duration = moment.duration(end.diff(now))
-  const days = duration.asDays()
-  return days ? Math.ceil(days) : ''
-}
-
 const fieldFristDauerBisMitarbeiter = (geschaeft, styles) => (
   <div className={regularStyles.fieldFristDauerBisMitarbeiter}>
     <ControlLabel>
@@ -38,9 +30,9 @@ const fieldFristDauerBisMitarbeiter = (geschaeft, styles) => (
         paddingTop: 0,
         marginTop: 0,
       }}
-      className={statusFristInStyle(fristDauerBisMitarbeiter(geschaeft), styles)}
+      className={statusFristInStyle(geschaeft.dauerBisFristMitarbeiter, styles)}
     >
-      {fristDauerBisMitarbeiter(geschaeft)}
+      {geschaeft.dauerBisFristMitarbeiter}
     </FormControl.Static>
   </div>
 )

@@ -17,6 +17,12 @@ export const getGeschaefteWithNSideData = createSelector(
   (geschaefte, gki, gke, interne, externe, geko, links) =>
     geschaefte.map((g) => {
       const newGeschaeft = _.clone(g)
+      newGeschaeft.verantwortlichName = interne
+        .filter(i => i.kurzzeichen === newGeschaeft.verantwortlich)
+        .map(i =>
+          (i.name ? `${i.vorname} ${i.name}` : '')
+        )
+        .join(', ')
       newGeschaeft.interne = gki
         .filter(i => i.idGeschaeft === newGeschaeft.idGeschaeft)
         .map((gk) =>

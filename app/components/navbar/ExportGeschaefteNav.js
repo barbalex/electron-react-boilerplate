@@ -104,6 +104,7 @@ const exportGeschaefteAll = (
     g.historie = getHistoryIdArray(g).join(', ')
     delete g.vorgeschaeft
     delete g.nachgeschaeft
+    delete g.verantwortlichName
     return g
   })
   exportGeschaefte(geschaefteReadable, messageShow)
