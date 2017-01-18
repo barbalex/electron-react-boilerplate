@@ -7,10 +7,11 @@ const getGke = (state) => state.geschaefteKontakteExtern.geschaefteKontakteExter
 const getInterne = (state) => state.geschaefte.interneOptions
 const getExterne = (state) => state.geschaefte.externeOptions
 const getGeko = (state) => state.geschaefte.geko
+const getLinks = (state) => state.geschaefte.links
 
 export const getGeschaefteWithNSideData = createSelector(
-  [getGeschaefte, getGki, getGke, getInterne, getExterne, getGeko],
-  (geschaefteInState, gki, gke, interne, externe, geko) => {
+  [getGeschaefte, getGki, getGke, getInterne, getExterne, getGeko, getLinks],
+  (geschaefteInState, gki, gke, interne, externe, geko, links) => {
     // attach all arrays to each geschaeft
     const geschaefte = geschaefteInState.map((g) => {
       const newGeschaeft = clone(g)
@@ -26,6 +27,8 @@ export const getGeschaefteWithNSideData = createSelector(
         )
       newGeschaeft.geko = geko
         .filter(gko => gko.idGeschaeft === g.idGeschaeft)
+      newGeschaeft.links = links
+        .filter(link => link.idGeschaeft === g.idGeschaeft)
       return newGeschaeft
     })
     return geschaefte

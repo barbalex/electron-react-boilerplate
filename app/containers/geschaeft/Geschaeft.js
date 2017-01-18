@@ -3,14 +3,15 @@ import { connect } from 'react-redux'
 import Geschaeft from '../../components/geschaeft/Geschaeft'
 import * as GeschaefteActions from '../../actions/geschaefte'
 import * as AppActions from '../../actions/app'
+import { getGeschaefteWithNSideData } from '../../selectors'
 
 const actions = Object.assign(GeschaefteActions, AppActions)
 
 function mapStateToProps(state) {
   const {
-    geschaefte,
     activeId,
   } = state.geschaefte
+  const geschaefte = getGeschaefteWithNSideData(state)
   const {
     config,
   } = state.app

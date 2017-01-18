@@ -102,6 +102,7 @@ class Geschaeft extends Component {
   static propTypes = {
     geschaeft: PropTypes.object.isRequired,
     activeId: PropTypes.number.isRequired,
+    links: PropTypes.array.isRequired,
     geschaefteChangeState: PropTypes.func.isRequired,
     changeGeschaeftInDb: PropTypes.func.isRequired,
     config: PropTypes.object.isRequired,
@@ -181,6 +182,7 @@ class Geschaeft extends Component {
   render = () => {
     const {
       geschaeft,
+      links,
       config,
       isPrintPreview,
     } = this.props
@@ -229,6 +231,8 @@ class Geschaeft extends Component {
       Wrapper = WrapperWideNoAreaForGeschaeftsart
     }
 
+    const showLinks = !(isPrintPreview && geschaeft.links.length === 0)
+
     return (
       <ScrollContainer>
         <Wrapper isPrintPreview={isPrintPreview}>
@@ -272,10 +276,13 @@ class Geschaeft extends Component {
             change={this.change}
             blur={this.blur}
           />
-          <AreaLinks
-            blur={this.blur}
-            change={this.change}
-          />
+          {
+            showLinks &&
+            <AreaLinks
+              blur={this.blur}
+              change={this.change}
+            />
+          }
           <AreaHistory
             blur={this.blur}
             change={this.change}
