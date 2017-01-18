@@ -110,7 +110,7 @@
   composes: columnKontaktIntern;
 }
 
-.fieldFristIn {
+.fieldWarnung {
   font-weight: 900;
   letter-spacing: 0.35em;
   font-size: 16px;
@@ -118,12 +118,12 @@
   -webkit-text-stroke-width: 1.3px;
 }
 
-.fieldFristInFaellig {
-  composes: fieldFristIn;
+.fieldWarnungFaellig {
+  composes: fieldWarnung;
   -webkit-text-fill-color: red;
 }
 
-.fieldFristInHeute {
-  composes: fieldFristIn;
+.fieldWarnungHeute {
+  composes: fieldWarnung;
   -webkit-text-fill-color: yellow;
 }

@@ -9,7 +9,6 @@ import moment from 'moment'
 import _ from 'lodash'
 
 import exportGeschaefte from '../../src/exportGeschaefte'
-import getHistoryOfGeschaeft from '../../src/getHistoryOfGeschaeft'
 import getHistoryIdArray from '../../src/getHistoryIdArray'
 
 const exportGeschaefteRechtsmittelVorjahre = (
@@ -101,8 +100,10 @@ const exportGeschaefteAll = (
         .join(', ') :
       null
     )
-    // creates problems when calculating too many
-    // g.history = getHistoryIdArray(g).join(', ')
+    // works nice but: initial load of app is slowed
+    g.historie = getHistoryIdArray(g).join(', ')
+    delete g.vorgeschaeft
+    delete g.nachgeschaeft
     return g
   })
   exportGeschaefte(geschaefteReadable, messageShow)

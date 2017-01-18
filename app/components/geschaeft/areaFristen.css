@@ -28,7 +28,7 @@
   padding-left: 13px;
 }
 
-.fieldFristIn {
+.fieldWarnung {
   font-weight: 900;
   letter-spacing: 0.13em;
   font-size: 16px;
@@ -36,12 +36,12 @@
   -webkit-text-stroke-width: 1px;
 }
 
-.fieldFristInFaellig {
-  composes: fieldFristIn;
+.fieldWarnungFaellig {
+  composes: fieldWarnung;
   -webkit-text-fill-color: red;
 }
 
-.fieldFristInHeute {
-  composes: fieldFristIn;
+.fieldWarnungHeute {
+  composes: fieldWarnung;
   -webkit-text-fill-color: orange;
 }

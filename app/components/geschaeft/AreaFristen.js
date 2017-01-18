@@ -12,10 +12,10 @@ moment.locale('de')
 
 const statusFristInStyle = (dauerBisFristMitarbeiter, styles) => {
   if (dauerBisFristMitarbeiter < 0) {
-    return [styles.fieldFristInFaellig, 'formControlStatic'].join(' ')
+    return [styles.fieldWarnungFaellig, 'formControlStatic'].join(' ')
   }
   if (dauerBisFristMitarbeiter === 0) {
-    return [styles.fieldFristInHeute, 'formControlStatic'].join(' ')
+    return [styles.fieldWarnungHeute, 'formControlStatic'].join(' ')
   }
   return 'formControlStatic'
 }

@@ -135,7 +135,7 @@ class Geschaeft extends Component {
     if (type === 'radio') {
       // need to set null if existing value was clicked
       if (geschaeft[name] === dataset.value) {
-        value = null
+        value = ''
       } else {
         value = dataset.value
       }

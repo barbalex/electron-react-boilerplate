@@ -2,14 +2,15 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import GeschaefteItem from '../components/GeschaefteItem'
 import * as GeschaefteActions from '../actions/geschaefte'
+import { getGeschaefteWithNSideData } from '../selectors'
 
 function mapStateToProps(state, props) {
   const {
-    geschaefte,
     geschaefteGefilterteIds,
     activeId,
     interneOptions,
   } = state.geschaefte
+  const geschaefte = getGeschaefteWithNSideData(state)
   const path = state.routing.locationBeforeTransitions.pathname
   const {
     index,
