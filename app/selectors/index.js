@@ -1,9 +1,7 @@
 import { createSelector } from 'reselect'
 import _ from 'lodash'
-import getHistoryOfGeschaeft from '../src/getHistoryOfGeschaeft'
 
 const getGeschaefte = (state) => state.geschaefte.geschaefte
-const getActiveId = (state) => state.geschaefte.activeId
 const getGki = (state) => state.geschaefteKontakteIntern.geschaefteKontakteIntern
 const getGke = (state) => state.geschaefteKontakteExtern.geschaefteKontakteExtern
 const getInterne = (state) => state.geschaefte.interneOptions
@@ -12,8 +10,8 @@ const getGeko = (state) => state.geschaefte.geko
 const getLinks = (state) => state.geschaefte.links
 
 export const getGeschaefteWithNSideData = createSelector(
-  [getGeschaefte, getActiveId, getGki, getGke, getInterne, getExterne, getGeko, getLinks],
-  (geschaefte, activeId, gki, gke, interne, externe, geko, links) =>
+  [getGeschaefte, getGki, getGke, getInterne, getExterne, getGeko, getLinks],
+  (geschaefte, gki, gke, interne, externe, geko, links) =>
     geschaefte.map((g) => {
       const newGeschaeft = _.clone(g)
       newGeschaeft.interne = gki
@@ -30,6 +28,7 @@ export const getGeschaefteWithNSideData = createSelector(
         .filter(gko => gko.idGeschaeft === newGeschaeft.idGeschaeft)
       newGeschaeft.links = links
         .filter(link => link.idGeschaeft === newGeschaeft.idGeschaeft)
+      /*
       newGeschaeft.vorgeschaeft = geschaefte
         .find(vg =>
           vg.idGeschaeft === parseInt(newGeschaeft.idVorgeschaeft, 10)
@@ -38,7 +37,7 @@ export const getGeschaefteWithNSideData = createSelector(
         .find(ng =>
           parseInt(ng.idVorgeschaeft, 10) === newGeschaeft.idGeschaeft
         )
-      // newGeschaeft.history = getHistoryOfGeschaeft(geschaefte, activeId)
+      */
       return newGeschaeft
     })
 )

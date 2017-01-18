@@ -102,7 +102,7 @@ const exportGeschaefteAll = (
       null
     )
     // creates problems when calculating too many
-    g.history = getHistoryIdArray(g).join(', ')
+    // g.history = getHistoryIdArray(g).join(', ')
     return g
   })
   exportGeschaefte(geschaefteReadable, messageShow)
