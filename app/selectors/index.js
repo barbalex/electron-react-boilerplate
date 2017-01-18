@@ -1,7 +1,9 @@
 import { createSelector } from 'reselect'
-import clone from 'lodash/clone'
+import _ from 'lodash'
+import getHistoryOfGeschaeft from '../src/getHistoryOfGeschaeft'
 
 const getGeschaefte = (state) => state.geschaefte.geschaefte
+const getActiveId = (state) => state.geschaefte.activeId
 const getGki = (state) => state.geschaefteKontakteIntern.geschaefteKontakteIntern
 const getGke = (state) => state.geschaefteKontakteExtern.geschaefteKontakteExtern
 const getInterne = (state) => state.geschaefte.interneOptions
@@ -10,11 +12,11 @@ const getGeko = (state) => state.geschaefte.geko
 const getLinks = (state) => state.geschaefte.links
 
 export const getGeschaefteWithNSideData = createSelector(
-  [getGeschaefte, getGki, getGke, getInterne, getExterne, getGeko, getLinks],
-  (geschaefteInState, gki, gke, interne, externe, geko, links) => {
+  [getGeschaefte, getActiveId, getGki, getGke, getInterne, getExterne, getGeko, getLinks],
+  (geschaefte, activeId, gki, gke, interne, externe, geko, links) => {
     // attach all arrays to each geschaeft
-    const geschaefte = geschaefteInState.map((g) => {
-      const newGeschaeft = clone(g)
+    return geschaefte.map((g) => {
+      const newGeschaeft = _.clone(g)
       newGeschaeft.interne = gki
         .filter(i => i.idGeschaeft === g.idGeschaeft)
         .map((gk) =>
@@ -29,8 +31,8 @@ export const getGeschaefteWithNSideData = createSelector(
         .filter(gko => gko.idGeschaeft === g.idGeschaeft)
       newGeschaeft.links = links
         .filter(link => link.idGeschaeft === g.idGeschaeft)
+      // newGeschaeft.history = getHistoryOfGeschaeft(geschaefte, activeId)
       return newGeschaeft
     })
-    return geschaefte
   }
 )
