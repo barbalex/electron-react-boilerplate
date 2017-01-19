@@ -9,6 +9,7 @@ import moment from 'moment'
 import _ from 'lodash'
 
 import exportGeschaefte from '../../src/exportGeschaefte'
+import getHistoryOfGeschaefte from '../../src/getHistoryOfGeschaefte'
 
 const exportGeschaefteRechtsmittelVorjahre = (
   e,
@@ -19,9 +20,8 @@ const exportGeschaefteRechtsmittelVorjahre = (
   const thisYear = moment().year()
   const firstDate = moment(`01.01.${thisYear - 2}`, 'DD.MM.YYYY')
   const lastDate = moment(`31.12.${thisYear - 1}`, 'DD.MM.YYYY')
-  function isInPreviousTwoYears(date) {
-    return moment(date, 'DD.MM.YYYY').isBetween(firstDate, lastDate, 'days', '[]')
-  }
+  const isInPreviousTwoYears = (date) =>
+    moment(date, 'DD.MM.YYYY').isBetween(firstDate, lastDate, 'days', '[]')
   const geschaefteGefiltert = geschaefte.filter(g => (
     g.geschaeftsart === 'Rekurs/Beschwerde' &&
     !!g.datumEingangAwel &&
@@ -43,6 +43,18 @@ const exportGeschaefteRechtsmittelVorjahre = (
   geschaefteGefiltert.forEach((g, index) => {
     geschaefteGefiltert[index] = _.pick(geschaefteGefiltert[index], fieldsWanted)
   })
+  const newFieldsNames = {
+    datumEingangAwel: 'Datum Rechtsschrift',
+    ausloeser: 'Rekurrent bzw. Beschwerdeführer / Objekt',
+    gegenstand: 'Gegenstand des Rechtssteites',
+    rechtsmittelInstanz: 'Rechtsmittelinstanz',
+    abteilung: 'Hauptbetroffene Abteilung',
+    rechtsmittelErledigung: 'Ergebnis des Rechtssteites',
+    rechtsmittelEntscheidDatum: 'Datum Urteil / Verfügung',
+    rechtsmittelEntscheidNr: 'Nr. Urteil / Verfügung',
+    rechtsmittelTxt: 'Bemerkungen',
+    idGeschaeft: 'Kapla ID',
+  }
   exportGeschaefte(geschaefteGefiltert, messageShow)
 }
 
@@ -56,7 +68,10 @@ const exportGeschaefteAll = (
   const geschaefteGefiltert = geschaefte.filter(g =>
     geschaefteGefilterteIds.includes(g.idGeschaeft)
   )
+  const history = getHistoryOfGeschaefte(geschaefteGefiltert)
+  console.log('history:', history)
   // need to make geko, interne and externe readable
+  // and add history
   const geschaefteReadable = _.clone(geschaefteGefiltert).map((g) => {
     // make readable
     g.geko = (
@@ -99,6 +114,9 @@ const exportGeschaefteAll = (
         .join(', ') :
       null
     )
+    g.historie = history
+      .get(g.idGeschaeft)
+      .join(', ')
     delete g.verantwortlichName
     return g
   })
