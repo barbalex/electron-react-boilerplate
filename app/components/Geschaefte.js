@@ -36,7 +36,9 @@ class Geschaefte extends Component {
   }
 
   doesTableBodyOverflow() {
-    if (this.tableBody) return this.tableBody.offsetHeight < this.tableBody.scrollHeight
+    if (this.tableBody) {
+      return this.tableBody.offsetHeight < this.tableBody.scrollHeight
+    }
     return false
   }
 
@@ -47,17 +49,6 @@ class Geschaefte extends Component {
         key={key}
         keyPassed={key}
       />
-    )
-  }
-
-  renderItems(items, ref) {
-    return (
-      <div
-        ref={ref}
-        className={styles.table}
-      >
-        {items}
-      </div>
     )
   }
 
@@ -117,6 +108,7 @@ class Geschaefte extends Component {
               itemRenderer={::this.renderItem}
               length={geschaefteGefilterteIds ? geschaefteGefilterteIds.length : 0}
               type="uniform"
+              ref={(c) => { this.reactList = c }}
             />
           </div>
         </div>
