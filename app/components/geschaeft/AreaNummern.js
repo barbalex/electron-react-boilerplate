@@ -81,6 +81,10 @@ const SlashKr = styled(Slash)`
 `
 const SlashBvv = styled(Slash)`
   grid-area: slashBvv;
+  margin-top: ${(props) => (props.isPrintPreview ? '-7px' : 'inherit')};
+  div {
+    margin-left: -1px;
+  }
 `
 const SlashRrb = styled(Slash)`
   grid-area: slashRrb;
@@ -236,201 +240,283 @@ const AreaNummern = ({
           disabled
         />
       </FieldIdGeschaeft>
-      <LabelGekoNr isPrintPreview={isPrintPreview}>
-        Geko
-      </LabelGekoNr>
-      <FieldGekoNr isPrintPreview={isPrintPreview}>
-        {
+      {
+        !(isPrintPreview && !gekoValuesString) &&
+        <LabelGekoNr isPrintPreview={isPrintPreview}>
+          Geko
+        </LabelGekoNr>
+      }
+      {
+        !(isPrintPreview && !gekoValuesString) &&
+        <FieldGekoNr isPrintPreview={isPrintPreview}>
+          {
+            isPrintPreview &&
+            <FormControl
+              type="text"
+              defaultValue={gekoValuesString}
+              name="gekoNr"
+              bsSize="small"
+              tabIndex={1 + tabsToAdd}
+            />
+          }
+          {
+            !isPrintPreview &&
+            <div>
+              {gekoFields}
+            </div>
+          }
+        </FieldGekoNr>
+      }
+      {
+        !(
           isPrintPreview &&
+          !geschaeft.entscheidAwelNr &&
+          !geschaeft.entscheidBdvNr &&
+          !geschaeft.entscheidRrbNr &&
+          !geschaeft.entscheidBvvNr &&
+          !geschaeft.entscheidKrNr
+        ) &&
+        <LabelJahre>
+          <LabelNrDiv>
+            Jahr
+          </LabelNrDiv>
+        </LabelJahre>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidAwelNr) &&
+        <LabelEntscheidAwel isPrintPreview={isPrintPreview}>
+          AWEL
+        </LabelEntscheidAwel>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidAwelNr) &&
+        <FieldEntscheidAwelNr isPrintPreview={isPrintPreview}>
+          <FormControl
+            type="number"
+            value={geschaeft.entscheidAwelNr || ''}
+            name="entscheidAwelNr"
+            onChange={change}
+            onBlur={blur}
+            bsSize="small"
+            tabIndex={2 + tabsToAdd}
+          />
+        </FieldEntscheidAwelNr>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidAwelNr) &&
+        <SlashAwel isPrintPreview={isPrintPreview}>
+          <div>/</div>
+        </SlashAwel>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidAwelNr) &&
+        <FieldEntscheidAwelJahr isPrintPreview={isPrintPreview}>
+          <FormControl
+            type="number"
+            value={geschaeft.entscheidAwelJahr || ''}
+            name="entscheidAwelJahr"
+            onChange={change}
+            onBlur={blur}
+            bsSize="small"
+            tabIndex={3 + tabsToAdd}
+          />
+        </FieldEntscheidAwelJahr>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidBdvNr) &&
+        <LabelEntscheidBdv isPrintPreview={isPrintPreview}>
+          BDV
+        </LabelEntscheidBdv>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidBdvNr) &&
+        <FieldEntscheidBdvNr isPrintPreview={isPrintPreview}>
+          <FormControl
+            type="number"
+            value={geschaeft.entscheidBdvNr || ''}
+            name="entscheidBdvNr"
+            onChange={change}
+            onBlur={blur}
+            bsSize="small"
+            tabIndex={4 + tabsToAdd}
+          />
+        </FieldEntscheidBdvNr>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidBdvNr) &&
+        <SlashBdv isPrintPreview={isPrintPreview}>
+          <div>/</div>
+        </SlashBdv>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidBdvNr) &&
+        <FieldEntscheidBdvJahr isPrintPreview={isPrintPreview}>
+          <FormControl
+            type="number"
+            value={geschaeft.entscheidBdvJahr || ''}
+            name="entscheidBdvJahr"
+            onChange={change}
+            onBlur={blur}
+            bsSize="small"
+            tabIndex={5 + tabsToAdd}
+          />
+        </FieldEntscheidBdvJahr>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidRrbNr) &&
+        <LabelEntscheidRrb isPrintPreview={isPrintPreview}>
+          RRB
+        </LabelEntscheidRrb>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidRrbNr) &&
+        <FieldEntscheidRrbNr isPrintPreview={isPrintPreview}>
+          <FormControl
+            type="number"
+            value={geschaeft.entscheidRrbNr || ''}
+            name="entscheidRrbNr"
+            onChange={change}
+            onBlur={blur}
+            bsSize="small"
+            tabIndex={6 + tabsToAdd}
+          />
+        </FieldEntscheidRrbNr>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidRrbNr) &&
+        <SlashRrb isPrintPreview={isPrintPreview}>
+          <div>/</div>
+        </SlashRrb>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidRrbNr) &&
+        <FieldEntscheidRrbJahr isPrintPreview={isPrintPreview}>
+          <FormControl
+            type="number"
+            value={geschaeft.entscheidRrbJahr || ''}
+            name="entscheidRrbJahr"
+            onChange={change}
+            onBlur={blur}
+            bsSize="small"
+            tabIndex={7 + tabsToAdd}
+          />
+        </FieldEntscheidRrbJahr>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidBvvNr) &&
+        <LabelEntscheidBvv isPrintPreview={isPrintPreview}>
+          BVV
+        </LabelEntscheidBvv>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidBvvNr) &&
+        <FieldEntscheidBvvNr isPrintPreview={isPrintPreview}>
+          <FormControl
+            type="number"
+            value={geschaeft.entscheidBvvNr || ''}
+            name="entscheidBvvNr"
+            onChange={change}
+            onBlur={blur}
+            bsSize="small"
+            tabIndex={8 + tabsToAdd}
+          />
+        </FieldEntscheidBvvNr>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidBvvNr) &&
+        <SlashBvv isPrintPreview={isPrintPreview}>
+          <div style={{ marginLeft: '-1px' }}>-</div>
+        </SlashBvv>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidBvvNr) &&
+        <FieldEntscheidBvvJahr isPrintPreview={isPrintPreview}>
+          <FormControl
+            type="number"
+            value={geschaeft.entscheidBvvJahr || ''}
+            name="entscheidBvvJahr"
+            onChange={change}
+            onBlur={blur}
+            bsSize="small"
+            tabIndex={9 + tabsToAdd}
+          />
+        </FieldEntscheidBvvJahr>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidKrNr) &&
+        <LabelEntscheidKr isPrintPreview={isPrintPreview}>
+          KR
+        </LabelEntscheidKr>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidKrNr) &&
+        <FieldEntscheidKrNr isPrintPreview={isPrintPreview}>
+          <FormControl
+            type="number"
+            value={geschaeft.entscheidKrNr || ''}
+            name="entscheidKrNr"
+            onChange={change}
+            onBlur={blur}
+            bsSize="small"
+            tabIndex={10 + tabsToAdd}
+          />
+        </FieldEntscheidKrNr>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidKrNr) &&
+        <SlashKr isPrintPreview={isPrintPreview}>
+          <div>/</div>
+        </SlashKr>
+      }
+      {
+        !(isPrintPreview && !geschaeft.entscheidKrNr) &&
+        <FieldEntscheidKrJahr isPrintPreview={isPrintPreview}>
+          <FormControl
+            type="number"
+            value={geschaeft.entscheidKrJahr || ''}
+            name="entscheidKrJahr"
+            onChange={change}
+            onBlur={blur}
+            bsSize="small"
+            tabIndex={11 + tabsToAdd}
+          />
+        </FieldEntscheidKrJahr>
+      }
+      {
+        !(isPrintPreview && !geschaeft.aktenstandort) &&
+        <FieldAktenstandort isPrintPreview={isPrintPreview}>
+          <ControlLabel>
+            Aktenstandort
+          </ControlLabel>
+          <FormControl
+            componentClass="select"
+            value={geschaeft.aktenstandort || ''}
+            name="aktenstandort"
+            onChange={change}
+            bsSize="small"
+            tabIndex={12 + tabsToAdd}
+          >
+            {createOptions(aktenstandortOptions)}
+          </FormControl>
+        </FieldAktenstandort>
+      }
+      {
+        !(isPrintPreview && !geschaeft.aktenstandort) &&
+        <FieldAktennummer isPrintPreview={isPrintPreview}>
+          <ControlLabel>
+            Nr.
+          </ControlLabel>
           <FormControl
             type="text"
-            defaultValue={gekoValuesString}
-            name="gekoNr"
+            value={geschaeft.aktennummer || ''}
+            name="aktennummer"
+            onChange={change}
+            onBlur={blur}
             bsSize="small"
-            tabIndex={1 + tabsToAdd}
+            tabIndex={13 + tabsToAdd}
           />
-        }
-        {
-          !isPrintPreview &&
-          <div>
-            {gekoFields}
-          </div>
-        }
-      </FieldGekoNr>
-      <LabelJahre>
-        <LabelNrDiv>
-          Jahr
-        </LabelNrDiv>
-      </LabelJahre>
-      <LabelEntscheidAwel isPrintPreview={isPrintPreview}>
-        AWEL
-      </LabelEntscheidAwel>
-      <FieldEntscheidAwelNr isPrintPreview={isPrintPreview}>
-        <FormControl
-          type="number"
-          value={geschaeft.entscheidAwelNr || ''}
-          name="entscheidAwelNr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={2 + tabsToAdd}
-        />
-      </FieldEntscheidAwelNr>
-      <SlashAwel isPrintPreview={isPrintPreview}>
-        <div>/</div>
-      </SlashAwel>
-      <FieldEntscheidAwelJahr isPrintPreview={isPrintPreview}>
-        <FormControl
-          type="number"
-          value={geschaeft.entscheidAwelJahr || ''}
-          name="entscheidAwelJahr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={3 + tabsToAdd}
-        />
-      </FieldEntscheidAwelJahr>
-      <LabelEntscheidBdv isPrintPreview={isPrintPreview}>
-        BDV
-      </LabelEntscheidBdv>
-      <FieldEntscheidBdvNr isPrintPreview={isPrintPreview}>
-        <FormControl
-          type="number"
-          value={geschaeft.entscheidBdvNr || ''}
-          name="entscheidBdvNr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={4 + tabsToAdd}
-        />
-      </FieldEntscheidBdvNr>
-      <SlashBdv isPrintPreview={isPrintPreview}>
-        <div>/</div>
-      </SlashBdv>
-      <FieldEntscheidBdvJahr isPrintPreview={isPrintPreview}>
-        <FormControl
-          type="number"
-          value={geschaeft.entscheidBdvJahr || ''}
-          name="entscheidBdvJahr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={5 + tabsToAdd}
-        />
-      </FieldEntscheidBdvJahr>
-      <LabelEntscheidRrb isPrintPreview={isPrintPreview}>
-        RRB
-      </LabelEntscheidRrb>
-      <FieldEntscheidRrbNr isPrintPreview={isPrintPreview}>
-        <FormControl
-          type="number"
-          value={geschaeft.entscheidRrbNr || ''}
-          name="entscheidRrbNr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={6 + tabsToAdd}
-        />
-      </FieldEntscheidRrbNr>
-      <SlashRrb isPrintPreview={isPrintPreview}>
-        <div>/</div>
-      </SlashRrb>
-      <FieldEntscheidRrbJahr isPrintPreview={isPrintPreview}>
-        <FormControl
-          type="number"
-          value={geschaeft.entscheidRrbJahr || ''}
-          name="entscheidRrbJahr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={7 + tabsToAdd}
-        />
-      </FieldEntscheidRrbJahr>
-      <LabelEntscheidBvv isPrintPreview={isPrintPreview}>
-        BVV
-      </LabelEntscheidBvv>
-      <FieldEntscheidBvvNr isPrintPreview={isPrintPreview}>
-        <FormControl
-          type="number"
-          value={geschaeft.entscheidBvvNr || ''}
-          name="entscheidBvvNr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={8 + tabsToAdd}
-        />
-      </FieldEntscheidBvvNr>
-      <SlashBvv isPrintPreview={isPrintPreview}>
-        <div style={{ marginLeft: '-1px' }}>-</div>
-      </SlashBvv>
-      <FieldEntscheidBvvJahr isPrintPreview={isPrintPreview}>
-        <FormControl
-          type="number"
-          value={geschaeft.entscheidBvvJahr || ''}
-          name="entscheidBvvJahr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={9 + tabsToAdd}
-        />
-      </FieldEntscheidBvvJahr>
-      <LabelEntscheidKr isPrintPreview={isPrintPreview}>
-        KR
-      </LabelEntscheidKr>
-      <FieldEntscheidKrNr isPrintPreview={isPrintPreview}>
-        <FormControl
-          type="number"
-          value={geschaeft.entscheidKrNr || ''}
-          name="entscheidKrNr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={10 + tabsToAdd}
-        />
-      </FieldEntscheidKrNr>
-      <SlashKr isPrintPreview={isPrintPreview}>
-        <div>/</div>
-      </SlashKr>
-      <FieldEntscheidKrJahr isPrintPreview={isPrintPreview}>
-        <FormControl
-          type="number"
-          value={geschaeft.entscheidKrJahr || ''}
-          name="entscheidKrJahr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={11 + tabsToAdd}
-        />
-      </FieldEntscheidKrJahr>
-      <FieldAktenstandort isPrintPreview={isPrintPreview}>
-        <ControlLabel>
-          Aktenstandort
-        </ControlLabel>
-        <FormControl
-          componentClass="select"
-          value={geschaeft.aktenstandort || ''}
-          name="aktenstandort"
-          onChange={change}
-          bsSize="small"
-          tabIndex={12 + tabsToAdd}
-        >
-          {createOptions(aktenstandortOptions)}
-        </FormControl>
-      </FieldAktenstandort>
-      <FieldAktennummer isPrintPreview={isPrintPreview}>
-        <ControlLabel>
-          Nr.
-        </ControlLabel>
-        <FormControl
-          type="text"
-          value={geschaeft.aktennummer || ''}
-          name="aktennummer"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={13 + tabsToAdd}
-        />
-      </FieldAktennummer>
+        </FieldAktennummer>
+      }
     </Container>
   )
 }
