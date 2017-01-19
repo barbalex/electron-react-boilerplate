@@ -12,6 +12,10 @@ class Geschaefte extends Component {
     path: PropTypes.string.isRequired,
   }
 
+  static defaultProps = {
+    activeId: null,
+  }
+
   state = {
     tableBodyOverflows: true,
   }
@@ -69,7 +73,7 @@ class Geschaefte extends Component {
     return false
   }
 
-  renderItem(index, key) {
+  renderItem(index, key) {  // eslint-disable-line class-methods-use-this
     return (
       <GeschaefteItem
         index={index}
