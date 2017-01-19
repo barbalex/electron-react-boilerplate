@@ -143,38 +143,59 @@ const AreaPersonen = ({
         <Title>
           Personen
         </Title>
-        <Subtitle>
-          Verantwortlich
-        </Subtitle>
-        <Verantwortlich>
-          <FormControl
-            componentClass="select"
-            value={geschaeft.verantwortlich || undefined}
-            name="verantwortlich"
-            onChange={change}
-            bsSize="small"
-            tabIndex={1 + nrOfFieldsBeforePersonen}
-          >
-            {verwantwortlichOptions(interneOptions)}
-          </FormControl>
-        </Verantwortlich>
-        <VerantwortlichName>
-          <StyledFormcontrolStatic>
-            {verantwortlichData(geschaeft, interneOptions, isPrintPreview)}
-          </StyledFormcontrolStatic>
-        </VerantwortlichName>
-        <Subtitle>
-          Interne Kontakte
-        </Subtitle>
-        <KontakteIntern
-          tabIndex={nrOfFieldsBeforePersonen + 1}
-        />
-        <Subtitle>
-          Externe Kontakte
-        </Subtitle>
-        <KontakteExtern
-          tabIndex={nrOfFieldsBeforePersonen + 2}
-        />
+        {
+          !(isPrintPreview && !geschaeft.verantwortlich) &&
+          <Subtitle>
+            Verantwortlich
+          </Subtitle>
+        }
+        {
+          !(isPrintPreview && !geschaeft.verantwortlich) &&
+          <Verantwortlich>
+            <FormControl
+              componentClass="select"
+              value={geschaeft.verantwortlich || undefined}
+              name="verantwortlich"
+              onChange={change}
+              bsSize="small"
+              tabIndex={1 + nrOfFieldsBeforePersonen}
+            >
+              {verwantwortlichOptions(interneOptions)}
+            </FormControl>
+          </Verantwortlich>
+        }
+        {
+          !(isPrintPreview && !geschaeft.verantwortlich) &&
+          <VerantwortlichName>
+            <StyledFormcontrolStatic>
+              {verantwortlichData(geschaeft, interneOptions, isPrintPreview)}
+            </StyledFormcontrolStatic>
+          </VerantwortlichName>
+        }
+        {
+          !(isPrintPreview && geschaeft.interne.length === 0) &&
+          <Subtitle>
+            Interne Kontakte
+          </Subtitle>
+        }
+        {
+          !(isPrintPreview && geschaeft.interne.length === 0) &&
+          <KontakteIntern
+            tabIndex={nrOfFieldsBeforePersonen + 1}
+          />
+        }
+        {
+          !(isPrintPreview && geschaeft.externe.length === 0) &&
+          <Subtitle>
+            Externe Kontakte
+          </Subtitle>
+        }
+        {
+          !(isPrintPreview && geschaeft.externe.length === 0) &&
+          <KontakteExtern
+            tabIndex={nrOfFieldsBeforePersonen + 2}
+          />
+        }
       </AreaPersonenDiv>
     </Container>
   )
