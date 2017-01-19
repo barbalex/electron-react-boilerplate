@@ -29,9 +29,10 @@ const stammdatenTitle = (table, rows) => {
   return <span>Stammdaten</span>
 }
 
-const StyledNavDropdown = styled(NavDropdown)`
-  border-left: ${props => props.showTableNavs ? 'solid grey 1px' : 'dotted #505050 1px'}
-  border-right: ${props => props.showTableNavs ? 'none' : 'dotted #505050 1px'};
+// eslint-disable-next-line no-unused-vars
+const StyledNavDropdown = styled(({ showTableNavs, children, ...rest }) => <NavDropdown {...rest}>{children}</NavDropdown>)`
+  border-left: ${props => (props.showTableNavs ? 'solid grey 1px' : 'dotted #505050 1px')}
+  border-right: ${props => (props.showTableNavs ? 'none' : 'dotted #505050 1px')};
 `
 
 const NavbarStammdatenNav = ({

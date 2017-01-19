@@ -10,6 +10,10 @@ class TableLayout extends Component {
     id: PropTypes.number,
   }
 
+  static defaultProps = {
+    id: null,
+  }
+
   render = () => {
     const {
       configSetKey,

@@ -32,7 +32,8 @@ const Container = styled.div`
   grid-template-columns: 100%;
   grid-gap: 0;
 `
-const Row = styled.div`
+// eslint-disable-next-line no-unused-vars
+const Row = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 1 / span 1;
   display: grid;
   grid-template-columns: ${(props) => (props.isPrintPreview ? '100%' : 'calc(100% - 20px) 20px')};
@@ -62,7 +63,8 @@ const Fv = styled.div`
     overflow: hidden;
   }
 `
-const DeleteGlyphiconDiv = styled.div`
+// eslint-disable-next-line no-unused-vars
+const DeleteGlyphiconDiv = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 2 / span 1;
   margin-top: -2px;
   display: ${(props) => (props.isPrintPreview ? 'none' : 'inherit')};

@@ -2,7 +2,8 @@
   "presets": [
     ["env", { "targets": { "node": 6 }, "useBuiltIns": true }],
     "stage-0",
-    "react"
+    "react",
+		"es2015"
   ],
   "plugins": ["add-module-exports"],
   "env": {
@@ -14,7 +15,8 @@
       "plugins": [
         "transform-class-properties",
         "transform-es2015-classes",
-        "tcomb"
+				"transform-es2015-destructuring",
+				"transform-object-rest-spread"
       ],
       "presets": ["react-hmre"]
     },

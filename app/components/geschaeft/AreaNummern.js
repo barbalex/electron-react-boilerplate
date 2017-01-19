@@ -63,7 +63,8 @@ const LabelNrDiv = styled.div`
   position: absolute;
   bottom: 1px;
 `
-const Slash = styled.div`
+// eslint-disable-next-line no-unused-vars
+const Slash = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
   margin-top: ${(props) => (props.isPrintPreview ? '-3px' : '2px')};
   font-size: ${(props) => (props.isPrintPreview ? '18px' : '22px')};
   height: ${(props) => (props.isPrintPreview ? '17px' : 'auto')};
@@ -79,7 +80,8 @@ const SlashBdv = styled(Slash)`
 const SlashKr = styled(Slash)`
   grid-area: slashKr;
 `
-const SlashBvv = styled(Slash)`
+// eslint-disable-next-line no-unused-vars
+const SlashBvv = styled(({ isPrintPreview, children, ...rest }) => <Slash {...rest}>{children}</Slash>)`
   grid-area: slashBvv;
   margin-top: ${(props) => (props.isPrintPreview ? '-7px' : 'inherit')};
   div {
@@ -89,7 +91,8 @@ const SlashBvv = styled(Slash)`
 const SlashRrb = styled(Slash)`
   grid-area: slashRrb;
 `
-const LabelHorizontal = styled(ControlLabel)`
+// eslint-disable-next-line no-unused-vars
+const LabelHorizontal = styled(({ isPrintPreview, children, ...rest }) => <ControlLabel {...rest}>{children}</ControlLabel>)`
   margin-top: ${(props) => (props.isPrintPreview ? 0 : '11px')};
   text-align: right;
   font-size: ${(props) => (props.isPrintPreview ? '10px !important' : '11px')};
@@ -100,7 +103,8 @@ const AreaNummernTitle = styled.div`
   font-size: 16px;
   grid-area: areaNummernTitle;
 `
-const Field = styled.div`
+// eslint-disable-next-line no-unused-vars
+const Field = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
   height: ${(props) => (props.isPrintPreview ? '17px' : 'auto')};
   input {
     font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
@@ -166,7 +170,8 @@ const LabelEntscheidRrb = styled(LabelHorizontal)`
 const FieldEntscheidRrbJahr = styled(Field)`
   grid-area: fieldEntscheidRrbJahr;
 `
-const FieldAktenstandort = styled(Field)`
+// eslint-disable-next-line no-unused-vars
+const FieldAktenstandort = styled(({ isPrintPreview, children, ...rest }) => <Field {...rest}>{children}</Field>)`
   height: ${(props) => (props.isPrintPreview ? '29px' : 'auto')};
   grid-area: fieldAktenstandort;
   font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
@@ -177,7 +182,8 @@ const FieldAktenstandort = styled(Field)`
     height: ${(props) => (props.isPrintPreview ? '15px !important' : '34px')};
   }
 `
-const FieldAktennummer = styled(Field)`
+// eslint-disable-next-line no-unused-vars
+const FieldAktennummer = styled(({ isPrintPreview, children, ...rest }) => <Field {...rest}>{children}</Field>)`
   height: ${(props) => (props.isPrintPreview ? '29px' : 'auto')};
   grid-area: fieldAktennummer;
   font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};

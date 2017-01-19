@@ -10,9 +10,10 @@ import filterForVernehmlAngek from '../../src/filterForVernehmlAngek'
 import filterForVernehmlLaeuft from '../../src/filterForVernehmlLaeuft'
 import filterForFaelligeGeschaefte from '../../src/filterForFaelligeGeschaefte'
 
-const StyledNavDropdown = styled(NavDropdown)`
-  border-left: ${props => props.showBerichteNavs ? 'solid grey 1px' : 'dotted #505050 1px'}
-  border-right: ${props => props.showBerichteNavs ? 'none' : 'dotted #505050 1px'};
+// eslint-disable-next-line no-unused-vars
+const StyledNavDropdown = styled(({ showBerichteNavs, children, ...rest }) => <NavDropdown {...rest}>{children}</NavDropdown>)`
+  border-left: ${props => (props.showBerichteNavs ? 'solid grey 1px' : 'dotted #505050 1px')}
+  border-right: ${props => (props.showBerichteNavs ? 'none' : 'dotted #505050 1px')};
 `
 
 const BerichteNav = ({
@@ -149,8 +150,12 @@ BerichteNav.propTypes = {
   geschaeftPdfShow: PropTypes.func.isRequired,
   path: PropTypes.string.isRequired,
   pages: PropTypes.object.isRequired,
-  activeId: PropTypes.number,  // does NOT always exist
+  activeId: PropTypes.number,
   showBerichteNavs: PropTypes.bool.isRequired,
+}
+
+BerichteNav.defaultProps = {
+  activeId: null,
 }
 
 export default BerichteNav

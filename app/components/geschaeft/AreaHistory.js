@@ -4,7 +4,8 @@ import styled from 'styled-components'
 
 import AreaHistoryRows from '../../containers/geschaeft/AreaHistoryRows'
 
-const Container = styled.div`
+// eslint-disable-next-line no-unused-vars
+const Container = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-area: areaHistory;
   background-color: rgb(227, 232, 255);
   display: grid;
@@ -26,7 +27,8 @@ const Title = styled.div`
 const FieldVorgeschaeft = styled.div`
   grid-area: fieldVorgeschaeft;
 `
-const LabelVorgeschaeft = styled(ControlLabel)`
+// eslint-disable-next-line no-unused-vars
+const LabelVorgeschaeft = styled(({ isPrintPreview, children, ...rest }) => <ControlLabel {...rest}>{children}</ControlLabel>)`
   grid-area: labelVorgeschaeft;
   margin-top: ${(props) => (props.isPrintPreview ? 0 : '10px')};
   text-align: right;

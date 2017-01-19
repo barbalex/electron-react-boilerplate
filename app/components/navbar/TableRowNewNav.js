@@ -20,7 +20,7 @@ const NavbarTableRowNeuNav = ({
 NavbarTableRowNeuNav.displayName = 'NavbarTableRowNeuNav'
 
 NavbarTableRowNeuNav.propTypes = {
-  table: PropTypes.string,
+  table: PropTypes.string.isRequired,
   rowNewCreate: PropTypes.func.isRequired,
 }
 

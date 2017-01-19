@@ -5,8 +5,9 @@ import {
 } from 'react-bootstrap'
 import styled from 'styled-components'
 
-const StyledNavItem = styled(NavItem)`
-  border-right: ${props => props.showGeschaefteNavs ? 'solid grey 1px' : 'dotted #505050 1px'};
+// eslint-disable-next-line no-unused-vars
+const StyledNavItem = styled(({ showGeschaefteNavs, children, ...rest }) => <NavItem {...rest}>{children}</NavItem>)`
+  border-right: ${props => (props.showGeschaefteNavs ? 'solid grey 1px' : 'dotted #505050 1px')};
 `
 
 const NavbarGeschaeftLoeschenNav = ({
@@ -29,8 +30,12 @@ NavbarGeschaeftLoeschenNav.displayName = 'NavbarGeschaeftLoeschenNav'
 
 NavbarGeschaeftLoeschenNav.propTypes = {
   geschaeftSetDeleteIntended: PropTypes.func.isRequired,
-  activeId: PropTypes.number,  // does NOT always exist
+  activeId: PropTypes.number,
   showGeschaefteNavs: PropTypes.bool.isRequired,
+}
+
+NavbarGeschaeftLoeschenNav.defaultProps = {
+  activeId: null,
 }
 
 export default NavbarGeschaeftLoeschenNav

@@ -62,14 +62,16 @@ const Container = styled.div`
   grid-template-columns: 100%;
   grid-gap: 0;
 `
-const RowfVDropdown = styled.div`
+// eslint-disable-next-line no-unused-vars
+const RowfVDropdown = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 1 / span 1;
   display: grid;
   grid-template-columns: ${(props) => (props.isPrintPreview ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)')};
   grid-gap: 4px;
   margin-top: 5px;
 `
-const FvDropdown = styled.div`
+// eslint-disable-next-line no-unused-vars
+const FvDropdown = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 1 / span 1;
   display: ${(props) => (props.isPrintPreview ? 'none' : 'inherit')};
 `

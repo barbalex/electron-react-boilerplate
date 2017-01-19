@@ -7,8 +7,9 @@ import {
 } from 'react-bootstrap'
 import styled from 'styled-components'
 
-const StyledNavItem = styled(NavItem)`
-  border-right: ${props => props.showBerichteNavs ? 'solid grey 1px' : 'dotted #505050 1px'};
+// eslint-disable-next-line no-unused-vars
+const StyledNavItem = styled(({ showBerichteNavs, children, ...rest }) => <NavItem {...rest}>{children}</NavItem>)`
+  border-right: ${props => (props.showBerichteNavs ? 'solid grey 1px' : 'dotted #505050 1px')};
 `
 
 const { dialog } = remote

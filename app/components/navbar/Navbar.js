@@ -23,9 +23,10 @@ import FilterNav from '../../containers/navbar/FilterNav'
 import OptionsNav from '../../containers/navbar/OptionsNav'
 import styles from './Navbar.css'
 
-const GeschaefteLinkContainer = styled(LinkContainer)`
-  border-left: ${props => props.showGeschaefteNavs ? 'solid grey 1px' : 'dotted #505050 1px'};
-  border-right: ${props => props.showGeschaefteNavs ? 'none' : 'dotted #505050 1px'};
+// eslint-disable-next-line no-unused-vars
+const GeschaefteLinkContainer = styled(({ showGeschaefteNavs, children, ...rest }) => <LinkContainer {...rest}>{children}</LinkContainer>)`
+  border-left: ${props => (props.showGeschaefteNavs ? 'solid grey 1px' : 'dotted #505050 1px')};
+  border-right: ${props => (props.showGeschaefteNavs ? 'none' : 'dotted #505050 1px')};
 `
 
 class NavbarComponent extends Component {

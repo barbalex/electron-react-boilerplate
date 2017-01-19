@@ -9,7 +9,8 @@ const FieldsContainer = styled.div`
   display: grid;
   grid-template-columns: 100%;
 `
-const HistoryField = styled.div`
+// eslint-disable-next-line no-unused-vars
+const HistoryField = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 1;
   display: grid;
   grid-template-columns: ${(props) => (props.isPrintPreview ? '35px calc(100% - 35px)' : '60px calc(100% - 60px)')};

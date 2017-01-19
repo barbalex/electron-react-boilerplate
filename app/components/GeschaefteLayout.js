@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import SplitPane from 'react-split-pane'
+
 import Geschaeft from '../containers/geschaeft/Geschaeft'
 import Pages from '../containers/Pages'
 import GeschaeftPdf from '../components/GeschaeftPdf'
@@ -11,6 +12,10 @@ class GeschaefteLayout extends Component {
     configSetKey: PropTypes.func.isRequired,
     activeId: PropTypes.number,
     path: PropTypes.string.isRequired,
+  }
+
+  static defaultProps = {
+    activeId: null,
   }
 
   render = () => {
