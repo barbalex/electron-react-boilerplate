@@ -1,5 +1,6 @@
 /**
  * this works
+ * and is used to create history for export
  * BUT:
  * it slows the app far too much if added to reselect
  * even if the function is memoized (which seemed to have no effect)

@@ -65,14 +65,6 @@ export default (geschaefte, messageShow) => {
           .then(() => {
             messageShow(false, '', '')
             shell.openItem(path)
-            /*
-            // show the message
-            const msg = `Die Geschäfte wurden nach ${path} exportiert`
-            messageShow(true, msg, '')
-            setTimeout(() =>
-              messageShow(false, '', ''), 8000
-            )
-            */
           })
           .catch((error) => {
             messageShow(true, 'Fehler:', error)
