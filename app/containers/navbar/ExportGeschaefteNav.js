@@ -1,5 +1,6 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+
 import ExportGeschaefteNav from '../../components/navbar/ExportGeschaefteNav'
 import * as AppActions from '../../actions/app'
 import { getGeschaefteWithNSideData } from '../../selectors'

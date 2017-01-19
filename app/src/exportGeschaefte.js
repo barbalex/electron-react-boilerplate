@@ -4,6 +4,7 @@
 
 import { remote, shell } from 'electron'
 import writeExport from './writeExport'
+import getHistoryOfGeschaefte from './getHistoryOfGeschaefte'
 
 const { dialog } = remote
 
@@ -47,10 +48,19 @@ export default (geschaefte, messageShow) => {
   dialog.showSaveDialog(dialogOptions, (path) => {
     if (path) {
       messageShow(true, 'Der Export wird aufgebaut...', '')
+      // add history
+      const history = getHistoryOfGeschaefte(geschaefte)
+      const geschaefteWithHistory = geschaefte.map((g) => {
+        g.historie = history
+          .get(g.idGeschaeft)
+          .join(', ')
+        return g
+      })
+
       // set timeout so message appears before exceljs starts working
       // and possibly blocks execution of message
       setTimeout(() => {
-        const dataArray = getDataArrayFromExportObjects(geschaefte)
+        const dataArray = getDataArrayFromExportObjects(geschaefteWithHistory)
         writeExport(path, dataArray)
           .then(() => {
             messageShow(false, '', '')
