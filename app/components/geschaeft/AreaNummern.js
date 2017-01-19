@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel } from 'react-bootstrap'
 import styled from 'styled-components'
-import clone from 'lodash/clone'
 
 import GekoNrField from '../../containers/geschaeft/GekoNrField'
 import createOptions from '../../src/createOptions'
@@ -362,7 +361,7 @@ const AreaNummern = ({
         />
       </FieldEntscheidBvvNr>
       <SlashBvv isPrintPreview={isPrintPreview}>
-        <div>/</div>
+        <div style={{ marginLeft: '-1px' }}>-</div>
       </SlashBvv>
       <FieldEntscheidBvvJahr isPrintPreview={isPrintPreview}>
         <FormControl
@@ -446,8 +445,6 @@ AreaNummern.propTypes = {
   viewIsNarrow: PropTypes.bool.isRequired,
   nrOfGFields: PropTypes.number.isRequired,
   isPrintPreview: PropTypes.bool.isRequired,
-  gekoRemove: PropTypes.func.isRequired,
-  gekoNewCreate: PropTypes.func.isRequired,
 }
 
 export default AreaNummern
