@@ -1,9 +1,24 @@
 import React, { PropTypes } from 'react'
-import styles from './areaZuletztMutiert.css'
+import styled from 'styled-components'
+
+const Container = styled.div`
+  grid-area: areaZuletztMutiert;
+  background-color: rgba(239, 239, 239, 1);
+  display: grid;
+  grid-template-columns: 100%;
+  padding: 8px;
+  align-items: center;
+`
+// eslint-disable-next-line no-unused-vars
+const Field = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
+  grid-column: 1;
+  font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+`
 
 const AreaZuletztMutiert = ({
   geschaeft,
   interneOptions,
+  isPrintPreview,
 }) => {
   let zuletztMutiertText
 
@@ -30,11 +45,11 @@ const AreaZuletztMutiert = ({
   }
 
   return (
-    <div className={styles.areaZuletztMutiert}>
-      <div className={styles.fieldZuletztMutiert}>
+    <Container>
+      <Field isPrintPreview={isPrintPreview}>
         {zuletztMutiertText}
-      </div>
-    </div>
+      </Field>
+    </Container>
   )
 }
 
@@ -43,6 +58,7 @@ AreaZuletztMutiert.displayName = 'AreaZuletztMutiert'
 AreaZuletztMutiert.propTypes = {
   geschaeft: PropTypes.object.isRequired,
   interneOptions: PropTypes.array.isRequired,
+  isPrintPreview: PropTypes.bool.isRequired,
 }
 
 export default AreaZuletztMutiert
