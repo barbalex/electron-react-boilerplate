@@ -43,19 +43,26 @@ const exportGeschaefteRechtsmittelVorjahre = (
   geschaefteGefiltert.forEach((g, index) => {
     geschaefteGefiltert[index] = _.pick(geschaefteGefiltert[index], fieldsWanted)
   })
-  const newFieldsNames = {
+  const newFieldNames = {
     datumEingangAwel: 'Datum Rechtsschrift',
     ausloeser: 'Rekurrent bzw. Beschwerdeführer / Objekt',
-    gegenstand: 'Gegenstand des Rechtssteites',
+    gegenstand: 'Gegenstand des Rechtsstreites',
     rechtsmittelInstanz: 'Rechtsmittelinstanz',
     abteilung: 'Hauptbetroffene Abteilung',
-    rechtsmittelErledigung: 'Ergebnis des Rechtssteites',
+    rechtsmittelErledigung: 'Ergebnis des Rechtsstreites',
     rechtsmittelEntscheidDatum: 'Datum Urteil / Verfügung',
     rechtsmittelEntscheidNr: 'Nr. Urteil / Verfügung',
     rechtsmittelTxt: 'Bemerkungen',
     idGeschaeft: 'Kapla ID',
   }
-  exportGeschaefte(geschaefteGefiltert, messageShow)
+  const geschaefteWithNewFieldNames = geschaefteGefiltert.map(g => {
+    const newGeschaeft = {}
+    Object.keys(g).forEach(key => {
+      newGeschaeft[newFieldNames[key]] = g[key]
+    })
+    return newGeschaeft
+  })
+  exportGeschaefte(geschaefteWithNewFieldNames, messageShow)
 }
 
 const exportGeschaefteAll = (
