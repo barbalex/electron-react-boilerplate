@@ -147,17 +147,6 @@ class Table extends Component {
     )
   }
 
-  renderItems(items, ref) {
-    return (
-      <div
-        ref={ref}
-        className={styles.table}
-      >
-        {items}
-      </div>
-    )
-  }
-
   render() {
     const { rows } = this.props
     const { tableBodyOverflows } = this.state

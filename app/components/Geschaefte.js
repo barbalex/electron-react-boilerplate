@@ -1,10 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import ReactList from 'react-list'
+import _ from 'lodash'
+
 import styles from './Geschaefte.css'
 import GeschaefteItem from '../containers/GeschaefteItem'
 
 class Geschaefte extends Component {
   static propTypes = {
+    activeId: PropTypes.number,
     geschaefteGefilterteIds: PropTypes.array.isRequired,
     path: PropTypes.string.isRequired,
   }
@@ -14,7 +17,31 @@ class Geschaefte extends Component {
   }
 
   componentDidUpdate() {
-    const { path } = this.props
+    const {
+      path,
+      activeId,
+      geschaefteGefilterteIds,
+    } = this.props
+    const rL = this.reactList
+    if (activeId) {
+      // get visible indexes
+      const visibleRange = rL.getVisibleRange()
+      // get index of active id
+      const index = _.findIndex(
+        geschaefteGefilterteIds,
+        g => g === activeId
+      )
+      // scroll to active id
+      // but only if necessary
+      const visibleRangeIncludesId = (
+        visibleRange[0] <= index &&
+        index <= visibleRange[1]
+      )
+      if (!visibleRangeIncludesId) {
+        rL.scrollTo(index)
+      }
+    }
+
     if (
       path === '/geschaefte' ||
       path === '/'
