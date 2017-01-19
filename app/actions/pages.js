@@ -1,5 +1,7 @@
 import { push } from 'react-router-redux'
 
+import { getGeschaefteWithNSideData } from '../selectors'
+
 export const PAGES_STOP = 'PAGES_STOP'
 export const pagesStop = () =>
   (dispatch) => {
@@ -24,9 +26,10 @@ export const pagesModalShow = (
 export const PAGES_INITIATE = 'PAGES_INITIATE'
 export const pagesInitiate = reportType =>
   (dispatch, getState) => {
-    const { geschaefte } = getState()
-    const { geschaefteGefilterteIds } = geschaefte
-    const geschaefteGefiltert = geschaefte.geschaefte.filter(g =>
+    const state = getState()
+    const geschaefte = getGeschaefteWithNSideData(state)
+    const { geschaefteGefilterteIds } = state.geschaefte
+    const geschaefteGefiltert = geschaefte.filter(g =>
       geschaefteGefilterteIds.includes(g.idGeschaeft)
     )
 

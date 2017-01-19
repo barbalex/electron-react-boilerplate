@@ -14,8 +14,6 @@ const isOdd = (num) =>
 const PageVernehmlassungenRows = ({
   geschaeft,
   rowIndex,
-  interneOptions,
-  geko,
 }) => {
   const fristMitarbeiter = (
     geschaeft.fristMitarbeiter ?
@@ -46,26 +44,19 @@ const PageVernehmlassungenRows = ({
     faelligkeitText = faelligkeitText.substring(0, maxStringLength)
     faelligkeitText += '... (Text gekürzt)'
   }
-
   const rowClassName = (
     !isOdd(rowIndex) ?
     styles.tableBodyRowShaded :
     styles.tableBodyRow
   )
-
-  const verantwortlichRow = interneOptions.find(o => o.kurzzeichen === geschaeft.verantwortlich)
-  const verantwortlichName = (
-    verantwortlichRow && verantwortlichRow.name ?
-    `${verantwortlichRow.vorname} ${verantwortlichRow.name}` :
-    '(kein Name)'
-  )
-
-  const gekoValues = geko.filter(g => g.idGeschaeft === geschaeft.idGeschaeft).map(g => g.gekoNr)
-  const gekoValue = gekoValues.map(val =>
-    <div key={val}>
-      {val}
-    </div>
-  )
+  const gekoValue = geschaeft.geko
+    .map(g => g.gekoNr)
+    .map(val =>
+      <div key={val}>
+        {val}
+      </div>
+    )
+  const verantwortlichName = `${geschaeft.verantwortlichName}${geschaeft.verantwortlich ? ` (${geschaeft.verantwortlich})` : ''}`
 
   return (
     <div
@@ -151,7 +142,7 @@ const PageVernehmlassungenRows = ({
         ].join(' ')}
       >
         <div className={styles.fieldBold}>
-          {`${verantwortlichName}${geschaeft.verantwortlich ? ` (${geschaeft.verantwortlich})` : ''}`}
+          {verantwortlichName}
         </div>
         {
           geschaeft.abteilung &&
@@ -169,8 +160,6 @@ PageVernehmlassungenRows.displayName = 'PageVernehmlassungenRows'
 PageVernehmlassungenRows.propTypes = {
   geschaeft: PropTypes.object.isRequired,
   rowIndex: PropTypes.number.isRequired,
-  interneOptions: PropTypes.array.isRequired,
-  geko: PropTypes.array.isRequired,
 }
 
 export default PageVernehmlassungenRows

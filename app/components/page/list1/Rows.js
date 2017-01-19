@@ -25,7 +25,7 @@ const PageList1Rows = ({
   }
   if (gegenstand && gegenstand.length > maxStringLength) {
     gegenstand = gegenstand.substring(0, maxStringLength)
-    gegenstand += '... (Text für die Ausgabe gekürzt)'
+    gegenstand += '... (Text gekürzt)'
   }
 
   const rowClassName = (
@@ -116,8 +116,8 @@ const PageList1Rows = ({
 PageList1Rows.displayName = 'PageList1Rows'
 
 PageList1Rows.propTypes = {
-  geschaeft: PropTypes.object,
-  rowIndex: PropTypes.number,
+  geschaeft: PropTypes.object.isRequired,
+  rowIndex: PropTypes.number.isRequired,
 }
 
 export default PageList1Rows

@@ -1,5 +1,6 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+
 import Page from '../../components/page/Page'
 import * as GeschaefteActions from '../../actions/geschaefte'
 import * as PagesActions from '../../actions/pages'
@@ -31,8 +32,6 @@ function mapStateToProps(state, props) {
     geschaefteGefilterteIds,
     filterFields,
     sortFields,
-    interneOptions,
-    geko,
   } = geschaefte
   const myGeschaefte = pages.pages[pageIndex].geschaefte
 
@@ -49,8 +48,6 @@ function mapStateToProps(state, props) {
     queryTitle,
     reportType,
     geschaefteGefilterteIds,
-    interneOptions,
-    geko,
   }
 }
 
