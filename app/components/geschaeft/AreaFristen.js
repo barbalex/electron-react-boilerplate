@@ -107,7 +107,10 @@ const AreaFristen = ({
           tabIndex={5 + nrOfFieldsBeforeFristen}
         />
       }
-      {!!geschaeft.fristMitarbeiter && fieldFristDauerBisMitarbeiter(geschaeft, styles)}
+      {
+        !!geschaeft.dauerBisFristMitarbeiter &&
+        fieldFristDauerBisMitarbeiter(geschaeft, styles)
+      }
       {
         !(!geschaeft.datumAusgangAwel && isPrintPreview) &&
         <DateField
