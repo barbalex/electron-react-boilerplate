@@ -13,7 +13,7 @@ const FieldsContainer = styled.div`
 const HistoryField = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 1;
   display: grid;
-  grid-template-columns: ${(props) => (props.isPrintPreview ? '35px calc(100% - 35px)' : '60px calc(100% - 60px)')};
+  grid-template-columns: ${(props) => (props.isPrintPreview ? '35px 45px calc(100% - 80px)' : '55px 75px calc(100% - 130px)')};
   grid-gap: 0;
   border-bottom: thin solid #CECBCB;
   padding-left: ${(props) => (props.isPrintPreview ? 0 : '13px')};
@@ -32,8 +32,11 @@ const HistoryField = styled(({ isPrintPreview, children, ...rest }) => <div {...
 const IdGeschaeft = styled.div`
   grid-column: 1;
 `
-const Gegenstand = styled.div`
+const Datum = styled.div`
   grid-column: 2;
+`
+const Gegenstand = styled.div`
+  grid-column: 3;
 `
 
 const AreaHistoryRows = ({
@@ -45,7 +48,7 @@ const AreaHistoryRows = ({
   const isPrintPreview = path === '/geschaeftPdf'
   const history = getHistoryOfGeschaeft(geschaefte, activeId)
   // sort descending
-  history.reverse()
+  // history.reverse()
 
   return (
     <FieldsContainer>
@@ -73,6 +76,9 @@ const AreaHistoryRows = ({
               <IdGeschaeft>
                 {id}
               </IdGeschaeft>
+              <Datum>
+                {geschaeft.datumEingangAwel}
+              </Datum>
               <Gegenstand>
                 {geschaeft.gegenstand}
               </Gegenstand>
