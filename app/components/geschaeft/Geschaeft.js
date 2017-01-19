@@ -189,8 +189,26 @@ class Geschaeft extends Component {
     const showGeschaeft = geschaeft && geschaeft.idGeschaeft
     if (!showGeschaeft) return null
 
-    const showAreaParlVorstoss = geschaeft.geschaeftsart === 'Parlament. Vorstoss'
-    const showAreaRechtsmittel = geschaeft.geschaeftsart === 'Rekurs/Beschwerde'
+    const showAreaParlVorstoss = (
+      geschaeft.geschaeftsart === 'Parlament. Vorstoss' &&
+      !(
+        isPrintPreview &&
+        !geschaeft.parlVorstossStufe &&
+        !geschaeft.parlVorstossZustaendigkeitAwel &&
+        !geschaeft.parlVorstossTyp
+      )
+    )
+    const showAreaRechtsmittel = (
+      geschaeft.geschaeftsart === 'Rekurs/Beschwerde' &&
+      !(
+        isPrintPreview &&
+        !geschaeft.rechtsmittelInstanz &&
+        !geschaeft.rechtsmittelEntscheidNr &&
+        !geschaeft.rechtsmittelEntscheidDatum &&
+        !geschaeft.rechtsmittelErledigung &&
+        !geschaeft.rechtsmittelTxt
+      )
+    )
     const showAreaForGeschaeftsart = (
       showAreaParlVorstoss ||
       showAreaRechtsmittel

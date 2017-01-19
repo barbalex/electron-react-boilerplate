@@ -26,73 +26,88 @@ const AreaRechtsmittel = ({
       <div className={styles.areaRechtsmittelTitle}>
         Rekurs / Beschwerde
       </div>
-      <div className={styles.fieldInstanz}>
-        <ControlLabel>
-          Instanz
-        </ControlLabel>
-        <FormControl
-          componentClass="select"
-          value={geschaeft.rechtsmittelInstanz || ''}
-          name="rechtsmittelInstanz"
-          onChange={change}
-          bsSize="small"
-          tabIndex={1 + nrOfFieldsBeforePv}
-        >
-          {createOptions(rechtsmittelInstanzOptions)}
-        </FormControl>
-      </div>
-      <div className={styles.fieldEntscheidNr}>
-        <ControlLabel>
-          Entscheid Nr.
-        </ControlLabel>
-        <FormControl
-          type="number"
-          value={geschaeft.rechtsmittelEntscheidNr || ''}
-          name="rechtsmittelEntscheidNr"
-          onChange={change}
-          onBlur={blur}
-          bsSize="small"
-          tabIndex={2 + nrOfFieldsBeforePv}
-        />
-      </div>
-      <div className={styles.fieldEntscheidDatum}>
-        <DateField
-          name="rechtsmittelEntscheidDatum"
-          label="Entscheid Datum"
-          change={change}
-          blur={blur}
-          onChangeDatePicker={onChangeDatePicker}
-          tabIndex={3 + nrOfFieldsBeforePv}
-        />
-      </div>
-      <div className={styles.fieldErledigung}>
-        <ControlLabel>
-          Erledigung
-        </ControlLabel>
-        <FormControl
-          componentClass="select"
-          value={geschaeft.rechtsmittelErledigung || ''}
-          name="rechtsmittelErledigung"
-          onChange={change}
-          bsSize="small"
-          tabIndex={4 + nrOfFieldsBeforePv}
-        >
-          {createOptions(rechtsmittelErledigungOptions)}
-        </FormControl>
-      </div>
-      <div className={styles.fieldRechtsmittelTxt}>
-        <ControlLabel>
-          Bemerkungen
-        </ControlLabel>
-        <Textarea
-          value={geschaeft.rechtsmittelTxt || ''}
-          name="rechtsmittelTxt"
-          onChange={change}
-          onBlur={blur}
-          tabIndex={5 + nrOfFieldsBeforePv}
-          className={styles.textarea}
-        />
-      </div>
+      {
+        !(isPrintPreview && !geschaeft.rechtsmittelInstanz) &&
+        <div className={styles.fieldInstanz}>
+          <ControlLabel>
+            Instanz
+          </ControlLabel>
+          <FormControl
+            componentClass="select"
+            value={geschaeft.rechtsmittelInstanz || ''}
+            name="rechtsmittelInstanz"
+            onChange={change}
+            bsSize="small"
+            tabIndex={1 + nrOfFieldsBeforePv}
+          >
+            {createOptions(rechtsmittelInstanzOptions)}
+          </FormControl>
+        </div>
+      }
+      {
+        !(isPrintPreview && !geschaeft.rechtsmittelEntscheidNr) &&
+        <div className={styles.fieldEntscheidNr}>
+          <ControlLabel>
+            Entscheid Nr.
+          </ControlLabel>
+          <FormControl
+            type="number"
+            value={geschaeft.rechtsmittelEntscheidNr || ''}
+            name="rechtsmittelEntscheidNr"
+            onChange={change}
+            onBlur={blur}
+            bsSize="small"
+            tabIndex={2 + nrOfFieldsBeforePv}
+          />
+        </div>
+      }
+      {
+        !(isPrintPreview && !geschaeft.rechtsmittelEntscheidDatum) &&
+        <div className={styles.fieldEntscheidDatum}>
+          <DateField
+            name="rechtsmittelEntscheidDatum"
+            label="Entscheid Datum"
+            change={change}
+            blur={blur}
+            onChangeDatePicker={onChangeDatePicker}
+            tabIndex={3 + nrOfFieldsBeforePv}
+          />
+        </div>
+      }
+      {
+        !(isPrintPreview && !geschaeft.rechtsmittelErledigung) &&
+        <div className={styles.fieldErledigung}>
+          <ControlLabel>
+            Erledigung
+          </ControlLabel>
+          <FormControl
+            componentClass="select"
+            value={geschaeft.rechtsmittelErledigung || ''}
+            name="rechtsmittelErledigung"
+            onChange={change}
+            bsSize="small"
+            tabIndex={4 + nrOfFieldsBeforePv}
+          >
+            {createOptions(rechtsmittelErledigungOptions)}
+          </FormControl>
+        </div>
+      }
+      {
+        !(isPrintPreview && !geschaeft.rechtsmittelTxt) &&
+        <div className={styles.fieldRechtsmittelTxt}>
+          <ControlLabel>
+            Bemerkungen
+          </ControlLabel>
+          <Textarea
+            value={geschaeft.rechtsmittelTxt || ''}
+            name="rechtsmittelTxt"
+            onChange={change}
+            onBlur={blur}
+            tabIndex={5 + nrOfFieldsBeforePv}
+            className={styles.textarea}
+          />
+        </div>
+      }
     </div>
   )
 }

@@ -120,27 +120,36 @@ const AreaParlVorstoss = ({
       <div className={styles.areaParlVorstTitle}>
         Parlamentarischer Vorstoss
       </div>
-      <div className={styles.fieldParlVorstossTyp}>
-        <ControlLabel>
-          Typ
-        </ControlLabel>
-        <FormControl
-          componentClass="select"
-          value={geschaeft.parlVorstossTyp || ''}
-          name="parlVorstossTyp"
-          onChange={change}
-          bsSize="small"
-          tabIndex={1 + nrOfFieldsBeforePv}
-        >
-          {createOptions(parlVorstossTypOptions)}
-        </FormControl>
-      </div>
-      <div className={styles.fieldStufe}>
-        {parlVorstossStufe({ isPrintPreview, geschaeft, change, nrOfFieldsBeforePv })}
-      </div>
-      <div className={styles.fieldZustaendigkeit}>
-        {parlVorstossZustaendigkeit({ isPrintPreview, geschaeft, change, nrOfFieldsBeforePv })}
-      </div>
+      {
+        !(isPrintPreview && !geschaeft.parlVorstossTyp) &&
+        <div className={styles.fieldParlVorstossTyp}>
+          <ControlLabel>
+            Typ
+          </ControlLabel>
+          <FormControl
+            componentClass="select"
+            value={geschaeft.parlVorstossTyp || ''}
+            name="parlVorstossTyp"
+            onChange={change}
+            bsSize="small"
+            tabIndex={1 + nrOfFieldsBeforePv}
+          >
+            {createOptions(parlVorstossTypOptions)}
+          </FormControl>
+        </div>
+      }
+      {
+        !(isPrintPreview && !geschaeft.parlVorstossStufe) &&
+        <div className={styles.fieldStufe}>
+          {parlVorstossStufe({ isPrintPreview, geschaeft, change, nrOfFieldsBeforePv })}
+        </div>
+      }
+      {
+        !(isPrintPreview && !geschaeft.parlVorstossZustaendigkeitAwel) &&
+        <div className={styles.fieldZustaendigkeit}>
+          {parlVorstossZustaendigkeit({ isPrintPreview, geschaeft, change, nrOfFieldsBeforePv })}
+        </div>
+      }
     </div>
   )
 }
