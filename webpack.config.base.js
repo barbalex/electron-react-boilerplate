@@ -38,4 +38,4 @@ export default validate({
     // (mysql, mongodb, and so on..)
     'sqlite3', 'exceljs'
   ]
-});
+})
