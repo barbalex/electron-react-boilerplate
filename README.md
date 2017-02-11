@@ -33,7 +33,7 @@ Kapla ist in JavaScript geschrieben und benutzt unter anderem:
 - [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/grid)
 
 ## Entwicklungsumgebung installieren ##
-	
+
 	# Ordner schaffen, z.B. "kapla"
 	cd kapla
     git clone https://github.com/barbalex/kapla3.git

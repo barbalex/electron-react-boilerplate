@@ -13,6 +13,7 @@
     "generator-star-spacing": "off",
     "import/no-unresolved": ["error", { "ignore": ["electron"] }],
     "import/no-extraneous-dependencies": "off",
+    "no-console": 0,
     "no-use-before-define": "off",
     "react/jsx-no-bind": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
@@ -31,7 +32,6 @@
     "react"
   ],
   "settings": {
-    "targets": ["chrome"],
     "import/resolver": {
       "webpack": {
         "config": "webpack.config.eslint.js"
