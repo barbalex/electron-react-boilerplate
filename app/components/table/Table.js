@@ -15,6 +15,10 @@ class Table extends Component {
     config: PropTypes.object.isRequired,
   }
 
+  static defaultProps = {
+    id: 0,
+  }
+
   state = {
     tableBodyOverflows: true
   }
