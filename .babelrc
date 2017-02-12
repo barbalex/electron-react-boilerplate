@@ -12,12 +12,6 @@
       "plugins": ["babel-plugin-dev-expression"]
     },
     "development": {
-      "plugins": [
-        "transform-class-properties",
-        "transform-es2015-classes",
-				"transform-es2015-destructuring",
-				"transform-object-rest-spread"
-      ],
       "presets": ["react-hmre"]
     },
     "test": {
