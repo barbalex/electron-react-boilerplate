@@ -19,7 +19,7 @@ const onClickPrint = (e, path) => {
   const landscape = path === '/pages'
   const win = remote.getCurrentWindow()
   const printToPDFOptions = {
-    marginsType: 1,
+    marginsType: 0,
     pageSize: 'A4',
     landscape,
     printBackground: true
@@ -32,6 +32,7 @@ const onClickPrint = (e, path) => {
     }]
   }
 
+  // https://github.com/electron/electron/blob/master/docs/api/web-contents.md#contentsprinttopdfoptions-callback
   win.webContents.printToPDF(
     printToPDFOptions,
     (error, data) => {

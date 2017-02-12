@@ -44,9 +44,23 @@
     padding: 1.5cm !important;
     overflow-y: hidden !important;
     /* no idea why this is not necessary: */
-    page-break-after: always !important;
+    /* page-break-after: always !important; */
     page-break-inside: avoid !important;
-    page-break-before: avoid !important;
+    page-break-before: always !important;
+    /**
+     * this is extremely weird:
+     * window.print seems to change margins
+     * window.printToPdf does not
+     */
+    margin-top: -3cm !important;
+    margin-left: -1cm !important;
+  }
+  /**
+   * This was set to 1.8 but when using
+   * window.print that is not enough
+   */
+  .footer {
+    bottom: 2cm !important;
   }
 }
 

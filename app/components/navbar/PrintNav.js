@@ -8,17 +8,16 @@ import {
 const onClickPrint = (e, path) => {
   e.preventDefault()
   const win = remote.getCurrentWindow()
-  // const landscape = path !== '/geschaeftPdf'
-  // console.log('landscape:', landscape)
-  // sadly, the landscape setting only works in printToPdf
-  const options = {
-    silent: false,
-    printBackground: false,
-  }
-  win.webContents.print(options, (error, data) => {
-    if (error) throw error
-    // console.log('data', data)
-  })
+  // https://github.com/electron/electron/blob/master/docs/api/web-contents.md#contentsprintoptions
+  /**
+   * PROBLEM
+   * with webContents.print marginsType can not be set
+   * so this may be set by system settings, which could be different
+   * from pc to pc!
+   * Preset seems to be 0 for default margin
+   * MUCH BETTER would be 1 for no margin
+   */
+  win.webContents.print()
 }
 
 const NavbarPrintNav = ({ path }) =>
