@@ -162,21 +162,6 @@ class Page extends Component {
     )
   }
 
-  footer = () => {
-    const { pageIndex, pages } = this.props
-    const now = moment().format('DD.MM.YYYY')
-    return (
-      <div className={styles.footer}>
-        <p>
-          {now}
-        </p>
-        <p>
-          Seite {pageIndex + 1}/{pages.length}
-        </p>
-      </div>
-    )
-  }
-
   tableRows = () => {
     const {
       geschaefte,
@@ -224,6 +209,7 @@ class Page extends Component {
       filterFields,
       sortFields,
       pageIndex,
+      pages,
       queryTitle,
       building,
       reportType,
@@ -296,7 +282,14 @@ class Page extends Component {
           }
           {this.tableRows()}
         </div>
-        {this.footer()}
+        <div className={styles.footer}>
+          <p>
+            {moment().format('DD.MM.YYYY')}
+          </p>
+          <p>
+            Seite {pageIndex + 1}/{pages.length}
+          </p>
+        </div>
       </div>
     )
   }

@@ -38,10 +38,12 @@
      * something seems to change the measurements
      * if they are not repeated here using important
      */
-    width: 29.7cm !important;
-    height: 20.95cm !important;
+    width: 26.7cm !important;
+    height: 17cm !important;
+    top: 0 !important;
+    max-height: 17cm;
     margin: 0 !important;
-    padding: 1.5cm !important;
+    padding: 0 !important;
     overflow-y: hidden !important;
     /* no idea why this is not necessary: */
     /* page-break-after: always !important; */
@@ -52,15 +54,36 @@
      * window.print seems to change margins
      * window.printToPdf does not
      */
+    /*
     margin-top: -3cm !important;
-    margin-left: -1cm !important;
+    margin-left: -1cm !important; */
   }
   /**
    * This was set to 1.8 but when using
    * window.print that is not enough
    */
   .footer {
-    bottom: 2cm !important;
+    bottom: 0 !important;
+  }
+}
+
+@page {
+  margin: 1.5cm;
+  size: A4 landscape;
+}
+
+@page :left {
+  @bottom-right {
+    content: "Seite " counter(page) "/" counter(pages);
+    margin: 10pt 0 30pt 0;
+    border-top: .25pt solid #666;
+    font-size: 9pt;
+    color: #333;
+    background-color: red;
+  }
+  @left-middle {
+    background-color: blue;
+    content: "left-middle"
   }
 }
 
@@ -76,26 +99,25 @@
 
 .footer {
   position: absolute;
-  width: 25.7cm;
+  width: 100%;
   /**
    * push down so it is never covered
    * by content
    */
-  bottom: 1.8cm;
+  bottom: 0;
 }
 
 .footer p {
   position: relative;
   /* push down as far as possible */
   margin-bottom: 0;
-}
-
-.footer p {
   float: right;
+  text-align: right;
 }
 
 .footer p:first-of-type {
   float: left;
+  text-align: left;
 }
 
 .h1 {
