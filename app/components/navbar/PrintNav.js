@@ -5,7 +5,7 @@ import {
   Glyphicon,
 } from 'react-bootstrap'
 
-const onClickPrint = (e, path) => {
+const onClickPrint = (e) => {
   e.preventDefault()
   const win = remote.getCurrentWindow()
   // https://github.com/electron/electron/blob/master/docs/api/web-contents.md#contentsprintoptions
@@ -16,15 +16,14 @@ const onClickPrint = (e, path) => {
    * from pc to pc!
    * Preset seems to be 0 for default margin
    * MUCH BETTER would be 1 for no margin
+   * but: @page css to the rescue
    */
   win.webContents.print()
 }
 
-const NavbarPrintNav = ({ path }) =>
+const NavbarPrintNav = () =>
   <NavItem
-    onClick={e =>
-      onClickPrint(e, path)
-    }
+    onClick={onClickPrint}
     title="Drucken"
   >
     <Glyphicon glyph="print" />
