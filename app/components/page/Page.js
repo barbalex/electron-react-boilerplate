@@ -16,6 +16,7 @@ import List1Rows from './list1/Rows'
 import filterCriteriaToArrayOfStrings from '../../src/filterCriteriaToArrayOfStrings'
 import sortCriteriaToArrayOfStrings from '../../src/sortCriteriaToArrayOfStrings'
 import logoImg from 'file!../../etc/logo.png'  // eslint-disable-line
+import PageTitle from '../../containers/page/PageTitle'
 
 class Page extends Component {
   static propTypes = {
@@ -32,8 +33,6 @@ class Page extends Component {
     pagesQueryTitle: PropTypes.func.isRequired,
     pagesSetTitle: PropTypes.func.isRequired,
     pagesFinishedBuilding: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired,
-    queryTitle: PropTypes.bool.isRequired,
     pagesModalShow: PropTypes.func.isRequired,
     building: PropTypes.bool.isRequired,
     reportType: PropTypes.string.isRequired,
@@ -49,23 +48,6 @@ class Page extends Component {
 
   componentDidUpdate = () => {
     this.nextStepp()
-  }
-
-  onClickH1 = () => {
-    const { pagesQueryTitle } = this.props
-    pagesQueryTitle(true)
-  }
-
-  onKeyPressTitle = (e) => {
-    const { pagesQueryTitle, title } = this.props
-    if (e.key === 'Enter' && title) {
-      pagesQueryTitle(false)
-    }
-  }
-
-  onBlurTitle = () => {
-    const { pagesQueryTitle, title } = this.props
-    if (title) pagesQueryTitle(false)
   }
 
   showPagesModal = () => {
@@ -125,43 +107,6 @@ class Page extends Component {
     }
   }
 
-  changeQueryTitle = (e) => {
-    const { pagesSetTitle } = this.props
-    const { value } = e.target
-    pagesSetTitle(value)
-  }
-
-  inputPagesTitle = () => {
-    const { title } = this.props
-    return (
-      <FormGroup>
-        <FormControl
-          type="text"
-          value={title}
-          placeholder="Titel erfassen"
-          onChange={this.changeQueryTitle}
-          onKeyPress={this.onKeyPressTitle}
-          onBlur={this.onBlurTitle}
-          bsSize="large"
-          autoFocus
-          className={styles.titleInput}
-        />
-      </FormGroup>
-    )
-  }
-
-  textPagesTitle = () => {
-    const { title } = this.props
-    return (
-      <h1
-        onClick={this.onClickH1}
-        className={styles.h1}
-      >
-        {title}
-      </h1>
-    )
-  }
-
   tableRows = () => {
     const {
       geschaefte,
@@ -210,7 +155,6 @@ class Page extends Component {
       sortFields,
       pageIndex,
       pages,
-      queryTitle,
       building,
       reportType,
     } = this.props
@@ -238,16 +182,9 @@ class Page extends Component {
               alt="Logo"
             />
           }
-          {
-            firstPage &&
-            queryTitle &&
-            this.inputPagesTitle()
-          }
-          {
-            firstPage &&
-            !queryTitle &&
-            this.textPagesTitle()
-          }
+          <PageTitle
+            firstPage={firstPage}
+          />
           {
             firstPage &&
             <div

@@ -23,8 +23,6 @@ function mapStateToProps(state, props) {
   const {
     remainingGeschaefte,
     activePageIndex,
-    title,
-    queryTitle,
     building,
     reportType,
   } = pages
@@ -44,8 +42,6 @@ function mapStateToProps(state, props) {
     remainingGeschaefte,
     activePageIndex,
     pageIndex,
-    title,
-    queryTitle,
     reportType,
     geschaefteGefilterteIds,
   }
