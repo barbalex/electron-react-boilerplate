@@ -8,83 +8,74 @@ import logoImg from 'file!../../etc/logo.png'  // eslint-disable-line
 
 const enhance = compose(
   withHandlers({
-    onClickHG1: props => () {
-      
-    }
+    onClickH1: props => () =>
+      props.pagesQueryTitle(true)
+    ,
+    onKeyPressTitle: props => (e) => {
+      const { pagesQueryTitle, title } = props
+      if (e.key === 'Enter' && title) {
+        pagesQueryTitle(false)
+      }
+    },
+    onBlurTitle: props => () => {
+      const { pagesQueryTitle, title } = props
+      if (title) pagesQueryTitle(false)
+    },
+    changeQueryTitle: props => (e) =>
+      props.pagesSetTitle(e.target.value)
+    ,
   })
 )
 
-class Page extends Component {
-  static propTypes = {
-    firstPage: PropTypes.bool.isRequired,
-    pagesQueryTitle: PropTypes.func.isRequired,
-    pagesSetTitle: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired,
-    queryTitle: PropTypes.bool.isRequired,
-  }
-
-  onClickH1 = () => {
-    const { pagesQueryTitle } = this.props
-    pagesQueryTitle(true)
-  }
-
-  onKeyPressTitle = (e) => {
-    const { pagesQueryTitle, title } = this.props
-    if (e.key === 'Enter' && title) {
-      pagesQueryTitle(false)
+const Page = ({
+  firstPage,
+  queryTitle,
+  title,
+  onClickH1,
+  onKeyPressTitle,
+  onBlurTitle,
+  changeQueryTitle,
+}) =>
+  <div>
+    {
+      firstPage &&
+      queryTitle &&
+      <FormGroup>
+        <FormControl
+          type="text"
+          value={title}
+          placeholder="Titel erfassen"
+          onChange={changeQueryTitle}
+          onKeyPress={onKeyPressTitle}
+          onBlur={onBlurTitle}
+          bsSize="large"
+          autoFocus
+          className={styles.titleInput}
+        />
+      </FormGroup>
     }
-  }
+    {
+      firstPage &&
+      !queryTitle &&
+      <h1
+        onClick={onClickH1}
+        className={styles.h1}
+      >
+        {title}
+      </h1>
+    }
+  </div>
 
-  onBlurTitle = () => {
-    const { pagesQueryTitle, title } = this.props
-    if (title) pagesQueryTitle(false)
-  }
-
-  changeQueryTitle = (e) => {
-    const { pagesSetTitle } = this.props
-    const { value } = e.target
-    pagesSetTitle(value)
-  }
-
-  render = () => {
-    const {
-      firstPage,
-      queryTitle,
-      title,
-    } = this.props
-
-    return (
-      <div>
-        {
-          firstPage &&
-          queryTitle &&
-          <FormGroup>
-            <FormControl
-              type="text"
-              value={title}
-              placeholder="Titel erfassen"
-              onChange={this.changeQueryTitle}
-              onKeyPress={this.onKeyPressTitle}
-              onBlur={this.onBlurTitle}
-              bsSize="large"
-              autoFocus
-              className={styles.titleInput}
-            />
-          </FormGroup>
-        }
-        {
-          firstPage &&
-          !queryTitle &&
-          <h1
-            onClick={this.onClickH1}
-            className={styles.h1}
-          >
-            {title}
-          </h1>
-        }
-      </div>
-    )
-  }
+Page.propTypes = {
+  firstPage: PropTypes.bool.isRequired,
+  pagesQueryTitle: PropTypes.func.isRequired,
+  pagesSetTitle: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  queryTitle: PropTypes.bool.isRequired,
+  onClickH1: PropTypes.func.isRequired,
+  onKeyPressTitle: PropTypes.func.isRequired,
+  onBlurTitle: PropTypes.func.isRequired,
+  changeQueryTitle: PropTypes.func.isRequired,
 }
 
-export default Page
+export default enhance(Page)
