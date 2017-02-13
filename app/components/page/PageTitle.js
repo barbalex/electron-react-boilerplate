@@ -1,8 +1,18 @@
 import React, { Component, PropTypes } from 'react'
 import { FormGroup, FormControl } from 'react-bootstrap'
+import compose from 'recompose/compose'
+import withHandlers from 'recompose/withHandlers'
 
 import styles from './Page.css'
 import logoImg from 'file!../../etc/logo.png'  // eslint-disable-line
+
+const enhance = compose(
+  withHandlers({
+    onClickHG1: props => () {
+      
+    }
+  })
+)
 
 class Page extends Component {
   static propTypes = {
