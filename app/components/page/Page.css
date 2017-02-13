@@ -6,8 +6,9 @@
   /* Show a drop shadow beneath each page */
   box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);
 
-  /* enable placing footer absolute */
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   width: 29.7cm;
   height: 20.95cm;
@@ -58,13 +59,6 @@
     margin-top: -3cm !important;
     margin-left: -1cm !important; */
   }
-  /**
-   * This was set to 1.8 but when using
-   * window.print that is not enough
-   */
-  .footer {
-    bottom: 0 !important;
-  }
 }
 
 @page {
@@ -98,17 +92,10 @@
 }
 
 .footer {
-  position: absolute;
   width: 100%;
-  /**
-   * push down so it is never covered
-   * by content
-   */
-  bottom: 0;
 }
 
 .footer p {
-  position: relative;
   /* push down as far as possible */
   margin-bottom: 0;
   float: right;
