@@ -5,11 +5,11 @@
   background: #fff;
   /* Show a drop shadow beneath each page */
   box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);
-
+  /* place rowsContainer top and footer bottom */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
+  /* set page size and padding for screen */
   width: 29.7cm;
   height: 20.95cm;
   padding: 1.5cm;
@@ -46,39 +46,14 @@
     margin: 0 !important;
     padding: 0 !important;
     overflow-y: hidden !important;
-    /* no idea why this is not necessary: */
-    /* page-break-after: always !important; */
     page-break-inside: avoid !important;
     page-break-before: always !important;
-    /**
-     * this is extremely weird:
-     * window.print seems to change margins
-     * window.printToPdf does not
-     */
-    /*
-    margin-top: -3cm !important;
-    margin-left: -1cm !important; */
   }
 }
 
 @page {
   margin: 1.5cm;
   size: A4 landscape;
-}
-
-@page :left {
-  @bottom-right {
-    content: "Seite " counter(page) "/" counter(pages);
-    margin: 10pt 0 30pt 0;
-    border-top: .25pt solid #666;
-    font-size: 9pt;
-    color: #333;
-    background-color: red;
-  }
-  @left-middle {
-    background-color: blue;
-    content: "left-middle"
-  }
 }
 
 .titleInput {
