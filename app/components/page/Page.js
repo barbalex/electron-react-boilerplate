@@ -10,7 +10,7 @@ import List1Header from './list1/Header'
 import List1Rows from './list1/Rows'
 import filterCriteriaToArrayOfStrings from '../../src/filterCriteriaToArrayOfStrings'
 import sortCriteriaToArrayOfStrings from '../../src/sortCriteriaToArrayOfStrings'
-import logoImg from 'file!../../etc/logo.png'  // eslint-disable-line
+import logoImg from '../../etc/logo.png'
 import PageTitle from '../../containers/page/PageTitle'
 
 class Page extends Component {

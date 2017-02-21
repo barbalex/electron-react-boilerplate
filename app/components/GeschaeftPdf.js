@@ -3,7 +3,7 @@ import moment from 'moment'
 import styled from 'styled-components'
 
 import Geschaeft from '../containers/geschaeft/Geschaeft'
-// import logoImg from 'file!../etc/logo.png'
+// import logoImg from '../etc/logo.png'
 
 /*
  * need defined height and overflow
