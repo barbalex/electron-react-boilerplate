@@ -1,9 +1,4 @@
-/*
- * This component builds and displays a single page
- */
-
 import React, { Component, PropTypes } from 'react'
-import { FormGroup, FormControl } from 'react-bootstrap'
 import moment from 'moment'
 
 import styles from './Page.css'
@@ -30,8 +25,6 @@ class Page extends Component {
     pageIndex: PropTypes.number.isRequired,
     pageAddGeschaeft: PropTypes.func.isRequired,
     pagesMoveGeschaeftToNewPage: PropTypes.func.isRequired,
-    pagesQueryTitle: PropTypes.func.isRequired,
-    pagesSetTitle: PropTypes.func.isRequired,
     pagesFinishedBuilding: PropTypes.func.isRequired,
     pagesModalShow: PropTypes.func.isRequired,
     building: PropTypes.bool.isRequired,
