@@ -17,15 +17,13 @@ class GekoNrField extends Component {
       gekoNr,
       oldGekoNr: gekoNr,
     }
-    this.onChange = this.onChange.bind(this)
-    this.onBlur = this.onBlur.bind(this)
   }
 
-  onChange(e) {
+  onChange = (e) => {
     this.setState({ gekoNr: e.target.value })
   }
 
-  onBlur() {
+  onBlur = () => {
     const {
       idGeschaeft,
       gekoRemove,
