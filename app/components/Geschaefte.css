@@ -1,6 +1,12 @@
+.body {
+  background-image: linear-gradient(45deg, rgba(235, 255, 229, .5) 10%, rgba(216, 255, 200, .7));
+  height: 100vh;
+}
+
 .table {
-  top: 52px;
-  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   -webkit-user-select: none;
 }
 
@@ -10,8 +16,8 @@
 }
 
 .tableBody {
-  overflow: auto;
   height: calc(100vh - 82px);
+  overflow: auto;
 }
 
 .tableHeaderRow,
@@ -50,11 +56,6 @@
 
 .active {
   background-color: #FFBF73;
-}
-
-.body {
-  background-image: linear-gradient(45deg, rgba(235, 255, 229, .5) 10%, rgba(216, 255, 200, .7));
-  height: 100vh;
 }
 
 .fieldGegenstand {

@@ -40,7 +40,7 @@ const GeschaefteItem = ({
   )
 
   return (
-    <div
+    <div  // eslint-disable-line jsx-a11y/no-static-element-interactions
       key={keyPassed}
       className={trClassName}
       onClick={() => {
@@ -97,7 +97,7 @@ GeschaefteItem.propTypes = {
   activeId: PropTypes.number,
   path: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
-  keyPassed: PropTypes.number.isRequired,
+  keyPassed: PropTypes.string.isRequired,
 }
 
 export default GeschaefteItem

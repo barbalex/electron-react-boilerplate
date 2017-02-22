@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import ReactList from 'react-list'
+import { AutoSizer, List } from 'react-virtualized'
 import _ from 'lodash'
 
 import styles from './Geschaefte.css'
@@ -21,30 +21,7 @@ class Geschaefte extends Component {
   }
 
   componentDidUpdate() {
-    const {
-      path,
-      activeId,
-      geschaefteGefilterteIds,
-    } = this.props
-    const rL = this.reactList
-    if (activeId) {
-      // get visible indexes
-      const visibleRange = rL.getVisibleRange()
-      // get index of active id
-      const index = _.findIndex(
-        geschaefteGefilterteIds,
-        g => g === activeId
-      )
-      // scroll to active id
-      // but only if necessary
-      const visibleRangeIncludesId = (
-        visibleRange[0] <= index &&
-        index <= visibleRange[1]
-      )
-      if (!visibleRangeIncludesId) {
-        rL.scrollTo(index)
-      }
-    }
+    const { path } = this.props
 
     if (
       path === '/geschaefte' ||
@@ -67,25 +44,34 @@ class Geschaefte extends Component {
   }
 
   doesTableBodyOverflow() {
-    if (this.tableBody) {
-      return this.tableBody.offsetHeight < this.tableBody.scrollHeight
+    if (this.tableBody && this.reactList) {
+      return this.tableBody.offsetHeight === this.reactList.props.height
     }
     return false
   }
 
-  renderItem(index, key) {  // eslint-disable-line class-methods-use-this
-    return (
+  rowRenderer = ({ key, index, style }) =>
+    <div key={key} style={style}>
       <GeschaefteItem
         index={index}
-        key={key}
         keyPassed={key}
       />
-    )
-  }
+    </div>
+
+  noRowsRenderer = () =>
+    <div>
+      lade Daten...
+    </div>
 
   render() {
-    const { geschaefteGefilterteIds } = this.props
+    const { geschaefteGefilterteIds, activeId } = this.props
     const { tableBodyOverflows } = this.state
+    const rowCount = geschaefteGefilterteIds ? geschaefteGefilterteIds.length : 0
+    // get index of active id
+    const indexOfActiveId = _.findIndex(
+      geschaefteGefilterteIds,
+      g => g === activeId
+    )
 
     return (
       <div className={styles.body}>
@@ -135,12 +121,21 @@ class Geschaefte extends Component {
             className={styles.tableBody}
             ref={(c) => { this.tableBody = c }}
           >
-            <ReactList
-              itemRenderer={::this.renderItem}
-              length={geschaefteGefilterteIds ? geschaefteGefilterteIds.length : 0}
-              type="uniform"
-              ref={(c) => { this.reactList = c }}
-            />
+            <AutoSizer>
+              {({ height, width }) =>
+                <List
+                  height={height}
+                  rowCount={rowCount}
+                  rowHeight={77}
+                  rowRenderer={this.rowRenderer}
+                  noRowsRenderer={this.noRowsRenderer}
+                  width={width}
+                  scrollToIndex={indexOfActiveId}
+                  ref={(c) => { this.reactList = c }}
+                  {...geschaefteGefilterteIds}
+                />
+              }
+            </AutoSizer>
           </div>
         </div>
       </div>
