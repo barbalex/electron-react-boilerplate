@@ -1,19 +1,30 @@
 import React, { Component, PropTypes } from 'react'
 import { AutoSizer, List } from 'react-virtualized'
 import _ from 'lodash'
+import styled from 'styled-components'
 
 import styles from './Geschaefte.css'
 import GeschaefteItem from '../containers/GeschaefteItem'
+
+const StyledNoRowsDiv = styled.div`
+  padding: 10px;
+  font-weight: bold;
+`
 
 class Geschaefte extends Component {
   static propTypes = {
     activeId: PropTypes.number,
     geschaefteGefilterteIds: PropTypes.array.isRequired,
+    geschaefte: PropTypes.array.isRequired,
     path: PropTypes.string.isRequired,
+    filterFields: PropTypes.array,
+    filterFulltext: PropTypes.string,
   }
 
   static defaultProps = {
     activeId: null,
+    filterFields: [],
+    filterFulltext: '',
   }
 
   state = {
@@ -58,10 +69,23 @@ class Geschaefte extends Component {
       />
     </div>
 
-  noRowsRenderer = () =>
-    <div>
-      lade Daten...
-    </div>
+  noRowsRenderer = () => {
+    const { filterFields, filterFulltext, geschaefte } = this.props
+    const isFiltered = (
+      geschaefte.length > 0 &&
+      (filterFields.length > 0 || !!filterFulltext)
+    )
+    const text = (
+      isFiltered ?
+      'Keine Daten entsprechen dem Filter' :
+      'lade Daten...'
+    )
+    return (
+      <StyledNoRowsDiv>
+        {text}
+      </StyledNoRowsDiv>
+    )
+  }
 
   render() {
     const { geschaefteGefilterteIds, activeId } = this.props
