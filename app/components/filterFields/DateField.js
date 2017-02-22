@@ -31,9 +31,6 @@ class DateField extends Component {
     let value = values[name]
     if (value) value = moment(value, 'YYYY-MM-DD').format('DD.MM.YYYY')
     this.state = { value }
-    this.onChange = this.onChange.bind(this)
-    this.onBlur = this.onBlur.bind(this)
-    this.onChangeDatePicker = this.onChangeDatePicker.bind(this)
   }
 
   componentDidUpdate(prevProps) {
@@ -46,11 +43,11 @@ class DateField extends Component {
     }
   }
 
-  onChange(e) {
+  onChange = (e) => {
     this.setState({ value: e.target.value })
   }
 
-  onBlur() {
+  onBlur = () => {
     const { values, name, change } = this.props
     let { value } = this.state
     // only filter if value has changed
