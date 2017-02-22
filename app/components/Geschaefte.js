@@ -35,7 +35,7 @@ class Geschaefte extends Component {
     }
   }
 
-  setTableBodyOverflow() {
+  setTableBodyOverflow = () => {
     const { tableBodyOverflows } = this.state
     const overflows = this.doesTableBodyOverflow()
     if (overflows !== tableBodyOverflows) {
@@ -43,7 +43,7 @@ class Geschaefte extends Component {
     }
   }
 
-  doesTableBodyOverflow() {
+  doesTableBodyOverflow = () => {
     if (this.tableBody && this.reactList) {
       return this.tableBody.offsetHeight === this.reactList.props.height
     }
