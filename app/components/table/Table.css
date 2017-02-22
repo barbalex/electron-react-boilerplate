@@ -1,3 +1,8 @@
+.body {
+  background-image: linear-gradient(45deg, rgba(235, 255, 229, .5) 10%, rgba(216, 255, 200, .7));
+  height: 100vh;
+}
+
 .table {
   top: 52px;
   width: 100%;
@@ -22,6 +27,8 @@
 .tableBodyRow {
   border-bottom: 1px solid #BBBBBB;
   cursor: pointer;
+  min-height: 38px;
+  max-height: 38px;
 }
 
 .tableHeaderRow {
@@ -41,9 +48,4 @@
 
 .active {
   background-color: #FFBF73;
-}
-
-.body {
-  background-image: linear-gradient(45deg, rgba(235, 255, 229, .5) 10%, rgba(216, 255, 200, .7));
-  height: 100vh;
 }

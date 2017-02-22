@@ -1,9 +1,16 @@
 import React, { Component, PropTypes } from 'react'
-import ReactList from 'react-list'
+import { AutoSizer, List } from 'react-virtualized'
 import _ from 'lodash'
 import $ from 'jquery'
 import Linkify from 'react-linkify'
+import styled from 'styled-components'
+
 import styles from './Table.css'
+
+const StyledNoRowsDiv = styled.div`
+  padding: 10px;
+  font-weight: bold;
+`
 
 class Table extends Component {
   static propTypes = {
@@ -24,25 +31,6 @@ class Table extends Component {
   }
 
   componentDidUpdate = () => {
-    const { rows, id } = this.props
-    const rL = this.reactList
-    if (id) {
-      // get visible indexes
-      const visibleRange = rL.getVisibleRange()
-      // get index of active id
-      const index = _.findIndex(rows, r =>
-        r.id === id
-      )
-      // scroll to active id
-      // but only if necessary
-      const visibleRangeIncludesId = (
-        visibleRange[0] <= index &&
-        index <= visibleRange[1]
-      )
-      if (!visibleRangeIncludesId) {
-        rL.scrollAround(id)
-      }
-    }
     /**
      * this only works in a setTimeout!
      * otherwise tableBody scrollHeight equals offsetHeight
@@ -127,7 +115,7 @@ class Table extends Component {
     })
   }
 
-  renderItem = (index, key) => {
+  rowRenderer = ({ key, index, style }) => {
     const { rows, id } = this.props
     const row = rows[index]
     const isActive = !!id && id === row.id
@@ -144,15 +132,28 @@ class Table extends Component {
         onClick={() =>
           this.onClickTableRow(row.id)
         }
+        style={style}
       >
         {this.itemColumns(row)}
       </div>
     )
   }
 
+  noRowsRenderer = () => {
+    const text = 'lade Daten...'
+    return (
+      <StyledNoRowsDiv>
+        {text}
+      </StyledNoRowsDiv>
+    )
+  }
+
   render() {
-    const { rows } = this.props
-    const { tableBodyOverflows } = this.state
+    const { rows, id } = this.props
+    const { tableBodyOverflows } = this.state// get index of active id
+    const indexOfActiveId = _.findIndex(rows, r =>
+      r.id === id
+    )
 
     return (
       <div className={styles.body}>
@@ -171,12 +172,21 @@ class Table extends Component {
             className={styles.tableBody}
             ref={(c) => { this.tableBody = c }}
           >
-            <ReactList
-              itemRenderer={::this.renderItem}
-              length={rows.length}
-              type="uniform"
-              ref={(c) => { this.reactList = c }}
-            />
+            <AutoSizer>
+              {({ height, width }) =>
+                <List
+                  height={height}
+                  rowCount={rows.length}
+                  rowHeight={38}
+                  rowRenderer={this.rowRenderer}
+                  noRowsRenderer={this.noRowsRenderer}
+                  width={width}
+                  scrollToIndex={indexOfActiveId}
+                  ref={(c) => { this.reactList = c }}
+                  {...rows}
+                />
+              }
+            </AutoSizer>
           </div>
         </div>
       </div>

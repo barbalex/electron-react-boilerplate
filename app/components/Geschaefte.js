@@ -54,12 +54,8 @@ class Geschaefte extends Component {
     }
   }
 
-  doesTableBodyOverflow = () => {
-    if (this.tableBody && this.reactList) {
-      return this.tableBody.offsetHeight === this.reactList.props.height
-    }
-    return false
-  }
+  doesTableBodyOverflow = () =>
+    this.tableBody.offsetHeight < this.tableBody.scrollHeight
 
   rowRenderer = ({ key, index, style }) =>
     <div key={key} style={style}>
