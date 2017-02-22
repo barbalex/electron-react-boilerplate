@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import $ from 'jquery'
+import compose from 'recompose/compose'
+import withHandlers from 'recompose/withHandlers'
+
 import styles from './filterFields.css'
 import AreaGeschaeft from '../../containers/filterFields/AreaGeschaeft'
 import AreaNummern from '../../containers/filterFields/AreaNummern'
@@ -14,92 +17,88 @@ import isDateField from '../../src/isDateField'
 
 moment.locale('de')
 
+const enhance = compose(
+  withHandlers({
+    changeComparator: props => (value, name) => {
+      const { filterFields, geschaefteFilterByFields } = props
+      const newFilterFields = []
+      let changedField = {
+        comparator: '=',
+        field: name,
+        value: null,
+      }
+      if (filterFields.forEach) {
+        filterFields.forEach((f) => {
+          if (f.field !== name) {
+            newFilterFields.push(f)
+          } else {
+            changedField = f
+          }
+        })
+      }
+      changedField.comparator = value
+      newFilterFields.push(changedField)
+      geschaefteFilterByFields(newFilterFields)
+    },
+    change: props => (e) => {
+      const {
+        filterFields,
+        geschaefteFilterByFields,
+      } = props
+      const {
+        type,
+        name,
+        dataset,
+      } = e.target
+      const newFilterFields = []
+      let changedField = {
+        comparator: '=',
+        field: name,
+        value: null,
+      }
+      if (filterFields.forEach) {
+        filterFields.forEach((f) => {
+          if (f.field !== name) {
+            newFilterFields.push(f)
+          } else if (f.comparator) {
+            changedField = f
+          }
+        })
+      }
+      let { value } = e.target
+      // console.log('FilterFields, value on change:', value)
+      if (isDateField(name) && value) {
+        value = moment(value, 'DD.MM.YYYY').format('YYYY-MM-DD')
+      }
+      if (type === 'radio') {
+        // need to set null if existing value was clicked
+        if (changedField.value === dataset.value) {
+          value = null
+        } else {
+          value = dataset.value
+        }
+      }
+      changedField.value = value
+      newFilterFields.push(changedField)
+      geschaefteFilterByFields(newFilterFields)
+    },
+  }),
+)
+
 class FilterFields extends Component {
   static propTypes = {
     values: PropTypes.object.isRequired,
-    filterFields: PropTypes.arrayOf(
-      PropTypes.shape({
-        comparator: PropTypes.oneOf(['=', '===', '!==', '<', '>', '']),
-        field: PropTypes.string,
-        value: PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.number
-        ])
-      })
-    ).isRequired,
-    geschaefteFilterByFields: PropTypes.func.isRequired,
     config: PropTypes.object.isRequired,
-  }
-
-  changeComparator = (value, name) => {
-    const { filterFields, geschaefteFilterByFields } = this.props
-    const newFilterFields = []
-    let changedField = {
-      comparator: '=',
-      field: name,
-      value: null,
-    }
-    if (filterFields.forEach) {
-      filterFields.forEach((f) => {
-        if (f.field !== name) {
-          newFilterFields.push(f)
-        } else {
-          changedField = f
-        }
-      })
-    }
-    changedField.comparator = value
-    newFilterFields.push(changedField)
-    geschaefteFilterByFields(newFilterFields)
-  }
-
-  change = (e) => {
-    const {
-      filterFields,
-      geschaefteFilterByFields,
-    } = this.props
-    const {
-      type,
-      name,
-      dataset,
-    } = e.target
-    const newFilterFields = []
-    let changedField = {
-      comparator: '=',
-      field: name,
-      value: null,
-    }
-    if (filterFields.forEach) {
-      filterFields.forEach((f) => {
-        if (f.field !== name) {
-          newFilterFields.push(f)
-        } else if (f.comparator) {
-          changedField = f
-        }
-      })
-    }
-    let { value } = e.target
-    // console.log('FilterFields, value on change:', value)
-    if (isDateField(name) && value) {
-      value = moment(value, 'DD.MM.YYYY').format('YYYY-MM-DD')
-    }
-    if (type === 'radio') {
-      // need to set null if existing value was clicked
-      if (changedField.value === dataset.value) {
-        value = null
-      } else {
-        value = dataset.value
-      }
-    }
-    changedField.value = value
-    newFilterFields.push(changedField)
-    geschaefteFilterByFields(newFilterFields)
+    changeComparator: PropTypes.func.isRequired,
+    change: PropTypes.func.isRequired,
   }
 
   render = () => {
     const {
       values,
       config,
+      changeComparator,
+      change,
     } = this.props
 
     const showAreaParlVorstoss = (
@@ -147,22 +146,22 @@ class FilterFields extends Component {
         <div className={wrapperClass}>
           <AreaGeschaeft
             firstTabIndex={wrapperClassBaseString === 'wrapperNarrow' ? nrOfNrFields : 0}
-            change={this.change}
-            changeComparator={this.changeComparator}
+            change={change}
+            changeComparator={changeComparator}
             values={values}
           />
           <AreaNummern
             firstTabIndex={wrapperClassBaseString === 'wrapperNarrow' ? 0 : nrOfGFields}
-            change={this.change}
-            changeComparator={this.changeComparator}
+            change={change}
+            changeComparator={changeComparator}
             values={values}
           />
           {
             showAreaParlVorstoss &&
             <AreaParlVorstoss
               firstTabIndex={nrOfFieldsBeforePv}
-              change={this.change}
-              changeComparator={this.changeComparator}
+              change={change}
+              changeComparator={changeComparator}
               values={values}
             />
           }
@@ -170,33 +169,33 @@ class FilterFields extends Component {
             showAreaRechtsmittel &&
             <AreaRechtsmittel
               firstTabIndex={nrOfFieldsBeforePv}
-              change={this.change}
-              changeComparator={this.changeComparator}
+              change={change}
+              changeComparator={changeComparator}
               values={values}
             />
           }
           <AreaFristen
             firstTabIndex={nrOfFieldsBeforeFristen}
-            change={this.change}
-            changeComparator={this.changeComparator}
+            change={change}
+            changeComparator={changeComparator}
             values={values}
           />
           <AreaPersonen
             firstTabIndex={nrOfFieldsBeforePersonen}
-            change={this.change}
-            changeComparator={this.changeComparator}
+            change={change}
+            changeComparator={changeComparator}
             values={values}
           />
           <AreaHistory
             firstTabIndex={nrOfFieldsBeforeHistory}
-            change={this.change}
-            changeComparator={this.changeComparator}
+            change={change}
+            changeComparator={changeComparator}
             values={values}
           />
           <AreaZuletztMutiert
             firstTabIndex={nrOfFieldsBeforeZuletztMutiert}
-            change={this.change}
-            changeComparator={this.changeComparator}
+            change={change}
+            changeComparator={changeComparator}
             values={values}
           />
         </div>
@@ -205,4 +204,4 @@ class FilterFields extends Component {
   }
 }
 
-export default FilterFields
+export default enhance(FilterFields)
