@@ -55,12 +55,12 @@ class Table extends Component {
     tableReset()
   }
 
-  onClickTableRow(id) {
+  onClickTableRow = (id) => {
     const { tableRowToggleActivated, table } = this.props
     tableRowToggleActivated(table, id)
   }
 
-  setTableBodyOverflow() {
+  setTableBodyOverflow = () => {
     const { tableBodyOverflows } = this.state
     const overflows = this.doesTableBodyOverflow()
     if (overflows !== tableBodyOverflows) {
@@ -68,9 +68,8 @@ class Table extends Component {
     }
   }
 
-  doesTableBodyOverflow() {
-    return this.tableBody.offsetHeight < this.tableBody.scrollHeight
-  }
+  doesTableBodyOverflow = () =>
+    this.tableBody.offsetHeight < this.tableBody.scrollHeight
 
   itemColumns = (row) => {
     const { config } = this.props
@@ -128,7 +127,7 @@ class Table extends Component {
     })
   }
 
-  renderItem(index, key) {
+  renderItem = (index, key) => {
     const { rows, id } = this.props
     const row = rows[index]
     const isActive = !!id && id === row.id
@@ -139,7 +138,7 @@ class Table extends Component {
     )
 
     return (
-      <div
+      <div  // eslint-disable-line jsx-a11y/no-static-element-interactions
         key={key}
         className={trClassName}
         onClick={() =>
