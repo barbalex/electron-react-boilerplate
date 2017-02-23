@@ -737,6 +737,7 @@ CREATE INDEX iAbteilungSort ON abteilung (sort);
 INSERT INTO
   abteilung(abteilung, historisch, sort)
 VALUES
+  ('', 1, 0),
   ('AW', 0, 1),
   ('Di', 0, 2),
   ('En', 0, 3),
