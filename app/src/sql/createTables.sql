@@ -11,6 +11,8 @@ CREATE TABLE externe (
 
 DROP INDEX IF EXISTS iExterneVornameName;
 CREATE INDEX iExterneVornameName ON externe (vorname, name);
+DROP INDEX IF EXISTS iExterneNameVorname;
+CREATE INDEX iExterneNameVorname ON externe (name, vorname);
 
 -------------------------------------------
 
@@ -28,8 +30,12 @@ CREATE TABLE interne (
   vorname TEXT
 );
 
+DROP INDEX IF EXISTS iKurzzeichen;
+CREATE INDEX iKurzzeichen ON interne (kurzzeichen);
 DROP INDEX IF EXISTS iInterneVornameName;
 CREATE INDEX iInterneVornameName ON interne (vorname, name);
+DROP INDEX IF EXISTS iInterneNameVorname;
+CREATE INDEX iInterneNameVorname ON interne (name, vorname);
 
 -------------------------------------------
 
@@ -54,7 +60,7 @@ CREATE TABLE links (
 
 DROP TABLE IF EXISTS geschaefte;
 CREATE TABLE geschaefte (
-  abteilung TEXT,
+  abteilung TEXT REFERENCES abteilung(abteilung) ON UPDATE CASCADE ON DELETE RESTRICT,
   aktennummer TEXT,
   aktenstandort TEXT REFERENCES aktenstandort(aktenstandort) ON UPDATE CASCADE ON DELETE RESTRICT,
   ausloeser TEXT,
@@ -120,6 +126,7 @@ DROP INDEX IF EXISTS iGeschaefteStatus;
 CREATE INDEX iGeschaefteStatus ON geschaefte (status);
 DROP INDEX IF EXISTS iGeschaefteAktenstandort;
 CREATE INDEX iGeschaefteAktenstandort ON geschaefte (aktenstandort);
+CREATE INDEX iGeschaefteAbteilung ON geschaefte (abteilung);
 
 -------------------------------------------
 
@@ -184,6 +191,10 @@ CREATE TABLE geschaeftsart (
   sort INTEGER
 );
 
+DROP INDEX IF EXISTS iGeschaeftsartGeschaeftsart;
+CREATE INDEX iGeschaeftsartGeschaeftsart ON geschaeftsart (geschaeftsart);
+DROP INDEX IF EXISTS iGeschaeftsartHistorisch;
+CREATE INDEX iGeschaeftsartHistorisch ON geschaeftsart (historisch);
 DROP INDEX IF EXISTS iGeschaeftsartSort;
 CREATE INDEX iGeschaeftsartSort ON geschaeftsart (sort);
 
@@ -280,6 +291,10 @@ CREATE TABLE status (
   sort INTEGER
 );
 
+DROP INDEX IF EXISTS iStatusStatus;
+CREATE INDEX iStatusStatus ON status (status);
+DROP INDEX IF EXISTS iStatusHistorisch;
+CREATE INDEX iStatusHistorisch ON status (historisch);
 DROP INDEX IF EXISTS iStatusSort;
 CREATE INDEX iStatusSort ON status (sort);
 
@@ -354,6 +369,10 @@ CREATE TABLE aktenstandort (
   sort INTEGER
 );
 
+DROP INDEX IF EXISTS iAktenstandortAktenstandort;
+CREATE INDEX iAktenstandortAktenstandort ON aktenstandort (aktenstandort);
+DROP INDEX IF EXISTS iAktenstandortHistorisch;
+CREATE INDEX iAktenstandortHistorisch ON aktenstandort (historisch);
 DROP INDEX IF EXISTS iAktenstandortSort;
 CREATE INDEX iAktenstandortSort ON aktenstandort (sort);
 
@@ -422,6 +441,10 @@ CREATE TABLE parlVorstossTyp (
   sort INTEGER
 );
 
+DROP INDEX IF EXISTS iParlVorstossTypParlVorstossTyp;
+CREATE INDEX iParlVorstossTypParlVorstossTyp ON parlVorstossTyp (parlVorstossTyp);
+DROP INDEX IF EXISTS iParlVorstossTypHistorisch;
+CREATE INDEX iParlVorstossTypHistorisch ON parlVorstossTyp (historisch);
 DROP INDEX IF EXISTS iParlVorstossTypSort;
 CREATE INDEX iParlVorstossTypSort ON parlVorstossTyp (sort);
 
@@ -515,6 +538,10 @@ CREATE TABLE rechtsmittelErledigung (
   sort INTEGER
 );
 
+DROP INDEX IF EXISTS iRechtsmittelErledigungRechtsmittelErledigung;
+CREATE INDEX iRechtsmittelErledigungRechtsmittelErledigung ON rechtsmittelErledigung (rechtsmittelErledigung);
+DROP INDEX IF EXISTS iRechtsmittelErledigungHistorisch;
+CREATE INDEX iRechtsmittelErledigungHistorisch ON rechtsmittelErledigung (historisch);
 DROP INDEX IF EXISTS iRechtsmittelErledigungSort;
 CREATE INDEX iRechtsmittelErledigungSort ON rechtsmittelErledigung (sort);
 
@@ -615,6 +642,10 @@ CREATE TABLE rechtsmittelInstanz (
   sort INTEGER
 );
 
+DROP INDEX IF EXISTS iRechtsmittelInstanzRechtsmittelInstanz;
+CREATE INDEX iRechtsmittelInstanzRechtsmittelInstanz ON rechtsmittelInstanz (rechtsmittelInstanz);
+DROP INDEX IF EXISTS iRechtsmittelInstanzHistorisch;
+CREATE INDEX iRechtsmittelInstanzHistorisch ON rechtsmittelInstanz (historisch);
 DROP INDEX IF EXISTS iRechtsmittelInstanzSort;
 CREATE INDEX iRechtsmittelInstanzSort ON rechtsmittelInstanz (sort);
 
@@ -696,6 +727,10 @@ CREATE TABLE abteilung (
   sort INTEGER
 );
 
+DROP INDEX IF EXISTS iAbteilungAbteilung;
+CREATE INDEX iAbteilungAbteilung ON abteilung (abteilung);
+DROP INDEX IF EXISTS iAbteilungHistorisch;
+CREATE INDEX iAbteilungHistorisch ON abteilung (historisch);
 DROP INDEX IF EXISTS iAbteilungSort;
 CREATE INDEX iAbteilungSort ON abteilung (sort);
 
