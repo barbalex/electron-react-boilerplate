@@ -68,7 +68,9 @@ app.on('ready', async () => {
   await installExtensions()
 
   mainWindow = new BrowserWindow(browserWindowOptions)
-  if (lastWindowState && lastWindowState.maximized) mainWindow.maximize()
+  if (lastWindowState && lastWindowState.maximized) {
+    mainWindow.maximize()
+  }
 
   mainWindow.loadURL(`file://${__dirname}/app.html`)
 
