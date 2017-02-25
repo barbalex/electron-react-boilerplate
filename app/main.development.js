@@ -47,7 +47,7 @@ const installExtensions = async () => {
 const browserWindowOptions = {
   width: 1800,
   height: 1024,
-  icon: './app/etc/zh3.png',
+  icon: './app/etc/app.png',
   webPreferences: {
     experimentalFeatures: true
   },
@@ -68,6 +68,7 @@ app.on('ready', async () => {
   await installExtensions()
 
   mainWindow = new BrowserWindow(browserWindowOptions)
+  if (lastWindowState && lastWindowState.maximized) mainWindow.maximize()
 
   mainWindow.loadURL(`file://${__dirname}/app.html`)
 
