@@ -31,10 +31,6 @@
     "productName": "Kapla",
     "appId": "ch.zh.awel.kapla",
     "category": "public.app-category.tools",
-    "directories": {
-      "buildResources": "resources",
-      "output": "release"
-    },
     "dmg": {
       "contents": [
         {
@@ -68,6 +64,10 @@
         "AppImage"
       ]
     }
+  },
+  "directories": {
+    "buildResources": "resources",
+    "output": "release"
   },
   "bin": {
     "electron": "./node_modules/.bin/electron"
