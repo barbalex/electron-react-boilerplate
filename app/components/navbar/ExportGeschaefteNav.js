@@ -76,7 +76,6 @@ const exportGeschaefteAll = (
     geschaefteGefilterteIds.includes(g.idGeschaeft)
   )
   const history = getHistoryOfGeschaefte(geschaefteGefiltert)
-  console.log('history:', history)
   // need to make geko, interne and externe readable
   // and add history
   const geschaefteReadable = _.clone(geschaefteGefiltert).map((g) => {
