@@ -15,6 +15,5 @@ module.exports = () => {
   if (!fs.existsSync(dataFilePath)) return {}
   const configFile = fs.readFileSync(dataFilePath, 'utf-8')
   if (!configFile) return {}
-  const config = JSON.parse(configFile)
-  return config
+  return JSON.parse(configFile)
 }
