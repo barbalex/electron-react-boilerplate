@@ -47,7 +47,7 @@ export const getGeschaefteWithNSideData = createSelector(  // eslint-disable-lin
         .filter(gko => gko.idGeschaeft === newGeschaeft.idGeschaeft)
       newGeschaeft.links = links
         .filter(link => link.idGeschaeft === newGeschaeft.idGeschaeft)
-      newGeschaeft.kannFaelligSein = faelligeStati.includes(g.status)
+      newGeschaeft.kannFaelligSein = faelligeStati ? faelligeStati.includes(g.status) : false
       newGeschaeft.dauerBisFristMitarbeiter = getDauerBisFristMitarbeiter(newGeschaeft)
       newGeschaeft.fristMitarbeiterWarnung = getFristMitarbeiterWarnung(newGeschaeft.dauerBisFristMitarbeiter)
       return newGeschaeft

@@ -1,4 +1,5 @@
-const fs = require('fs')
+import fs from 'fs'
+
 import chooseDb from '../src/chooseDb'
 import getConfig from '../src/getConfig'
 import saveConfig from '../src/saveConfig'
@@ -15,10 +16,13 @@ export const configGet = () =>
   (dispatch) => {
     getConfig()
       .then((config) => {
-        console.log('configGet: config read:', config)
         let newConfig = config
         if (!newConfig) {
-          newConfig = {}
+          newConfig = {
+            dbPath: '',
+            tableColumnWidth: 700,
+            geschaefteColumnWidth: 700,
+          }
         }
         dispatch({
           type: CONFIG_GET,
@@ -26,12 +30,14 @@ export const configGet = () =>
         })
         const { dbPath } = newConfig
         if (!dbPath) {
-          dispatch(dbGetAtStandardpathIfPossible())
-        } else {
-          console.log('configGet: dbPath:', dbPath)
-          const db = new sqlite3.Database(dbPath)
-          dispatch(dbChooseSuccess(dbPath, db))
+          return dispatch(dbGetAtStandardpathIfPossible())
         }
+        const dbExists = fs.existsSync(dbPath)
+        if (!dbExists) {
+          return dispatch(dbGetAtStandardpathIfPossible())
+        }
+        const db = new sqlite3.Database(dbPath)
+        dispatch(dbChooseSuccess(dbPath, db))
       })
       .catch(error =>
         console.error(error)
@@ -107,7 +113,7 @@ const dbChooseSuccess = (dbPath, db) =>
       dbPath
     })
     // get data
-    dispatch(GeschaefteActions.getGeschaefte())
+    dispatch(GeschaefteActions.faelligeStatiOptionsGet())
     dispatch(GeschaefteActions.getGeko())
     dispatch(GeschaefteActions.getLinks())
     dispatch(GeschaefteActions.interneOptionsGet())
@@ -117,11 +123,11 @@ const dbChooseSuccess = (dbPath, db) =>
     dispatch(GeschaefteActions.rechtsmittelErledigungOptionsGet())
     dispatch(GeschaefteActions.parlVorstossTypOptionsGet())
     dispatch(GeschaefteActions.statusOptionsGet())
-    dispatch(GeschaefteActions.faelligeStatiOptionsGet())
     dispatch(GeschaefteActions.geschaeftsartOptionsGet())
     dispatch(GeschaefteActions.aktenstandortOptionsGet())
     dispatch(GeschaefteActions.rechtsmittelInstanzOptionsGet())
     dispatch(GeschaefteActions.abteilungOptionsGet())
+    dispatch(GeschaefteActions.getGeschaefte())
     dispatch(UserActions.fetchUsername())
     // set filter to fällige
     dispatch(GeschaefteActions.geschaefteFilterByFields(filterForFaelligeGeschaefte(), 'fällige'))
@@ -154,7 +160,6 @@ export function dbGetAtStandardpathIfPossible() {
     // try to open db at standard path
     // need function that tests if db exists at standard path
     const standardDbExists = fs.existsSync(standardDbPath)
-    console.log('standardDbExists:', standardDbExists)
     if (standardDbExists) {
       const db = new sqlite3.Database(standardDbPath)
       dispatch(dbChooseSuccess(standardDbPath, db))
