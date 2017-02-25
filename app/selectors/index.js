@@ -19,7 +19,7 @@ const getGeko = (state) =>
 const getLinks = (state) =>
   state.geschaefte.links
 
-export const getGeschaefteWithNSideData = createSelector(
+export const getGeschaefteWithNSideData = createSelector(  // eslint-disable-line import/prefer-default-export
   [getGeschaefte, getGki, getGke, getInterne, getExterne, getGeko, getLinks],
   (geschaefte, gki, gke, interne, externe, geko, links) =>
     geschaefte.map((g) => {
