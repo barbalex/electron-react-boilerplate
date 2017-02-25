@@ -41,7 +41,7 @@ CREATE INDEX iInterneNameVorname ON interne (name, vorname);
 
 DROP TABLE IF EXISTS geko;
 CREATE TABLE geko (
-  idGeschaeft INTEGER,-- REFERENCES geschaefte(idGeschaeft) ON UPDATE CASCADE ON DELETE CASCADE,
+  idGeschaeft INTEGER REFERENCES geschaefte(idGeschaeft) ON UPDATE CASCADE ON DELETE CASCADE,
   gekoNr TEXT,
   PRIMARY KEY (gekoNr, idGeschaeft)
 );
@@ -60,7 +60,7 @@ WHERE
 
 DROP TABLE IF EXISTS links;
 CREATE TABLE links (
-  idGeschaeft INTEGER,-- REFERENCES geschaefte(idGeschaeft) ON UPDATE CASCADE ON DELETE CASCADE,
+  idGeschaeft INTEGER REFERENCES geschaefte(idGeschaeft) ON UPDATE CASCADE ON DELETE CASCADE,
   url TEXT,
   txt TEXT,
   PRIMARY KEY (url, idGeschaeft)
