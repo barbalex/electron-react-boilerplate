@@ -17,8 +17,8 @@ const standardState = {
   messageTextLine2: '',
   config: {
     dbPath: '',
-    tableColumnWidth: 70,
-    geschaefteColumnWidth: 40,
+    tableColumnWidth: 700,
+    geschaefteColumnWidth: 400,
   },
 }
 
