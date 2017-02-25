@@ -9,7 +9,7 @@ const options = {
 export default () =>
   new Promise((resolve, reject) => {
     dialog.showOpenDialog(options, (result) => {
-      if (result[0]) resolve(result[0])
+      if (result && result[0]) resolve(result[0])
       reject('keine Datenbank gewählt')
     })
   })

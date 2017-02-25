@@ -1,3 +1,4 @@
+const fs = require('fs')
 import chooseDb from '../src/chooseDb'
 import getConfig from '../src/getConfig'
 import saveConfig from '../src/saveConfig'
@@ -14,6 +15,7 @@ export const configGet = () =>
   (dispatch) => {
     getConfig()
       .then((config) => {
+        console.log('configGet: config read:', config)
         let newConfig = config
         if (!newConfig) {
           newConfig = {}
@@ -26,6 +28,7 @@ export const configGet = () =>
         if (!dbPath) {
           dispatch(dbGetAtStandardpathIfPossible())
         } else {
+          console.log('configGet: dbPath:', dbPath)
           const db = new sqlite3.Database(dbPath)
           dispatch(dbChooseSuccess(dbPath, db))
         }
@@ -149,21 +152,23 @@ export function dbGetAtStandardpathIfPossible() {
   return (dispatch) => {
     const standardDbPath = 'G:\\Recht\\2 Sekretariat\\Kapla\\kapla.db'
     // try to open db at standard path
-    let db = new sqlite3.Database(standardDbPath, sqlite3.OPEN_READWRITE, (error) => {
-      if (error) {
-        // let user choose db file
-        dispatch(dbChoose())
-        chooseDb()
-          .then((dbPath) => {
-            db = new sqlite3.Database(dbPath)
-            dispatch(dbChooseSuccess(dbPath, db))
-            dispatch(configSetKey('dbPath', dbPath))
-          })
-          .catch(err => dispatch(dbChooseError(err)))
-      } else {
-        dispatch(dbChooseSuccess(standardDbPath, db))
-        dispatch(configSetKey('dbPath', standardDbPath))
-      }
-    })
+    // need function that tests if db exists at standard path
+    const standardDbExists = fs.existsSync(standardDbPath)
+    console.log('standardDbExists:', standardDbExists)
+    if (standardDbExists) {
+      const db = new sqlite3.Database(standardDbPath)
+      dispatch(dbChooseSuccess(standardDbPath, db))
+      dispatch(configSetKey('dbPath', standardDbPath))
+    } else {
+      // let user choose db file
+      dispatch(dbChoose())
+      chooseDb()
+        .then((dbPath) => {
+          const db = new sqlite3.Database(dbPath)
+          dispatch(dbChooseSuccess(dbPath, db))
+          dispatch(configSetKey('dbPath', dbPath))
+        })
+        .catch(err => dispatch(dbChooseError(err)))
+    }
   }
 }

@@ -14,9 +14,10 @@ const dataFilePath = path.join(
 
 module.exports = () =>
   new Promise((resolve) => {
-    if (!fs.existsSync(dataFilePath)) return resolve({})
+    console.log('getConfig, config dataFilePath:', dataFilePath)
+    if (!fs.existsSync(dataFilePath)) return resolve(null)
     const configFile = fs.readFileSync(dataFilePath, 'utf-8')
-    if (!configFile) return resolve({})
+    if (!configFile) return resolve(null)
     const config = JSON.parse(configFile)
     resolve(config)
   })
