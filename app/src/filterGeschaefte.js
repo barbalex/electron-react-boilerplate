@@ -2,6 +2,8 @@ import { includes, isString } from 'lodash'
 import moment from 'moment'
 import isDateField from './isDateField'
 
+import filterGeschaefteByFulltext from './filterGeschaefteByFulltext'
+
 export default function (
   geschaefte,
   filterFulltext,
@@ -17,39 +19,7 @@ export default function (
   ]
 
   if (existsFilterFulltext) {
-    geschaefteGefiltert = geschaefte.filter((geschaeft) => {
-      // if any value satisfies the filter, include the geschaeft
-      let satisfiesFilter = false
-      Object.keys(geschaeft).forEach((key) => {
-        // there are lots of empty fields
-        // don't work on them
-        if (geschaeft[key]) {
-          if (isNaN(filterFulltext)) {
-            // a string is queried
-            const geschaeftValue = (
-              isString(geschaeft[key]) ?
-              geschaeft[key].toLowerCase() :
-              geschaeft[key]
-            )
-            const filterValue = (
-              isString(filterFulltext) ?
-              filterFulltext.toLowerCase() :
-              filterFulltext
-            )
-            if (includes(geschaeftValue, filterValue)) {
-              satisfiesFilter = true
-            }
-          } else {
-            // a number is queried
-            // convert to string to also find 7681 when filtering for 681
-            if (includes(geschaeft[key].toString(), filterFulltext.toString())) {
-              satisfiesFilter = true
-            }
-          }
-        }
-      })
-      return satisfiesFilter
-    })
+    geschaefteGefiltert = filterGeschaefteByFulltext(geschaefte, filterFulltext)
   } else if (existsFilterFields) {
     // some filterFields may only have a comparator >
     // reduce to filterFields with values
@@ -94,7 +64,7 @@ export default function (
           } else {
             const comparator = filterFields[index].comparator || '='
             if (filterValue === '') {
-              if (!!geschaeftValue) satisfiesFilter = false
+              if (!!geschaeftValue) satisfiesFilter = false  // eslint-disable-line no-extra-boolean-cast
             } else if (comparator === '!==') {
               if (!(geschaeftValue !== filterValue)) satisfiesFilter = false
             } else if (comparator === '<') {
@@ -106,8 +76,8 @@ export default function (
                 if (geschaeftValue !== filterValue) satisfiesFilter = false
               } else if (isNaN(filterValue)) {
                 if (!includes(geschaeftValue, filterValue)) satisfiesFilter = false
-              } else {
-                if (!includes(geschaeftValue.toString(), filterValue.toString())) satisfiesFilter = false
+              } else if (!includes(geschaeftValue.toString(), filterValue.toString())) {
+                satisfiesFilter = false
               }
             } else if (comparator === '===') {
               if (geschaeftValue != filterValue) satisfiesFilter = false  // eslint-disable-line eqeqeq
