@@ -56,7 +56,7 @@
     ],
     "win": {
       "target": "nsis",
-      "iconUrl": "app/etc/zh3.ico"
+      "iconUrl": "app/etc/app.ico"
     },
     "linux": {
       "target": [
