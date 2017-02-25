@@ -298,12 +298,15 @@ DROP TABLE IF EXISTS status;
 CREATE TABLE status (
   id integer PRIMARY KEY,
   status TEXT UNIQUE,
+  geschaeftKannFaelligSein integer DEFAULT 0,
   historisch integer DEFAULT 0,
   sort INTEGER
 );
 
 DROP INDEX IF EXISTS iStatusStatus;
 CREATE INDEX iStatusStatus ON status (status);
+DROP INDEX IF EXISTS iStatusGeschaeftKannFaelligSein;
+CREATE INDEX iStatusGeschaeftKannFaelligSein ON status (geschaeftKannFaelligSein);
 DROP INDEX IF EXISTS iStatusHistorisch;
 CREATE INDEX iStatusHistorisch ON status (historisch);
 DROP INDEX IF EXISTS iStatusSort;
