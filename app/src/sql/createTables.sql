@@ -41,16 +41,26 @@ CREATE INDEX iInterneNameVorname ON interne (name, vorname);
 
 DROP TABLE IF EXISTS geko;
 CREATE TABLE geko (
-  idGeschaeft INTEGER REFERENCES geschaefte(idGeschaeft) ON UPDATE CASCADE ON DELETE CASCADE,
+  idGeschaeft INTEGER,-- REFERENCES geschaefte(idGeschaeft) ON UPDATE CASCADE ON DELETE CASCADE,
   gekoNr TEXT,
   PRIMARY KEY (gekoNr, idGeschaeft)
 );
+
+INSERT INTO
+  geko(idGeschaeft, gekoNr)
+SELECT
+	idGeschaeft,
+  gekoNr
+FROM
+  geschaefte
+WHERE
+  geschaefte.gekoNr IS NOT NULL;
 
 -------------------------------------------
 
 DROP TABLE IF EXISTS links;
 CREATE TABLE links (
-  idGeschaeft INTEGER REFERENCES geschaefte(idGeschaeft) ON UPDATE CASCADE ON DELETE CASCADE,
+  idGeschaeft INTEGER,-- REFERENCES geschaefte(idGeschaeft) ON UPDATE CASCADE ON DELETE CASCADE,
   url TEXT,
   txt TEXT,
   PRIMARY KEY (url, idGeschaeft)
@@ -64,7 +74,6 @@ CREATE TABLE geschaefte (
   aktennummer TEXT,
   aktenstandort TEXT REFERENCES aktenstandort(aktenstandort) ON UPDATE CASCADE ON DELETE RESTRICT,
   ausloeser TEXT,
-  benutzer TEXT,
   datumAusgangAwel TEXT,
   datumEingangAwel TEXT,
   details TEXT,
@@ -84,27 +93,29 @@ CREATE TABLE geschaefte (
   fristDirektion TEXT,
   fristMitarbeiter TEXT,
   gegenstand TEXT,
-  -- gekoNr to be moved to table geko after first import and dropped thereafter
-  gekoNr TEXT,
+  -- gekoNr TEXT,-- to be moved to table geko after first import and dropped thereafter
   geschaeftsart TEXT REFERENCES geschaeftsart(geschaeftsart) ON UPDATE CASCADE ON DELETE RESTRICT,
   idGeschaeft INTEGER PRIMARY KEY,
-  idKontaktExtern_readonly TEXT,
-  idKontaktIntern_readonly TEXT,
+  -- idKontaktExtern_readonly TEXT,-- to be removed after not using a while
+  -- idKontaktIntern_readonly TEXT,-- to be removed after not using a while
   idVorgeschaeft INTEGER,
+	-- kontaktIntern1 TEXT,-- to be removed after transfering to geschaefteKontakteIntern
+	-- kontaktIntern2 TEXT,-- to be removed after transfering to geschaefteKontakteIntern
+	-- kontaktIntern3 TEXT,-- to be removed after transfering to geschaefteKontakteIntern
+	-- kontaktIntern4 TEXT,-- to be removed after transfering to geschaefteKontakteIntern
   mutationsdatum TEXT,
   mutationsperson TEXT,
   naechsterSchritt TEXT,
   ort TEXT,
   parlVorstossStufe TEXT,
-  parlVorstossZustaendigkeitAwel TEXT,
   parlVorstossTyp TEXT REFERENCES parlVorstossTyp(parlVorstossTyp) ON UPDATE CASCADE ON DELETE RESTRICT,
+  parlVorstossZustaendigkeitAwel TEXT,
   rechtsmittelInstanz TEXT REFERENCES rechtsmittelInstanz(rechtsmittelInstanz) ON UPDATE CASCADE ON DELETE RESTRICT,
   rechtsmittelErledigung TEXT REFERENCES rechtsmittelErledigung(rechtsmittelErledigung) ON UPDATE CASCADE ON DELETE RESTRICT,
   rechtsmittelEntscheidNr INTEGER,
   rechtsmittelEntscheidDatum TEXT,
   rechtsmittelTxt TEXT,
   status TEXT REFERENCES status(status) ON UPDATE CASCADE ON DELETE RESTRICT,
-  -- first correct data before referencing
   verantwortlich TEXT REFERENCES interne(kurzzeichen) ON UPDATE CASCADE ON DELETE RESTRICT,
   vermerk TEXT,
   vermerkIntern TEXT,
@@ -173,10 +184,10 @@ SELECT geschaefte.idGeschaeft, externe.id
 FROM
   geschaefte
   INNER JOIN externe
-  -- ON instr(geschaefte.idKontaktExtern, externe.name || ' ' || externe.vorname) > 0
-  ON geschaefte.idKontaktExtern LIKE '%' || externe.name || ' ' || externe.vorname || '%'
+  -- ON instr(geschaefte.idKontaktExtern_readonly, externe.name || ' ' || externe.vorname) > 0
+  ON geschaefte.idKontaktExtern_readonly LIKE '%' || externe.name || ' ' || externe.vorname || '%'
 WHERE
-  geschaefte.idKontaktExtern <> '';
+  geschaefte.idKontaktExtern_readonly <> '';
 
 -------------------------------------------
 
@@ -464,6 +475,12 @@ GROUP BY
 HAVING
   parlVorstossTyp IS NOT NULL;
 
+
+-- add missing value
+INSERT INTO
+	parlVorstossTyp(parlVorstossTyp)
+	VALUES ('Leistungsmotion');
+
 -- but only ones to be used actively
 -- are not historical
 UPDATE
@@ -471,7 +488,7 @@ UPDATE
 SET
   historisch = 1
 WHERE
-  parlVorstossTyp NOT IN ('Anfrage', 'Interpellation', 'Postulat', 'Dringliches Postulat', 'Leistungsmotion', 'Motion', 'Parlamentatische Initiative', 'Vorlage');
+  parlVorstossTyp NOT IN ('Anfrage', 'Dringliche Anfrage', 'Interpellation', 'Postulat', 'Dringliches Postulat', 'Leistungsmotion', 'Motion', 'Vorlage');
 
   -- and actively used ones have a sort value
 UPDATE
@@ -480,6 +497,12 @@ SET
   sort = 1
 WHERE
   parlVorstossTyp = 'Anfrage';
+UPDATE
+    parlVorstossTyp
+SET
+  sort = 2
+WHERE
+  parlVorstossTyp = 'Dringliche Anfrage';
 UPDATE
   parlVorstossTyp
 SET
@@ -515,18 +538,7 @@ UPDATE
 SET
   sort = 8
 WHERE
-  parlVorstossTyp = 'Parlamentatische Initiative';
-UPDATE
-  parlVorstossTyp
-SET
-  sort = 9
-WHERE
   parlVorstossTyp = 'Vorlage';
-
--- add missing value
-INSERT INTO
-  parlVorstossTyp(parlVorstossTyp, historisch, sort)
-  VALUES ('Dringliche Anfrage', 0, 2);
 
 -------------------------------------------
 
@@ -711,12 +723,6 @@ SET
 WHERE
   rechtsmittelInstanz = 'Instanz 3';
 
--- add missing data
-INSERT INTO
-  rechtsmittelInstanz (rechtsmittelInstanz, historisch, sort)
-VALUES
-  ('Instanz 1', 0, 1);
-
 -------------------------------------------
 
 DROP TABLE IF EXISTS abteilung;
@@ -751,8 +757,8 @@ VALUES
 -- set empty values to null:
 -- do for all fields
 UPDATE geschaefte
-SET idKontaktIntern_readonly = NULL
-WHERE idKontaktIntern_readonly = ''
+SET abteilung = NULL
+WHERE abteilung = ''
 
 -------------------------------------------
 
@@ -761,6 +767,12 @@ UPDATE
   geschaefte
 SET
   verantwortlich = trim(verantwortlich, ' ')
+
+-- trim verantwortlich
+UPDATE
+  interne
+SET
+  kurzzeichen = trim(kurzzeichen, ' ')
 
 -------------------------------------------
 
@@ -772,8 +784,8 @@ FROM
   LEFT JOIN interne
   ON interne.kurzzeichen = geschaefte.verantwortlich
 WHERE
-  verantwortlich IS NOT NULL AND
-  kurzzeichen IS NULL
+  geschaefte.verantwortlich IS NOT NULL AND
+  interne.kurzzeichen IS NULL
 
 
 SELECT
@@ -787,3 +799,16 @@ WHERE
   kurzzeichen IS NULL
 GROUP BY
   verantwortlich
+
+-------------------------------------------
+
+vacuum
+
+-------------------------------------------
+
+INSERT INTO
+  geschaefteKontakteExtern(idGeschaeft, idKontakt)
+SELECT
+	idGeschaeft, idKontakt
+FROM
+  geschaefteKontakteExternTmp;
