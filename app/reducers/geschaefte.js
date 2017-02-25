@@ -36,6 +36,8 @@ import {
   PARLVORSTOSSTYP_OPTIONS_GET_ERROR,
   STATUS_OPTIONS_GET_SUCCESS,
   STATUS_OPTIONS_GET_ERROR,
+  FAELLIGE_STATI_OPTIONS_GET_SUCCESS,
+  FAELLIGE_STATI_OPTIONS_GET_ERROR,
   GESCHAEFTSART_OPTIONS_GET_SUCCESS,
   GESCHAEFTSART_OPTIONS_GET_ERROR,
   AKTENSTANDORT_OPTIONS_GET_SUCCESS,
@@ -237,6 +239,11 @@ const geschaefte = (state = standardState, action) => {
         ...state,
         statusOptions: action.statusOptions,
       }
+    case FAELLIGE_STATI_OPTIONS_GET_SUCCESS:
+      return {
+        ...state,
+        faelligeStatiOptions: action.faelligeStatiOptions,
+      }
     case GESCHAEFTSART_OPTIONS_GET_SUCCESS:
       return {
         ...state,
@@ -347,6 +354,7 @@ const geschaefte = (state = standardState, action) => {
     case RECHTSMITTELERLEDIGUNG_OPTIONS_GET_ERROR:
     case PARLVORSTOSSTYP_OPTIONS_GET_ERROR:
     case STATUS_OPTIONS_GET_ERROR:
+    case FAELLIGE_STATI_OPTIONS_GET_ERROR:
     case GESCHAEFTSART_OPTIONS_GET_ERROR:
     case AKTENSTANDORT_OPTIONS_GET_ERROR:
     case RECHTSMITTEL_INSTANZ_OPTIONS_GET_ERROR:

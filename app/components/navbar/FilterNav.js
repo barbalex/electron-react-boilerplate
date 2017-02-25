@@ -138,7 +138,12 @@ const FilterNav = ({
                   comparator: '<',
                 },
                 {
-                  field: 'mutationsperson',
+                  field: 'kannFaelligSein',
+                  value: true,
+                  comparator: '===',
+                },
+                {
+                  field: 'verantwortlichItKonto',
                   value: username,
                   comparator: '===',
                 }

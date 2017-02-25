@@ -8,6 +8,11 @@ export default function () {
       value: now,
       comparator: '<',
     },
+    {
+      field: 'kannFaelligSein',
+      value: true,
+      comparator: '===',
+    },
   ]
   return filter
 }

@@ -114,6 +114,7 @@ const dbChooseSuccess = (dbPath, db) =>
     dispatch(GeschaefteActions.rechtsmittelErledigungOptionsGet())
     dispatch(GeschaefteActions.parlVorstossTypOptionsGet())
     dispatch(GeschaefteActions.statusOptionsGet())
+    dispatch(GeschaefteActions.faelligeStatiOptionsGet())
     dispatch(GeschaefteActions.geschaeftsartOptionsGet())
     dispatch(GeschaefteActions.aktenstandortOptionsGet())
     dispatch(GeschaefteActions.rechtsmittelInstanzOptionsGet())

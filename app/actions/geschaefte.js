@@ -8,6 +8,7 @@ import getGeschaefteFromDb from '../src/getGeschaefteFromDb'
 import getGekoFromDb from '../src/getGekoFromDb'
 import getLinkFromDb from '../src/getLinksFromDb'
 import getDropdownOptions from '../src/getDropdownOptions'
+import getFaelligeStatiOptions from '../src/getFaelligeStatiOptions'
 import getInterneOptions from '../src/getInterneOptions'
 import getExterneOptions from '../src/getExterneOptions'
 import updateGeschaeft from '../src/updateGeschaeft'
@@ -447,6 +448,31 @@ const statusOptionsGetSuccess = statusOptions => ({
 export const STATUS_OPTIONS_GET_ERROR = 'STATUS_OPTIONS_GET_ERROR'
 const statusOptionsGetError = error => ({
   type: STATUS_OPTIONS_GET_ERROR,
+  error
+})
+
+export const FAELLIGE_STATI_OPTIONS_GET = 'FAELLIGE_STATI_OPTIONS_GET'
+export const faelligeStatiOptionsGet = () =>
+  (dispatch, getState) => {
+    const { app } = getState()
+    getFaelligeStatiOptions(app.db)
+      .then(faelligeStatiOptions =>
+        dispatch(faelligeStatiOptionsGetSuccess(faelligeStatiOptions))
+      )
+      .catch(error =>
+        dispatch(faelligeStatiOptionsGetError(error))
+      )
+  }
+
+export const FAELLIGE_STATI_OPTIONS_GET_SUCCESS = 'FAELLIGE_STATI_OPTIONS_GET_SUCCESS'
+const faelligeStatiOptionsGetSuccess = faelligeStatiOptions => ({
+  type: FAELLIGE_STATI_OPTIONS_GET_SUCCESS,
+  faelligeStatiOptions
+})
+
+export const FAELLIGE_STATI_OPTIONS_GET_ERROR = 'FAELLIGE_STATI_OPTIONS_GET_ERROR'
+const faelligeStatiOptionsGetError = error => ({
+  type: FAELLIGE_STATI_OPTIONS_GET_ERROR,
   error
 })
 
