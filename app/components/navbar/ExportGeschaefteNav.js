@@ -125,6 +125,7 @@ const exportGeschaefteAll = (
       .get(g.idGeschaeft)
       .join(', ')
     delete g.verantwortlichName
+    delete g.kannFaelligSein
     return g
   })
   exportGeschaefte(geschaefteReadable, messageShow)
