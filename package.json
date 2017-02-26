@@ -56,6 +56,9 @@
     "win": {
       "target": ["nsis"]
     },
+    "mac": {
+      "category": "public.app-category.business"
+    },
     "linux": {
       "target": [
         "deb",
