@@ -14,7 +14,7 @@ const ContainerBase = styled.div`
 const ContainerView = styled(ContainerBase)`
   background-color: rgba(239, 239, 239, 1);
   /* can't use 1fr for first column - does not work correctly, no idea why */
-  grid-template-columns: calc(100% - 196px) 8px 90px 8px 90px;
+  grid-template-columns: calc(100% - 216px) 8px 110px 8px 90px;
   grid-template-areas:
      "areaNummernTitle areaNummernTitle labelNr . labelJahre"
      "labelIdGeschaeft . fieldIdGeschaeft . ."
@@ -29,7 +29,7 @@ const ContainerView = styled(ContainerBase)`
 `
 const ContainerPrint = styled(ContainerBase)`
   /* can't use 1fr for first column - does not work correctly, no idea why */
-  grid-template-columns: calc(100% - 166px) 8px 75px 8px 45px;
+  grid-template-columns: calc(100% - 156px) 8px 95px 8px 45px;
   grid-template-areas:
     "areaNummernTitle areaNummernTitle areaNummernTitle areaNummernTitle areaNummernTitle"
     ". . labelNr . labelJahre"
