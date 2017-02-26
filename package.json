@@ -30,7 +30,6 @@
   "build": {
     "productName": "Kapla",
     "appId": "ch.zh.awel.kapla",
-    "category": "public.app-category.tools",
     "dmg": {
       "contents": [
         {
@@ -55,19 +54,18 @@
       "package.json"
     ],
     "win": {
-      "target": "nsis",
-      "iconUrl": "app/etc/app.ico"
+      "target": ["nsis"]
     },
     "linux": {
       "target": [
         "deb",
         "AppImage"
       ]
+    },
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
     }
-  },
-  "directories": {
-    "buildResources": "resources",
-    "output": "release"
   },
   "bin": {
     "electron": "./node_modules/.bin/electron"
@@ -107,7 +105,7 @@
     "css-loader": "0.26.2",
     "devtron": "1.4.0",
     "electron": "1.4.15",
-    "electron-builder": "13.11.1",
+    "electron-builder": "14.4.0",
     "electron-devtools-installer": "2.1.0",
     "enzyme": "2.7.1",
     "eslint": "3.16.1",
