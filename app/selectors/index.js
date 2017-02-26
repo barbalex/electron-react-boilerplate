@@ -3,6 +3,7 @@ import _ from 'lodash'
 
 import getDauerBisFristMitarbeiter from '../src/getDauerBisFristMitarbeiter'
 import getFristMitarbeiterWarnung from '../src/getFristMitarbeiterWarnung'
+import getItKontoForVerantwortlich from '../src/getItKontoForVerantwortlich'
 
 const getGeschaefte = (state) =>
   state.geschaefte.geschaefte
@@ -37,7 +38,7 @@ export const getGeschaefteWithNSideData = createSelector(  // eslint-disable-lin
         .map((gk) =>
           interne.find(i => i.id === gk.idKontakt) || null
         )
-      newGeschaeft.verantwortlichItKonto = gki.find(i => i.kurzzeichen === g.verantwortlich)
+      newGeschaeft.verantwortlichItKonto = getItKontoForVerantwortlich(interne, g)
       newGeschaeft.externe = gke
         .filter(i => i.idGeschaeft === newGeschaeft.idGeschaeft)
         .map((gk) =>
