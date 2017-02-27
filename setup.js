@@ -34,21 +34,6 @@ module.exports = {
       pattern: /counter/
     },
     {
-      file: 'app/store/configureStore.development.js',
-      replace: [
-        { pattern: /\?: counterStateType/, substitute: '' },
-        { pattern: /^.*import type.*$/, substitute: '' },
-        { pattern: /^.*counterActions.*$/, substitute: '' }
-      ]
-    },
-    {
-      file: 'app/store/configureStore.production.js',
-      replace: [
-        { pattern: /\?: counterStateType/, substitute: '' },
-        { pattern: /^.*import type.*$/, substitute: '' },
-      ]
-    },
-    {
       file: 'app/app.global.css',
       clear: true
     },

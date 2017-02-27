@@ -54,7 +54,9 @@
       "package.json"
     ],
     "win": {
-      "target": ["nsis"]
+      "target": [
+        "nsis"
+      ]
     },
     "mac": {
       "category": "public.app-category.business"
@@ -130,9 +132,9 @@
     "jsdom": "9.11.0",
     "json-loader": "0.5.4",
     "minimist": "1.2.0",
+    "mobx-react-devtools": "4.2.11",
     "mocha": "3.2.0",
     "react-addons-test-utils": "15.4.2",
-    "redux-logger": "2.8.1",
     "sinon": "1.17.7",
     "spectron": "3.4.1",
     "style-loader": "0.13.2",
@@ -145,12 +147,15 @@
     "webpack-validator": "2.3.0"
   },
   "dependencies": {
+    "ampersand-app": "^2.0.0",
     "electron-debug": "1.1.0",
     "exceljs": "0.3.0",
     "file-loader": "0.9.0",
     "font-awesome": "4.7.0",
     "jquery": "3.1.1",
     "lodash": "4.17.4",
+    "mobx": "3.1.0",
+    "mobx-react": "4.1.0",
     "moment": "2.17.1",
     "react": "15.4.2",
     "react-bootstrap": "0.30.7",
@@ -167,8 +172,6 @@
     "react-virtualized": "9.1.0",
     "recompose": "0.22.0",
     "redux": "3.6.0",
-    "redux-promise": "0.5.3",
-    "redux-thunk": "2.2.0",
     "reselect": "2.5.4",
     "source-map-support": "0.4.11",
     "sqlite3": "3.1.8",

@@ -9,27 +9,10 @@ import {
 } from '../actions/app'
 
 const standardState = {
-  fetchingDb: false,
-  errorFetchingDb: null,
-  db: null,
-  showMessageModal: false,
-  messageTextLine1: '',
-  messageTextLine2: '',
-  config: {
-    dbPath: '',
-    tableColumnWidth: 700,
-    geschaefteColumnWidth: 400,
-  },
 }
 
 const app = (state = standardState, action) => {
   switch (action.type) {
-    case CONFIG_GET:
-    case CONFIG_SET:
-      return {
-        ...state,
-        config: action.config,
-      }
     case CONFIG_SET_KEY:
       return {
         ...state,
