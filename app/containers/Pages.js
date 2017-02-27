@@ -6,10 +6,12 @@ import * as PagesActions from '../actions/pages'
 function mapStateToProps(state) {
   const {
     pages,
+    reportType,
   } = state.pages
 
   return {
     pages,
+    reportType,
   }
 }
 

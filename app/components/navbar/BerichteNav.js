@@ -31,7 +31,6 @@ const BerichteNav = ({
   const nameObject = {
     typFaelligeGeschaefte: 'Bericht: Typ "fällige Geschäfte"',
     list1: 'Bericht: Einfache Liste',
-    typVernehmlassungen: 'Bericht: Typ "Vernehmlassungen"',
     angekVernehml: 'Bericht: angekündigte Vernehmlassungen',
     laufendeVernehml: 'Bericht: laufende Vernehmlassungen'
   }

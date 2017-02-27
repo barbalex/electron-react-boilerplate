@@ -40,7 +40,16 @@ class Page extends Component {
   }
 
   componentDidUpdate = () => {
-    this.nextStepp()
+    const { reportType } = this.props
+    if (['typFaelligeGeschaefte', 'angekVernehml', 'laufendeVernehml'].includes(reportType)) {
+      // need to wait for next tick
+      // otherwise in vernehmlassungen
+      // some rows were only listed on second call
+      const that = this
+      setTimeout(() => that.nextStepp())
+    } else {
+      this.nextStepp()
+    }
   }
 
   showPagesModal = () => {
@@ -94,8 +103,14 @@ class Page extends Component {
         }
       }
       if (remainingGeschaefte.length === 0) {
-        pagesModalShow(false, '', '')
-        pagesFinishedBuilding()
+        if (offsetHeight < scrollHeight) {
+          const lastGeschaeft = geschaefte[geschaefte.length - 1]
+          pagesMoveGeschaeftToNewPage(lastGeschaeft)
+          this.showPagesModal()
+        } else {
+          pagesModalShow(false, '', '')
+          pagesFinishedBuilding()
+        }
       }
     }
   }
@@ -117,7 +132,6 @@ class Page extends Component {
         )
       }
       if (
-        reportType === 'typVernehmlassungen' ||
         reportType === 'angekVernehml' ||
         reportType === 'laufendeVernehml'
       ) {
@@ -200,7 +214,6 @@ class Page extends Component {
           }
           {
             (
-              reportType === 'typVernehmlassungen' ||
               reportType === 'angekVernehml' ||
               reportType === 'laufendeVernehml'
             ) &&
