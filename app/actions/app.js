@@ -8,6 +8,7 @@ import * as GeschaefteActions from './geschaefte'
 import * as GeschaefteKontakteInternActions from './geschaefteKontakteIntern'
 import * as GeschaefteKontakteExternActions from './geschaefteKontakteExtern'
 import * as UserActions from './user'
+import standardDbPath from '../src/standardDbPath'
 
 const sqlite3 = require('sqlite3').verbose()
 
@@ -156,7 +157,6 @@ export function dbGet() {
 
 export function dbGetAtStandardpathIfPossible() {
   return (dispatch) => {
-    const standardDbPath = 'G:\\Recht\\2 Sekretariat\\Kapla\\kapla.db'
     // try to open db at standard path
     // need function that tests if db exists at standard path
     const standardDbExists = fs.existsSync(standardDbPath)

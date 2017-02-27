@@ -8,6 +8,7 @@ import {
 import fs from 'fs'
 
 import standardConfig from './src/standardConfig'
+import standardDbPath from './src/standardDbPath'
 import getConfig from './src/getConfig'
 import filterForFaelligeGeschaefte from './src/filterForFaelligeGeschaefte'
 
@@ -46,7 +47,6 @@ function Store() {
       this.geschaefteSortByFields('fristMitarbeiter', 'DESCENDING')
     }),
     dbGetAtStandardpathIfPossible: action(() => {
-      const standardDbPath = 'G:\\Recht\\2 Sekretariat\\Kapla\\kapla.db'
       // try to open db at standard path
       // need function that tests if db exists at standard path
       const standardDbExists = fs.existsSync(standardDbPath)
