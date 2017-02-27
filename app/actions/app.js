@@ -156,7 +156,7 @@ export function dbGet() {
 
 export function dbGetAtStandardpathIfPossible() {
   return (dispatch) => {
-    const standardDbPath = 'G:\\Recht\\2 Sekretariat\\Kapla\\kapla.db'
+    const standardDbPath = 'U:\\kapla.db'
     // try to open db at standard path
     // need function that tests if db exists at standard path
     const standardDbExists = fs.existsSync(standardDbPath)
