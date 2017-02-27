@@ -27,15 +27,6 @@ export const getGeschaefteWithNSideData = createSelector(  // eslint-disable-lin
   (geschaefte, gki, gke, interne, externe, geko, links, faelligeStati) =>
     geschaefte.map((g) => {
       const newGeschaeft = _.clone(g)
-      // newGeschaeft.verantwortlichName = ''
-      // newGeschaeft.interne = []
-      // newGeschaeft.verantwortlichItKonto = ''
-      // newGeschaeft.externe = []
-      // newGeschaeft.geko = []
-      // newGeschaeft.links = []
-      // newGeschaeft.kannFaelligSein = false
-      // newGeschaeft.dauerBisFristMitarbeiter = ''
-      // newGeschaeft.fristMitarbeiterWarnung = ''
       newGeschaeft.verantwortlichName = interne
         .filter(i => i.kurzzeichen === newGeschaeft.verantwortlich)
         .map(i =>
