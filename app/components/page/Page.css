@@ -30,7 +30,22 @@
 /* When the document is actually printed */
 @media print {
   .pageContainer {
-    /*overflow-y: hidden !important;*/
+    /**
+     * something seems to change the measurements
+     * if they are not repeated here using important
+     * seems like export to pdf is moved right down
+     * without this
+     */
+    width: 26.7cm !important;
+    height: 17cm !important;
+    top: 0 !important;
+    max-height: 17cm;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-y: hidden !important;
+    page-break-inside: avoid !important;
+    page-break-before: always !important;
+    overflow-y: hidden !important;
   }
 }
 
