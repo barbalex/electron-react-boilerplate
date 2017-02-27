@@ -47,9 +47,9 @@ export default (store) => ({
   /*
    * ROW
    */
-  tableRowNew: action((row) => {
-    store.table.rows = [...store.table.rows, row]
-  }),
+  tableRowNew: action((row) =>
+    store.table.rows.push(row)
+  ),
   tableRowToggleActivated: action((table, id) => {
     store.table.id = (
       store.table.id && store.table.id === id ?
@@ -76,11 +76,9 @@ export default (store) => ({
     store.table.willDelete = false
   }),
   tableRowDelete: action((table, id) => {
-    store.table.rows = [
-      ...store.table.rows.filter(g =>
-        g.id !== id
-      ),
-    ]
+    store.table.rows = store.table.rows.filter(g =>
+      g.id !== id
+    )
   }),
   tableRowRemove: action((table, id) => {
     const { app } = store
@@ -90,7 +88,6 @@ export default (store) => ({
         store.tableRowRemoveDeleteIntended()
         store.tableRowDelete(table, id)
       })
-      // TODO: create error state
       .catch(error =>
         store.tableChangeDbError(error)
       )
@@ -101,9 +98,9 @@ export default (store) => ({
       row[field] = value
     }
   }),
-  tableChangeDbError: action((error) => {
-    store.table.error = [...store.table.error, error]
-  }),
+  tableChangeDbError: action((error) =>
+    store.table.error.push(error)
+  ),
   changeTableInDb: action((table, id, field, value) => {
     const { app } = store
     // no need to do something on then

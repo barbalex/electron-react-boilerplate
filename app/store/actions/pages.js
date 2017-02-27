@@ -2,7 +2,6 @@
 import { action } from 'mobx'
 import { browserHistory } from 'react-router'
 
-import pagesStandardState from '../../src/pagesStandardState'
 import pageStandardState from '../../src/pageStandardState'
 
 export default (store) => ({
@@ -63,5 +62,11 @@ export default (store) => ({
         store.pages.remainingGeschaefte.push(geschaeft)
       }
     }
+  }),
+  pagesMoveGeschaeftToNewPage: action((geschaeft) => {
+    const { pages } = store
+    store.pageRemoveGeschaeft(pages.activePageIndex, geschaeft)
+    store.pagesNewPage()
+    store.pageAddGeschaeft()
   }),
 })
