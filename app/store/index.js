@@ -1,6 +1,4 @@
-import {
-  extendObservable,
-} from 'mobx'
+import { extendObservable } from 'mobx'
 
 import app from './app'
 import appActions from './actions/app'
@@ -12,12 +10,15 @@ import pages from './pages'
 import pagesActions from './actions/pages'
 import geschaefteKontakteIntern from './geschaefteKontakteIntern'
 import geschaefteKontakteInternActions from './actions/geschaefteKontakteIntern'
+import geschaefteKontakteExtern from './geschaefteKontakteExtern'
+import geschaefteKontakteExternActions from './actions/geschaefteKontakteExtern'
 
 function Store() {
   this.app = app
   extendObservable(this, appActions(this))
   this.geschaefte = {}
-  this.geschaefteKontakteExtern = {}
+  this.geschaefteKontakteExtern = geschaefteKontakteExtern
+  extendObservable(this, geschaefteKontakteExternActions(this))
   this.geschaefteKontakteIntern = geschaefteKontakteIntern
   extendObservable(this, geschaefteKontakteInternActions(this))
   this.pages = pages

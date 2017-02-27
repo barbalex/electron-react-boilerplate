@@ -1,10 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { action } from 'mobx'
-import { browserHistory } from 'react-router'
 
 import getGeschaefteKontakteInternFromDb from '../../src/getGeschaefteKontakteInternFromDb'
-import newGeschaeftKontaktInternInDb from '../../src/newGeschaeftKontaktInternInDb.js'
-import deleteGeschaeftKontaktIntern from '../../src/deleteGeschaeftKontaktIntern.js'
+import newGeschaeftKontaktInternInDb from '../../src/newGeschaeftKontaktInternInDb'
+import deleteGeschaeftKontaktIntern from '../../src/deleteGeschaeftKontaktIntern'
 
 
 export default (store) => ({
@@ -51,12 +50,32 @@ export default (store) => ({
   geschaeftKontaktInternRemoveDeleteIntended: action(() => {
     store.geschaefteKontakteIntern.willDelete = false
   }),
-  xxx: action(() => {
+  geschaeftKontaktInternDelete: action((idGeschaeft, idKontakt) => {
+    store.geschaefteKontakteIntern.geschaefteKontakteIntern = store.geschaefteKontakteIntern.geschaefteKontakteIntern.filter(g =>
+      (g.idGeschaeft !== idGeschaeft || g.idKontakt !== idKontakt))
+    store.geschaefteKontakteIntern.activeIdGeschaeft = null
+    store.geschaefteKontakteIntern.activeIdKontakt = null
   }),
-  xxx: action(() => {
+  geschaeftKontaktInternRemove: action((idGeschaeft, idKontakt) => {
+    const { app } = store
+    deleteGeschaeftKontaktIntern(app.db, idGeschaeft, idKontakt)
+      .then(() => {
+        store.geschaeftKontaktInternRemoveDeleteIntended()
+        store.geschaeftKontaktInternDelete(idGeschaeft, idKontakt)
+      })
+      .catch(error =>
+        store.geschaeftKontaktInternDeleteError(error)
+      )
   }),
-  xxx: action(() => {
+  geschaeftKontaktInternDeleteError: action((error) =>
+    store.geschaeftKontaktInternDelete.push(error)
+  ),
+  geschaeftKontaktInternSetDeleteIntended: action((idGeschaeft, idKontakt) => {
+    store.geschaefteKontakteIntern.willDelete = true
+    store.geschaefteKontakteIntern.activeIdGeschaeft = idGeschaeft
+    store.geschaefteKontakteIntern.activeIdKontakt = idKontakt
   }),
-  xxx: action(() => {
-  }),
+  geschaefteKontakteInternChangeDbError: action((error) =>
+    store.geschaefteKontakteIntern.error.push(error)
+  ),
 })
