@@ -54,29 +54,29 @@ import { push } from 'react-router-redux'
 import newTableRowInDb from '../src/newTableRowInDb'
 import deleteTableRow from '../src/deleteTableRow'
 
-export const rowNewCreate = table =>
+export const tableRowNewCreate = table =>
   (dispatch, getState) => {
     const { app, routing } = getState()
     newTableRowInDb(app.db, table)
       .then((row) => {
-        dispatch(rowNew(table, row))
+        dispatch(tableRowNew(table, row))
         dispatch(tableRowToggleActivated(table, row.id))
         if (routing.locationBeforeTransitions.pathname !== '/table') {
           dispatch(push('/table'))
         }
       })
-      .catch(error => dispatch(tableNewError(error)))
+      .catch(error => dispatch(tableRowNewError(error)))
   }
 
 export const TABLE_ROW_NEW = 'TABLE_ROW_NEW'
-export const rowNew = (table, row) => ({
+export const tableRowNew = (table, row) => ({
   type: TABLE_ROW_NEW,
   table,
   row
 })
 
 export const TABLE_ROW_NEW_ERROR = 'TABLE_ROW_NEW_ERROR'
-export const tableNewError = error => ({
+export const tableRowNewError = error => ({
   type: TABLE_ROW_NEW_ERROR,
   error
 })

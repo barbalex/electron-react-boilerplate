@@ -5,12 +5,12 @@ import {
 } from 'react-bootstrap'
 
 const NavbarTableRowNeuNav = ({
-  rowNewCreate,
+  tableRowNewCreate,
   table,
 }) =>
   <NavItem
     onClick={() =>
-      rowNewCreate(table)
+      tableRowNewCreate(table)
     }
     title="neuer Datensatz"
   >
@@ -21,7 +21,7 @@ NavbarTableRowNeuNav.displayName = 'NavbarTableRowNeuNav'
 
 NavbarTableRowNeuNav.propTypes = {
   table: PropTypes.string.isRequired,
-  rowNewCreate: PropTypes.func.isRequired,
+  tableRowNewCreate: PropTypes.func.isRequired,
 }
 
 export default NavbarTableRowNeuNav

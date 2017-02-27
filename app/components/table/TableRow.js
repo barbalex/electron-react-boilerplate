@@ -9,7 +9,6 @@ import styles from './TableRow.css'
 
 const change = ({
   event,
-  table,
   id,
   tableChangeState,
 }) => {
@@ -20,7 +19,7 @@ const change = ({
     // blur does not occur in radio
     blur(event)
   }
-  tableChangeState(table, id, name, value)
+  tableChangeState(id, name, value)
 }
 
 const blur = ({
