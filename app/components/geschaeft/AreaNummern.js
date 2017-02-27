@@ -207,10 +207,14 @@ const AreaNummern = ({
 }) => {
   const tabsToAdd = viewIsNarrow ? 0 : nrOfGFields
   const Container = isPrintPreview ? ContainerPrint : ContainerView
-  const gekoValues = geschaeft.geko
-    .filter(g => g.idGeschaeft === geschaeft.idGeschaeft)
-    .map(g => g.gekoNr)
-    .sort()
+  const gekoValues = (
+    geschaeft.geko ?
+    geschaeft.geko
+      .filter(g => g.idGeschaeft === geschaeft.idGeschaeft)
+      .map(g => g.gekoNr)
+      .sort() :
+    []
+  )
   const gekoValuesString = gekoValues.join(', ')
   const gekoFields = gekoValues.map(g =>
     <GekoNrField
