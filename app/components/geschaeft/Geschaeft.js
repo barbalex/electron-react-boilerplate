@@ -4,16 +4,19 @@ import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import $ from 'jquery'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
 
 import isDateField from '../../src/isDateField'
 import validateDate from '../../src/validateDate'
-import AreaGeschaeft from '../../containers/geschaeft/AreaGeschaeft'
+import AreaGeschaeft from './AreaGeschaeft'
 import AreaNummern from '../../containers/geschaeft/AreaNummern'
-import AreaFristen from '../../containers/geschaeft/AreaFristen'
+import AreaFristen from './AreaFristen'
 import AreaParlVorstoss from '../../containers/geschaeft/AreaParlVorstoss'
 import AreaRechtsmittel from '../../containers/geschaeft/AreaRechtsmittel'
 import AreaPersonen from '../../containers/geschaeft/AreaPersonen'
-import AreaHistory from '../../containers/geschaeft/AreaHistory'
+import AreaHistory from './AreaHistory'
 import AreaLinks from '../../containers/geschaeft/AreaLinks'
 import AreaZuletztMutiert from '../../containers/geschaeft/AreaZuletztMutiert'
 
@@ -97,6 +100,33 @@ const WrapperWideNoAreaForGeschaeftsartPdf = styled(WrapperPdf)`
       "areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory"
       "areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert";
 `
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store, routing } = props
+    const {
+      activeId,
+      geschaefte,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    const {
+      config,
+    } = store.app
+    const isPrintPreview = path === '/geschaeftPdf'
+    const geschaeft = geschaefte.find(g =>
+      g.idGeschaeft === activeId
+    )
+
+    return {
+      geschaeft,
+      activeId,
+      config,
+      isPrintPreview,
+    }
+  }),
+  observer
+)
 
 class Geschaeft extends Component {
   static propTypes = {
@@ -311,4 +341,4 @@ class Geschaeft extends Component {
   }
 }
 
-export default Geschaeft
+export default enhance(Geschaeft)

@@ -4,6 +4,10 @@ import {
   ControlLabel,
 } from 'react-bootstrap'
 import moment from 'moment'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+
 import regularStyles from './areaFristen.css'
 import pdfStyles from './areaFristenPdf.css'
 import DateField from '../../containers/geschaeft/DateField'
@@ -35,6 +39,38 @@ const fieldFristDauerBisMitarbeiter = (geschaeft, styles) => (
       {geschaeft.dauerBisFristMitarbeiter}
     </FormControl.Static>
   </div>
+)
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const {
+      store,
+      routing,
+      blur,
+      change,
+      nrOfFieldsBeforeFristen,
+      onChangeDatePicker,
+    } = props
+    const {
+      activeId,
+      geschaefte,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    const isPrintPreview = path === '/geschaeftPdf'
+    const geschaeft = geschaefte.find(g =>
+      g.idGeschaeft === activeId
+    )
+    return {
+      geschaeft,
+      change,
+      blur,
+      nrOfFieldsBeforeFristen,
+      onChangeDatePicker,
+      isPrintPreview,
+    }
+  }),
+  observer
 )
 
 const AreaFristen = ({
@@ -148,4 +184,4 @@ AreaFristen.propTypes = {
   isPrintPreview: PropTypes.bool.isRequired,
 }
 
-export default AreaFristen
+export default enhance(AreaFristen)

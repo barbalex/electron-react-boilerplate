@@ -4,9 +4,42 @@ import {
   ControlLabel,
   Radio,
 } from 'react-bootstrap'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+import withHandlers from 'recompose/withHandlers'
+
 import regularStyles from './areaParlVorstoss.css'
 import pdfStyles from './areaParlVorstossPdf.css'
 import createOptions from '../../src/createOptions'
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store, routing } = props
+    const {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    return {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+      path,
+    }
+  }),
+  withHandlers({
+    onChange: props => size =>
+      props.store.configSetKey('geschaefteColumnWidth', size),
+  }),
+  observer
+)
 
 const parlVorstossStufe = ({ isPrintPreview, geschaeft, change, nrOfFieldsBeforePv }) => {
   if (!isPrintPreview) {
@@ -164,4 +197,4 @@ AreaParlVorstoss.propTypes = {
   isPrintPreview: PropTypes.bool.isRequired,
 }
 
-export default AreaParlVorstoss
+export default enhance(AreaParlVorstoss)

@@ -1,10 +1,51 @@
 import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel } from 'react-bootstrap'
 import Textarea from 'react-textarea-autosize'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
 
 import regularStyles from './areaGeschaeft.css'
 import pdfStyles from './areaGeschaeftPdf.css'
 import createOptions from '../../src/createOptions'
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const {
+      store,
+      routing,
+      blur,
+      change,
+      wrapperClass,
+      nrOfGFields,
+    } = props
+    const {
+      activeId,
+      geschaefte,
+      statusOptions,
+      abteilungOptions,
+      geschaeftsartOptions,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    const isPrintPreview = path === '/geschaeftPdf'
+    const geschaeft = geschaefte.find(g =>
+      g.idGeschaeft === activeId
+    )
+    return {
+      geschaeft,
+      statusOptions,
+      abteilungOptions,
+      geschaeftsartOptions,
+      change,
+      blur,
+      wrapperClass,
+      nrOfGFields,
+      isPrintPreview,
+    }
+  }),
+  observer
+)
 
 const AreaGeschaeft = ({
   geschaeft,
@@ -225,4 +266,4 @@ AreaGeschaeft.propTypes = {
   isPrintPreview: PropTypes.bool.isRequired,
 }
 
-export default AreaGeschaeft
+export default enhance(AreaGeschaeft)

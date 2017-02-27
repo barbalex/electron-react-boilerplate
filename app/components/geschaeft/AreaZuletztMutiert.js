@@ -1,5 +1,9 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+import withHandlers from 'recompose/withHandlers'
 
 const Container = styled.div`
   grid-area: areaZuletztMutiert;
@@ -14,6 +18,34 @@ const Field = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{
   grid-column: 1;
   font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
 `
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store, routing } = props
+    const {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    return {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+      path,
+    }
+  }),
+  withHandlers({
+    onChange: props => size =>
+      props.store.configSetKey('geschaefteColumnWidth', size),
+  }),
+  observer
+)
 
 const AreaZuletztMutiert = ({
   geschaeft,
@@ -61,4 +93,4 @@ AreaZuletztMutiert.propTypes = {
   isPrintPreview: PropTypes.bool.isRequired,
 }
 
-export default AreaZuletztMutiert
+export default enhance(AreaZuletztMutiert)

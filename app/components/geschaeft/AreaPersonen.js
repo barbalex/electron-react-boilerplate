@@ -2,6 +2,10 @@ import React, { PropTypes } from 'react'
 import { FormControl } from 'react-bootstrap'
 import _ from 'lodash'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+import withHandlers from 'recompose/withHandlers'
 
 import KontakteIntern from '../../containers/geschaeft/KontakteIntern'
 import KontakteExtern from '../../containers/geschaeft/KontakteExtern'
@@ -123,6 +127,34 @@ const StyledFormcontrolStaticPrint = styled(FormControl.Static)`
   min-height: 0;
 `
 
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store, routing } = props
+    const {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    return {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+      path,
+    }
+  }),
+  withHandlers({
+    onChange: props => size =>
+      props.store.configSetKey('geschaefteColumnWidth', size),
+  }),
+  observer
+)
+
 const AreaPersonen = ({
   geschaeft,
   nrOfFieldsBeforePersonen = 0,
@@ -215,4 +247,4 @@ AreaPersonen.propTypes = {
   isPrintPreview: PropTypes.bool.isRequired,
 }
 
-export default AreaPersonen
+export default enhance(AreaPersonen)

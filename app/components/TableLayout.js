@@ -1,10 +1,36 @@
 import React, { PropTypes } from 'react'
 import SplitPane from 'react-split-pane'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+import withHandlers from 'recompose/withHandlers'
+
 import TableRow from '../containers/table/TableRow'
 import Table from '../containers/table/Table'
 
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store } = props
+    const { tableLayout, config } = store.app
+    const { id } = store.table
+    const { configSetKey } = store
+    return {
+      configSetKey,
+      tableLayout,
+      config,
+      id,
+    }
+  }),
+  withHandlers({
+    onChange: props => size =>
+      props.store.configSetKey('tableColumnWidth', size),
+  }),
+  observer
+)
+
 const TableLayout = ({
-  configSetKey,
+  onChange,
   config,
   id,
 }) =>
@@ -12,7 +38,7 @@ const TableLayout = ({
     split="vertical"
     minSize={100}
     defaultSize={config.tableColumnWidth}
-    onChange={size => configSetKey('tableColumnWidth', size)}
+    onChange={onChange}
   >
     <Table />
     <div>
@@ -25,7 +51,7 @@ const TableLayout = ({
 
 TableLayout.propTypes = {
   config: PropTypes.object.isRequired,
-  configSetKey: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   id: PropTypes.number,
 }
 
@@ -33,4 +59,4 @@ TableLayout.defaultProps = {
   id: null,
 }
 
-export default TableLayout
+export default enhance(TableLayout)

@@ -1,8 +1,11 @@
 import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel } from 'react-bootstrap'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
 
-import AreaHistoryRows from '../../containers/geschaeft/AreaHistoryRows'
+import AreaHistoryRows from './AreaHistoryRows'
 
 // eslint-disable-next-line no-unused-vars
 const Container = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
@@ -33,6 +36,33 @@ const LabelVorgeschaeft = styled(({ isPrintPreview, children, ...rest }) => <Con
   margin-top: ${(props) => (props.isPrintPreview ? 0 : '10px')};
   text-align: right;
 `
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const {
+      store,
+      routing,
+      blur,
+      change,
+    } = props
+    const {
+      activeId,
+      geschaefte,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    const geschaeft = geschaefte.find(g =>
+      g.idGeschaeft === activeId
+    )
+    return {
+      geschaeft,
+      change,
+      blur,
+      path,
+    }
+  }),
+  observer
+)
 
 const AreaHistory = ({
   geschaeft,
@@ -76,4 +106,4 @@ AreaHistory.propTypes = {
   path: PropTypes.string.isRequired,
 }
 
-export default AreaHistory
+export default enhance(AreaHistory)

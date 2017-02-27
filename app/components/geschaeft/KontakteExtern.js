@@ -2,6 +2,10 @@ import React, { PropTypes } from 'react'
 import { FormControl } from 'react-bootstrap'
 import _ from 'lodash'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+import withHandlers from 'recompose/withHandlers'
 
 import KontakteExternItems from '../../containers/geschaeft/KontakteExternItems'
 
@@ -69,6 +73,34 @@ const FvDropdown = styled(({ isPrintPreview, children, ...rest }) => <div {...re
   display: ${(props) => (props.isPrintPreview ? 'none' : 'inherit')};
 `
 
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store, routing } = props
+    const {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    return {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+      path,
+    }
+  }),
+  withHandlers({
+    onChange: props => size =>
+      props.store.configSetKey('geschaefteColumnWidth', size),
+  }),
+  observer
+)
+
 const GeschaefteKontakteExtern = ({
   geschaefteKontakteExtern,
   tabIndex,
@@ -117,4 +149,4 @@ GeschaefteKontakteExtern.propTypes = {
   isPrintPreview: PropTypes.bool.isRequired,
 }
 
-export default GeschaefteKontakteExtern
+export default enhance(GeschaefteKontakteExtern)

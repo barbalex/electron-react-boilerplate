@@ -4,10 +4,43 @@ import {
   ControlLabel,
 } from 'react-bootstrap'
 import Textarea from 'react-textarea-autosize'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+import withHandlers from 'recompose/withHandlers'
+
 import regularStyles from './areaRechtsmittel.css'
 import pdfStyles from './areaRechtsmittelPdf.css'
 import DateField from '../../containers/geschaeft/DateField'
 import createOptions from '../../src/createOptions'
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store, routing } = props
+    const {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    return {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+      path,
+    }
+  }),
+  withHandlers({
+    onChange: props => size =>
+      props.store.configSetKey('geschaefteColumnWidth', size),
+  }),
+  observer
+)
 
 const AreaRechtsmittel = ({
   geschaeft,
@@ -125,4 +158,4 @@ AreaRechtsmittel.propTypes = {
   isPrintPreview: PropTypes.bool.isRequired,
 }
 
-export default AreaRechtsmittel
+export default enhance(AreaRechtsmittel)

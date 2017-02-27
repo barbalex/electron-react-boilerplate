@@ -2,14 +2,46 @@ import React, { Component, PropTypes } from 'react'
 import { AutoSizer, List } from 'react-virtualized'
 import _ from 'lodash'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+import withHandlers from 'recompose/withHandlers'
 
 import styles from './Geschaefte.css'
-import GeschaefteItem from '../containers/GeschaefteItem'
+import GeschaefteItem from '../components/GeschaefteItem'
 
 const StyledNoRowsDiv = styled.div`
   padding: 10px;
   font-weight: bold;
 `
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store, routing } = props
+    const {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    return {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+      path,
+    }
+  }),
+  withHandlers({
+    onChange: props => size =>
+      props.store.configSetKey('geschaefteColumnWidth', size),
+  }),
+  observer
+)
 
 class Geschaefte extends Component {
   static propTypes = {
@@ -163,4 +195,4 @@ class Geschaefte extends Component {
   }
 }
 
-export default Geschaefte
+export default enhance(Geschaefte)

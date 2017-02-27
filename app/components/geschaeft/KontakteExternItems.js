@@ -3,6 +3,10 @@ import { Glyphicon } from 'react-bootstrap'
 import _ from 'lodash'
 import Linkify from 'react-linkify'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+import withHandlers from 'recompose/withHandlers'
 
 const verantwortlichData = (gKE, externeOptions) => {
   function addValueToInfo(info, value) {
@@ -83,6 +87,34 @@ const StyledGlyphicon = styled(Glyphicon)`
   cursor: pointer;
 `
 
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store, routing } = props
+    const {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    return {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+      path,
+    }
+  }),
+  withHandlers({
+    onChange: props => size =>
+      props.store.configSetKey('geschaefteColumnWidth', size),
+  }),
+  observer
+)
+
 const GeschaefteKontakteExtern = ({
   geschaefteKontakteExtern,
   activeId,
@@ -138,4 +170,4 @@ GeschaefteKontakteExtern.propTypes = {
   isPrintPreview: PropTypes.bool.isRequired,
 }
 
-export default GeschaefteKontakteExtern
+export default enhance(GeschaefteKontakteExtern)

@@ -8,10 +8,43 @@ import {
 } from 'react-bootstrap'
 import moment from 'moment'
 import DateRangePicker from 'react-bootstrap-daterangepicker'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+import withHandlers from 'recompose/withHandlers'
+
 import styles from './dateField.css'
 import getDateValidationStateDate from '../../src/getDateValidationStateDate'
 
 moment.locale('de')
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store, routing } = props
+    const {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    return {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+      path,
+    }
+  }),
+  withHandlers({
+    onChange: props => size =>
+      props.store.configSetKey('geschaefteColumnWidth', size),
+  }),
+  observer
+)
 
 const DateField = ({
   geschaeft,
@@ -87,4 +120,4 @@ DateField.propTypes = {
   tabIndex: PropTypes.number.isRequired,
 }
 
-export default DateField
+export default enhance(DateField)

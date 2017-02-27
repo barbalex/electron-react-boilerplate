@@ -1,5 +1,8 @@
 import React, { PropTypes } from 'react'
 import { hashHistory } from 'react-router'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
 
 import styles from './Geschaefte.css'
 
@@ -8,6 +11,34 @@ const getStatusFristInStyle = (fristMitarbeiterWarnung) => {
   if (fristMitarbeiterWarnung === 'HEUTE') return styles.fieldWarnungHeute
   return null
 }
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const {
+      store,
+      routing,
+      index,
+      keyPassed,
+    } = props
+    const {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+
+    return {
+      geschaefte,
+      geschaefteGefilterteIds,
+      activeId,
+      path,
+      index,
+      keyPassed,
+    }
+  }),
+  observer
+)
 
 const GeschaefteItem = ({
   geschaefte,
@@ -100,4 +131,4 @@ GeschaefteItem.propTypes = {
   keyPassed: PropTypes.string.isRequired,
 }
 
-export default GeschaefteItem
+export default enhance(GeschaefteItem)

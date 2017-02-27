@@ -1,6 +1,10 @@
 import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel } from 'react-bootstrap'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+import withHandlers from 'recompose/withHandlers'
 
 import GekoNrField from '../../containers/geschaeft/GekoNrField'
 import createOptions from '../../src/createOptions'
@@ -195,6 +199,34 @@ const FieldAktennummer = styled(({ isPrintPreview, children, ...rest }) => <Fiel
     font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
   }
 `
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store, routing } = props
+    const {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    return {
+      activeId,
+      geschaefteGefilterteIds,
+      geschaefte,
+      filterFields,
+      filterFulltext,
+      path,
+    }
+  }),
+  withHandlers({
+    onChange: props => size =>
+      props.store.configSetKey('geschaefteColumnWidth', size),
+  }),
+  observer
+)
 
 const AreaNummern = ({
   aktenstandortOptions,
@@ -547,4 +579,4 @@ AreaNummern.propTypes = {
   isPrintPreview: PropTypes.bool.isRequired,
 }
 
-export default AreaNummern
+export default enhance(AreaNummern)

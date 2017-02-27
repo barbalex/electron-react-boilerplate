@@ -1,5 +1,8 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
 
 import getHistoryOfGeschaeft from '../../src/getHistoryOfGeschaeft'
 
@@ -42,6 +45,24 @@ const Datum = styled.div`
 const Gegenstand = styled.div`
   grid-column: 3;
 `
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store, routing } = props
+    const {
+      activeId,
+      geschaefte,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    return {
+      geschaefte,
+      activeId,
+      path,
+    }
+  }),
+  observer
+)
 
 const AreaHistoryRows = ({
   geschaefte,
@@ -103,4 +124,4 @@ AreaHistoryRows.propTypes = {
   path: PropTypes.string.isRequired,
 }
 
-export default AreaHistoryRows
+export default enhance(AreaHistoryRows)
