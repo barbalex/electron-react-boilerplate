@@ -27,6 +27,15 @@ export const getGeschaefteWithNSideData = createSelector(  // eslint-disable-lin
   (geschaefte, gki, gke, interne, externe, geko, links, faelligeStati) =>
     geschaefte.map((g) => {
       const newGeschaeft = _.clone(g)
+      // newGeschaeft.verantwortlichName = ''
+      // newGeschaeft.interne = []
+      // newGeschaeft.verantwortlichItKonto = ''
+      // newGeschaeft.externe = []
+      // newGeschaeft.geko = []
+      // newGeschaeft.links = []
+      // newGeschaeft.kannFaelligSein = false
+      // newGeschaeft.dauerBisFristMitarbeiter = ''
+      // newGeschaeft.fristMitarbeiterWarnung = ''
       newGeschaeft.verantwortlichName = interne
         .filter(i => i.kurzzeichen === newGeschaeft.verantwortlich)
         .map(i =>
@@ -38,12 +47,12 @@ export const getGeschaefteWithNSideData = createSelector(  // eslint-disable-lin
         .map((gk) =>
           interne.find(i => i.id === gk.idKontakt) || null
         )
-      newGeschaeft.verantwortlichItKonto = getItKontoForVerantwortlich(interne, g)
       newGeschaeft.externe = gke
         .filter(i => i.idGeschaeft === newGeschaeft.idGeschaeft)
         .map((gk) =>
           externe.find(i => i.id === gk.idKontakt) || null
         )
+      newGeschaeft.verantwortlichItKonto = getItKontoForVerantwortlich(interne, g.verantwortlich)
       newGeschaeft.geko = geko
         .filter(gko => gko.idGeschaeft === newGeschaeft.idGeschaeft)
       newGeschaeft.links = links

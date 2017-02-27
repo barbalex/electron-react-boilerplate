@@ -1,6 +1,6 @@
-export default (interne, geschaeft) => {
+export default (interne, verantwortlich) => {
   const intern = interne.find(i =>
-    i.kurzzeichen === geschaeft.verantwortlich
+    i.kurzzeichen === verantwortlich
   )
   if (intern) return intern.itKonto
   return null
