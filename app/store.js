@@ -11,6 +11,10 @@ import standardConfig from './src/standardConfig'
 import standardDbPath from './src/standardDbPath'
 import getConfig from './src/getConfig'
 import filterForFaelligeGeschaefte from './src/filterForFaelligeGeschaefte'
+import saveConfig from './src/saveConfig'
+import chooseDb from './src/chooseDb'
+
+const sqlite3 = require('sqlite3').verbose()
 
 function Store() {
   this.app = {}
@@ -24,7 +28,24 @@ function Store() {
     config: standardConfig,
   })
   extendObservable(this, {
+    configSetKey: action((key, value) => {
+      const { config } = this.app
+      if (value) {
+        config[key] = value
+      } else if (config[key]) {
+        delete config[key]
+      }
+      saveConfig(config)
+      this.app.config = config
+    }),
     dbChooseSuccess: action((dbPath, db) => {
+      this.app.fetchingDb = false
+      this.app.db = db
+      this.app.config = Object.assign(
+        {},
+        this.app.config,
+        { dbPath },
+      )
       // get data
       this.faelligeStatiOptionsGet()
       this.getGeko()
@@ -52,40 +73,45 @@ function Store() {
       const standardDbExists = fs.existsSync(standardDbPath)
       if (standardDbExists) {
         const db = new sqlite3.Database(standardDbPath)
-        dispatch(dbChooseSuccess(standardDbPath, db))
-        dispatch(configSetKey('dbPath', standardDbPath))
+        this.dbChooseSuccess(standardDbPath, db)
+        this.configSetKey('dbPath', standardDbPath)
       } else {
         // let user choose db file
-        dispatch(dbChoose())
+        this.app.fetchingDb = true
+        this.app.errorFetchingDb = null
         chooseDb()
           .then((dbPath) => {
             const db = new sqlite3.Database(dbPath)
-            dispatch(dbChooseSuccess(dbPath, db))
-            dispatch(configSetKey('dbPath', dbPath))
+            this.dbChooseSuccess(dbPath, db)
+            this.configSetKey('dbPath', dbPath)
           })
-          .catch(err => dispatch(dbChooseError(err)))
+          .catch(err => {
+            this.app.fetchingDb = false
+            this.app.errorFetchingDb = err
+            this.app.db = null
+          })
       }
     }),
-    getConfig: action(() => {
+    getConfig: action(() =>
       getConfig()
-      .then((config) => {
-        let newConfig = config || standardConfig
-        this.config = config
-        const { dbPath } = newConfig
-        if (!dbPath) {
-          return dispatch(dbGetAtStandardpathIfPossible())
-        }
-        const dbExists = fs.existsSync(dbPath)
-        if (!dbExists) {
-          return dispatch(dbGetAtStandardpathIfPossible())
-        }
-        const db = new sqlite3.Database(dbPath)
-        dispatch(dbChooseSuccess(dbPath, db))
-      })
-      .catch(error =>
-        console.error(error)
-      )
-    }),
+        .then((config) => {
+          const newConfig = config || standardConfig
+          this.config = config
+          const { dbPath } = newConfig
+          if (!dbPath) {
+            return this.dbGetAtStandardpathIfPossible()
+          }
+          const dbExists = fs.existsSync(dbPath)
+          if (!dbExists) {
+            return this.dbGetAtStandardpathIfPossible()
+          }
+          const db = new sqlite3.Database(dbPath)
+          this.dbChooseSuccess(dbPath, db)
+        })
+        .catch(error =>
+          console.error(error)
+        )
+    ),
   })
   this.geschaefte = {}
   this.geschaefteKontakteExtern = {}
