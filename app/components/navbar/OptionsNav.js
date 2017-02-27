@@ -13,6 +13,9 @@ const DbPathDiv = styled.div`
 const onGetProjektbeschreibung = () => {
   shell.openItem('https://github.com/barbalex/kapla3/raw/master/app/etc/Projektbeschreibung.pdf')
 }
+const onClickIssues = () => {
+  shell.openItem('https://github.com/barbalex/kapla3/issues')
+}
 
 const OptionsNav = ({
   config,
@@ -46,6 +49,11 @@ const OptionsNav = ({
       onClick={onGetProjektbeschreibung}
     >
       Projektbeschreibung herunterladen
+    </MenuItem>
+    <MenuItem
+      onClick={onClickIssues}
+    >
+      Fehler und Wünsche melden
     </MenuItem>
   </NavDropdown>
 
