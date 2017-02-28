@@ -7,7 +7,6 @@ import {
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withProps from 'recompose/withProps'
-import withHandlers from 'recompose/withHandlers'
 
 import regularStyles from './areaParlVorstoss.css'
 import pdfStyles from './areaParlVorstossPdf.css'
@@ -16,27 +15,31 @@ import createOptions from '../../src/createOptions'
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing } = props
+    const {
+      store,
+      routing,
+      blur,
+      change,
+      nrOfFieldsBeforePv,
+    } = props
     const {
       activeId,
-      geschaefteGefilterteIds,
       geschaefte,
-      filterFields,
-      filterFulltext,
+      parlVorstossTypOptions,
     } = store.geschaefte
     const path = routing.locationBeforeTransitions.pathname
+    const isPrintPreview = path === '/geschaeftPdf'
+    const geschaeft = geschaefte.find(g =>
+      g.idGeschaeft === activeId
+    )
     return {
-      activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
-      path,
+      geschaeft,
+      parlVorstossTypOptions,
+      change,
+      blur,
+      nrOfFieldsBeforePv,
+      isPrintPreview,
     }
-  }),
-  withHandlers({
-    onChange: props => size =>
-      props.store.configSetKey('geschaefteColumnWidth', size),
   }),
   observer
 )

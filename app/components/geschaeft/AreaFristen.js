@@ -10,7 +10,7 @@ import withProps from 'recompose/withProps'
 
 import regularStyles from './areaFristen.css'
 import pdfStyles from './areaFristenPdf.css'
-import DateField from '../../containers/geschaeft/DateField'
+import DateField from './DateField'
 
 moment.locale('de')
 

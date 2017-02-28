@@ -5,10 +5,9 @@ import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withProps from 'recompose/withProps'
-import withHandlers from 'recompose/withHandlers'
 
-import KontakteIntern from '../../containers/geschaeft/KontakteIntern'
-import KontakteExtern from '../../containers/geschaeft/KontakteExtern'
+import KontakteIntern from './KontakteIntern'
+import KontakteExtern from './KontakteExtern'
 
 const verwantwortlichOptions = (interneOptions) => {
   // sort interneOptions by kurzzeichen
@@ -130,27 +129,32 @@ const StyledFormcontrolStaticPrint = styled(FormControl.Static)`
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing } = props
+    const {
+      store,
+      routing,
+      blur,
+      change,
+      nrOfFieldsBeforePersonen,
+    } = props
     const {
       activeId,
-      geschaefteGefilterteIds,
       geschaefte,
-      filterFields,
-      filterFulltext,
+      interneOptions,
     } = store.geschaefte
     const path = routing.locationBeforeTransitions.pathname
+    const isPrintPreview = path === '/geschaeftPdf'
+    const geschaeft = geschaefte.find(g =>
+      g.idGeschaeft === activeId
+    )
     return {
+      geschaeft,
       activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
-      path,
+      interneOptions,
+      change,
+      blur,
+      nrOfFieldsBeforePersonen,
+      isPrintPreview,
     }
-  }),
-  withHandlers({
-    onChange: props => size =>
-      props.store.configSetKey('geschaefteColumnWidth', size),
   }),
   observer
 )

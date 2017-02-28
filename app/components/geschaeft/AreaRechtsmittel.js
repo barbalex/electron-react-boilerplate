@@ -7,37 +7,44 @@ import Textarea from 'react-textarea-autosize'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withProps from 'recompose/withProps'
-import withHandlers from 'recompose/withHandlers'
 
 import regularStyles from './areaRechtsmittel.css'
 import pdfStyles from './areaRechtsmittelPdf.css'
-import DateField from '../../containers/geschaeft/DateField'
+import DateField from './DateField'
 import createOptions from '../../src/createOptions'
 
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing } = props
+    const {
+      store,
+      routing,
+      blur,
+      change,
+      nrOfFieldsBeforePv,
+      onChangeDatePicker,
+    } = props
     const {
       activeId,
-      geschaefteGefilterteIds,
       geschaefte,
-      filterFields,
-      filterFulltext,
+      rechtsmittelErledigungOptions,
+      rechtsmittelInstanzOptions,
     } = store.geschaefte
     const path = routing.locationBeforeTransitions.pathname
+    const isPrintPreview = path === '/geschaeftPdf'
+    const geschaeft = geschaefte.find(g =>
+      g.idGeschaeft === activeId
+    )
     return {
-      activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
-      path,
+      geschaeft,
+      rechtsmittelErledigungOptions,
+      rechtsmittelInstanzOptions,
+      change,
+      blur,
+      nrOfFieldsBeforePv,
+      onChangeDatePicker,
+      isPrintPreview,
     }
-  }),
-  withHandlers({
-    onChange: props => size =>
-      props.store.configSetKey('geschaefteColumnWidth', size),
   }),
   observer
 )

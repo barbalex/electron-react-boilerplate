@@ -4,9 +4,8 @@ import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withProps from 'recompose/withProps'
-import withHandlers from 'recompose/withHandlers'
 
-import GekoNrField from '../../containers/geschaeft/GekoNrField'
+import GekoNrField from './GekoNrField'
 import createOptions from '../../src/createOptions'
 
 const ContainerBase = styled.div`
@@ -203,27 +202,33 @@ const FieldAktennummer = styled(({ isPrintPreview, children, ...rest }) => <Fiel
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing } = props
     const {
+      store,
+      routing,
+      blur,
+      change,
+      wrapperClass,
+      nrOfGFields,
+    } = props
+    const {
+      aktenstandortOptions,
       activeId,
-      geschaefteGefilterteIds,
       geschaefte,
-      filterFields,
-      filterFulltext,
     } = store.geschaefte
     const path = routing.locationBeforeTransitions.pathname
+    const isPrintPreview = path === '/geschaeftPdf'
+    const geschaeft = geschaefte.find(g =>
+      g.idGeschaeft === activeId
+    )
     return {
-      activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
-      path,
+      aktenstandortOptions,
+      geschaeft,
+      blur,
+      change,
+      wrapperClass,
+      nrOfGFields,
+      isPrintPreview,
     }
-  }),
-  withHandlers({
-    onChange: props => size =>
-      props.store.configSetKey('geschaefteColumnWidth', size),
   }),
   observer
 )

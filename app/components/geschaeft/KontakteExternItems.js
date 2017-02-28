@@ -92,25 +92,20 @@ const enhance = compose(
   withProps((props) => {
     const { store, routing } = props
     const {
+      externeOptions,
       activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
     } = store.geschaefte
     const path = routing.locationBeforeTransitions.pathname
+    const {
+      geschaefteKontakteExtern,
+    } = store.geschaefteKontakteExtern
+    const isPrintPreview = path === '/geschaeftPdf'
     return {
+      geschaefteKontakteExtern,
+      externeOptions,
       activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
-      path,
+      isPrintPreview,
     }
-  }),
-  withHandlers({
-    onChange: props => size =>
-      props.store.configSetKey('geschaefteColumnWidth', size),
   }),
   observer
 )

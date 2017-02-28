@@ -8,27 +8,24 @@ import withHandlers from 'recompose/withHandlers'
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing } = props
     const {
-      activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
-    } = store.geschaefte
-    const path = routing.locationBeforeTransitions.pathname
+      store,
+      idGeschaeft,
+      gekoNr,
+      tabsToAdd,
+    } = props
+    const {
+      gekoRemove,
+      gekoNewCreate,
+    } = store
+
     return {
-      activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
-      path,
+      idGeschaeft,
+      gekoNr,
+      tabsToAdd,
+      gekoRemove,
+      gekoNewCreate,
     }
-  }),
-  withHandlers({
-    onChange: props => size =>
-      props.store.configSetKey('geschaefteColumnWidth', size),
   }),
   observer
 )

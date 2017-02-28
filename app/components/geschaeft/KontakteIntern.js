@@ -5,9 +5,8 @@ import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withProps from 'recompose/withProps'
-import withHandlers from 'recompose/withHandlers'
 
-import KontakteInternItems from '../../containers/geschaeft/KontakteInternItems'
+import KontakteInternItems from './KontakteInternItems'
 
 const onChangeNewKontaktIntern = (
   e,
@@ -83,27 +82,31 @@ const FvDropdown = styled(({ isPrintPreview, children, ...rest }) => <div {...re
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing } = props
     const {
+      store,
+      routing,
+      tabIndex,
+    } = props
+    const {
+      interneOptions,
       activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
     } = store.geschaefte
     const path = routing.locationBeforeTransitions.pathname
+    const {
+      geschaefteKontakteIntern,
+      activeIdGeschaeft,
+      activeIdKontakt,
+    } = store.geschaefteKontakteIntern
+    const isPrintPreview = path === '/geschaeftPdf'
     return {
+      geschaefteKontakteIntern,
+      activeIdGeschaeft,
+      activeIdKontakt,
+      interneOptions,
       activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
-      path,
+      tabIndex,
+      isPrintPreview,
     }
-  }),
-  withHandlers({
-    onChange: props => size =>
-      props.store.configSetKey('geschaefteColumnWidth', size),
   }),
   observer
 )

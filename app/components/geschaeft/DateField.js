@@ -11,7 +11,6 @@ import DateRangePicker from 'react-bootstrap-daterangepicker'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withProps from 'recompose/withProps'
-import withHandlers from 'recompose/withHandlers'
 
 import styles from './dateField.css'
 import getDateValidationStateDate from '../../src/getDateValidationStateDate'
@@ -21,27 +20,31 @@ moment.locale('de')
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing } = props
+    const {
+      store,
+      name,
+      label,
+      change,
+      blur,
+      onChangeDatePicker,
+      tabIndex,
+    } = props
     const {
       activeId,
-      geschaefteGefilterteIds,
       geschaefte,
-      filterFields,
-      filterFulltext,
     } = store.geschaefte
-    const path = routing.locationBeforeTransitions.pathname
+    const geschaeft = geschaefte.find(g =>
+      g.idGeschaeft === activeId
+    )
     return {
-      activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
-      path,
+      name,
+      label,
+      geschaeft,
+      change,
+      blur,
+      onChangeDatePicker,
+      tabIndex,
     }
-  }),
-  withHandlers({
-    onChange: props => size =>
-      props.store.configSetKey('geschaefteColumnWidth', size),
   }),
   observer
 )

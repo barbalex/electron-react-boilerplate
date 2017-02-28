@@ -5,7 +5,6 @@ import { shell } from 'electron'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withProps from 'recompose/withProps'
-import withHandlers from 'recompose/withHandlers'
 
 import regularStyles from './areaLinks.css'
 import pdfStyles from './areaLinksPdf.css'
@@ -13,27 +12,17 @@ import pdfStyles from './areaLinksPdf.css'
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing } = props
+    const { store, routing, links } = props
     const {
       activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
     } = store.geschaefte
     const path = routing.locationBeforeTransitions.pathname
+    const isPrintPreview = path === '/geschaeftPdf'
     return {
+      links,
       activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
-      path,
+      isPrintPreview,
     }
-  }),
-  withHandlers({
-    onChange: props => size =>
-      props.store.configSetKey('geschaefteColumnWidth', size),
   }),
   observer
 )

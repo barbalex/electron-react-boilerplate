@@ -26,7 +26,7 @@ window.app = app
 
 render(
   <Provider store={store}>
-    { false && <DevTools />}
+    <DevTools />
     <Router history={history} routes={routes} />
   </Provider>,
   document.getElementById('root')

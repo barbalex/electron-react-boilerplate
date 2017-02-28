@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withProps from 'recompose/withProps'
-import withHandlers from 'recompose/withHandlers'
 
 const titleText = (idKontakt, interneOptions) => {
   const data = interneOptions.find(o =>
@@ -84,25 +83,20 @@ const enhance = compose(
   withProps((props) => {
     const { store, routing } = props
     const {
+      interneOptions,
       activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
     } = store.geschaefte
     const path = routing.locationBeforeTransitions.pathname
+    const {
+      geschaefteKontakteIntern,
+    } = store.geschaefteKontakteIntern
+    const isPrintPreview = path === '/geschaeftPdf'
     return {
+      geschaefteKontakteIntern,
+      interneOptions,
       activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
-      filterFulltext,
-      path,
+      isPrintPreview,
     }
-  }),
-  withHandlers({
-    onChange: props => size =>
-      props.store.configSetKey('geschaefteColumnWidth', size),
   }),
   observer
 )
