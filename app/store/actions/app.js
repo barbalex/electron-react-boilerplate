@@ -90,7 +90,7 @@ export default (store) => ({
         )
     }
   }),
-  getConfig: action(() =>
+  configGet: action(() =>  // or "getConfig"???
     getConfig()
       .then((config) => {
         const newConfig = config || standardConfig

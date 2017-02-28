@@ -27,7 +27,7 @@ function Store() {
     error: [],
     geschaefte: [],
     geschaeftePlus: computed(() =>
-      this.geschaefte.map((g) => {
+      this.geschaefte.geschaefte.map((g) => {
         const { interneOptions, externeOptions, geko, links, faelligeStatiOptions } = this.geschaefte
         const interne = this.geschaefteKontakteIntern.geschaefteKontakteIntern
         const externe = this.geschaefteKontakteExtern.geschaefteKontakteExtern

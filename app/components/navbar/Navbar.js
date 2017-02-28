@@ -6,6 +6,7 @@ import {
 } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import styled from 'styled-components'
+import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withProps from 'recompose/withProps'
@@ -37,22 +38,27 @@ const enhance = compose(
   withProps((props) => {
     const {
       store,
-      routing,
+      location,
     } = props
     const {
-      showPagesModal,
-      showMessageModal,
       configGet,
     } = store
+    const {
+      showMessageModal,
+    } = store.app
+    const {
+      showPagesModal,
+    } = store.pages
     const {
       geschaefteGefilterteIds,
       geschaeftePlus: geschaefte,
       willDelete,
     } = store.geschaefte
-    const path = routing.locationBeforeTransitions.pathname
+    console.log('Navbar, withProps, props:', props)
+    const path = location.pathname
     return {
-      geschaefte,
-      geschaefteGefilterteIds,
+      geschaeftePlus: geschaefte,
+      geschaefteGefilterteIds: toJS(geschaefteGefilterteIds),
       willDeleteGeschaeft: willDelete,
       path,
       showMessageModal,
@@ -65,13 +71,17 @@ const enhance = compose(
 
 class NavbarComponent extends Component {
   static propTypes = {
-    geschaefte: PropTypes.array.isRequired,
+    geschaefte: PropTypes.array,
     geschaefteGefilterteIds: PropTypes.array.isRequired,
     showMessageModal: PropTypes.bool.isRequired,
     showPagesModal: PropTypes.bool.isRequired,
     configGet: PropTypes.func.isRequired,
     willDeleteGeschaeft: PropTypes.bool.isRequired,
     path: PropTypes.string.isRequired,
+  }
+
+  static defaultProps = {
+    geschaefte: [],
   }
 
   componentWillMount() {

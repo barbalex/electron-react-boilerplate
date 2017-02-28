@@ -1,10 +1,8 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'mobx-react'
-import DevTools from 'mobx-react-devtools'
 import app from 'ampersand-app'
 import { Router, hashHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
 
 import routes from './routes'
 // loading store from separate file does not work for server rendering
@@ -12,8 +10,6 @@ import routes from './routes'
 // but I need to fetch it from wrapComponentInProvider.js
 import store from './store'
 import './app.global.css'
-
-const history = syncHistoryWithStore(hashHistory, store)
 
 app.extend({
   init() {
@@ -26,8 +22,7 @@ window.app = app
 
 render(
   <Provider store={store}>
-    <DevTools />
-    <Router history={history} routes={routes} />
+    <Router history={hashHistory} routes={routes} />
   </Provider>,
   document.getElementById('root')
 )
