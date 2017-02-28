@@ -38,7 +38,7 @@ const enhance = compose(
   withProps((props) => {
     const {
       store,
-      location,
+      ...rest
     } = props
     const {
       configGet,
@@ -64,6 +64,7 @@ const enhance = compose(
       showMessageModal,
       showPagesModal,
       configGet,
+      ...rest,
     }
   }),
   observer
@@ -97,6 +98,7 @@ class NavbarComponent extends Component {
       showPagesModal,
       willDeleteGeschaeft,
       path,
+      ...rest,
     } = this.props
 
     const dataIsFiltered = geschaefte.length !== geschaefteGefilterteIds.length
@@ -176,7 +178,7 @@ class NavbarComponent extends Component {
           <Nav pullRight>
             {
               !showTableNavs &&
-              <FilterNav />
+              <FilterNav {...rest} />
             }
             <OptionsNav />
           </Nav>

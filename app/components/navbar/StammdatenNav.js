@@ -4,6 +4,7 @@ import {
   MenuItem,
 } from 'react-bootstrap'
 import styled from 'styled-components'
+import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withProps from 'recompose/withProps'
@@ -41,12 +42,12 @@ const StyledNavDropdown = styled(({ showTableNavs, children, ...rest }) => <NavD
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store } = props
-    const { showTableNavs, getTable } = store
+    const { store, showTableNavs } = props
+    const { getTable } = store
     const { table, rows } = store.table
     return {
       table,
-      rows,
+      rows: toJS(rows),
       showTableNavs,
       getTable,
     }

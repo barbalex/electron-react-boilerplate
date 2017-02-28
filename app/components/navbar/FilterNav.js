@@ -9,6 +9,7 @@ import {
   FormControl,
 } from 'react-bootstrap'
 import moment from 'moment'
+import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withProps from 'recompose/withProps'
@@ -25,7 +26,7 @@ const enhance = compose(
   withProps((props) => {
     const {
       store,
-      routing,
+      location,
     } = props
     const {
       geschaefteRemoveFilters,
@@ -45,15 +46,15 @@ const enhance = compose(
     const {
       username,
     } = store.user
-    const path = routing.locationBeforeTransitions.pathname
+    const path = location.pathname
     return {
       username,
-      filterFields,
+      filterFields: toJS(filterFields),
       filterType,
       filterFulltext,
-      sortFields,
+      sortFields: toJS(sortFields),
       geschaefte,
-      geschaefteGefilterteIds,
+      geschaefteGefilterteIds: toJS(geschaefteGefilterteIds),
       path,
       geschaefteRemoveFilters,
       geschaefteFilterByFulltext,
