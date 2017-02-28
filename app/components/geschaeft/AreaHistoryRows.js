@@ -49,12 +49,12 @@ const Gegenstand = styled.div`
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing } = props
+    const { store, location } = props
     const {
       activeId,
       geschaeftePlus: geschaefte,
     } = store.geschaefte
-    const path = routing.locationBeforeTransitions.pathname
+    const path = location.pathname
     return {
       geschaefte,
       activeId,

@@ -63,9 +63,9 @@ const enhance = compose(
   withProps((props) => {
     const {
       store,
-      routing,
+      location,
     } = props
-    const path = routing.locationBeforeTransitions.pathname
+    const path = location.pathname
     const {
       showBerichteNavs,
     } = store

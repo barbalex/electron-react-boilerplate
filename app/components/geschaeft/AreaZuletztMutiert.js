@@ -21,13 +21,13 @@ const Field = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing } = props
+    const { store, location } = props
     const {
       activeId,
       geschaeftePlus: geschaefte,
       interneOptions,
     } = store.geschaefte
-    const path = routing.locationBeforeTransitions.pathname
+    const path = location.pathname
     const geschaeft = geschaefte.find(g =>
       g.idGeschaeft === activeId
     )

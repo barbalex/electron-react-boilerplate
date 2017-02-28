@@ -45,8 +45,6 @@ const enhance = compose(
     const {
       username,
     } = store.user
-    console.log('FilterNav, withProps: store.user:', store.user)
-    console.log('FilterNav, withProps: store.user.username:', store.user.username)
     return {
       username,
       filterFields: toJS(filterFields),
@@ -279,11 +277,17 @@ FilterNav.propTypes = {
   geschaefteSortByFields: PropTypes.func.isRequired,
   geschaefteResetSort: PropTypes.func.isRequired,
   filterFulltext: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
+  // on initial load, username is undefined
+  username: PropTypes.string,
   router: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,
   location: PropTypes.object.isRequired,
+}
+
+FilterNav.defaultProps = {
+  username: '',
+  filterType: '',
 }
 
 export default enhance(FilterNav)

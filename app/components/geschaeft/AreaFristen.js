@@ -46,7 +46,7 @@ const enhance = compose(
   withProps((props) => {
     const {
       store,
-      routing,
+      location,
       blur,
       change,
       nrOfFieldsBeforeFristen,
@@ -56,7 +56,7 @@ const enhance = compose(
       activeId,
       geschaeftePlus: geschaefte,
     } = store.geschaefte
-    const path = routing.locationBeforeTransitions.pathname
+    const path = location.pathname
     const isPrintPreview = path === '/geschaeftPdf'
     const geschaeft = geschaefte.find(g =>
       g.idGeschaeft === activeId

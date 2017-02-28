@@ -41,6 +41,7 @@ export default (store) => ({
   dbChooseSuccess: action((dbPath, db) => {
     store.app.fetchingDb = false
     store.app.db = db
+    console.log('dbChooseSuccess: db', db)
     store.app.config = Object.assign(
       {},
       store.app.config,
@@ -94,16 +95,19 @@ export default (store) => ({
     getConfig()
       .then((config) => {
         const newConfig = config || standardConfig
-        store.config = config
+        store.config = newConfig
         const { dbPath } = newConfig
+        console.log('newConfig:', newConfig)
         if (!dbPath) {
           return store.dbGetAtStandardpathIfPossible()
         }
         const dbExists = fs.existsSync(dbPath)
+        console.log('dbExists:', dbExists)
         if (!dbExists) {
           return store.dbGetAtStandardpathIfPossible()
         }
         const db = new sqlite3.Database(dbPath)
+        console.log('db:', db)
         store.dbChooseSuccess(dbPath, db)
       })
       .catch(error =>

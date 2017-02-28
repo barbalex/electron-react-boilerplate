@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { AutoSizer, List } from 'react-virtualized'
 import _ from 'lodash'
 import styled from 'styled-components'
+import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withProps from 'recompose/withProps'
@@ -18,7 +19,7 @@ const StyledNoRowsDiv = styled.div`
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing } = props
+    const { store } = props
     const {
       activeId,
       geschaefteGefilterteIds,
@@ -26,14 +27,12 @@ const enhance = compose(
       filterFields,
       filterFulltext,
     } = store.geschaefte
-    const path = routing.locationBeforeTransitions.pathname
     return {
       activeId,
-      geschaefteGefilterteIds,
-      geschaefte,
-      filterFields,
+      geschaefteGefilterteIds: toJS(geschaefteGefilterteIds),
+      geschaefte: toJS(geschaefte),
+      filterFields: toJS(filterFields),
       filterFulltext,
-      path,
     }
   }),
   withHandlers({
@@ -48,15 +47,16 @@ class Geschaefte extends Component {
     activeId: PropTypes.number,
     geschaefteGefilterteIds: PropTypes.array.isRequired,
     geschaefte: PropTypes.array.isRequired,
-    path: PropTypes.string.isRequired,
     filterFields: PropTypes.array,
     filterFulltext: PropTypes.string,
+    location: PropTypes.string,
   }
 
   static defaultProps = {
     activeId: null,
     filterFields: [],
     filterFulltext: '',
+    location: '',
   }
 
   state = {
@@ -64,7 +64,8 @@ class Geschaefte extends Component {
   }
 
   componentDidUpdate() {
-    const { path } = this.props
+    const { location } = this.props
+    const path = location.pathname
 
     if (
       path === '/geschaefte' ||

@@ -84,14 +84,14 @@ const enhance = compose(
   withProps((props) => {
     const {
       store,
-      routing,
+      location,
       tabIndex,
     } = props
     const {
       interneOptions,
       activeId,
     } = store.geschaefte
-    const path = routing.locationBeforeTransitions.pathname
+    const path = location.pathname
     const {
       geschaefteKontakteIntern,
       activeIdGeschaeft,

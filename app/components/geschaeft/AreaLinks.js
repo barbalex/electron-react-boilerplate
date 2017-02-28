@@ -12,11 +12,11 @@ import pdfStyles from './areaLinksPdf.css'
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing, links } = props
+    const { store, location, links } = props
     const {
       activeId,
     } = store.geschaefte
-    const path = routing.locationBeforeTransitions.pathname
+    const path = location.pathname
     const isPrintPreview = path === '/geschaeftPdf'
     return {
       links,

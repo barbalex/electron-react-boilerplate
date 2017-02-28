@@ -1,5 +1,5 @@
 export default (state, field, direction) => {
-  const sortFieldsWithoutPassedField = state.sortFields.filter(sf =>
+  const sortFieldsWithoutPassedField = state.geschaefte.sortFields.filter(sf =>
     sf.field !== field
   )
   if (!direction) {
@@ -7,10 +7,7 @@ export default (state, field, direction) => {
     return sortFieldsWithoutPassedField
   }
   return [
-    {
-      field: field,
-      direction: direction,
-    },
+    { field, direction },
     ...sortFieldsWithoutPassedField,
   ]
 }

@@ -41,7 +41,7 @@ export default (store) => ({
     store.geschaefte.geschaefteGefilterteIds = geschaefteGefilterteIds
   }),
   getGeschaefte: action(() => {
-    const { app, routing } = store
+    const { app } = store
     store.geschaefte.fetching = true
     store.geschaefte.error = []
     getGeschaefteFromDb(app.db)
@@ -49,7 +49,7 @@ export default (store) => ({
         store.geschaefte.fetching = false
         store.geschaefte.error = []
         store.geschaefte.geschaefte = geschaefte
-        if (routing.locationBeforeTransitions.pathname !== '/geschaefte') {
+        if (window.location.pathname !== '/geschaefte') {
           browserHistory.push('/geschaefte')
         }
       })
@@ -59,7 +59,7 @@ export default (store) => ({
       })
   }),
   geschaefteFilterByFields: action((filterFields, filterType = 'nach Feldern') => {
-    const { routing, pages } = store
+    const { pages } = store
     const { filterFulltext, sortFields, geschaefte } = store.geschaefte
     // remove filterFields with empty values
     const filterFieldsWithValues = filterFields.filter(ff =>
@@ -81,7 +81,7 @@ export default (store) => ({
      * if pages are active,
      * initiate with new data
      */
-    const path = routing.locationBeforeTransitions.pathname
+    const path = window.location.pathname
     if (path === '/pages') {
       const { reportType } = pages
       store.pagesInitiate(reportType)
@@ -100,27 +100,29 @@ export default (store) => ({
     store.geschaefte.sortFields = []
   }),
   geschaefteSortByFields: action((field, direction) => {
-    const { routing, pages } = store
+    const { pages } = store
     const sortFields = geschaefteSortByFieldsGetSortFields(store, field, direction)
+    console.log('geschaefteSortByFields: sortFields:', sortFields)
     const geschaefteGefilterteIds = sortIdsBySortFields(
       store.geschaefte,
       store.geschaefteGefilterteIds,
       sortFields
     )
+    console.log('geschaefteSortByFields: geschaefteGefilterteIds:', geschaefteGefilterteIds)
     store.geschaefte.geschaefteGefilterteIds = geschaefteGefilterteIds
     store.geschaefte.sortFields = sortFields
     /**
      * if pages are active,
      * initiate with new data
      */
-    const path = routing.locationBeforeTransitions.pathname
+    const path = window.location.pathname
     if (path === '/pages') {
       const { reportType } = pages
       store.pagesInitiate(reportType)
     }
   }),
   geschaefteFilterByFulltext: action((filterFulltext, filterType = 'nach Volltext') => {
-    const { pages, routing } = store
+    const { pages } = store
     const { filterFields, geschaefte, sortFields } = store.geschaefte
     // create geschaefteGefilterteIds
     let geschaefteGefilterteIds = filterGeschaefte(
@@ -138,7 +140,7 @@ export default (store) => ({
      * if pages are active,
      * initiate with new data
      */
-    const path = routing.locationBeforeTransitions.pathname
+    const path = window.location.pathname
     if (path === '/pages') {
       const { reportType } = pages
       store.pagesInitiate(reportType)
@@ -196,7 +198,7 @@ export default (store) => ({
    * GESCHAEFT
    */
   geschaeftNewCreate: action(() => {
-    const { app, user, routing } = store
+    const { app, user } = store
     newGeschaeftInDb(app.db, user.username)
       .then((geschaeft) => {
         store.geschaefte.geschaefte.unshift(geschaeft)
@@ -205,7 +207,7 @@ export default (store) => ({
            */
         store.geschaefte.geschaefteGefilterteIds.unshift(geschaeft.idGeschaeft)
         store.geschaeftToggleActivated(geschaeft.idGeschaeft)
-        if (routing.locationBeforeTransitions.pathname !== '/geschaefte') {
+        if (window.location.pathname !== '/geschaefte') {
           browserHistory.push('/geschaefte')
         }
       })

@@ -13,11 +13,11 @@ import Geschaefte from '../components/Geschaefte'
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing } = props
+    const { store, location } = props
     const { config } = store.app
     const { activeId } = store.geschaefte
     const { configSetKey } = store
-    const path = routing.locationBeforeTransitions.pathname
+    const path = location.pathname
     return {
       configSetKey,
       config,

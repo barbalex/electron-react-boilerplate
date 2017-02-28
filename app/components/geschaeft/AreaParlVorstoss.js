@@ -17,7 +17,7 @@ const enhance = compose(
   withProps((props) => {
     const {
       store,
-      routing,
+      location,
       blur,
       change,
       nrOfFieldsBeforePv,
@@ -27,7 +27,7 @@ const enhance = compose(
       geschaeftePlus: geschaefte,
       parlVorstossTypOptions,
     } = store.geschaefte
-    const path = routing.locationBeforeTransitions.pathname
+    const path = location.pathname
     const isPrintPreview = path === '/geschaeftPdf'
     const geschaeft = geschaefte.find(g =>
       g.idGeschaeft === activeId
@@ -44,7 +44,12 @@ const enhance = compose(
   observer
 )
 
-const parlVorstossStufe = ({ isPrintPreview, geschaeft, change, nrOfFieldsBeforePv }) => {
+const parlVorstossStufe = ({
+  isPrintPreview,
+  geschaeft,
+  change,
+  nrOfFieldsBeforePv,
+}) => {
   if (!isPrintPreview) {
     return (
       <div>
@@ -92,7 +97,12 @@ const parlVorstossStufe = ({ isPrintPreview, geschaeft, change, nrOfFieldsBefore
   )
 }
 
-const parlVorstossZustaendigkeit = ({ isPrintPreview, geschaeft, change, nrOfFieldsBeforePv }) => {
+const parlVorstossZustaendigkeit = ({
+  isPrintPreview,
+  geschaeft,
+  change,
+  nrOfFieldsBeforePv,
+}) => {
   if (!isPrintPreview) {
     return (
       <div>

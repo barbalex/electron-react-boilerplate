@@ -31,12 +31,12 @@ export const geschaeftPdfShow = () =>
 
 export const getGeschaefte = () =>
   (dispatch, getState) => {
-    const { app, routing } = getState()
+    const { app } = getState()
     dispatch(geschaefteGet())
     getGeschaefteFromDb(app.db)
       .then((geschaefte) => {
         dispatch(geschaefteGetSuccess(geschaefte))
-        if (routing.locationBeforeTransitions.pathname !== '/geschaefte') {
+        if (window.location.pathname !== '/geschaefte') {
           dispatch(push('/geschaefte'))
         }
       })

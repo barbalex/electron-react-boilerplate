@@ -12,7 +12,6 @@ const App = ({ children }) => {
   }
   return (
     <div ref={setRef}>
-      <DevTools />
       <Navbar />
       {children}
     </div>

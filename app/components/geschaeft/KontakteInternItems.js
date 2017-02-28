@@ -81,12 +81,12 @@ const RemoveGlyphicon = styled(Glyphicon)`
 const enhance = compose(
   inject('store'),
   withProps((props) => {
-    const { store, routing } = props
+    const { store, location } = props
     const {
       interneOptions,
       activeId,
     } = store.geschaefte
-    const path = routing.locationBeforeTransitions.pathname
+    const path = location.pathname
     const {
       geschaefteKontakteIntern,
     } = store.geschaefteKontakteIntern

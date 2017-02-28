@@ -31,12 +31,12 @@ export default (store) => ({
     store.table.error = [...store.table.error, error]
   }),
   getTable: action((table) => {
-    const { app, routing } = store
+    const { app } = store
     store.tableGet(table)
     getTableFromDb(app.db, table)
       .then((rows) => {
         store.tableGetSuccess(table, rows)
-        if (routing.locationBeforeTransitions.pathname !== '/table') {
+        if (window.location.pathname !== '/table') {
           browserHistory.push('/table')
         }
       })
@@ -58,12 +58,12 @@ export default (store) => ({
     )
   }),
   tableRowNewCreate: action((table) => {
-    const { app, routing } = store
+    const { app } = store
     newTableRowInDb(app.db, table)
       .then((row) => {
         store.tableRowNew(table, row)
         store.tableRowToggleActivated(table, row.id)
-        if (routing.locationBeforeTransitions.pathname !== '/table') {
+        if (window.location.pathname !== '/table') {
           browserHistory.push('/table')
         }
       })

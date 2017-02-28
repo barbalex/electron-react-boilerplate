@@ -24,7 +24,7 @@ const enhance = compose(
   withProps((props) => {
     const {
       store,
-      routing,
+      location,
       pages,
     } = props
     const {
@@ -38,7 +38,7 @@ const enhance = compose(
     const {
       activeId,
     } = store.geschaefte
-    const path = routing.locationBeforeTransitions.pathname
+    const path = location.pathname
     return {
       path,
       pages,
