@@ -26,7 +26,6 @@ const enhance = compose(
   withProps((props) => {
     const {
       store,
-      location,
     } = props
     const {
       geschaefteRemoveFilters,
@@ -46,7 +45,8 @@ const enhance = compose(
     const {
       username,
     } = store.user
-    const path = location.pathname
+    console.log('FilterNav, withProps: store.user:', store.user)
+    console.log('FilterNav, withProps: store.user.username:', store.user.username)
     return {
       username,
       filterFields: toJS(filterFields),
@@ -55,7 +55,6 @@ const enhance = compose(
       sortFields: toJS(sortFields),
       geschaefte,
       geschaefteGefilterteIds: toJS(geschaefteGefilterteIds),
-      path,
       geschaefteRemoveFilters,
       geschaefteFilterByFulltext,
       geschaefteFilterByFields,
@@ -80,9 +79,10 @@ const FilterNav = ({
   username,
   geschaefteRemoveFilters,
   geschaefteFilterByFulltext,
-  path,
   router,
+  location,
 }) => {
+  const path = location.pathname
   const dataIsFilteredByFulltext = (
     geschaefte.length !== geschaefteGefilterteIds.length &&
     filterFulltext
@@ -283,7 +283,7 @@ FilterNav.propTypes = {
   router: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,
-  path: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 export default enhance(FilterNav)

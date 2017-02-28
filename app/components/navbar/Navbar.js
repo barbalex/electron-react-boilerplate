@@ -4,6 +4,7 @@ import {
   Nav,
   NavItem,
 } from 'react-bootstrap'
+import { withRouter } from 'react-router'
 import { LinkContainer } from 'react-router-bootstrap'
 import styled from 'styled-components'
 import { toJS } from 'mobx'
@@ -35,36 +36,26 @@ const GeschaefteLinkContainer = styled(({ showGeschaefteNavs, children, ...rest 
 
 const enhance = compose(
   inject('store'),
+  withRouter,
   withProps((props) => {
-    const {
-      store,
-      ...rest
-    } = props
-    const {
-      configGet,
-    } = store
-    const {
-      showMessageModal,
-    } = store.app
-    const {
-      showPagesModal,
-    } = store.pages
+    const { store, location } = props
+    const { configGet } = store
+    const { showMessageModal } = store.app
+    const { showPagesModal } = store.pages
     const {
       geschaefteGefilterteIds,
       geschaeftePlus: geschaefte,
       willDelete,
     } = store.geschaefte
-    console.log('Navbar, withProps, props:', props)
     const path = location.pathname
     return {
       geschaeftePlus: geschaefte,
       geschaefteGefilterteIds: toJS(geschaefteGefilterteIds),
       willDeleteGeschaeft: willDelete,
-      path,
       showMessageModal,
       showPagesModal,
       configGet,
-      ...rest,
+      path,
     }
   }),
   observer
@@ -98,7 +89,6 @@ class NavbarComponent extends Component {
       showPagesModal,
       willDeleteGeschaeft,
       path,
-      ...rest,
     } = this.props
 
     const dataIsFiltered = geschaefte.length !== geschaefteGefilterteIds.length
@@ -178,7 +168,7 @@ class NavbarComponent extends Component {
           <Nav pullRight>
             {
               !showTableNavs &&
-              <FilterNav {...rest} />
+              <FilterNav />
             }
             <OptionsNav />
           </Nav>
