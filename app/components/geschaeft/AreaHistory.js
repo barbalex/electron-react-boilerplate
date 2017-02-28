@@ -48,7 +48,7 @@ const enhance = compose(
     } = props
     const {
       activeId,
-      geschaefte,
+      geschaeftePlus: geschaefte,
     } = store.geschaefte
     const path = routing.locationBeforeTransitions.pathname
     const geschaeft = geschaefte.find(g =>

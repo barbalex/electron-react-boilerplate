@@ -7,6 +7,9 @@ import {
 } from 'react-bootstrap'
 import moment from 'moment'
 import _ from 'lodash'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
 
 import exportGeschaefte from '../../src/exportGeschaefte'
 import getHistoryOfGeschaefte from '../../src/getHistoryOfGeschaefte'
@@ -130,6 +133,28 @@ const exportGeschaefteAll = (
   exportGeschaefte(geschaefteReadable, messageShow)
 }
 
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const {
+      store,
+    } = props
+    const {
+      messageShow,
+    } = props.store
+    const {
+      geschaefteGefilterteIds,
+      geschaeftePlus: geschaefte,
+    } = store.geschaefte
+    return {
+      geschaefte,
+      geschaefteGefilterteIds,
+      messageShow,
+    }
+  }),
+  observer
+)
+
 const NavbarExportGeschaefteNav = ({
   geschaefte,
   messageShow,
@@ -172,4 +197,4 @@ NavbarExportGeschaefteNav.propTypes = {
   messageShow: PropTypes.func.isRequired,
 }
 
-export default NavbarExportGeschaefteNav
+export default enhance(NavbarExportGeschaefteNav)

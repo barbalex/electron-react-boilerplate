@@ -6,21 +6,24 @@ import {
 } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
 
 import ModalGeschaeftDelete from '../../containers/ModalGeschaeftDelete'
 import ModalMessage from '../../containers/ModalMessage'
 import PagesModal from '../../containers/PagesModal'
-import BerichteNav from '../../containers/navbar/BerichteNav'
-import GeschaeftNeuNav from '../../containers/navbar/GeschaeftNewNav'
-import GeschaeftLoeschenNav from '../../containers/navbar/GeschaeftDeleteNav'
-import TableRowNeuNav from '../../containers/navbar/TableRowNewNav'
-import TableRowDeleteNav from '../../containers/navbar/TableRowDeleteNav'
-import ExportGeschaefteNav from '../../containers/navbar/ExportGeschaefteNav'
-import PrintToPdfNav from '../../containers/navbar/PrintToPdfNav'
-import PrintNav from '../../containers/navbar/PrintNav'
-import StammdatenNav from '../../containers/navbar/StammdatenNav'
-import FilterNav from '../../containers/navbar/FilterNav'
-import OptionsNav from '../../containers/navbar/OptionsNav'
+import BerichteNav from './BerichteNav'
+import GeschaeftNeuNav from './GeschaeftNewNav'
+import GeschaeftLoeschenNav from './GeschaeftDeleteNav'
+import TableRowNeuNav from './TableRowNewNav'
+import TableRowDeleteNav from './TableRowDeleteNav'
+import ExportGeschaefteNav from './ExportGeschaefteNav'
+import PrintToPdfNav from './PrintToPdfNav'
+import PrintNav from './PrintNav'
+import StammdatenNav from './StammdatenNav'
+import FilterNav from './FilterNav'
+import OptionsNav from './OptionsNav'
 import styles from './Navbar.css'
 
 // eslint-disable-next-line no-unused-vars
@@ -28,6 +31,37 @@ const GeschaefteLinkContainer = styled(({ showGeschaefteNavs, children, ...rest 
   border-left: ${props => (props.showGeschaefteNavs ? 'solid grey 1px' : 'dotted #505050 1px')};
   border-right: ${props => (props.showGeschaefteNavs ? 'none' : 'dotted #505050 1px')};
 `
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const {
+      store,
+      routing,
+    } = props
+    const {
+      showPagesModal,
+      showMessageModal,
+      configGet,
+    } = store
+    const {
+      geschaefteGefilterteIds,
+      geschaeftePlus: geschaefte,
+      willDelete,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    return {
+      geschaefte,
+      geschaefteGefilterteIds,
+      willDeleteGeschaeft: willDelete,
+      path,
+      showMessageModal,
+      showPagesModal,
+      configGet,
+    }
+  }),
+  observer
+)
 
 class NavbarComponent extends Component {
   static propTypes = {
@@ -142,4 +176,4 @@ class NavbarComponent extends Component {
   }
 }
 
-export default NavbarComponent
+export default enhance(NavbarComponent)

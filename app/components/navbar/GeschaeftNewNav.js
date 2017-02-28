@@ -3,6 +3,25 @@ import {
   NavItem,
   Glyphicon,
 } from 'react-bootstrap'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const {
+      store,
+    } = props
+    const {
+      geschaeftNewCreate,
+    } = store
+    return {
+      geschaeftNewCreate,
+    }
+  }),
+  observer
+)
 
 const NavbarGeschaeftNeuNav = ({
   geschaeftNewCreate,
@@ -20,4 +39,4 @@ NavbarGeschaeftNeuNav.propTypes = {
   geschaeftNewCreate: PropTypes.func.isRequired,
 }
 
-export default NavbarGeschaeftNeuNav
+export default enhance(NavbarGeschaeftNeuNav)

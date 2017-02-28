@@ -3,6 +3,20 @@ import {
   NavItem,
   Glyphicon,
 } from 'react-bootstrap'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store } = props
+    const { tableRowNewCreate } = store
+    const { table } = store.table
+    return { table, tableRowNewCreate }
+  }),
+  observer
+)
 
 const NavbarTableRowNeuNav = ({
   tableRowNewCreate,
@@ -24,4 +38,4 @@ NavbarTableRowNeuNav.propTypes = {
   tableRowNewCreate: PropTypes.func.isRequired,
 }
 
-export default NavbarTableRowNeuNav
+export default enhance(NavbarTableRowNeuNav)

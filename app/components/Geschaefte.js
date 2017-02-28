@@ -22,7 +22,7 @@ const enhance = compose(
     const {
       activeId,
       geschaefteGefilterteIds,
-      geschaefte,
+      geschaeftePlus: geschaefte,
       filterFields,
       filterFulltext,
     } = store.geschaefte

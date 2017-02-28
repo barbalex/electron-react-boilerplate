@@ -1,9 +1,11 @@
 import { remote } from 'electron'
-import React, { PropTypes } from 'react'
+import React from 'react'
 import {
   NavItem,
   Glyphicon,
 } from 'react-bootstrap'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
 
 const onClickPrint = (e) => {
   e.preventDefault()
@@ -21,6 +23,11 @@ const onClickPrint = (e) => {
   win.webContents.print()
 }
 
+const enhance = compose(
+  inject('store'),
+  observer
+)
+
 const NavbarPrintNav = () =>
   <NavItem
     onClick={onClickPrint}
@@ -31,8 +38,4 @@ const NavbarPrintNav = () =>
 
 NavbarPrintNav.displayName = 'NavbarPrintNav'
 
-NavbarPrintNav.propTypes = {
-  path: PropTypes.string.isRequired,
-}
-
-export default NavbarPrintNav
+export default enhance(NavbarPrintNav)

@@ -5,6 +5,9 @@ import {
 } from 'react-bootstrap'
 import styled from 'styled-components'
 import { shell } from 'electron'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
 
 const DbPathDiv = styled.div`
   font-style: italic;
@@ -16,6 +19,28 @@ const onGetProjektbeschreibung = () => {
 const onClickIssues = () => {
   shell.openItem('https://github.com/barbalex/kapla3/issues')
 }
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const {
+      store,
+    } = props
+    const {
+      dbGet,
+      configUiReset,
+    } = store
+    const {
+      config,
+    } = store.app
+    return {
+      config,
+      dbGet,
+      configUiReset,
+    }
+  }),
+  observer
+)
 
 const OptionsNav = ({
   config,
@@ -65,4 +90,4 @@ OptionsNav.propTypes = {
   configUiReset: PropTypes.func.isRequired,
 }
 
-export default OptionsNav
+export default enhance(OptionsNav)

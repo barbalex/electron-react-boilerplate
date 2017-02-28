@@ -24,7 +24,7 @@ const enhance = compose(
     } = props
     const {
       activeId,
-      geschaefte,
+      geschaeftePlus: geschaefte,
       parlVorstossTypOptions,
     } = store.geschaefte
     const path = routing.locationBeforeTransitions.pathname

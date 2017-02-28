@@ -4,6 +4,9 @@ import {
   MenuItem,
 } from 'react-bootstrap'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
 
 import styles from './Navbar.css'
 import filterForVernehmlAngek from '../../src/filterForVernehmlAngek'
@@ -15,6 +18,41 @@ const StyledNavDropdown = styled(({ showBerichteNavs, children, ...rest }) => <N
   border-left: ${props => (props.showBerichteNavs ? 'solid grey 1px' : 'dotted #505050 1px')}
   border-right: ${props => (props.showBerichteNavs ? 'none' : 'dotted #505050 1px')};
 `
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const {
+      store,
+      routing,
+      pages,
+    } = props
+    const {
+      pagesInitiate,
+      geschaeftPdfShow,
+      geschaefteFilterByFields,
+      geschaefteSortByFields,
+      geschaefteResetSort,
+      showBerichteNavs,
+    } = props.store
+    const {
+      activeId,
+    } = store.geschaefte
+    const path = routing.locationBeforeTransitions.pathname
+    return {
+      path,
+      pages,
+      activeId,
+      pagesInitiate,
+      geschaeftPdfShow,
+      geschaefteFilterByFields,
+      geschaefteSortByFields,
+      geschaefteResetSort,
+      showBerichteNavs,
+    }
+  }),
+  observer
+)
 
 const BerichteNav = ({
   pagesInitiate,
@@ -157,4 +195,4 @@ BerichteNav.defaultProps = {
   activeId: null,
 }
 
-export default BerichteNav
+export default enhance(BerichteNav)

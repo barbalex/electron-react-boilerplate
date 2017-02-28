@@ -31,7 +31,7 @@ const enhance = compose(
     } = props
     const {
       activeId,
-      geschaefte,
+      geschaeftePlus: geschaefte,
     } = store.geschaefte
     const geschaeft = geschaefte.find(g =>
       g.idGeschaeft === activeId

@@ -4,6 +4,9 @@ import {
   MenuItem,
 } from 'react-bootstrap'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
 
 import styles from './Navbar.css'
 
@@ -34,6 +37,22 @@ const StyledNavDropdown = styled(({ showTableNavs, children, ...rest }) => <NavD
   border-left: ${props => (props.showTableNavs ? 'solid grey 1px' : 'dotted #505050 1px')}
   border-right: ${props => (props.showTableNavs ? 'none' : 'dotted #505050 1px')};
 `
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store } = props
+    const { showTableNavs, getTable } = store
+    const { table, rows } = store.table
+    return {
+      table,
+      rows,
+      showTableNavs,
+      getTable,
+    }
+  }),
+  observer
+)
 
 const NavbarStammdatenNav = ({
   getTable,
@@ -121,4 +140,4 @@ NavbarStammdatenNav.propTypes = {
   showTableNavs: PropTypes.bool.isRequired,
 }
 
-export default NavbarStammdatenNav
+export default enhance(NavbarStammdatenNav)

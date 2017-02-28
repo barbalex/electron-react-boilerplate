@@ -107,7 +107,7 @@ const enhance = compose(
     const { store, routing } = props
     const {
       activeId,
-      geschaefte,
+      geschaeftePlus: geschaefte,
     } = store.geschaefte
     const path = routing.locationBeforeTransitions.pathname
     const {

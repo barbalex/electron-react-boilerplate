@@ -213,7 +213,7 @@ const enhance = compose(
     const {
       aktenstandortOptions,
       activeId,
-      geschaefte,
+      geschaeftePlus: geschaefte,
     } = store.geschaefte
     const path = routing.locationBeforeTransitions.pathname
     const isPrintPreview = path === '/geschaeftPdf'

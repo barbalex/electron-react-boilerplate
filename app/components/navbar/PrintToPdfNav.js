@@ -6,6 +6,9 @@ import {
   Glyphicon,
 } from 'react-bootstrap'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
 
 // eslint-disable-next-line no-unused-vars
 const StyledNavItem = styled(({ showBerichteNavs, children, ...rest }) => <NavItem {...rest}>{children}</NavItem>)`
@@ -55,6 +58,25 @@ const onClickPrint = (e, path) => {
   )
 }
 
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const {
+      store,
+      routing,
+    } = props
+    const path = routing.locationBeforeTransitions.pathname
+    const {
+      showBerichteNavs,
+    } = store
+    return {
+      path,
+      showBerichteNavs,
+    }
+  }),
+  observer
+)
+
 const NavbarPrintNav = ({
   path,
   showBerichteNavs,
@@ -76,4 +98,4 @@ NavbarPrintNav.propTypes = {
   showBerichteNavs: PropTypes.bool.isRequired,
 }
 
-export default NavbarPrintNav
+export default enhance(NavbarPrintNav)

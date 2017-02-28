@@ -4,17 +4,36 @@ import {
   Glyphicon,
 } from 'react-bootstrap'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
 
 // eslint-disable-next-line no-unused-vars
 const StyledNavItem = styled(({ showTableNavs, children, ...rest }) => <NavItem {...rest}>{children}</NavItem>)`
   border-right: ${props => (props.showTableNavs ? 'solid grey 1px' : 'dotted #505050 1px')};
 `
 
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store } = props
+    const { tableRowRemove, showTableNavs } = store
+    const { table, id } = store.table
+    return {
+      table,
+      activeTableRowId: id,
+      tableRowRemove,
+      showTableNavs,
+    }
+  }),
+  observer
+)
+
 const NavbarTableRowDeleteNav = ({
   tableRowRemove,
+  showTableNavs,
   table,
   activeTableRowId,
-  showTableNavs,
 }) =>
   <StyledNavItem
     onClick={() =>
@@ -40,4 +59,4 @@ NavbarTableRowDeleteNav.defaultProps = {
   activeTableRowId: null,
 }
 
-export default NavbarTableRowDeleteNav
+export default enhance(NavbarTableRowDeleteNav)

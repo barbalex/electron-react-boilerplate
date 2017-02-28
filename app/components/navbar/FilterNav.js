@@ -9,12 +9,62 @@ import {
   FormControl,
 } from 'react-bootstrap'
 import moment from 'moment'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+
 import filterForFaelligeGeschaefte from '../../src/filterForFaelligeGeschaefte'
 import filterForVernehmlAngek from '../../src/filterForVernehmlAngek'
 import filterForVernehmlLaeuft from '../../src/filterForVernehmlLaeuft'
 import filterCriteriaToArrayOfStrings from '../../src/filterCriteriaToArrayOfStrings'
 import sortCriteriaToArrayOfStrings from '../../src/sortCriteriaToArrayOfStrings'
 import styles from './Navbar.css'
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const {
+      store,
+      routing,
+    } = props
+    const {
+      geschaefteRemoveFilters,
+      geschaefteFilterByFulltext,
+      geschaefteFilterByFields,
+      geschaefteSortByFields,
+      geschaefteResetSort,
+    } = store
+    const {
+      filterFields,
+      filterType,
+      filterFulltext,
+      sortFields,
+      geschaefteGefilterteIds,
+      geschaeftePlus: geschaefte,
+    } = store.geschaefte
+    const {
+      username,
+    } = store.user
+    const path = routing.locationBeforeTransitions.pathname
+    return {
+      username,
+      filterFields,
+      filterType,
+      filterFulltext,
+      sortFields,
+      geschaefte,
+      geschaefteGefilterteIds,
+      path,
+      geschaefteRemoveFilters,
+      geschaefteFilterByFulltext,
+      geschaefteFilterByFields,
+      geschaefteSortByFields,
+      geschaefteResetSort,
+    }
+  }),
+  withRouter(),
+  observer
+)
 
 const FilterNav = ({
   sortFields,
@@ -235,4 +285,4 @@ FilterNav.propTypes = {
   path: PropTypes.string.isRequired,
 }
 
-export default withRouter(FilterNav)
+export default enhance(FilterNav)

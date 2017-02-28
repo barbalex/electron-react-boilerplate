@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import Navbar from '../containers/navbar/Navbar'
+import Navbar from '../components/navbar/Navbar'
 
 const App = ({ children }) => {
   // setting ref according to this:

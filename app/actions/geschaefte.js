@@ -92,19 +92,18 @@ export const geschaefteFilterByFields = (
 ) =>
   (dispatch, getState) => {
     const { routing, pages } = getState()
-    const { filterFulltext, sortFields } = getState().geschaefte
-    const geschaefte = getGeschaefteWithNSideData(getState())
+    const { filterFulltext, sortFields, geschaeftePlus } = getState().geschaefte
     // remove filterFields with empty values
     const filterFieldsWithValues = filterFields.filter(ff =>
       ff.value || ff.value === 0 || ff.comparator
     )
     // create geschaefteGefilterteIds
     let geschaefteGefilterteIds = filterGeschaefte(
-      geschaefte,
+      geschaeftePlus,
       filterFulltext,
       filterFieldsWithValues
     )
-    geschaefteGefilterteIds = sortIdsBySortFields(geschaefte, geschaefteGefilterteIds, sortFields)
+    geschaefteGefilterteIds = sortIdsBySortFields(geschaeftePlus, geschaefteGefilterteIds, sortFields)
     dispatch({
       type: GESCHAEFTE_FILTER_BY_FIELDS,
       filterFields: filterFieldsWithValues,
@@ -157,14 +156,14 @@ export const GESCHAEFTE_FILTER_BY_FULLTEXT = 'GESCHAEFTE_FILTER_BY_FULLTEXT'
 export const geschaefteFilterByFulltext = (filterFulltext, filterType = 'nach Volltext') =>
   (dispatch, getState) => {
     const { pages, routing } = getState()
-    const { filterFields, geschaefte, sortFields } = getState().geschaefte
+    const { filterFields, geschaeftePlus, sortFields } = getState().geschaefte
     // create geschaefteGefilterteIds
     let geschaefteGefilterteIds = filterGeschaefte(
-      geschaefte,
+      geschaeftePlus,
       filterFulltext,
       filterFields
     )
-    geschaefteGefilterteIds = sortIdsBySortFields(geschaefte, geschaefteGefilterteIds, sortFields)
+    geschaefteGefilterteIds = sortIdsBySortFields(geschaeftePlus, geschaefteGefilterteIds, sortFields)
     dispatch({
       type: GESCHAEFTE_FILTER_BY_FULLTEXT,
       geschaefteGefilterteIds,

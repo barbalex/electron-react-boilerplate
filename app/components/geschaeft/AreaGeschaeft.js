@@ -22,7 +22,7 @@ const enhance = compose(
     } = props
     const {
       activeId,
-      geschaefte,
+      geschaeftePlus: geschaefte,
       statusOptions,
       abteilungOptions,
       geschaeftsartOptions,
