@@ -103,8 +103,14 @@ export default (store) => ({
     const { pages } = store
     const sortFields = geschaefteSortByFieldsGetSortFields(store, field, direction)
     console.log('geschaefteSortByFields: sortFields:', sortFields)
+    console.log('geschaefteSortByFields: store:', store)
+    console.log('geschaefteSortByFields: store.geschaefte:', store.geschaefte)
+    console.log('geschaefteSortByFields: store.geschaefte.geschaefte:', store.geschaefte.geschaefte)
+    console.log('geschaefteSortByFields: store.geschaefte.geschaefte.length:', store.geschaefte.geschaefte.length)
+    console.log('geschaefteSortByFields: store.geschaefte.geschaeftePlus:', store.geschaefte.geschaeftePlus)
+    console.log('geschaefteSortByFields: store.geschaefte.geschaeftePlus.length:', store.geschaefte.geschaeftePlus.length)
     const geschaefteGefilterteIds = sortIdsBySortFields(
-      store.geschaefte,
+      store.geschaefte.geschaefte,
       store.geschaefteGefilterteIds,
       sortFields
     )

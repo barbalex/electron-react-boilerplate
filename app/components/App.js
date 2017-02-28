@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
-import DevTools from 'mobx-react-devtools'
+// add devtools below ref
+// import DevTools from 'mobx-react-devtools'
 
 import Navbar from '../components/navbar/Navbar'
 
