@@ -62,7 +62,7 @@ const enhance = compose(
       geschaefteResetSort,
     }
   }),
-  withRouter(),
+  withRouter,
   observer
 )
 

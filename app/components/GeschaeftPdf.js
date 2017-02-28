@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
 
-import Geschaeft from '../containers/geschaeft/Geschaeft'
+import Geschaeft from './geschaeft/Geschaeft'
 // import logoImg from '../etc/logo.png'
 
 /*

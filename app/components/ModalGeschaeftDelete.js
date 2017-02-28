@@ -1,5 +1,26 @@
 import React, { PropTypes } from 'react'
 import { Modal, Button } from 'react-bootstrap'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+import withProps from 'recompose/withProps'
+
+const enhance = compose(
+  inject('store'),
+  withProps((props) => {
+    const { store } = props
+    const {
+      geschaeftRemove,
+      geschaeftRemoveDeleteIntended,
+    } = store
+    const { activeId } = store.geschaefte
+    return {
+      activeId,
+      geschaeftRemove,
+      geschaeftRemoveDeleteIntended,
+    }
+  }),
+  observer
+)
 
 const ModalGeschaeftDelete = ({
   geschaeftRemove,
@@ -40,4 +61,4 @@ ModalGeschaeftDelete.propTypes = {
   activeId: PropTypes.number,
 }
 
-export default ModalGeschaeftDelete
+export default enhance(ModalGeschaeftDelete)

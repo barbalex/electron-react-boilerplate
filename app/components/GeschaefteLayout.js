@@ -6,7 +6,7 @@ import withProps from 'recompose/withProps'
 import withHandlers from 'recompose/withHandlers'
 
 import Geschaeft from '../components/geschaeft/Geschaeft'
-import Pages from '../containers/Pages'
+import Pages from './Pages'
 import GeschaeftPdf from '../components/GeschaeftPdf'
 import Geschaefte from '../components/Geschaefte'
 

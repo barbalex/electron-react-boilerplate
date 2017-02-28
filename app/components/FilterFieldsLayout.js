@@ -6,7 +6,7 @@ import withProps from 'recompose/withProps'
 import withHandlers from 'recompose/withHandlers'
 
 import FilterFields from '../containers/filterFields/FilterFields'
-import Geschaefte from '../containers/Geschaefte'
+import Geschaefte from './Geschaefte'
 
 const enhance = compose(
   inject('store'),
