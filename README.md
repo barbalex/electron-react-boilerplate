@@ -28,7 +28,7 @@ Kapla ist in JavaScript geschrieben und benutzt unter anderem:
 - [electron](http://electron.atom.io)
 - [nodejs](https://nodejs.org)
 - [React](https://facebook.github.io/react)
-- [Redux](http://redux.js.org)
+- [MobX](https://github.com/mobxjs/mobx)
 - [styled components](https://github.com/styled-components/styled-components)
 - [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/grid)
 
