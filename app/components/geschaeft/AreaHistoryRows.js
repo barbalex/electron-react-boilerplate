@@ -104,7 +104,7 @@ const AreaHistoryRows = ({ store }) => {
 AreaHistoryRows.displayName = 'AreaHistoryRows'
 
 AreaHistoryRows.propTypes = {
-  store: PropTypes.array.isRequired,
+  store: PropTypes.object.isRequired,
 }
 
 export default enhance(AreaHistoryRows)

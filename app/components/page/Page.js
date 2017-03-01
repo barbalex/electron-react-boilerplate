@@ -145,7 +145,7 @@ class Page extends Component {
     })
   }
 
-  render = () => {
+  render() {
     const { store, pageIndex } = this.props
     const { pages, building, reportType } = store.pages
     const { filterFields, sortFields } = store.geschaefte

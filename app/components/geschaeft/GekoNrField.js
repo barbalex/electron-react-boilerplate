@@ -45,7 +45,7 @@ class GekoNrField extends Component {
     }
   }
 
-  render = () => {
+  render() {
     const { tabsToAdd } = this.props
     const { gekoNr } = this.state
 
