@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import { withRouter } from 'react-router'
 import {
   MenuItem,
   Button,
@@ -9,10 +8,9 @@ import {
   FormControl,
 } from 'react-bootstrap'
 import moment from 'moment'
-import { toJS } from 'mobx'
+import { withRouter } from 'react-router'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import filterForFaelligeGeschaefte from '../../src/filterForFaelligeGeschaefte'
 import filterForVernehmlAngek from '../../src/filterForVernehmlAngek'
@@ -23,63 +21,27 @@ import styles from './Navbar.css'
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-    } = props
-    const {
-      geschaefteRemoveFilters,
-      geschaefteFilterByFulltext,
-      geschaefteFilterByFields,
-      geschaefteSortByFields,
-      geschaefteResetSort,
-    } = store
-    const {
-      filterFields,
-      filterType,
-      filterFulltext,
-      sortFields,
-      geschaefteGefilterteIds,
-      geschaeftePlus: geschaefte,
-    } = store.geschaefte
-    const {
-      username,
-    } = store.user
-    return {
-      username,
-      filterFields: toJS(filterFields),
-      filterType,
-      filterFulltext,
-      sortFields: toJS(sortFields),
-      geschaefte,
-      geschaefteGefilterteIds: toJS(geschaefteGefilterteIds),
-      geschaefteRemoveFilters,
-      geschaefteFilterByFulltext,
-      geschaefteFilterByFields,
-      geschaefteSortByFields,
-      geschaefteResetSort,
-    }
-  }),
   withRouter,
   observer
 )
 
-const FilterNav = ({
-  sortFields,
-  filterFulltext,
-  filterFields,
-  filterType,
-  geschaefte,
-  geschaefteGefilterteIds,
-  geschaefteFilterByFields,
-  geschaefteSortByFields,
-  geschaefteResetSort,
-  username,
-  geschaefteRemoveFilters,
-  geschaefteFilterByFulltext,
-  router,
-  location,
-}) => {
+const FilterNav = ({ store, router }) => {
+  const {
+    geschaefteRemoveFilters,
+    geschaefteFilterByFulltext,
+    geschaefteFilterByFields,
+    geschaefteSortByFields,
+    geschaefteResetSort,
+  } = store
+  const {
+    filterFields,
+    filterType,
+    filterFulltext,
+    sortFields,
+    geschaefteGefilterteIds,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+  } = store.geschaefte
+  const { username } = store.user
   const path = location.pathname
   const dataIsFilteredByFulltext = (
     geschaefte.length !== geschaefteGefilterteIds.length &&
@@ -266,28 +228,8 @@ const FilterNav = ({
 FilterNav.displayName = 'FilterNav'
 
 FilterNav.propTypes = {
-  sortFields: PropTypes.array.isRequired,
-  filterFields: PropTypes.array.isRequired,
-  filterType: PropTypes.string,
-  geschaefte: PropTypes.array.isRequired,
-  geschaefteGefilterteIds: PropTypes.array.isRequired,
-  geschaefteFilterByFields: PropTypes.func.isRequired,
-  geschaefteFilterByFulltext: PropTypes.func.isRequired,
-  geschaefteRemoveFilters: PropTypes.func.isRequired,
-  geschaefteSortByFields: PropTypes.func.isRequired,
-  geschaefteResetSort: PropTypes.func.isRequired,
-  filterFulltext: PropTypes.string.isRequired,
-  // on initial load, username is undefined
-  username: PropTypes.string,
-  router: PropTypes.shape({
-    push: PropTypes.func.isRequired
-  }).isRequired,
-  location: PropTypes.object.isRequired,
-}
-
-FilterNav.defaultProps = {
-  username: '',
-  filterType: '',
+  store: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
 }
 
 export default enhance(FilterNav)

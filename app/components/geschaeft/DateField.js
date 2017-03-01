@@ -10,7 +10,6 @@ import moment from 'moment'
 import DateRangePicker from 'react-bootstrap-daterangepicker'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import styles from './dateField.css'
 import getDateValidationStateDate from '../../src/getDateValidationStateDate'
@@ -19,38 +18,11 @@ moment.locale('de')
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-      name,
-      label,
-      change,
-      blur,
-      onChangeDatePicker,
-      tabIndex,
-    } = props
-    const {
-      activeId,
-      geschaeftePlus: geschaefte,
-    } = store.geschaefte
-    const geschaeft = geschaefte.find(g =>
-      g.idGeschaeft === activeId
-    )
-    return {
-      name,
-      label,
-      geschaeft,
-      change,
-      blur,
-      onChangeDatePicker,
-      tabIndex,
-    }
-  }),
   observer
 )
 
 const DateField = ({
-  geschaeft,
+  store,
   name,
   label,
   change,
@@ -58,6 +30,13 @@ const DateField = ({
   onChangeDatePicker,
   tabIndex,
 }) => {
+  const {
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+  } = store.geschaefte
+  const geschaeft = geschaefte.find(g =>
+    g.idGeschaeft === activeId
+  )
   /**
    * need to give addon no padding
    * and the originally addon's padding to the glyphicon
@@ -114,7 +93,7 @@ const DateField = ({
 DateField.displayName = 'DateField'
 
 DateField.propTypes = {
-  geschaeft: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   change: PropTypes.func.isRequired,

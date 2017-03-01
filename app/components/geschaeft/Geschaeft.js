@@ -4,9 +4,9 @@ import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import $ from 'jquery'
 import styled from 'styled-components'
+import { withRouter } from 'react-router'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import isDateField from '../../src/isDateField'
 import validateDate from '../../src/validateDate'
@@ -103,39 +103,14 @@ const WrapperWideNoAreaForGeschaeftsartPdf = styled(WrapperPdf)`
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const { store, location } = props
-    const {
-      activeId,
-      geschaeftePlus: geschaefte,
-    } = store.geschaefte
-    const path = location.pathname
-    const {
-      config,
-    } = store.app
-    const isPrintPreview = path === '/geschaeftPdf'
-    const geschaeft = geschaefte.find(g =>
-      g.idGeschaeft === activeId
-    )
-
-    return {
-      geschaeft,
-      activeId,
-      config,
-      isPrintPreview,
-    }
-  }),
+  withRouter,
   observer
 )
 
 class Geschaeft extends Component {
   static propTypes = {
-    geschaeft: PropTypes.object.isRequired,
-    activeId: PropTypes.number.isRequired,
-    geschaefteChangeState: PropTypes.func.isRequired,
-    changeGeschaeftInDb: PropTypes.func.isRequired,
-    config: PropTypes.object.isRequired,
-    isPrintPreview: PropTypes.bool.isRequired,
+    store: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
   }
 
   onChangeDatePicker = (name, e, picker) => {
@@ -150,12 +125,15 @@ class Geschaeft extends Component {
   }
 
   change = (e) => {
+    const { store } = this.props
+    const { changeGeschaeftInDb, geschaefteChangeState } = store
     const {
-      geschaeft,
       activeId,
-      geschaefteChangeState,
-      changeGeschaeftInDb,
-    } = this.props
+      geschaeftePlusFilteredAndSorted: geschaefte,
+    } = store.geschaefte
+    const geschaeft = geschaefte.find(g =>
+      g.idGeschaeft === activeId
+    )
     const {
       type,
       name,
@@ -179,11 +157,9 @@ class Geschaeft extends Component {
   }
 
   blur = (e) => {
-    const {
-      activeId,
-      changeGeschaeftInDb,
-      geschaefteChangeState,
-    } = this.props
+    const { store } = this.props
+    const { changeGeschaeftInDb, geschaefteChangeState } = store
+    const { activeId } = store.geschaefte
     const {
       type,
       name,
@@ -209,11 +185,17 @@ class Geschaeft extends Component {
   }
 
   render = () => {
+    const { store, location } = this.props
     const {
-      geschaeft,
-      config,
-      isPrintPreview,
-    } = this.props
+      activeId,
+      geschaeftePlusFilteredAndSorted: geschaefte,
+    } = store.geschaefte
+    const path = location.pathname
+    const { config } = store.app
+    const isPrintPreview = path === '/geschaeftPdf'
+    const geschaeft = geschaefte.find(g =>
+      g.idGeschaeft === activeId
+    )
 
     // return immediately if no geschaeft
     const showGeschaeft = geschaeft && geschaeft.idGeschaeft
@@ -299,7 +281,6 @@ class Geschaeft extends Component {
             <AreaParlVorstoss
               nrOfFieldsBeforePv={nrOfFieldsBeforePv}
               change={this.change}
-              blur={this.blur}
             />
           }
           {
@@ -320,14 +301,11 @@ class Geschaeft extends Component {
           <AreaPersonen
             nrOfFieldsBeforePersonen={nrOfFieldsBeforePersonen}
             change={this.change}
-            blur={this.blur}
           />
           {
             showLinks &&
             <AreaLinks
               links={geschaeft.links}
-              blur={this.blur}
-              change={this.change}
             />
           }
           <AreaHistory

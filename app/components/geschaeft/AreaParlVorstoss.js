@@ -6,7 +6,6 @@ import {
 } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import regularStyles from './areaParlVorstoss.css'
 import pdfStyles from './areaParlVorstossPdf.css'
@@ -14,42 +13,15 @@ import createOptions from '../../src/createOptions'
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-      location,
-      blur,
-      change,
-      nrOfFieldsBeforePv,
-    } = props
-    const {
-      activeId,
-      geschaeftePlus: geschaefte,
-      parlVorstossTypOptions,
-    } = store.geschaefte
-    const path = location.pathname
-    const isPrintPreview = path === '/geschaeftPdf'
-    const geschaeft = geschaefte.find(g =>
-      g.idGeschaeft === activeId
-    )
-    return {
-      geschaeft,
-      parlVorstossTypOptions,
-      change,
-      blur,
-      nrOfFieldsBeforePv,
-      isPrintPreview,
-    }
-  }),
   observer
 )
 
-const parlVorstossStufe = ({
+const parlVorstossStufe = (
   isPrintPreview,
   geschaeft,
   change,
   nrOfFieldsBeforePv,
-}) => {
+) => {
   if (!isPrintPreview) {
     return (
       <div>
@@ -97,12 +69,12 @@ const parlVorstossStufe = ({
   )
 }
 
-const parlVorstossZustaendigkeit = ({
+const parlVorstossZustaendigkeit = (
   isPrintPreview,
   geschaeft,
   change,
   nrOfFieldsBeforePv,
-}) => {
+) => {
   if (!isPrintPreview) {
     return (
       <div>
@@ -153,12 +125,21 @@ const parlVorstossZustaendigkeit = ({
 }
 
 const AreaParlVorstoss = ({
-  geschaeft,
-  parlVorstossTypOptions,
+  store,
+  location,
   nrOfFieldsBeforePv,
   change,
-  isPrintPreview,
 }) => {
+  const {
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+    parlVorstossTypOptions,
+  } = store.geschaefte
+  const path = location.pathname
+  const isPrintPreview = path === '/geschaeftPdf'
+  const geschaeft = geschaefte.find(g =>
+    g.idGeschaeft === activeId
+  )
   const styles = isPrintPreview ? pdfStyles : regularStyles
 
   return (
@@ -187,13 +168,13 @@ const AreaParlVorstoss = ({
       {
         !(isPrintPreview && !geschaeft.parlVorstossStufe) &&
         <div className={styles.fieldStufe}>
-          {parlVorstossStufe({ isPrintPreview, geschaeft, change, nrOfFieldsBeforePv })}
+          {parlVorstossStufe(isPrintPreview, geschaeft, change, nrOfFieldsBeforePv)}
         </div>
       }
       {
         !(isPrintPreview && !geschaeft.parlVorstossZustaendigkeitAwel) &&
         <div className={styles.fieldZustaendigkeit}>
-          {parlVorstossZustaendigkeit({ isPrintPreview, geschaeft, change, nrOfFieldsBeforePv })}
+          {parlVorstossZustaendigkeit(isPrintPreview, geschaeft, change, nrOfFieldsBeforePv)}
         </div>
       }
     </div>
@@ -203,11 +184,10 @@ const AreaParlVorstoss = ({
 AreaParlVorstoss.displayName = 'AreaParlVorstoss'
 
 AreaParlVorstoss.propTypes = {
-  geschaeft: PropTypes.object.isRequired,
-  parlVorstossTypOptions: PropTypes.array.isRequired,
+  store: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   nrOfFieldsBeforePv: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
-  isPrintPreview: PropTypes.bool.isRequired,
 }
 
 export default enhance(AreaParlVorstoss)

@@ -4,7 +4,6 @@ import _ from 'lodash'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import KontakteExternItems from './KontakteExternItems'
 
@@ -74,78 +73,58 @@ const FvDropdown = styled(({ isPrintPreview, children, ...rest }) => <div {...re
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-      location,
-      tabIndex,
-    } = props
-    const {
-      externeOptions,
-      activeId,
-    } = store.geschaefte
-    const path = location.pathname
-    const {
-      geschaefteKontakteExtern,
-    } = store.geschaefteKontakteExtern
-    const isPrintPreview = path === '/geschaeftPdf'
-    return {
-      geschaefteKontakteExtern,
-      externeOptions,
-      activeId,
-      tabIndex,
-      isPrintPreview,
-    }
-  }),
   observer
 )
 
 const GeschaefteKontakteExtern = ({
-  geschaefteKontakteExtern,
+  store,
+  location,
   tabIndex,
-  geschaeftKontaktExternNewCreate,
-  activeId,
-  externeOptions,
-  isPrintPreview,
-}) =>
-  <Container>
-    <KontakteExternItems />
-    <RowFvDropdown isPrintPreview={isPrintPreview}>
-      <FvDropdown isPrintPreview={isPrintPreview}>
-        <FormControl
-          componentClass="select"
-          bsSize="small"
-          onChange={e =>
-            onChangeNewKontaktExtern(
-              e,
-              geschaeftKontaktExternNewCreate,
-              activeId,
-            )
-          }
-          title="Neuen Kontakt hinzufügen"
-          tabIndex={tabIndex}
-        >
-          {
-            optionsList(
-              externeOptions,
-              geschaefteKontakteExtern,
-              activeId,
-            )
-          }
-        </FormControl>
-      </FvDropdown>
-    </RowFvDropdown>
-  </Container>
+}) => {
+  const { geschaeftKontaktExternNewCreate } = store
+  const { externeOptions, activeId } = store.geschaefte
+  const path = location.pathname
+  const { geschaefteKontakteExtern } = store.geschaefteKontakteExtern
+  const isPrintPreview = path === '/geschaeftPdf'
+
+  return (
+    <Container>
+      <KontakteExternItems />
+      <RowFvDropdown isPrintPreview={isPrintPreview}>
+        <FvDropdown isPrintPreview={isPrintPreview}>
+          <FormControl
+            componentClass="select"
+            bsSize="small"
+            onChange={e =>
+              onChangeNewKontaktExtern(
+                e,
+                geschaeftKontaktExternNewCreate,
+                activeId,
+              )
+            }
+            title="Neuen Kontakt hinzufügen"
+            tabIndex={tabIndex}
+          >
+            {
+              optionsList(
+                externeOptions,
+                geschaefteKontakteExtern,
+                activeId,
+              )
+            }
+          </FormControl>
+        </FvDropdown>
+      </RowFvDropdown>
+    </Container>
+  )
+}
 
 GeschaefteKontakteExtern.displayName = 'GeschaefteKontakteExtern'
 
 GeschaefteKontakteExtern.propTypes = {
-  externeOptions: PropTypes.array.isRequired,
-  geschaefteKontakteExtern: PropTypes.array.isRequired,
-  geschaeftKontaktExternNewCreate: PropTypes.func.isRequired,
-  activeId: PropTypes.number.isRequired,
+  store: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   tabIndex: PropTypes.number.isRequired,
-  isPrintPreview: PropTypes.bool.isRequired,
 }
 
 export default enhance(GeschaefteKontakteExtern)

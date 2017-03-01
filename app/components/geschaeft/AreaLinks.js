@@ -4,36 +4,26 @@ import { Glyphicon } from 'react-bootstrap'
 import { shell } from 'electron'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import regularStyles from './areaLinks.css'
 import pdfStyles from './areaLinksPdf.css'
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const { store, location, links } = props
-    const {
-      activeId,
-    } = store.geschaefte
-    const path = location.pathname
-    const isPrintPreview = path === '/geschaeftPdf'
-    return {
-      links,
-      activeId,
-      isPrintPreview,
-    }
-  }),
   observer
 )
 
 const AreaLinks = ({
+  store,
+  location,
   links,
-  linkNewCreate,
-  linkRemove,
-  activeId,
-  isPrintPreview,
 }) => {
+  const { linkNewCreate, linkRemove } = store
+  const {
+    activeId,
+  } = store.geschaefte
+  const path = location.pathname
+  const isPrintPreview = path === '/geschaeftPdf'
   const styles = isPrintPreview ? pdfStyles : regularStyles
 
   const onDrop = files =>
@@ -91,10 +81,8 @@ AreaLinks.displayName = 'AreaLinks'
 
 AreaLinks.propTypes = {
   links: PropTypes.array.isRequired,
-  linkNewCreate: PropTypes.func.isRequired,
-  linkRemove: PropTypes.func.isRequired,
-  activeId: PropTypes.number.isRequired,
-  isPrintPreview: PropTypes.bool.isRequired,
+  store: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 export default enhance(AreaLinks)

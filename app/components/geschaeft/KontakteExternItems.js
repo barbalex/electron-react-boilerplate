@@ -5,8 +5,6 @@ import Linkify from 'react-linkify'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
-import withHandlers from 'recompose/withHandlers'
 
 const verantwortlichData = (gKE, externeOptions) => {
   function addValueToInfo(info, value) {
@@ -89,34 +87,15 @@ const StyledGlyphicon = styled(Glyphicon)`
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const { store, location } = props
-    const {
-      externeOptions,
-      activeId,
-    } = store.geschaefte
-    const path = location.pathname
-    const {
-      geschaefteKontakteExtern,
-    } = store.geschaefteKontakteExtern
-    const isPrintPreview = path === '/geschaeftPdf'
-    return {
-      geschaefteKontakteExtern,
-      externeOptions,
-      activeId,
-      isPrintPreview,
-    }
-  }),
   observer
 )
 
-const GeschaefteKontakteExtern = ({
-  geschaefteKontakteExtern,
-  activeId,
-  externeOptions,
-  geschaeftKontaktExternRemove,
-  isPrintPreview,
-}) => {
+const GeschaefteKontakteExtern = ({ store, location }) => {
+  const { geschaeftKontaktExternRemove } = store
+  const { externeOptions, activeId } = store.geschaefte
+  const path = location.pathname
+  const { geschaefteKontakteExtern } = store.geschaefteKontakteExtern
+  const isPrintPreview = path === '/geschaeftPdf'
   // filter for this geschaeft
   const gkIFiltered = geschaefteKontakteExtern.filter(g =>
     g.idGeschaeft === activeId
@@ -158,11 +137,8 @@ const GeschaefteKontakteExtern = ({
 GeschaefteKontakteExtern.displayName = 'GeschaefteKontakteExtern'
 
 GeschaefteKontakteExtern.propTypes = {
-  externeOptions: PropTypes.array.isRequired,
-  geschaefteKontakteExtern: PropTypes.array.isRequired,
-  geschaeftKontaktExternRemove: PropTypes.func.isRequired,
-  activeId: PropTypes.number.isRequired,
-  isPrintPreview: PropTypes.bool.isRequired,
+  store: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 export default enhance(GeschaefteKontakteExtern)

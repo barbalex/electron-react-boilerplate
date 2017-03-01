@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { hashHistory } from 'react-router'
+import { withRouter } from 'react-router'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
@@ -13,11 +13,13 @@ const getStatusFristInStyle = (fristMitarbeiterWarnung) => {
 
 const enhance = compose(
   inject('store'),
+  withRouter,
   observer
 )
 
 const GeschaefteItem = ({
   store,
+  router,
   index,
   keyPassed,
 }) => {
@@ -55,7 +57,7 @@ const GeschaefteItem = ({
         // because this is also called from '/fieldFilter'
         // no idea why but using 'router' passed by 'withRouter' did not work here
         if (path === '/filterFields') {
-          hashHistory.push('/geschaefte')
+          router.push('/geschaefte')
         }
         geschaeftToggleActivated(geschaeft.idGeschaeft)
       }}
@@ -99,6 +101,7 @@ GeschaefteItem.displayName = 'GeschaefteItem'
 
 GeschaefteItem.propTypes = {
   store: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
   keyPassed: PropTypes.string.isRequired,
 }

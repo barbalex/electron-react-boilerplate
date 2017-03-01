@@ -5,26 +5,16 @@ import {
 } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const { store } = props
-    const { tableRowNewCreate } = store
-    const { table } = store.table
-    return { table, tableRowNewCreate }
-  }),
   observer
 )
 
-const NavbarTableRowNeuNav = ({
-  tableRowNewCreate,
-  table,
-}) =>
+const NavbarTableRowNeuNav = ({ store }) =>
   <NavItem
     onClick={() =>
-      tableRowNewCreate(table)
+      store.tableRowNewCreate(store.table)
     }
     title="neuer Datensatz"
   >
@@ -34,8 +24,7 @@ const NavbarTableRowNeuNav = ({
 NavbarTableRowNeuNav.displayName = 'NavbarTableRowNeuNav'
 
 NavbarTableRowNeuNav.propTypes = {
-  table: PropTypes.string.isRequired,
-  tableRowNewCreate: PropTypes.func.isRequired,
+  store: PropTypes.object.isRequired,
 }
 
 export default enhance(NavbarTableRowNeuNav)

@@ -1,14 +1,11 @@
 import { remote, shell } from 'electron'
 import fs from 'fs'
 import React, { PropTypes } from 'react'
-import {
-  NavItem,
-  Glyphicon,
-} from 'react-bootstrap'
+import { NavItem, Glyphicon } from 'react-bootstrap'
 import styled from 'styled-components'
-import { observer, inject } from 'mobx-react'
+import { withRouter } from 'react-router'
+import { observer } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 // eslint-disable-next-line no-unused-vars
 const StyledNavItem = styled(({ showBerichteNavs, children, ...rest }) => <NavItem {...rest}>{children}</NavItem>)`
@@ -59,31 +56,17 @@ const onClickPrint = (e, path) => {
 }
 
 const enhance = compose(
-  inject('store'),
-  withProps((props) => {
-    const {
-      store,
-      location,
-    } = props
-    const path = location.pathname
-    const {
-      showBerichteNavs,
-    } = store
-    return {
-      path,
-      showBerichteNavs,
-    }
-  }),
+  withRouter,
   observer
 )
 
 const NavbarPrintNav = ({
-  path,
+  router,
   showBerichteNavs,
 }) =>
   <StyledNavItem
     onClick={e =>
-      onClickPrint(e, path)
+      onClickPrint(e, router.location.pathname)
     }
     title="PDF erzeugen"
     showBerichteNavs={showBerichteNavs}
@@ -94,7 +77,7 @@ const NavbarPrintNav = ({
 NavbarPrintNav.displayName = 'NavbarPrintNav'
 
 NavbarPrintNav.propTypes = {
-  path: PropTypes.string.isRequired,
+  router: PropTypes.object.isRequired,
   showBerichteNavs: PropTypes.bool.isRequired,
 }
 

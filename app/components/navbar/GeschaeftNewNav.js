@@ -1,33 +1,16 @@
 import React, { PropTypes } from 'react'
-import {
-  NavItem,
-  Glyphicon,
-} from 'react-bootstrap'
+import { NavItem, Glyphicon } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-    } = props
-    const {
-      geschaeftNewCreate,
-    } = store
-    return {
-      geschaeftNewCreate,
-    }
-  }),
   observer
 )
 
-const NavbarGeschaeftNeuNav = ({
-  geschaeftNewCreate,
-}) =>
+const NavbarGeschaeftNeuNav = ({ store }) =>
   <NavItem
-    onClick={geschaeftNewCreate}
+    onClick={store.geschaeftNewCreate}
     title="neues Geschäft"
   >
     <Glyphicon glyph="plus" />
@@ -36,7 +19,7 @@ const NavbarGeschaeftNeuNav = ({
 NavbarGeschaeftNeuNav.displayName = 'NavbarGeschaeftNeuNav'
 
 NavbarGeschaeftNeuNav.propTypes = {
-  geschaeftNewCreate: PropTypes.func.isRequired,
+  store: PropTypes.object.isRequired,
 }
 
 export default enhance(NavbarGeschaeftNeuNav)

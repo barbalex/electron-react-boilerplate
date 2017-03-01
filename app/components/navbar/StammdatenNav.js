@@ -4,10 +4,8 @@ import {
   MenuItem,
 } from 'react-bootstrap'
 import styled from 'styled-components'
-import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import styles from './Navbar.css'
 
@@ -41,26 +39,12 @@ const StyledNavDropdown = styled(({ showTableNavs, children, ...rest }) => <NavD
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const { store, showTableNavs } = props
-    const { getTable } = store
-    const { table, rows } = store.table
-    return {
-      table,
-      rows: toJS(rows),
-      showTableNavs,
-      getTable,
-    }
-  }),
   observer
 )
 
-const NavbarStammdatenNav = ({
-  getTable,
-  table,
-  rows,
-  showTableNavs,
-}) => {
+const NavbarStammdatenNav = ({ store, showTableNavs }) => {
+  const { getTable } = store
+  const { table, rows } = store.table
   /**
    * does not work - should keep menu active when table is loaded
    * probably a bug in react-bootstrap
@@ -135,9 +119,7 @@ const NavbarStammdatenNav = ({
 NavbarStammdatenNav.displayName = 'NavbarStammdatenNav'
 
 NavbarStammdatenNav.propTypes = {
-  getTable: PropTypes.func.isRequired,
-  table: PropTypes.string,
-  rows: PropTypes.array,
+  store: PropTypes.object.isRequired,
   showTableNavs: PropTypes.bool.isRequired,
 }
 

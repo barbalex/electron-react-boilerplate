@@ -6,7 +6,6 @@ import {
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 // eslint-disable-next-line no-unused-vars
 const StyledNavItem = styled(({ showGeschaefteNavs, children, ...rest }) => <NavItem {...rest}>{children}</NavItem>)`
@@ -15,52 +14,30 @@ const StyledNavItem = styled(({ showGeschaefteNavs, children, ...rest }) => <Nav
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-    } = props
-    const {
-      geschaeftSetDeleteIntended,
-      showGeschaefteNavs,
-    } = props.store
-    const {
-      activeId,
-    } = store.geschaefte
-    return {
-      activeId,
-      geschaeftSetDeleteIntended,
-      showGeschaefteNavs,
-    }
-  }),
   observer
 )
 
-const NavbarGeschaeftLoeschenNav = ({
-  geschaeftSetDeleteIntended,
-  activeId,
-  showGeschaefteNavs,
-}) =>
-  <StyledNavItem
-    onClick={() =>
-      geschaeftSetDeleteIntended(activeId)
-    }
-    title="Geschäft löschen"
-    disabled={!activeId}
-    showGeschaefteNavs={showGeschaefteNavs}
-  >
-    <Glyphicon glyph="trash" />
-  </StyledNavItem>
+const NavbarGeschaeftLoeschenNav = ({ store }) => {
+  const { geschaeftSetDeleteIntended, showGeschaefteNavs } = store
+  const { activeId } = store.geschaefte
+  return (
+    <StyledNavItem
+      onClick={() =>
+        geschaeftSetDeleteIntended(activeId)
+      }
+      title="Geschäft löschen"
+      disabled={!activeId}
+      showGeschaefteNavs={showGeschaefteNavs}
+    >
+      <Glyphicon glyph="trash" />
+    </StyledNavItem>
+  )
+}
 
 NavbarGeschaeftLoeschenNav.displayName = 'NavbarGeschaeftLoeschenNav'
 
 NavbarGeschaeftLoeschenNav.propTypes = {
-  geschaeftSetDeleteIntended: PropTypes.func.isRequired,
-  activeId: PropTypes.number,
-  showGeschaefteNavs: PropTypes.bool.isRequired,
-}
-
-NavbarGeschaeftLoeschenNav.defaultProps = {
-  activeId: null,
+  store: PropTypes.object.isRequired,
 }
 
 export default enhance(NavbarGeschaeftLoeschenNav)

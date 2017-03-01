@@ -101,13 +101,17 @@ const enhance = compose(
   observer
 )
 
-const GeschaefteKontakteInternItems = ({
-  geschaefteKontakteIntern,
-  activeId,
-  interneOptions,
-  geschaeftKontaktInternRemove,
-  isPrintPreview,
-}) => {
+const GeschaefteKontakteInternItems = ({ store, location }) => {
+  const { geschaeftKontaktInternRemove } = store
+  const {
+    interneOptions,
+    activeId,
+  } = store.geschaefte
+  const path = location.pathname
+  const {
+    geschaefteKontakteIntern,
+  } = store.geschaefteKontakteIntern
+  const isPrintPreview = path === '/geschaeftPdf'
   // filter for this geschaeft
   const gkIFiltered = geschaefteKontakteIntern.filter(g =>
     g.idGeschaeft === activeId
@@ -148,11 +152,8 @@ const GeschaefteKontakteInternItems = ({
 GeschaefteKontakteInternItems.displayName = 'GeschaefteKontakteInternItems'
 
 GeschaefteKontakteInternItems.propTypes = {
-  interneOptions: PropTypes.array,
-  geschaefteKontakteIntern: PropTypes.array,
-  geschaeftKontaktInternRemove: PropTypes.func.isRequired,
-  activeId: PropTypes.number.isRequired,
-  isPrintPreview: PropTypes.bool.isRequired,
+  store: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 export default enhance(GeschaefteKontakteInternItems)

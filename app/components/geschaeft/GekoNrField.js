@@ -2,41 +2,18 @@ import React, { Component, PropTypes } from 'react'
 import { FormControl } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
-import withHandlers from 'recompose/withHandlers'
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-      idGeschaeft,
-      gekoNr,
-      tabsToAdd,
-    } = props
-    const {
-      gekoRemove,
-      gekoNewCreate,
-    } = store
-
-    return {
-      idGeschaeft,
-      gekoNr,
-      tabsToAdd,
-      gekoRemove,
-      gekoNewCreate,
-    }
-  }),
   observer
 )
 
 class GekoNrField extends Component {
   static propTypes = {
+    store: PropTypes.object.isRequired,
     idGeschaeft: PropTypes.number.isRequired,
     gekoNr: PropTypes.string.isRequired,
     tabsToAdd: PropTypes.number.isRequired,
-    gekoRemove: PropTypes.func.isRequired,
-    gekoNewCreate: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -53,15 +30,9 @@ class GekoNrField extends Component {
   }
 
   onBlur = () => {
-    const {
-      idGeschaeft,
-      gekoRemove,
-      gekoNewCreate,
-    } = this.props
-    const {
-      gekoNr,
-      oldGekoNr,
-    } = this.state
+    const { idGeschaeft, store } = this.props
+    const { gekoRemove, gekoNewCreate } = store
+    const { gekoNr, oldGekoNr } = this.state
     // need old value
     if (gekoNr && oldGekoNr && gekoNr !== oldGekoNr) {
       gekoRemove(idGeschaeft, oldGekoNr)
@@ -75,12 +46,8 @@ class GekoNrField extends Component {
   }
 
   render = () => {
-    const {
-      tabsToAdd,
-    } = this.props
-    const {
-      gekoNr,
-    } = this.state
+    const { tabsToAdd } = this.props
+    const { gekoNr } = this.state
 
     return (
       <FormControl

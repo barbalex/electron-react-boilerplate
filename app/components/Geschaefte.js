@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { AutoSizer, List } from 'react-virtualized'
 import _ from 'lodash'
 import styled from 'styled-components'
-import { toJS } from 'mobx'
+import { withRouter } from 'react-router'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
@@ -21,17 +21,14 @@ const enhance = compose(
     onChange: props => size =>
       props.store.configSetKey('geschaefteColumnWidth', size),
   }),
+  withRouter,
   observer
 )
 
 class Geschaefte extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
-    location: PropTypes.string,
-  }
-
-  static defaultProps = {
-    location: '',
+    router: PropTypes.object.isRequired,
   }
 
   state = {
@@ -39,8 +36,8 @@ class Geschaefte extends Component {
   }
 
   componentDidUpdate() {
-    const { location } = this.props
-    const path = location.pathname
+    const { router } = this.props
+    const path = router.location.pathname
 
     if (
       path === '/geschaefte' ||
@@ -99,8 +96,8 @@ class Geschaefte extends Component {
       geschaefte,
       g => g.idGeschaeft === activeId
     )
-    console.log('Geschaefte, render, geschaefte.length:', geschaefte.length)
-    console.log('Geschaefte, render, geschaefte:', geschaefte)
+
+    console.log('Geschaefte: location:', this.props.router.location)
 
     return (
       <div className={styles.body}>
@@ -162,7 +159,6 @@ class Geschaefte extends Component {
                   scrollToIndex={indexOfActiveId}
                   ref={(c) => { this.reactList = c }}
                   {...geschaefte}
-                  {...geschaefte.length}
                 />
               }
             </AutoSizer>

@@ -9,7 +9,6 @@ import moment from 'moment'
 import _ from 'lodash'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import exportGeschaefte from '../../src/exportGeschaefte'
 import getHistoryOfGeschaefte from '../../src/getHistoryOfGeschaefte'
@@ -135,66 +134,51 @@ const exportGeschaefteAll = (
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-    } = props
-    const {
-      messageShow,
-    } = props.store
-    const {
-      geschaefteGefilterteIds,
-      geschaeftePlus: geschaefte,
-    } = store.geschaefte
-    return {
-      geschaefte,
-      geschaefteGefilterteIds,
-      messageShow,
-    }
-  }),
   observer
 )
 
-const NavbarExportGeschaefteNav = ({
-  geschaefte,
-  messageShow,
-  geschaefteGefilterteIds,
-}) =>
-  <NavDropdown
-    title="Exporte"
-    id="exportGeschaefteNavDropdown"
-  >
-    <MenuItem
-      onClick={e =>
-        exportGeschaefteAll(
-          e,
-          geschaefteGefilterteIds,
-          geschaefte,
-          messageShow,
-        )
-      }
+const NavbarExportGeschaefteNav = ({ store }) => {
+  const { messageShow } = store
+  const {
+    geschaefteGefilterteIds,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+  } = store.geschaefte
+  return (
+    <NavDropdown
+      title="Exporte"
+      id="exportGeschaefteNavDropdown"
     >
-      Gefilterte Geschäfte mit allen Feldern
-    </MenuItem>
-    <MenuItem
-      onClick={e =>
-        exportGeschaefteRechtsmittelVorjahre(
-          e,
-          geschaefte,
-          messageShow,
-        )
-      }
-    >
-      Rekurse und Beschwerden, Vergleich der letzten zwei Jahre
-    </MenuItem>
-  </NavDropdown>
+      <MenuItem
+        onClick={e =>
+          exportGeschaefteAll(
+            e,
+            geschaefteGefilterteIds,
+            geschaefte,
+            messageShow,
+          )
+        }
+      >
+        Gefilterte Geschäfte mit allen Feldern
+      </MenuItem>
+      <MenuItem
+        onClick={e =>
+          exportGeschaefteRechtsmittelVorjahre(
+            e,
+            geschaefte,
+            messageShow,
+          )
+        }
+      >
+        Rekurse und Beschwerden, Vergleich der letzten zwei Jahre
+      </MenuItem>
+    </NavDropdown>
+  )
+}
 
 NavbarExportGeschaefteNav.displayName = 'NavbarExportGeschaefteNav'
 
 NavbarExportGeschaefteNav.propTypes = {
-  geschaefte: PropTypes.array.isRequired,
-  geschaefteGefilterteIds: PropTypes.array.isRequired,
-  messageShow: PropTypes.func.isRequired,
+  store: PropTypes.object.isRequired,
 }
 
 export default enhance(NavbarExportGeschaefteNav)

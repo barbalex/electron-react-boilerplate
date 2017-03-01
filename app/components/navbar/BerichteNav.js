@@ -4,9 +4,9 @@ import {
   MenuItem,
 } from 'react-bootstrap'
 import styled from 'styled-components'
+import { withRouter } from 'react-router'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import styles from './Navbar.css'
 import filterForVernehmlAngek from '../../src/filterForVernehmlAngek'
@@ -21,50 +21,25 @@ const StyledNavDropdown = styled(({ showBerichteNavs, children, ...rest }) => <N
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-      location,
-      pages,
-    } = props
-    const {
-      pagesInitiate,
-      geschaeftPdfShow,
-      geschaefteFilterByFields,
-      geschaefteSortByFields,
-      geschaefteResetSort,
-      showBerichteNavs,
-    } = props.store
-    const {
-      activeId,
-    } = store.geschaefte
-    const path = location.pathname
-    return {
-      path,
-      pages,
-      activeId,
-      pagesInitiate,
-      geschaeftPdfShow,
-      geschaefteFilterByFields,
-      geschaefteSortByFields,
-      geschaefteResetSort,
-      showBerichteNavs,
-    }
-  }),
+  withRouter,
   observer
 )
 
 const BerichteNav = ({
-  pagesInitiate,
-  geschaeftPdfShow,
-  path,
-  pages,
-  geschaefteFilterByFields,
-  geschaefteSortByFields,
-  geschaefteResetSort,
-  activeId,
+  store,
+  router,
   showBerichteNavs,
 }) => {
+  const {
+    pages,
+    pagesInitiate,
+    geschaeftPdfShow,
+    geschaefteFilterByFields,
+    geschaefteSortByFields,
+    geschaefteResetSort,
+  } = store
+  const { activeId } = store.geschaefte
+  const path = router.location.pathname
   const isActive = path === '/pages'
   const nameObject = {
     typFaelligeGeschaefte: 'Bericht: Typ "fällige Geschäfte"',
@@ -180,19 +155,9 @@ const BerichteNav = ({
 BerichteNav.displayName = 'BerichteNav'
 
 BerichteNav.propTypes = {
-  geschaefteFilterByFields: PropTypes.func.isRequired,
-  geschaefteSortByFields: PropTypes.func.isRequired,
-  geschaefteResetSort: PropTypes.func.isRequired,
-  pagesInitiate: PropTypes.func.isRequired,
-  geschaeftPdfShow: PropTypes.func.isRequired,
-  path: PropTypes.string.isRequired,
-  pages: PropTypes.object.isRequired,
-  activeId: PropTypes.number,
+  store: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
   showBerichteNavs: PropTypes.bool.isRequired,
-}
-
-BerichteNav.defaultProps = {
-  activeId: null,
 }
 
 export default enhance(BerichteNav)

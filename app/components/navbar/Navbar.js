@@ -7,10 +7,8 @@ import {
 import { withRouter } from 'react-router'
 import { LinkContainer } from 'react-router-bootstrap'
 import styled from 'styled-components'
-import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import ModalGeschaeftDelete from '../ModalGeschaeftDelete'
 import ModalMessage from '../ModalMessage'
@@ -37,63 +35,35 @@ const GeschaefteLinkContainer = styled(({ showGeschaefteNavs, children, ...rest 
 const enhance = compose(
   inject('store'),
   withRouter,
-  withProps((props) => {
-    const { store, location } = props
-    const { configGet } = store
-    const { showMessageModal } = store.app
-    const { showPagesModal } = store.pages
-    const {
-      geschaefteGefilterteIds,
-      geschaeftePlus: geschaefte,
-      willDelete,
-    } = store.geschaefte
-    const path = location.pathname
-    return {
-      geschaeftePlus: geschaefte,
-      geschaefteGefilterteIds: toJS(geschaefteGefilterteIds),
-      willDeleteGeschaeft: willDelete,
-      showMessageModal,
-      showPagesModal,
-      configGet,
-      path,
-    }
-  }),
   observer
 )
 
 class NavbarComponent extends Component {
   static propTypes = {
-    geschaefte: PropTypes.array,
-    geschaefteGefilterteIds: PropTypes.array.isRequired,
-    showMessageModal: PropTypes.bool.isRequired,
-    showPagesModal: PropTypes.bool.isRequired,
-    configGet: PropTypes.func.isRequired,
-    willDeleteGeschaeft: PropTypes.bool.isRequired,
-    path: PropTypes.string.isRequired,
-  }
-
-  static defaultProps = {
-    geschaefte: [],
+    store: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
   }
 
   componentWillMount() {
-    const { configGet } = this.props
-    configGet()
+    this.props.store.configGet()
   }
 
   render() {
+    const { store, router } = this.props
+    const { showMessageModal } = store.app
+    const { showPagesModal } = store.pages
     const {
-      geschaefte,
       geschaefteGefilterteIds,
-      showMessageModal,
-      showPagesModal,
-      willDeleteGeschaeft,
-      path,
-    } = this.props
-
+      geschaeftePlusFilteredAndSorted: geschaefte,
+      willDelete,
+    } = store.geschaefte
+    const path = router.location.pathname
     const dataIsFiltered = geschaefte.length !== geschaefteGefilterteIds.length
     const classNameBadge = dataIsFiltered ? styles.active : null
-    const showBerichteNavs = path === '/pages' || path === '/geschaeftPdf'
+    const showBerichteNavs = (
+      path === '/pages' ||
+      path === '/geschaeftPdf'
+    )
     const showGeschaefteNavs = (
       path === '/geschaefte' ||
       path === '/filterFields'
@@ -104,7 +74,7 @@ class NavbarComponent extends Component {
     return (
       <div>
         {
-          willDeleteGeschaeft &&
+          willDelete &&
           <ModalGeschaeftDelete />
         }
         {

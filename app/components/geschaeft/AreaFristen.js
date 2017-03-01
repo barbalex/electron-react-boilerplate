@@ -6,7 +6,6 @@ import {
 import moment from 'moment'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import regularStyles from './areaFristen.css'
 import pdfStyles from './areaFristenPdf.css'
@@ -43,44 +42,26 @@ const fieldFristDauerBisMitarbeiter = (geschaeft, styles) => (
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-      location,
-      blur,
-      change,
-      nrOfFieldsBeforeFristen,
-      onChangeDatePicker,
-    } = props
-    const {
-      activeId,
-      geschaeftePlus: geschaefte,
-    } = store.geschaefte
-    const path = location.pathname
-    const isPrintPreview = path === '/geschaeftPdf'
-    const geschaeft = geschaefte.find(g =>
-      g.idGeschaeft === activeId
-    )
-    return {
-      geschaeft,
-      change,
-      blur,
-      nrOfFieldsBeforeFristen,
-      onChangeDatePicker,
-      isPrintPreview,
-    }
-  }),
   observer
 )
 
 const AreaFristen = ({
-  geschaeft,
-  nrOfFieldsBeforeFristen,
-  change,
+  store,
+  location,
   blur,
+  change,
+  nrOfFieldsBeforeFristen,
   onChangeDatePicker,
-  isPrintPreview,
 }) => {
+  const {
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+  } = store.geschaefte
+  const path = location.pathname
+  const isPrintPreview = path === '/geschaeftPdf'
+  const geschaeft = geschaefte.find(g =>
+    g.idGeschaeft === activeId
+  )
   const styles = isPrintPreview ? pdfStyles : regularStyles
 
   return (
@@ -176,7 +157,8 @@ const AreaFristen = ({
 AreaFristen.displayName = 'AreaFristen'
 
 AreaFristen.propTypes = {
-  geschaeft: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,
   onChangeDatePicker: PropTypes.func.isRequired,

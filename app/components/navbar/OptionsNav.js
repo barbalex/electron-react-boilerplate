@@ -7,7 +7,6 @@ import styled from 'styled-components'
 import { shell } from 'electron'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 const DbPathDiv = styled.div`
   font-style: italic;
@@ -22,72 +21,54 @@ const onClickIssues = () => {
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-    } = props
-    const {
-      dbGet,
-      configUiReset,
-    } = store
-    const {
-      config,
-    } = store.app
-    return {
-      config,
-      dbGet,
-      configUiReset,
-    }
-  }),
   observer
 )
 
-const OptionsNav = ({
-  config,
-  dbGet,
-  configUiReset,
-}) =>
-  <NavDropdown
-    title="&#8942;"
-    id="last-nav-dropdown"
-    noCaret
-  >
-    <MenuItem
-      onClick={dbGet}
+const OptionsNav = ({ store }) => {
+  const { dbGet, configUiReset } = store
+  const { config } = store.app
+  return (
+    <NavDropdown
+      title="&#8942;"
+      id="last-nav-dropdown"
+      noCaret
     >
-      Datenbank wählen
-      {
-        config.dbPath &&
-        <DbPathDiv>
-          Aktuell: {config.dbPath}
-        </DbPathDiv>
-      }
-    </MenuItem>
-    <MenuItem divider />
-    <MenuItem
-      onClick={configUiReset}
-    >
-      Einstellungen zurücksetzen
-    </MenuItem>
-    <MenuItem divider />
-    <MenuItem
-      onClick={onGetProjektbeschreibung}
-    >
-      Projektbeschreibung herunterladen
-    </MenuItem>
-    <MenuItem
-      onClick={onClickIssues}
-    >
-      Fehler und Wünsche melden
-    </MenuItem>
-  </NavDropdown>
+      <MenuItem
+        onClick={dbGet}
+      >
+        Datenbank wählen
+        {
+          config.dbPath &&
+          <DbPathDiv>
+            Aktuell: {config.dbPath}
+          </DbPathDiv>
+        }
+      </MenuItem>
+      <MenuItem divider />
+      <MenuItem
+        onClick={configUiReset}
+      >
+        Einstellungen zurücksetzen
+      </MenuItem>
+      <MenuItem divider />
+      <MenuItem
+        onClick={onGetProjektbeschreibung}
+      >
+        Projektbeschreibung herunterladen
+      </MenuItem>
+      <MenuItem
+        onClick={onClickIssues}
+      >
+        Fehler und Wünsche melden
+      </MenuItem>
+    </NavDropdown>
+  )
+}
 
 OptionsNav.displayName = 'OptionsNav'
 
 OptionsNav.propTypes = {
-  config: PropTypes.object.isRequired,
-  dbGet: PropTypes.func.isRequired,
-  configUiReset: PropTypes.func.isRequired,
+  store: PropTypes.object.isRequired,
 }
 
 export default enhance(OptionsNav)

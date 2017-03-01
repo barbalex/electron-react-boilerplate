@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 const Container = styled.div`
   grid-area: areaZuletztMutiert;
@@ -20,32 +19,23 @@ const Field = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const { store, location } = props
-    const {
-      activeId,
-      geschaeftePlus: geschaefte,
-      interneOptions,
-    } = store.geschaefte
-    const path = location.pathname
-    const geschaeft = geschaefte.find(g =>
-      g.idGeschaeft === activeId
-    )
-    const isPrintPreview = path === '/geschaeftPdf'
-    return {
-      geschaeft,
-      interneOptions,
-      isPrintPreview,
-    }
-  }),
   observer
 )
 
 const AreaZuletztMutiert = ({
-  geschaeft,
-  interneOptions,
-  isPrintPreview,
+  store,
+  location,
 }) => {
+  const {
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+    interneOptions,
+  } = store.geschaefte
+  const path = location.pathname
+  const geschaeft = geschaefte.find(g =>
+    g.idGeschaeft === activeId
+  )
+  const isPrintPreview = path === '/geschaeftPdf'
   let zuletztMutiertText
 
   if (!geschaeft.mutationsperson) {
@@ -82,9 +72,8 @@ const AreaZuletztMutiert = ({
 AreaZuletztMutiert.displayName = 'AreaZuletztMutiert'
 
 AreaZuletztMutiert.propTypes = {
-  geschaeft: PropTypes.object.isRequired,
-  interneOptions: PropTypes.array.isRequired,
-  isPrintPreview: PropTypes.bool.isRequired,
+  store: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 export default enhance(AreaZuletztMutiert)

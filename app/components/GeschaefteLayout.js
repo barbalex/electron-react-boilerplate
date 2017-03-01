@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import SplitPane from 'react-split-pane'
+import { withRouter } from 'react-router'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 import withHandlers from 'recompose/withHandlers'
 
 import Geschaeft from '../components/geschaeft/Geschaeft'
@@ -12,38 +12,30 @@ import Geschaefte from '../components/Geschaefte'
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const { store, location } = props
-    const { config } = store.app
-    const { activeId } = store.geschaefte
-    const { configSetKey } = store
-    const path = location.pathname
-    return {
-      configSetKey,
-      config,
-      activeId,
-      path,
-    }
-  }),
   withHandlers({
     onChange: props => size =>
       props.store.configSetKey('geschaefteColumnWidth', size),
   }),
+  withRouter,
   observer
 )
 
 const GeschaefteLayout = ({
+  store,
   onChange,
-  config,
-  activeId,
-  path,
+  router,
 }) => {
+  const { config } = store.app
+  const { activeId } = store.geschaefte
+  const path = router.location.pathname
   const showGeschaeft = (
     path === '/geschaefte'
     && activeId
   )
   const showPages = path === '/pages'
   const showGeschaeftPdf = path === '/geschaeftPdf' && activeId
+
+  console.log('GeschaefteLayout: location:', location)
 
   return (
     <SplitPane
@@ -72,14 +64,9 @@ const GeschaefteLayout = ({
 }
 
 GeschaefteLayout.propTypes = {
-  config: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
-  activeId: PropTypes.number,
-  path: PropTypes.string.isRequired,
-}
-
-GeschaefteLayout.defaultProps = {
-  activeId: null,
+  router: PropTypes.object.isRequired,
 }
 
 export default enhance(GeschaefteLayout)

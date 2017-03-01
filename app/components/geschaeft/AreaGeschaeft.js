@@ -3,7 +3,6 @@ import { FormControl, ControlLabel } from 'react-bootstrap'
 import Textarea from 'react-textarea-autosize'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import regularStyles from './areaGeschaeft.css'
 import pdfStyles from './areaGeschaeftPdf.css'
@@ -11,53 +10,29 @@ import createOptions from '../../src/createOptions'
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-      location,
-      blur,
-      change,
-      wrapperClass,
-      nrOfGFields,
-    } = props
-    const {
-      activeId,
-      geschaeftePlus: geschaefte,
-      statusOptions,
-      abteilungOptions,
-      geschaeftsartOptions,
-    } = store.geschaefte
-    const path = location.pathname
-    const isPrintPreview = path === '/geschaeftPdf'
-    const geschaeft = geschaefte.find(g =>
-      g.idGeschaeft === activeId
-    )
-    return {
-      geschaeft,
-      statusOptions,
-      abteilungOptions,
-      geschaeftsartOptions,
-      change,
-      blur,
-      wrapperClass,
-      nrOfGFields,
-      isPrintPreview,
-    }
-  }),
   observer
 )
 
 const AreaGeschaeft = ({
-  geschaeft,
-  statusOptions,
-  geschaeftsartOptions,
-  abteilungOptions,
-  viewIsNarrow,
-  change,
+  store,
+  location,
   blur,
+  change,
   nrOfGFields,
-  isPrintPreview,
+  viewIsNarrow,
 }) => {
+  const {
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+    statusOptions,
+    abteilungOptions,
+    geschaeftsartOptions,
+  } = store.geschaefte
+  const path = location.pathname
+  const isPrintPreview = path === '/geschaeftPdf'
+  const geschaeft = geschaefte.find(g =>
+    g.idGeschaeft === activeId
+  )
   const styles = isPrintPreview ? pdfStyles : regularStyles
   const tabsToAdd = viewIsNarrow ? nrOfGFields : 0
 
@@ -255,15 +230,12 @@ AreaGeschaeft.displayName = 'AreaGeschaeft'
  * as they may be loaded after the component
  */
 AreaGeschaeft.propTypes = {
-  geschaeft: PropTypes.object.isRequired,
-  statusOptions: PropTypes.array.isRequired,
-  abteilungOptions: PropTypes.array.isRequired,
-  geschaeftsartOptions: PropTypes.array.isRequired,
+  store: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,
   viewIsNarrow: PropTypes.bool.isRequired,
   nrOfGFields: PropTypes.number.isRequired,
-  isPrintPreview: PropTypes.bool.isRequired,
 }
 
 export default enhance(AreaGeschaeft)

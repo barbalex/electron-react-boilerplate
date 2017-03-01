@@ -52,7 +52,7 @@ const enhance = compose(
     const { store, location } = props
     const {
       activeId,
-      geschaeftePlus: geschaefte,
+      geschaeftePlusFilteredAndSorted: geschaefte,
     } = store.geschaefte
     const path = location.pathname
     return {
@@ -65,15 +65,18 @@ const enhance = compose(
 )
 
 const AreaHistoryRows = ({
-  geschaefte,
-  activeId,
-  geschaeftToggleActivated,
-  path,
+  store,
+  location,
 }) => {
+  const { geschaeftToggleActivated } = store
+  const {
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+  } = store.geschaefte
+  const path = location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
+  // TODO: compute?
   const history = getHistoryOfGeschaeft(geschaefte, activeId)
-  // sort descending
-  // history.reverse()
 
   return (
     <FieldsContainer>
@@ -118,10 +121,8 @@ const AreaHistoryRows = ({
 AreaHistoryRows.displayName = 'AreaHistoryRows'
 
 AreaHistoryRows.propTypes = {
-  geschaefte: PropTypes.array.isRequired,
-  activeId: PropTypes.number.isRequired,
-  geschaeftToggleActivated: PropTypes.func.isRequired,
-  path: PropTypes.string.isRequired,
+  store: PropTypes.array.isRequired,
+  location: PropTypes.array.isRequired,
 }
 
 export default enhance(AreaHistoryRows)

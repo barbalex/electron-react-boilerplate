@@ -1,9 +1,6 @@
 import { remote } from 'electron'
 import React from 'react'
-import {
-  NavItem,
-  Glyphicon,
-} from 'react-bootstrap'
+import { NavItem, Glyphicon } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 

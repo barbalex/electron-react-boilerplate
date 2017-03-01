@@ -4,7 +4,6 @@ import _ from 'lodash'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import KontakteIntern from './KontakteIntern'
 import KontakteExtern from './KontakteExtern'
@@ -128,50 +127,55 @@ const StyledFormcontrolStaticPrint = styled(FormControl.Static)`
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-      location,
-      blur,
-      change,
-      nrOfFieldsBeforePersonen,
-    } = props
-    const {
-      activeId,
-      geschaeftePlus: geschaefte,
-      interneOptions,
-    } = store.geschaefte
-    const path = location.pathname
-    const isPrintPreview = path === '/geschaeftPdf'
-    const geschaeft = geschaefte.find(g =>
-      g.idGeschaeft === activeId
-    )
-    return {
-      geschaeft,
-      activeId,
-      interneOptions,
-      change,
-      blur,
-      nrOfFieldsBeforePersonen,
-      isPrintPreview,
-    }
-  }),
   observer
 )
 
 const AreaPersonen = ({
-  geschaeft,
+  store,
+  location,
   nrOfFieldsBeforePersonen = 0,
   change,
-  interneOptions,
-  isPrintPreview,
 }) => {
-  const Container = isPrintPreview ? ContainerPrint : ContainerView
-  const AreaPersonenDiv = isPrintPreview ? AreaPersonenDivPrint : AreaPersonenDivView
-  const Subtitle = isPrintPreview ? SubtitlePrint : SubtitleView
-  const Verantwortlich = isPrintPreview ? VerantwortlichPrint : VerantwortlichView
-  const VerantwortlichName = isPrintPreview ? VerantwortlichNamePrint : VerantwortlichNameView
-  const StyledFormcontrolStatic = isPrintPreview ? StyledFormcontrolStaticPrint : StyledFormcontrolStaticView
+  const {
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+    interneOptions,
+  } = store.geschaefte
+  const path = location.pathname
+  const isPrintPreview = path === '/geschaeftPdf'
+  const geschaeft = geschaefte.find(g =>
+    g.idGeschaeft === activeId
+  )
+  const Container = (
+    isPrintPreview ?
+    ContainerPrint :
+    ContainerView
+  )
+  const AreaPersonenDiv = (
+    isPrintPreview ?
+    AreaPersonenDivPrint :
+    AreaPersonenDivView
+  )
+  const Subtitle = (
+    isPrintPreview ?
+    SubtitlePrint :
+    SubtitleView
+  )
+  const Verantwortlich = (
+    isPrintPreview ?
+    VerantwortlichPrint :
+    VerantwortlichView
+  )
+  const VerantwortlichName = (
+    isPrintPreview ?
+    VerantwortlichNamePrint :
+    VerantwortlichNameView
+  )
+  const StyledFormcontrolStatic = (
+    isPrintPreview ?
+    StyledFormcontrolStaticPrint :
+    StyledFormcontrolStaticView
+  )
 
   return (
     <Container>
@@ -244,11 +248,10 @@ AreaPersonen.displayName = 'AreaPersonen'
  * as they may be loaded after the component
  */
 AreaPersonen.propTypes = {
-  geschaeft: PropTypes.object.isRequired,
-  interneOptions: PropTypes.array,
+  store: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   nrOfFieldsBeforePersonen: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
-  isPrintPreview: PropTypes.bool.isRequired,
 }
 
 export default enhance(AreaPersonen)

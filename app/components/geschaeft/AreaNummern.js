@@ -3,7 +3,6 @@ import { FormControl, ControlLabel } from 'react-bootstrap'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import GekoNrField from './GekoNrField'
 import createOptions from '../../src/createOptions'
@@ -201,47 +200,27 @@ const FieldAktennummer = styled(({ isPrintPreview, children, ...rest }) => <Fiel
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-      location,
-      blur,
-      change,
-      wrapperClass,
-      nrOfGFields,
-    } = props
-    const {
-      aktenstandortOptions,
-      activeId,
-      geschaeftePlus: geschaefte,
-    } = store.geschaefte
-    const path = location.pathname
-    const isPrintPreview = path === '/geschaeftPdf'
-    const geschaeft = geschaefte.find(g =>
-      g.idGeschaeft === activeId
-    )
-    return {
-      aktenstandortOptions,
-      geschaeft,
-      blur,
-      change,
-      wrapperClass,
-      nrOfGFields,
-      isPrintPreview,
-    }
-  }),
   observer
 )
 
 const AreaNummern = ({
-  aktenstandortOptions,
-  geschaeft,
+  store,
+  location,
   viewIsNarrow,
   nrOfGFields,
   change,
   blur,
-  isPrintPreview,
 }) => {
+  const {
+    aktenstandortOptions,
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+  } = store.geschaefte
+  const path = location.pathname
+  const isPrintPreview = path === '/geschaeftPdf'
+  const geschaeft = geschaefte.find(g =>
+    g.idGeschaeft === activeId
+  )
   const tabsToAdd = viewIsNarrow ? 0 : nrOfGFields
   const Container = isPrintPreview ? ContainerPrint : ContainerView
   const gekoValues = (
@@ -575,13 +554,12 @@ const AreaNummern = ({
 AreaNummern.displayName = 'AreaNummern'
 
 AreaNummern.propTypes = {
-  aktenstandortOptions: PropTypes.array.isRequired,
-  geschaeft: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,
   viewIsNarrow: PropTypes.bool.isRequired,
   nrOfGFields: PropTypes.number.isRequired,
-  isPrintPreview: PropTypes.bool.isRequired,
 }
 
 export default enhance(AreaNummern)

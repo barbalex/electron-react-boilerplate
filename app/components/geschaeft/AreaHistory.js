@@ -3,7 +3,6 @@ import { FormControl, ControlLabel } from 'react-bootstrap'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import AreaHistoryRows from './AreaHistoryRows'
 
@@ -39,37 +38,23 @@ const LabelVorgeschaeft = styled(({ isPrintPreview, children, ...rest }) => <Con
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-      location,
-      blur,
-      change,
-    } = props
-    const {
-      activeId,
-      geschaeftePlus: geschaefte,
-    } = store.geschaefte
-    const path = location.pathname
-    const geschaeft = geschaefte.find(g =>
-      g.idGeschaeft === activeId
-    )
-    return {
-      geschaeft,
-      change,
-      blur,
-      path,
-    }
-  }),
   observer
 )
 
 const AreaHistory = ({
-  geschaeft,
+  store,
+  location,
   blur,
   change,
-  path,
 }) => {
+  const {
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+  } = store.geschaefte
+  const path = location.pathname
+  const geschaeft = geschaefte.find(g =>
+    g.idGeschaeft === activeId
+  )
   const isPrintPreview = path === '/geschaeftPdf'
 
   return (
@@ -100,10 +85,10 @@ const AreaHistory = ({
 AreaHistory.displayName = 'AreaHistory'
 
 AreaHistory.propTypes = {
-  geschaeft: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   blur: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
-  path: PropTypes.string.isRequired,
 }
 
 export default enhance(AreaHistory)
