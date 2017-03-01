@@ -9,12 +9,9 @@ const { dialog } = remote
 
 function getDataArrayFromExportObjects(exportObjects) {
   const dataArray = []
-
+  console.log('exportGeschaefte: exportObjects:', exportObjects)
   // first the field names:
-  dataArray
-    .push(
-      Object.keys(exportObjects[0])
-    )
+  dataArray.push(Object.keys(exportObjects[0]))
   // then the field values
   exportObjects.forEach(object =>
     dataArray

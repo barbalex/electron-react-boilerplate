@@ -74,13 +74,11 @@ const exportGeschaefteAll = (
   messageShow,
 ) => {
   e.preventDefault()
-  const geschaefteGefiltert = geschaefte.filter(g =>
-    geschaefteGefilterteIds.includes(g.idGeschaeft)
-  )
-  const history = getHistoryOfGeschaefte(geschaefteGefiltert)
+  // TODO: compute?
+  const history = getHistoryOfGeschaefte(geschaefte)
   // need to make geko, interne and externe readable
   // and add history
-  const geschaefteReadable = _.clone(geschaefteGefiltert).map((g) => {
+  const geschaefteReadable = _.clone(geschaefte).map((g) => {
     // make readable
     g.geko = (
       g.geko && g.geko.map ?
@@ -164,7 +162,7 @@ const NavbarExportGeschaefteNav = ({ store }) => {
         onClick={e =>
           exportGeschaefteRechtsmittelVorjahre(
             e,
-            geschaefte,
+            store.geschaefte.geschaefte,
             messageShow,
           )
         }
