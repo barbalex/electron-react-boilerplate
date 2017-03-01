@@ -13,7 +13,7 @@ import List1Rows from './list1/Rows'
 import filterCriteriaToArrayOfStrings from '../../src/filterCriteriaToArrayOfStrings'
 import sortCriteriaToArrayOfStrings from '../../src/sortCriteriaToArrayOfStrings'
 import logoImg from '../../etc/logo.png'
-import PageTitle from '../../containers/page/PageTitle'
+import PageTitle from './PageTitle'
 
 const enhance = compose(
   inject('store'),

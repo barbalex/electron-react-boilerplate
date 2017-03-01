@@ -8,11 +8,11 @@ import moment from 'moment'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
+import ComparatorSelector from './ComparatorSelector'
 import styles from './areaRechtsmittel.css'
 import createOptions from '../../src/createOptions'
-import DateField from '../../containers/filterFields/DateField'
-import Input from '../../containers/filterFields/Input'
+import DateField from './DateField'
+import Input from './Input'
 
 moment.locale('de')
 

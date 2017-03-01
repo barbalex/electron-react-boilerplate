@@ -8,8 +8,8 @@ import _ from 'lodash'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
-import SortSelector from '../../containers/filterFields/SortSelector'
+import ComparatorSelector from './ComparatorSelector'
+import SortSelector from './SortSelector'
 import styles from './areaZuletztMutiert.css'
 
 const interneOptionsList = (interneOptions) => {

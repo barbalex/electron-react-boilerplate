@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
 import ComparatorSelector from './ComparatorSelector'
-import SortSelector from '../../containers/filterFields/SortSelector'
+import SortSelector from './SortSelector'
 
 const enhance = compose(
   inject('store'),

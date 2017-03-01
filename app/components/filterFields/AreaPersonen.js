@@ -5,8 +5,8 @@ import Linkify from 'react-linkify'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
-import SortSelector from '../../containers/filterFields/SortSelector'
+import ComparatorSelector from './ComparatorSelector'
+import SortSelector from './SortSelector'
 import styles from './areaPersonen.css'
 
 const interneOptionsList = (interneOptions) => {

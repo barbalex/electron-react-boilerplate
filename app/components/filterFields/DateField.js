@@ -13,7 +13,7 @@ import compose from 'recompose/compose'
 
 import styles from './dateField.css'
 import ComparatorSelector from './ComparatorSelector'
-import SortSelector from '../../containers/filterFields/SortSelector'
+import SortSelector from './SortSelector'
 import getDateValidationStateDate from '../../src/getDateValidationStateDate'
 
 moment.locale('de')
