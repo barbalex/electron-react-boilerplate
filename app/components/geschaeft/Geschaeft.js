@@ -157,11 +157,7 @@ class Geschaeft extends Component {
     const { store } = this.props
     const { changeGeschaeftInDb, geschaefteChangeState } = store
     const { activeId } = store.geschaefte
-    const {
-      type,
-      name,
-    } = e.target
-    const { value } = e.target
+    const { type, name, value } = e.target
     if (type !== 'radio' && type !== 'select-one') {
       if (isDateField(name)) {
         if (validateDate(value)) {
@@ -181,14 +177,14 @@ class Geschaeft extends Component {
     }
   }
 
-  render = () => {
+  render() {
     const { store } = this.props
     const {
       activeId,
       geschaeftePlusFilteredAndSorted: geschaefte,
     } = store.geschaefte
-    const path = store.history.location.pathname
     const { config } = store.app
+    const path = store.history.location.pathname
     const isPrintPreview = path === '/geschaeftPdf'
     const geschaeft = geschaefte.find(g =>
       g.idGeschaeft === activeId
