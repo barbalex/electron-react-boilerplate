@@ -199,10 +199,13 @@ export default (store) => ({
     newGeschaeftInDb(app.db, user.username)
       .then((geschaeft) => {
         store.geschaefte.geschaefte.unshift(geschaeft)
-          /**
-           * need to add new id to geschaefteGefilterteIds
-           */
-        store.geschaefte.geschaefteGefilterteIds.unshift(geschaeft.idGeschaeft)
+        /**
+         * need to remove filters
+         */
+        store.geschaefte.filterFields = []
+        store.geschaefte.filterType = null
+        store.geschaefte.filterFulltext = ''
+        store.geschaefte.sortFields = []
         store.geschaeftToggleActivated(geschaeft.idGeschaeft)
         if (store.history.location.pathname !== '/geschaefte') {
           store.history.push('/geschaefte')
