@@ -51,6 +51,10 @@ export default (store) => ({
         store.geschaefte.geschaefte = geschaefte
         if (window.location.pathname !== '/geschaefte') {
           browserHistory.push('/geschaefte')
+          setTimeout(() => {
+            console.log('just pushed /geschaefte')
+            console.log('window.location.pathname:', window.location.pathname)
+          })
         }
       })
       .catch(error => {
