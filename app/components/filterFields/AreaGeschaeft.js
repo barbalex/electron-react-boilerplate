@@ -4,8 +4,8 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
 import styles from './areaGeschaeft.css'
-import SelectInput from '../../containers/filterFields/SelectInput'
-import Input from '../../containers/filterFields/Input'
+import SelectInput from './SelectInput'
+import Input from './Input'
 
 const enhance = compose(
   inject('store'),

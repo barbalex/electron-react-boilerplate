@@ -3,7 +3,7 @@ import { FormControl, ControlLabel, Radio, InputGroup } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
+import ComparatorSelector from './ComparatorSelector'
 import styles from './areaParlVorstoss.css'
 import createOptions from '../../src/createOptions'
 

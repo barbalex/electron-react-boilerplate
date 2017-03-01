@@ -3,8 +3,8 @@ import { ControlLabel } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-import Input from '../../containers/filterFields/Input'
-import SelectInput from '../../containers/filterFields/SelectInput'
+import Input from './Input'
+import SelectInput from './SelectInput'
 import styles from './areaNummern.css'
 
 const enhance = compose(

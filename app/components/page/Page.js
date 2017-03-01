@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
 
 import styles from './Page.css'
 import FaelligeGeschaefteHeader from './faelligeGeschaefte/Header'
@@ -13,22 +15,15 @@ import sortCriteriaToArrayOfStrings from '../../src/sortCriteriaToArrayOfStrings
 import logoImg from '../../etc/logo.png'
 import PageTitle from '../../containers/page/PageTitle'
 
+const enhance = compose(
+  inject('store'),
+  observer
+)
+
 class Page extends Component {
   static propTypes = {
-    pages: PropTypes.array.isRequired,
-    geschaefte: PropTypes.array.isRequired,
-    filterFields: PropTypes.array.isRequired,
-    sortFields: PropTypes.array.isRequired,
-    remainingGeschaefte: PropTypes.array.isRequired,
-    geschaefteGefilterteIds: PropTypes.array.isRequired,
-    activePageIndex: PropTypes.number.isRequired,
+    store: PropTypes.object.isRequired,
     pageIndex: PropTypes.number.isRequired,
-    pageAddGeschaeft: PropTypes.func.isRequired,
-    pagesMoveGeschaeftToNewPage: PropTypes.func.isRequired,
-    pagesFinishedBuilding: PropTypes.func.isRequired,
-    pagesModalShow: PropTypes.func.isRequired,
-    building: PropTypes.bool.isRequired,
-    reportType: PropTypes.string.isRequired,
   }
 
   componentDidMount = () => {
@@ -40,7 +35,7 @@ class Page extends Component {
   }
 
   componentDidUpdate = () => {
-    const { reportType } = this.props
+    const { reportType } = this.props.store.pages
     if (['typFaelligeGeschaefte', 'angekVernehml', 'laufendeVernehml'].includes(reportType)) {
       // need to wait for next tick
       // otherwise in vernehmlassungen
@@ -53,12 +48,10 @@ class Page extends Component {
   }
 
   showPagesModal = () => {
-    const {
-      pagesModalShow,
-      pages,
-      geschaefteGefilterteIds,
-      remainingGeschaefte,
-    } = this.props
+    const { store } = this.props
+    const { pagesModalShow } = store
+    const { pages, remainingGeschaefte } = store.pages
+    const { geschaefteGefilterteIds } = store.geschaefte
     const msgLine2Txt = `Bisher ${pages.length} Seiten, ${remainingGeschaefte.length} Geschäfte noch zu verarbeiten`
     const msgLine2 = geschaefteGefilterteIds.length > 50 ? msgLine2Txt : ''
     pagesModalShow(true, 'Der Bericht wird aufgebaut...', msgLine2)
@@ -74,17 +67,15 @@ class Page extends Component {
      *  - insert next row
      *  - render
      */
+    const { store, pageIndex } = this.props
     const {
-      pages,
-      activePageIndex,
-      pageIndex,
-      geschaefte,
-      remainingGeschaefte,
       pageAddGeschaeft,
       pagesMoveGeschaeftToNewPage,
       pagesFinishedBuilding,
       pagesModalShow,
-    } = this.props
+    } = store
+    const { pages, activePageIndex, remainingGeschaefte } = store.pages
+    const { geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
 
     // don't do anything on not active pages
     if (pageIndex === activePageIndex) {
@@ -116,10 +107,8 @@ class Page extends Component {
   }
 
   tableRows = () => {
-    const {
-      geschaefte,
-      reportType,
-    } = this.props
+    const { geschaeftePlusFilteredAndSorted: geschaefte } = this.props.store.geschaefte
+    const { reportType } = this.props.store.pages
 
     return geschaefte.map((geschaeft, index) => {
       if (reportType === 'typFaelligeGeschaefte') {
@@ -157,14 +146,9 @@ class Page extends Component {
   }
 
   render = () => {
-    const {
-      filterFields,
-      sortFields,
-      pageIndex,
-      pages,
-      building,
-      reportType,
-    } = this.props
+    const { store, pageIndex } = this.props
+    const { pages, building, reportType } = store.pages
+    const { filterFields, sortFields } = store.geschaefte
     const firstPage = pageIndex === 0
     const pageContainerStyle = (
       building ?
@@ -238,4 +222,4 @@ class Page extends Component {
   }
 }
 
-export default Page
+export default enhance(Page)

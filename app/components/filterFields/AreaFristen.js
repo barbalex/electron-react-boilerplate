@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
 import styles from './areaFristen.css'
-import DateField from '../../containers/filterFields/DateField'
+import DateField from './DateField'
 
 const enhance = compose(
   inject('store'),
