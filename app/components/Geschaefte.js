@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 import withHandlers from 'recompose/withHandlers'
 
 import styles from './Geschaefte.css'
@@ -18,22 +17,6 @@ const StyledNoRowsDiv = styled.div`
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const { store } = props
-    const {
-      activeId,
-      geschaeftePlusFilteredAndSorted: geschaefte,
-      // geschaefte,
-      filterFields,
-      filterFulltext,
-    } = store.geschaefte
-    return {
-      activeId,
-      geschaefte: toJS(geschaefte),
-      filterFields: toJS(filterFields),
-      filterFulltext,
-    }
-  }),
   withHandlers({
     onChange: props => size =>
       props.store.configSetKey('geschaefteColumnWidth', size),
@@ -43,17 +26,11 @@ const enhance = compose(
 
 class Geschaefte extends Component {
   static propTypes = {
-    activeId: PropTypes.number,
-    geschaefte: PropTypes.array.isRequired,
-    filterFields: PropTypes.array,
-    filterFulltext: PropTypes.string,
+    store: PropTypes.object.isRequired,
     location: PropTypes.string,
   }
 
   static defaultProps = {
-    activeId: null,
-    filterFields: [],
-    filterFulltext: '',
     location: '',
   }
 
@@ -97,7 +74,7 @@ class Geschaefte extends Component {
     </div>
 
   noRowsRenderer = () => {
-    const { filterFields, filterFulltext, geschaefte } = this.props
+    const { filterFields, filterFulltext, geschaefte } = this.props.store.geschaefte
     const isFiltered = (
       geschaefte.length > 0 &&
       (filterFields.length > 0 || !!filterFulltext)
@@ -115,15 +92,15 @@ class Geschaefte extends Component {
   }
 
   render() {
-    const { activeId, geschaefte } = this.props
+    const { activeId, geschaeftePlusFilteredAndSorted: geschaefte } = this.props.store.geschaefte
     const { tableBodyOverflows } = this.state
-    const rowCount = geschaefte ? geschaefte.length : 0
     // get index of active id
     const indexOfActiveId = _.findIndex(
       geschaefte,
       g => g.idGeschaeft === activeId
     )
     console.log('Geschaefte, render, geschaefte.length:', geschaefte.length)
+    console.log('Geschaefte, render, geschaefte:', geschaefte)
 
     return (
       <div className={styles.body}>
@@ -177,7 +154,7 @@ class Geschaefte extends Component {
               {({ height, width }) =>
                 <List
                   height={height}
-                  rowCount={rowCount}
+                  rowCount={geschaefte.length}
                   rowHeight={77}
                   rowRenderer={this.rowRenderer}
                   noRowsRenderer={this.noRowsRenderer}
@@ -185,6 +162,7 @@ class Geschaefte extends Component {
                   scrollToIndex={indexOfActiveId}
                   ref={(c) => { this.reactList = c }}
                   {...geschaefte}
+                  {...geschaefte.length}
                 />
               }
             </AutoSizer>

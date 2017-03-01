@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { hashHistory } from 'react-router'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import styles from './Geschaefte.css'
 
@@ -14,52 +13,29 @@ const getStatusFristInStyle = (fristMitarbeiterWarnung) => {
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const {
-      store,
-      location,
-      index,
-      keyPassed,
-    } = props
-    const {
-      activeId,
-      geschaefteGefilterteIds,
-      geschaeftePlus: geschaefte,
-    } = store.geschaefte
-    const path = location.pathname
-
-    return {
-      geschaefte,
-      geschaefteGefilterteIds,
-      activeId,
-      path,
-      index,
-      keyPassed,
-    }
-  }),
   observer
 )
 
 const GeschaefteItem = ({
-  geschaefte,
-  geschaefteGefilterteIds,
-  activeId,
-  path,
-  geschaeftToggleActivated,
+  store,
   index,
   keyPassed,
 }) => {
+  const {
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+  } = store.geschaefte
+  const { geschaeftToggleActivated } = store
+  const path = window.location.pathname
+  const geschaeft = geschaefte[index]
   const isActive = (
     activeId &&
-    activeId === geschaefteGefilterteIds[index]
+    activeId === geschaeft.idGeschaeft
   )
   const trClassName = (
     isActive ?
     [styles.tableBodyRow, styles.active].join(' ') :
     styles.tableBodyRow
-  )
-  const geschaeft = geschaefte.find(g =>
-    g.idGeschaeft === geschaefteGefilterteIds[index]
   )
   // make sure geschaeft exists
   if (!geschaeft) return null
@@ -122,11 +98,7 @@ const GeschaefteItem = ({
 GeschaefteItem.displayName = 'GeschaefteItem'
 
 GeschaefteItem.propTypes = {
-  geschaefte: PropTypes.array.isRequired,
-  geschaefteGefilterteIds: PropTypes.array.isRequired,
-  geschaeftToggleActivated: PropTypes.func.isRequired,
-  activeId: PropTypes.number,
-  path: PropTypes.string.isRequired,
+  store: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
   keyPassed: PropTypes.string.isRequired,
 }
