@@ -11,7 +11,8 @@ const enhance = compose(
 class GekoNrField extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
-    idGeschaeft: PropTypes.number.isRequired,
+    // seems missing when deleting geschaeft
+    idGeschaeft: PropTypes.number,
     gekoNr: PropTypes.string.isRequired,
     tabsToAdd: PropTypes.number.isRequired,
   }
