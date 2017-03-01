@@ -22,14 +22,13 @@ const enhance = compose(
     const { store } = props
     const {
       activeId,
-      geschaefteGefilterteIds,
-      geschaeftePlus: geschaefte,
+      geschaeftePlusFilteredAndSorted: geschaefte,
+      // geschaefte,
       filterFields,
       filterFulltext,
     } = store.geschaefte
     return {
       activeId,
-      geschaefteGefilterteIds: toJS(geschaefteGefilterteIds),
       geschaefte: toJS(geschaefte),
       filterFields: toJS(filterFields),
       filterFulltext,
@@ -45,7 +44,6 @@ const enhance = compose(
 class Geschaefte extends Component {
   static propTypes = {
     activeId: PropTypes.number,
-    geschaefteGefilterteIds: PropTypes.array.isRequired,
     geschaefte: PropTypes.array.isRequired,
     filterFields: PropTypes.array,
     filterFulltext: PropTypes.string,
@@ -117,14 +115,15 @@ class Geschaefte extends Component {
   }
 
   render() {
-    const { geschaefteGefilterteIds, activeId } = this.props
+    const { activeId, geschaefte } = this.props
     const { tableBodyOverflows } = this.state
-    const rowCount = geschaefteGefilterteIds ? geschaefteGefilterteIds.length : 0
+    const rowCount = geschaefte ? geschaefte.length : 0
     // get index of active id
     const indexOfActiveId = _.findIndex(
-      geschaefteGefilterteIds,
-      g => g === activeId
+      geschaefte,
+      g => g.idGeschaeft === activeId
     )
+    console.log('Geschaefte, render, geschaefte.length:', geschaefte.length)
 
     return (
       <div className={styles.body}>
@@ -185,7 +184,7 @@ class Geschaefte extends Component {
                   width={width}
                   scrollToIndex={indexOfActiveId}
                   ref={(c) => { this.reactList = c }}
-                  {...geschaefteGefilterteIds}
+                  {...geschaefte}
                 />
               }
             </AutoSizer>

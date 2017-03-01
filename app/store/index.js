@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { extendObservable, computed } from 'mobx'
+import _ from 'lodash'
+import moment from 'moment'
 
 import app from './app'
 import appActions from './actions/app'
@@ -17,6 +19,9 @@ import geschaefteActions from './actions/geschaefte'
 import getDauerBisFristMitarbeiter from '../src/getDauerBisFristMitarbeiter'
 import getFristMitarbeiterWarnung from '../src/getFristMitarbeiterWarnung'
 import getItKontoForVerantwortlich from '../src/getItKontoForVerantwortlich'
+import filterGeschaefteByFulltext from '../src/filterGeschaefteByFulltext'
+import filterGeschaefteByFilterFields from '../src/filterGeschaefteByFilterFields'
+import isDateField from '../src/isDateField'
 
 function Store() {
   this.app = app
@@ -58,9 +63,51 @@ function Store() {
         return g
       })
     ),
+    geschaeftePlusFiltered: computed(() => {
+      const { filterFulltext, filterFields, geschaeftePlus, geschaefte } = this.geschaefte
+      const existsFilterFulltext = !!filterFulltext
+      const existsFilterFields = filterFields.length > 0
+
+      if (existsFilterFulltext) {
+        return filterGeschaefteByFulltext(geschaeftePlus, filterFulltext)
+      } else if (existsFilterFields) {
+        return filterGeschaefteByFilterFields(geschaeftePlus, filterFields)
+      }
+      return geschaefte
+    }),
+    geschaeftePlusFilteredAndSorted: computed(() => {
+      const geschaeftePassed = this.geschaefte.geschaeftePlusFiltered
+      const { sortFields } = this.geschaefte
+      let geschaefte
+      sortFields.forEach((sf) => {
+        geschaefte = _.sortBy(geschaeftePassed, (g) => {
+          if (g[sf.field]) {
+            if (isDateField(sf.field)) {
+              // need to reformat date
+              return moment(g[sf.field], 'DD.MM.YYYY').format('YYYY-MM-DD')
+            }
+            return g[sf.field]
+          }
+          return 'ZZZZ'
+        })
+        if (sf.direction === 'DESCENDING') {
+          geschaefte = geschaefte.reverse()
+        }
+      })
+      if (sortFields.length === 0) {
+        geschaefte = _.sortBy(geschaeftePassed, 'idGeschaeft').reverse()
+      }
+      return geschaefte
+    }),
     links: [],
     geko: [],
     geschaefteGefilterteIds: [],
+    /*
+    geschaefteGefilterteIds: computed(() =>
+      this.geschaefte.geschaeftePlusFiltered.map(g =>
+        g.idGeschaeft
+      )
+    ),*/
     filterFields: [],
     filterFulltext: '',
     filterType: null,

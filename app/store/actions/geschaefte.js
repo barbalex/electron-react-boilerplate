@@ -58,6 +58,13 @@ export default (store) => ({
         store.geschaefte.error.push(error)
       })
   }),
+  geschaeftToggleActivated: action((idGeschaeft) => {
+    store.geschaefte.activeId = (
+      store.geschaefte.activeId && store.geschaefte.activeId === action.idGeschaeft ?
+      null :
+      idGeschaeft
+    )
+  }),
   geschaefteFilterByFields: action((filterFields, filterType = 'nach Feldern') => {
     const { pages } = store
     const { filterFulltext, sortFields, geschaefte } = store.geschaefte
@@ -88,13 +95,6 @@ export default (store) => ({
     } else if (geschaefteGefilterteIds.length === 1) {
       store.geschaeftToggleActivated(geschaefteGefilterteIds[0])
     }
-  }),
-  geschaeftToggleActivated: action((idGeschaeft) => {
-    store.geschaefte.activeId = (
-      store.geschaefte.activeId && store.geschaefte.activeId === action.idGeschaeft ?
-      null :
-      idGeschaeft
-    )
   }),
   geschaefteResetSort: action(() => {
     store.geschaefte.sortFields = []
