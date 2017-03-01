@@ -25,7 +25,9 @@ import OptionsNav from './OptionsNav'
 import styles from './Navbar.css'
 
 // eslint-disable-next-line no-unused-vars
-const GeschaefteLinkContainer = styled(({ showGeschaefteNavs, children, ...rest }) => <div {...rest}>{children}</div>)`
+const GeschaefteNavItem = styled(({ showGeschaefteNavs, children, ...rest }) =>
+  <NavItem {...rest}>{children}</NavItem>
+)`
   border-left: ${props => (props.showGeschaefteNavs ? 'solid grey 1px' : 'dotted #505050 1px')};
   border-right: ${props => (props.showGeschaefteNavs ? 'none' : 'dotted #505050 1px')};
 `
@@ -54,7 +56,7 @@ class NavbarComponent extends Component {
       willDelete,
     } = store.geschaefte
     const path = store.history.location.pathname
-    const dataIsFiltered = geschaefte.length !== geschaefteGefilterteIds.length
+    const dataIsFiltered = geschaefte.length !== store.geschaefte.geschaefte.length
     const classNameBadge = dataIsFiltered ? styles.active : null
     const showBerichteNavs = (
       path === '/pages' ||
@@ -87,16 +89,13 @@ class NavbarComponent extends Component {
           className={styles.navbar}
         >
           <Nav>
-            <GeschaefteLinkContainer
+            <GeschaefteNavItem
+              href="#"
               onClick={() => store.history.push('/geschaefte')}
               showGeschaefteNavs={showGeschaefteNavs}
             >
-              <NavItem
-                href="#"
-              >
-                Geschäfte <sup className={classNameBadge}>{geschaefteGefilterteIds.length}</sup>
-              </NavItem>
-            </GeschaefteLinkContainer>
+              Geschäfte <sup className={classNameBadge}>{geschaefte.length}</sup>
+            </GeschaefteNavItem>
             {
               showGeschaefteNavs &&
               <GeschaeftNeuNav />
