@@ -5,6 +5,9 @@ import {
   InputGroup,
 } from 'react-bootstrap'
 import _ from 'lodash'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+
 import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
 import SortSelector from '../../containers/filterFields/SortSelector'
 import styles from './areaZuletztMutiert.css'
@@ -50,9 +53,14 @@ const interneData = (values, interneOptions) => {
   return `${name}${abt}${eMail}${telefon}`
 }
 
+const enhance = compose(
+  inject('store'),
+  observer
+)
+
 const AreaZuletztMutiert = ({
+  store,
   values,
-  interneOptions,
   change,
   firstTabIndex,
   changeComparator,
@@ -79,13 +87,13 @@ const AreaZuletztMutiert = ({
           tabIndex={1 + firstTabIndex}
           className={styles.narrowVerantwDropdown}
         >
-          {interneOptionsList(interneOptions)}
+          {interneOptionsList(store.geschaefte.interneOptions)}
         </FormControl>
       </InputGroup>
     </div>
     <div className={styles.fieldVerantwortlichName}>
       <FormControl.Static>
-        {interneData(values, interneOptions)}
+        {interneData(values, store.geschaefte.interneOptions)}
       </FormControl.Static>
     </div>
   </div>
@@ -93,11 +101,11 @@ const AreaZuletztMutiert = ({
 AreaZuletztMutiert.displayName = 'AreaZuletztMutiert'
 
 AreaZuletztMutiert.propTypes = {
+  store: PropTypes.object.isRequired,
   values: PropTypes.object,
-  interneOptions: PropTypes.array,
   firstTabIndex: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
   changeComparator: PropTypes.func.isRequired,
 }
 
-export default AreaZuletztMutiert
+export default enhance(AreaZuletztMutiert)

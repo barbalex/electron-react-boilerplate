@@ -1,8 +1,15 @@
 import React, { PropTypes } from 'react'
 import { FormControl, InputGroup } from 'react-bootstrap'
-import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
-import SortSelector from '../../containers/filterFields/SortSelector'
+import { observer } from 'mobx-react'
+import compose from 'recompose/compose'
+
+import ComparatorSelector from './ComparatorSelector'
+import SortSelector from './SortSelector'
 import createOptions from '../../src/createOptions'
+
+const enhance = compose(
+  observer
+)
 
 const SelectInput = ({
   name,
@@ -50,4 +57,4 @@ SelectInput.propTypes = {
   options: PropTypes.array,
 }
 
-export default SelectInput
+export default enhance(SelectInput)

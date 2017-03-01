@@ -1,23 +1,25 @@
 import React, { PropTypes } from 'react'
 import moment from 'moment'
 import $ from 'jquery'
+import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
 
 import styles from './filterFields.css'
-import AreaGeschaeft from '../../containers/filterFields/AreaGeschaeft'
-import AreaNummern from '../../containers/filterFields/AreaNummern'
-import AreaFristen from '../../containers/filterFields/AreaFristen'
-import AreaParlVorstoss from '../../containers/filterFields/AreaParlVorstoss'
-import AreaRechtsmittel from '../../containers/filterFields/AreaRechtsmittel'
-import AreaPersonen from '../../containers/filterFields/AreaPersonen'
-import AreaHistory from '../../containers/filterFields/AreaHistory'
-import AreaZuletztMutiert from '../../containers/filterFields/AreaZuletztMutiert'
+import AreaGeschaeft from './AreaGeschaeft'
+import AreaNummern from './AreaNummern'
+import AreaFristen from './AreaFristen'
+import AreaParlVorstoss from './AreaParlVorstoss'
+import AreaRechtsmittel from './AreaRechtsmittel'
+import AreaPersonen from './AreaPersonen'
+import AreaHistory from './AreaHistory'
+import AreaZuletztMutiert from './AreaZuletztMutiert'
 import isDateField from '../../src/isDateField'
 
 moment.locale('de')
 
 const enhance = compose(
+  inject('store'),
   withHandlers({
     changeComparator: props => (value, name) => {
       const { filterFields, geschaefteFilterByFields } = props
@@ -83,11 +85,12 @@ const enhance = compose(
       geschaefteFilterByFields(newFilterFields)
     },
   }),
+  observer
 )
 
 const FilterFields = ({
+  store,
   values,
-  config,
   changeComparator,
   change,
 }) => {
@@ -106,7 +109,7 @@ const FilterFields = ({
 
   // need width to adapt layout to differing widths
   const windowWidth = $(window).width()
-  const areaFilterFieldsWidth = windowWidth - config.geschaefteColumnWidth
+  const areaFilterFieldsWidth = windowWidth - store.app.config.geschaefteColumnWidth
   const wrapperClassBaseString = (
     areaFilterFieldsWidth < 980 ?
     'wrapperNarrow' :
@@ -194,8 +197,8 @@ const FilterFields = ({
 }
 
 FilterFields.propTypes = {
+  store: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired,
   changeComparator: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
 }

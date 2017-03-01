@@ -1,11 +1,19 @@
 import React, { PropTypes } from 'react'
 import { ControlLabel } from 'react-bootstrap'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+
 import Input from '../../containers/filterFields/Input'
 import SelectInput from '../../containers/filterFields/SelectInput'
 import styles from './areaNummern.css'
 
+const enhance = compose(
+  inject('store'),
+  observer
+)
+
 const AreaNummern = ({
-  aktenstandortOptions,
+  store,
   values,
   firstTabIndex,
   change,
@@ -191,7 +199,7 @@ const AreaNummern = ({
         values={values}
         changeComparator={changeComparator}
         tabIndex={13 + firstTabIndex}
-        options={aktenstandortOptions}
+        options={store.geschaefte.aktenstandortOptions}
       />
     </div>
     <div className={styles.fieldAktennummer}>
@@ -212,11 +220,11 @@ const AreaNummern = ({
 AreaNummern.displayName = 'AreaNummern'
 
 AreaNummern.propTypes = {
-  aktenstandortOptions: PropTypes.array,
+  store: PropTypes.object.isRequired,
   values: PropTypes.object,
   change: PropTypes.func.isRequired,
   firstTabIndex: PropTypes.number.isRequired,
   changeComparator: PropTypes.func.isRequired,
 }
 
-export default AreaNummern
+export default enhance(AreaNummern)

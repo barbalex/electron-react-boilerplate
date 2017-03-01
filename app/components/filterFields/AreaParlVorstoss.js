@@ -1,12 +1,20 @@
 import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel, Radio, InputGroup } from 'react-bootstrap'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+
 import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
 import styles from './areaParlVorstoss.css'
 import createOptions from '../../src/createOptions'
 
+const enhance = compose(
+  inject('store'),
+  observer
+)
+
 const AreaParlVorstoss = ({
+  store,
   values,
-  parlVorstossTypOptions,
   firstTabIndex,
   change,
   changeComparator,
@@ -32,7 +40,7 @@ const AreaParlVorstoss = ({
           bsSize="small"
           tabIndex={1 + firstTabIndex}
         >
-          {createOptions(parlVorstossTypOptions)}
+          {createOptions(store.geschaefte.parlVorstossTypOptions)}
         </FormControl>
       </InputGroup>
     </div>
@@ -91,11 +99,11 @@ const AreaParlVorstoss = ({
 AreaParlVorstoss.displayName = 'AreaParlVorstoss'
 
 AreaParlVorstoss.propTypes = {
+  store: PropTypes.object.isRequired,
   values: PropTypes.object,
-  parlVorstossTypOptions: PropTypes.array.isRequired,
   firstTabIndex: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
   changeComparator: PropTypes.func.isRequired,
 }
 
-export default AreaParlVorstoss
+export default enhance(AreaParlVorstoss)

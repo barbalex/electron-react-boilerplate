@@ -5,6 +5,9 @@ import {
   InputGroup,
 } from 'react-bootstrap'
 import moment from 'moment'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+
 import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
 import styles from './areaRechtsmittel.css'
 import createOptions from '../../src/createOptions'
@@ -13,10 +16,14 @@ import Input from '../../containers/filterFields/Input'
 
 moment.locale('de')
 
+const enhance = compose(
+  inject('store'),
+  observer
+)
+
 const AreaRechtsmittel = ({
+  store,
   values,
-  rechtsmittelErledigungOptions,
-  rechtsmittelInstanzOptions,
   firstTabIndex,
   change,
   changeComparator,
@@ -42,7 +49,7 @@ const AreaRechtsmittel = ({
           bsSize="small"
           tabIndex={1 + firstTabIndex}
         >
-          {createOptions(rechtsmittelInstanzOptions)}
+          {createOptions(store.geschaefte.rechtsmittelInstanzOptions)}
         </FormControl>
       </InputGroup>
     </div>
@@ -92,7 +99,7 @@ const AreaRechtsmittel = ({
           bsSize="small"
           tabIndex={4 + firstTabIndex}
         >
-          {createOptions(rechtsmittelErledigungOptions)}
+          {createOptions(store.geschaefte.rechtsmittelErledigungOptions)}
         </FormControl>
       </InputGroup>
     </div>
@@ -113,12 +120,11 @@ const AreaRechtsmittel = ({
 AreaRechtsmittel.displayName = 'AreaRechtsmittel'
 
 AreaRechtsmittel.propTypes = {
+  store: PropTypes.object.isRequired,
   values: PropTypes.object,
-  rechtsmittelErledigungOptions: PropTypes.array.isRequired,
-  rechtsmittelInstanzOptions: PropTypes.array.isRequired,
   firstTabIndex: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
   changeComparator: PropTypes.func.isRequired,
 }
 
-export default AreaRechtsmittel
+export default enhance(AreaRechtsmittel)

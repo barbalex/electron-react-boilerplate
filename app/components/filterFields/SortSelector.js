@@ -3,14 +3,21 @@ import {
   InputGroup,
   FormControl,
 } from 'react-bootstrap'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+
 import styles from './sortSelector.css'
 
+const enhance = compose(
+  inject('store'),
+  observer
+)
+
 const SortSelector = ({
+  store,
   name,
-  sortFields,
-  geschaefteSortByFields,
 }) => {
-  const filterField = sortFields.find(ff => ff.field === name)
+  const filterField = store.geschaefte.sortFields.find(ff => ff.field === name)
   const direction = filterField ? filterField.direction : ''
 
   return (
@@ -18,7 +25,7 @@ const SortSelector = ({
       <FormControl
         componentClass="select"
         className={styles.sortSelector}
-        onChange={e => geschaefteSortByFields(name, e.target.value)}
+        onChange={e => store.geschaefteSortByFields(name, e.target.value)}
         value={direction}
       >
         <option value="" />
@@ -32,9 +39,8 @@ const SortSelector = ({
 SortSelector.displayName = 'SortSelector'
 
 SortSelector.propTypes = {
+  store: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
-  sortFields: PropTypes.array.isRequired,
-  geschaefteSortByFields: PropTypes.func.isRequired,
 }
 
-export default SortSelector
+export default enhance(SortSelector)

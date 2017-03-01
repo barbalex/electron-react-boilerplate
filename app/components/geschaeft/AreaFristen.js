@@ -1,8 +1,5 @@
 import React, { PropTypes } from 'react'
-import {
-  FormControl,
-  ControlLabel,
-} from 'react-bootstrap'
+import { FormControl, ControlLabel } from 'react-bootstrap'
 import moment from 'moment'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'

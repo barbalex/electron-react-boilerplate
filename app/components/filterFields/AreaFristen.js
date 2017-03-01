@@ -1,6 +1,14 @@
 import React, { PropTypes } from 'react'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+
 import styles from './areaFristen.css'
 import DateField from '../../containers/filterFields/DateField'
+
+const enhance = compose(
+  inject('store'),
+  observer
+)
 
 const AreaFristen = ({
   values,
@@ -79,4 +87,4 @@ AreaFristen.propTypes = {
   firstTabIndex: PropTypes.number.isRequired,
 }
 
-export default AreaFristen
+export default enhance(AreaFristen)

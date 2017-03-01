@@ -1,16 +1,21 @@
 import React, { PropTypes } from 'react'
-import {
-  InputGroup,
-  FormControl,
-} from 'react-bootstrap'
+import { InputGroup, FormControl } from 'react-bootstrap'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+
 import styles from './comparatorSelector.css'
 
+const enhance = compose(
+  inject('store'),
+  observer
+)
+
 const ComparatorSelector = ({
+  store,
   name,
-  filterFields,
   changeComparator,
 }) => {
-  const filterField = filterFields.find(ff => ff.field === name)
+  const filterField = store.geschaefte.filterFields.find(ff => ff.field === name)
   const comparatorValue = filterField ? filterField.comparator : ''
 
   return (
@@ -35,9 +40,9 @@ const ComparatorSelector = ({
 ComparatorSelector.displayName = 'ComparatorSelector'
 
 ComparatorSelector.propTypes = {
+  store: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
-  filterFields: PropTypes.array.isRequired,
   changeComparator: PropTypes.func.isRequired,
 }
 
-export default ComparatorSelector
+export default enhance(ComparatorSelector)

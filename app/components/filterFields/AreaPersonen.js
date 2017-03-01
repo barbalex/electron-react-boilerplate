@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import { FormControl, InputGroup } from 'react-bootstrap'
 import _ from 'lodash'
 import Linkify from 'react-linkify'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
 
 import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
 import SortSelector from '../../containers/filterFields/SortSelector'
@@ -108,12 +110,16 @@ const externeData = (values, externeOptions) => {
   return <Linkify>{info}</Linkify>
 }
 
+const enhance = compose(
+  inject('store'),
+  observer
+)
+
 const AreaPersonen = ({
+  store,
   values,
   firstTabIndex = 0,
   change,
-  interneOptions,
-  externeOptions,
   changeComparator,
 }) =>
   <div className={styles.container}>
@@ -142,13 +148,13 @@ const AreaPersonen = ({
             tabIndex={1 + firstTabIndex}
             className={styles.narrowVerantwDropdown}
           >
-            {verantwortlichOptionsList(interneOptions)}
+            {verantwortlichOptionsList(store.geschaefte.interneOptions)}
           </FormControl>
         </InputGroup>
       </div>
       <div className={styles.fieldVerantwortlichName}>
         <FormControl.Static>
-          {verantwortlichData(values, interneOptions)}
+          {verantwortlichData(values, store.geschaefte.interneOptions)}
         </FormControl.Static>
       </div>
       <div className={styles.areaInterneKontakteSubTitle}>
@@ -172,13 +178,13 @@ const AreaPersonen = ({
             tabIndex={2 + firstTabIndex}
             className={styles.narrowVerantwDropdown}
           >
-            {interneOptionsList(interneOptions)}
+            {interneOptionsList(store.geschaefte.interneOptions)}
           </FormControl>
         </InputGroup>
       </div>
       <div className={styles.fieldVerantwortlichName}>
         <FormControl.Static>
-          {interneData(values, interneOptions)}
+          {interneData(values, store.geschaefte.interneOptions)}
         </FormControl.Static>
       </div>
 
@@ -203,13 +209,13 @@ const AreaPersonen = ({
             tabIndex={3 + firstTabIndex}
             className={styles.verantwDropdown}
           >
-            {externeOptionsList(externeOptions)}
+            {externeOptionsList(store.geschaefte.externeOptions)}
           </FormControl>
         </InputGroup>
       </div>
       <div className={styles.fieldVerantwortlichName}>
         <FormControl.Static>
-          {externeData(values, externeOptions)}
+          {externeData(values, store.geschaefte.externeOptions)}
         </FormControl.Static>
       </div>
     </div>
@@ -222,12 +228,11 @@ AreaPersonen.displayName = 'AreaPersonen'
  * as they may be loaded after the component
  */
 AreaPersonen.propTypes = {
+  store: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,
-  interneOptions: PropTypes.array,
-  externeOptions: PropTypes.array,
   firstTabIndex: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
   changeComparator: PropTypes.func.isRequired,
 }
 
-export default AreaPersonen
+export default enhance(AreaPersonen)

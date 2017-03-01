@@ -1,10 +1,18 @@
 import React, { PropTypes } from 'react'
 import { FormControl, InputGroup } from 'react-bootstrap'
-import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+
+import ComparatorSelector from './ComparatorSelector'
 import SortSelector from '../../containers/filterFields/SortSelector'
 
+const enhance = compose(
+  inject('store'),
+  observer
+)
+
 const Input = ({
-  type,
+  type = 'text',
   name,
   change,
   values,
@@ -46,4 +54,4 @@ Input.propTypes = {
   autoFocus: PropTypes.bool.isRequired,
 }
 
-export default Input
+export default enhance(Input)

@@ -8,12 +8,19 @@ import {
 } from 'react-bootstrap'
 import moment from 'moment'
 import DateRangePicker from 'react-bootstrap-daterangepicker'
+import { observer } from 'mobx-react'
+import compose from 'recompose/compose'
+
 import styles from './dateField.css'
-import ComparatorSelector from '../../containers/filterFields/ComparatorSelector'
+import ComparatorSelector from './ComparatorSelector'
 import SortSelector from '../../containers/filterFields/SortSelector'
 import getDateValidationStateDate from '../../src/getDateValidationStateDate'
 
 moment.locale('de')
+
+const enhance = compose(
+  observer
+)
 
 class DateField extends Component {
   static propTypes = {
@@ -167,4 +174,4 @@ class DateField extends Component {
   }
 }
 
-export default DateField
+export default enhance(DateField)
