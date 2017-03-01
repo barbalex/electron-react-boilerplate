@@ -5,7 +5,6 @@ import Linkify from 'react-linkify'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 const titleText = (idKontakt, interneOptions) => {
   const data = interneOptions.find(o =>
@@ -80,24 +79,6 @@ const RemoveGlyphicon = styled(Glyphicon)`
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const { store, location } = props
-    const {
-      interneOptions,
-      activeId,
-    } = store.geschaefte
-    const path = location.pathname
-    const {
-      geschaefteKontakteIntern,
-    } = store.geschaefteKontakteIntern
-    const isPrintPreview = path === '/geschaeftPdf'
-    return {
-      geschaefteKontakteIntern,
-      interneOptions,
-      activeId,
-      isPrintPreview,
-    }
-  }),
   observer
 )
 

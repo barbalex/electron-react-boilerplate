@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-import withProps from 'recompose/withProps'
 
 import getHistoryOfGeschaeft from '../../src/getHistoryOfGeschaeft'
 
@@ -48,19 +47,6 @@ const Gegenstand = styled.div`
 
 const enhance = compose(
   inject('store'),
-  withProps((props) => {
-    const { store, location } = props
-    const {
-      activeId,
-      geschaeftePlusFilteredAndSorted: geschaefte,
-    } = store.geschaefte
-    const path = location.pathname
-    return {
-      geschaefte,
-      activeId,
-      path,
-    }
-  }),
   observer
 )
 
