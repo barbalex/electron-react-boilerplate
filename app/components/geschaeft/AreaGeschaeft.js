@@ -31,7 +31,7 @@ const AreaGeschaeft = ({
   const isPrintPreview = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
-  )
+  ) || {}
   const styles = isPrintPreview ? pdfStyles : regularStyles
   const tabsToAdd = viewIsNarrow ? nrOfGFields : 0
 

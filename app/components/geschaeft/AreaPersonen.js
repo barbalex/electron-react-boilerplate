@@ -30,9 +30,12 @@ const verwantwortlichOptions = (interneOptions) => {
 }
 
 const verantwortlichData = (geschaeft, interneOptions, isPrintPreview) => {
-  const data = interneOptions.find(o =>
-    o.kurzzeichen === geschaeft.verantwortlich
-  )
+  const data = interneOptions.find(o => {
+    if (geschaeft && geschaeft.verantwortlich) {
+      return o.kurzzeichen === geschaeft.verantwortlich
+    }
+    return false
+  })
   if (!data) return ''
   let name = ''
   if (isPrintPreview && data.name) {
@@ -144,7 +147,7 @@ const AreaPersonen = ({
   const isPrintPreview = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
-  )
+  ) || {}
   const Container = (
     isPrintPreview ?
     ContainerPrint :

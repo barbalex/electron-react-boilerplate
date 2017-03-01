@@ -53,7 +53,7 @@ const AreaHistory = ({
   const path = store.history.location.pathname
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
-  )
+  ) || {}
   const isPrintPreview = path === '/geschaeftPdf'
 
   return (
@@ -67,7 +67,7 @@ const AreaHistory = ({
       <FieldVorgeschaeft>
         <FormControl
           type="number"
-          value={geschaeft.idVorgeschaeft || ''}
+          value={geschaeft && geschaeft.idVorgeschaeft ? geschaeft.idVorgeschaeft : ''}
           name="idVorgeschaeft"
           onChange={change}
           onBlur={blur}

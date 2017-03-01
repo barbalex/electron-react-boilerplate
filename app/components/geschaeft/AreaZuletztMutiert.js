@@ -31,11 +31,11 @@ const AreaZuletztMutiert = ({ store }) => {
   const path = store.history.location.pathname
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
-  )
+  ) || {}
   const isPrintPreview = path === '/geschaeftPdf'
   let zuletztMutiertText
 
-  if (!geschaeft.mutationsperson) {
+  if (!geschaeft || !geschaeft.mutationsperson) {
     zuletztMutiertText = 'Bei diesem Geschäft wurde (noch) keine Mutationsperson gespeichert'
   } else {
     const mutPersonOptions = interneOptions.find((o) => {

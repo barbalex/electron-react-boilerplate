@@ -219,7 +219,7 @@ const AreaNummern = ({
   const isPrintPreview = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
-  )
+  ) || {}
   const tabsToAdd = viewIsNarrow ? 0 : nrOfGFields
   const Container = isPrintPreview ? ContainerPrint : ContainerView
   const gekoValues = (

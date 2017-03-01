@@ -130,7 +130,7 @@ class Geschaeft extends Component {
     } = store.geschaefte
     const geschaeft = geschaefte.find(g =>
       g.idGeschaeft === activeId
-    )
+    ) || {}
     const {
       type,
       name,
@@ -188,10 +188,10 @@ class Geschaeft extends Component {
     const isPrintPreview = path === '/geschaeftPdf'
     const geschaeft = geschaefte.find(g =>
       g.idGeschaeft === activeId
-    )
+    ) || {}
 
     // return immediately if no geschaeft
-    const showGeschaeft = geschaeft && geschaeft.idGeschaeft
+    const showGeschaeft = geschaeft.idGeschaeft
     if (!showGeschaeft) return null
 
     const showAreaParlVorstoss = (

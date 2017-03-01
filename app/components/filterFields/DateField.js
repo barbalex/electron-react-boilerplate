@@ -110,9 +110,7 @@ class DateField extends Component {
       tabIndex,
       changeComparator,
     } = this.props
-    const {
-      value,
-    } = this.state
+    const { value } = this.state
     /**
      * need to give addon no padding
      * and the originally addon's padding to the glyphicon

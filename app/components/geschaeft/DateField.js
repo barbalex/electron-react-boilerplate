@@ -36,7 +36,7 @@ const DateField = ({
   } = store.geschaefte
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
-  )
+  ) || {}
   /**
    * need to give addon no padding
    * and the originally addon's padding to the glyphicon
