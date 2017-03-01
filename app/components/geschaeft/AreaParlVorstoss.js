@@ -126,7 +126,6 @@ const parlVorstossZustaendigkeit = (
 
 const AreaParlVorstoss = ({
   store,
-  location,
   nrOfFieldsBeforePv,
   change,
 }) => {
@@ -135,7 +134,7 @@ const AreaParlVorstoss = ({
     geschaeftePlusFilteredAndSorted: geschaefte,
     parlVorstossTypOptions,
   } = store.geschaefte
-  const path = location.pathname
+  const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
@@ -185,7 +184,6 @@ AreaParlVorstoss.displayName = 'AreaParlVorstoss'
 
 AreaParlVorstoss.propTypes = {
   store: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   nrOfFieldsBeforePv: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
 }

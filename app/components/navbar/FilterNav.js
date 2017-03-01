@@ -40,7 +40,7 @@ const FilterNav = ({ store }) => {
     geschaeftePlusFilteredAndSorted: geschaefte,
   } = store.geschaefte
   const { username } = store.user
-  const path = location.pathname
+  const path = store.history.location.pathname
   const dataIsFilteredByFulltext = (
     geschaefte.length !== geschaefteGefilterteIds.length &&
     filterFulltext

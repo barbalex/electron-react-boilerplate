@@ -48,12 +48,8 @@ export default (store) => ({
         store.geschaefte.fetching = false
         store.geschaefte.error = []
         store.geschaefte.geschaefte = geschaefte
-        if (window.location.pathname !== '/geschaefte') {
+        if (store.history.location.pathname !== '/geschaefte') {
           store.history.push('/geschaefte')
-          setTimeout(() => {
-            console.log('just pushed /geschaefte')
-            console.log('window.location.pathname:', window.location.pathname)
-          })
         }
       })
       .catch(error => {
@@ -91,7 +87,7 @@ export default (store) => ({
      * if pages are active,
      * initiate with new data
      */
-    const path = window.location.pathname
+    const path = store.history.location.pathname
     if (path === '/pages') {
       const { reportType } = pages
       store.pagesInitiate(reportType)
@@ -116,7 +112,7 @@ export default (store) => ({
      * if pages are active,
      * initiate with new data
      */
-    const path = window.location.pathname
+    const path = store.history.location.pathname
     if (path === '/pages') {
       const { reportType } = pages
       store.pagesInitiate(reportType)
@@ -141,7 +137,7 @@ export default (store) => ({
      * if pages are active,
      * initiate with new data
      */
-    const path = window.location.pathname
+    const path = store.history.location.pathname
     if (path === '/pages') {
       const { reportType } = pages
       store.pagesInitiate(reportType)
@@ -208,7 +204,7 @@ export default (store) => ({
            */
         store.geschaefte.geschaefteGefilterteIds.unshift(geschaeft.idGeschaeft)
         store.geschaeftToggleActivated(geschaeft.idGeschaeft)
-        if (window.location.pathname !== '/geschaefte') {
+        if (store.history.location.pathname !== '/geschaefte') {
           store.history.push('/geschaefte')
         }
       })

@@ -13,16 +13,10 @@ const enhance = compose(
   observer
 )
 
-const AreaLinks = ({
-  store,
-  location,
-  links,
-}) => {
+const AreaLinks = ({ store, links }) => {
   const { linkNewCreate, linkRemove } = store
-  const {
-    activeId,
-  } = store.geschaefte
-  const path = location.pathname
+  const { activeId } = store.geschaefte
+  const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
   const styles = isPrintPreview ? pdfStyles : regularStyles
 
@@ -82,7 +76,6 @@ AreaLinks.displayName = 'AreaLinks'
 AreaLinks.propTypes = {
   links: PropTypes.array.isRequired,
   store: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
 }
 
 export default enhance(AreaLinks)

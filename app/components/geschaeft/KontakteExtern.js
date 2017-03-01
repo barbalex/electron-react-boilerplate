@@ -76,15 +76,11 @@ const enhance = compose(
   observer
 )
 
-const GeschaefteKontakteExtern = ({
-  store,
-  location,
-  tabIndex,
-}) => {
+const GeschaefteKontakteExtern = ({ store, tabIndex }) => {
   const { geschaeftKontaktExternNewCreate } = store
   const { externeOptions, activeId } = store.geschaefte
-  const path = location.pathname
   const { geschaefteKontakteExtern } = store.geschaefteKontakteExtern
+  const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
 
   return (
@@ -123,7 +119,6 @@ GeschaefteKontakteExtern.displayName = 'GeschaefteKontakteExtern'
 
 GeschaefteKontakteExtern.propTypes = {
   store: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   tabIndex: PropTypes.number.isRequired,
 }
 

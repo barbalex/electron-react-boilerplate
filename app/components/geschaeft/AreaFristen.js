@@ -44,7 +44,6 @@ const enhance = compose(
 
 const AreaFristen = ({
   store,
-  location,
   blur,
   change,
   nrOfFieldsBeforeFristen,
@@ -54,7 +53,7 @@ const AreaFristen = ({
     activeId,
     geschaeftePlusFilteredAndSorted: geschaefte,
   } = store.geschaefte
-  const path = location.pathname
+  const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
@@ -155,12 +154,10 @@ AreaFristen.displayName = 'AreaFristen'
 
 AreaFristen.propTypes = {
   store: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,
   onChangeDatePicker: PropTypes.func.isRequired,
   nrOfFieldsBeforeFristen: PropTypes.number.isRequired,
-  isPrintPreview: PropTypes.bool.isRequired,
 }
 
 export default enhance(AreaFristen)

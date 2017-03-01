@@ -82,13 +82,13 @@ const enhance = compose(
   observer
 )
 
-const GeschaefteKontakteInternItems = ({ store, location }) => {
+const GeschaefteKontakteInternItems = ({ store }) => {
   const { geschaeftKontaktInternRemove } = store
   const {
     interneOptions,
     activeId,
   } = store.geschaefte
-  const path = location.pathname
+  const path = store.history.location.pathname
   const {
     geschaefteKontakteIntern,
   } = store.geschaefteKontakteIntern
@@ -134,7 +134,6 @@ GeschaefteKontakteInternItems.displayName = 'GeschaefteKontakteInternItems'
 
 GeschaefteKontakteInternItems.propTypes = {
   store: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
 }
 
 export default enhance(GeschaefteKontakteInternItems)

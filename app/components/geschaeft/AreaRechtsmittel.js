@@ -19,7 +19,6 @@ const enhance = compose(
 
 const AreaRechtsmittel = ({
   store,
-  location,
   nrOfFieldsBeforePv,
   change,
   blur,
@@ -31,7 +30,7 @@ const AreaRechtsmittel = ({
     rechtsmittelErledigungOptions,
     rechtsmittelInstanzOptions,
   } = store.geschaefte
-  const path = location.pathname
+  const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
@@ -133,7 +132,6 @@ AreaRechtsmittel.displayName = 'AreaRechtsmittel'
 
 AreaRechtsmittel.propTypes = {
   store: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   nrOfFieldsBeforePv: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,

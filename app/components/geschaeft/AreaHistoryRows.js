@@ -50,16 +50,13 @@ const enhance = compose(
   observer
 )
 
-const AreaHistoryRows = ({
-  store,
-  location,
-}) => {
+const AreaHistoryRows = ({ store }) => {
   const { geschaeftToggleActivated } = store
   const {
     activeId,
     geschaeftePlusFilteredAndSorted: geschaefte,
   } = store.geschaefte
-  const path = location.pathname
+  const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
   // TODO: compute?
   const history = getHistoryOfGeschaeft(geschaefte, activeId)
@@ -108,7 +105,6 @@ AreaHistoryRows.displayName = 'AreaHistoryRows'
 
 AreaHistoryRows.propTypes = {
   store: PropTypes.array.isRequired,
-  location: PropTypes.array.isRequired,
 }
 
 export default enhance(AreaHistoryRows)

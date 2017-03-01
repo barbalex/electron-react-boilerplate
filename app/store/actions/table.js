@@ -35,7 +35,7 @@ export default (store) => ({
     getTableFromDb(app.db, table)
       .then((rows) => {
         store.tableGetSuccess(table, rows)
-        if (window.location.pathname !== '/table') {
+        if (store.history.location.pathname !== '/table') {
           store.history.push('/table')
         }
       })
@@ -62,7 +62,7 @@ export default (store) => ({
       .then((row) => {
         store.tableRowNew(table, row)
         store.tableRowToggleActivated(table, row.id)
-        if (window.location.pathname !== '/table') {
+        if (store.history.location.pathname !== '/table') {
           store.history.push('/table')
         }
       })

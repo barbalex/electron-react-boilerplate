@@ -83,16 +83,13 @@ const enhance = compose(
   observer
 )
 
-const GeschaefteKontakteIntern = ({
-  tabIndex,
-  store,
-  location,
-}) => {
+const GeschaefteKontakteIntern = ({ tabIndex, store }) => {
   const { geschaeftKontaktInternNewCreate } = store
   const { interneOptions, activeId } = store.geschaefte
-  const path = location.pathname
   const { geschaefteKontakteIntern } = store.geschaefteKontakteIntern
+  const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
+
   return (
     <Container>
       <KontakteInternItems />
@@ -129,7 +126,6 @@ GeschaefteKontakteIntern.displayName = 'GeschaefteKontakteIntern'
 
 GeschaefteKontakteIntern.propTypes = {
   store: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   tabIndex: PropTypes.number.isRequired,
 }
 

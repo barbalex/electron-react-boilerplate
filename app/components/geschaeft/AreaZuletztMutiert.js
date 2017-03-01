@@ -22,16 +22,13 @@ const enhance = compose(
   observer
 )
 
-const AreaZuletztMutiert = ({
-  store,
-  location,
-}) => {
+const AreaZuletztMutiert = ({ store }) => {
   const {
     activeId,
     geschaeftePlusFilteredAndSorted: geschaefte,
     interneOptions,
   } = store.geschaefte
-  const path = location.pathname
+  const path = store.history.location.pathname
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
   )
@@ -73,7 +70,6 @@ AreaZuletztMutiert.displayName = 'AreaZuletztMutiert'
 
 AreaZuletztMutiert.propTypes = {
   store: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
 }
 
 export default enhance(AreaZuletztMutiert)

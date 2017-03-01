@@ -43,7 +43,6 @@ const enhance = compose(
 
 const AreaHistory = ({
   store,
-  location,
   blur,
   change,
 }) => {
@@ -51,7 +50,7 @@ const AreaHistory = ({
     activeId,
     geschaeftePlusFilteredAndSorted: geschaefte,
   } = store.geschaefte
-  const path = location.pathname
+  const path = store.history.location.pathname
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
   )
@@ -74,7 +73,7 @@ const AreaHistory = ({
           onBlur={blur}
           bsSize="small"
           placeholder={isPrintPreview ? null : 'ID'}
-          tabIndex={99}
+          tabIndex={99}  // eslint-disable-line
         />
       </FieldVorgeschaeft>
       <AreaHistoryRows />
@@ -86,7 +85,6 @@ AreaHistory.displayName = 'AreaHistory'
 
 AreaHistory.propTypes = {
   store: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   blur: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
 }

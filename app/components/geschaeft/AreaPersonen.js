@@ -132,7 +132,6 @@ const enhance = compose(
 
 const AreaPersonen = ({
   store,
-  location,
   nrOfFieldsBeforePersonen = 0,
   change,
 }) => {
@@ -141,7 +140,7 @@ const AreaPersonen = ({
     geschaeftePlusFilteredAndSorted: geschaefte,
     interneOptions,
   } = store.geschaefte
-  const path = location.pathname
+  const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
@@ -243,13 +242,8 @@ const AreaPersonen = ({
 
 AreaPersonen.displayName = 'AreaPersonen'
 
-/**
- * do not make options required
- * as they may be loaded after the component
- */
 AreaPersonen.propTypes = {
   store: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   nrOfFieldsBeforePersonen: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
 }

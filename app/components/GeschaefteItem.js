@@ -25,7 +25,7 @@ const GeschaefteItem = ({
     geschaeftePlusFilteredAndSorted: geschaefte,
   } = store.geschaefte
   const { geschaeftToggleActivated } = store
-  const path = window.location.pathname
+  const path = store.history.location.pathname
   const geschaeft = geschaefte[index]
   const isActive = (
     activeId &&
