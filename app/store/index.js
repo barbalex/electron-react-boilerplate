@@ -3,6 +3,7 @@ import { extendObservable, computed } from 'mobx'
 import _ from 'lodash'
 import moment from 'moment'
 
+import observablehistory from './observablehistory'
 import app from './app'
 import appActions from './actions/app'
 import user from './user'
@@ -24,6 +25,7 @@ import filterGeschaefteByFilterFields from '../src/filterGeschaefteByFilterField
 import isDateField from '../src/isDateField'
 
 function Store() {
+  this.history = observablehistory
   this.app = app
   extendObservable(this, appActions(this))
   this.geschaefte = {}

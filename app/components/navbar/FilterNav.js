@@ -8,7 +8,6 @@ import {
   FormControl,
 } from 'react-bootstrap'
 import moment from 'moment'
-import { withRouter } from 'react-router'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
@@ -21,11 +20,10 @@ import styles from './Navbar.css'
 
 const enhance = compose(
   inject('store'),
-  withRouter,
   observer
 )
 
-const FilterNav = ({ store, router }) => {
+const FilterNav = ({ store }) => {
   const {
     geschaefteRemoveFilters,
     geschaefteFilterByFulltext,
@@ -99,7 +97,7 @@ const FilterNav = ({ store, router }) => {
           }}
           onClick={() => {
             if (path !== '/filterFields') {
-              router.push('/filterFields')
+              store.history.push('/filterFields')
             }
           }}
         >
@@ -229,7 +227,6 @@ FilterNav.displayName = 'FilterNav'
 
 FilterNav.propTypes = {
   store: PropTypes.object.isRequired,
-  router: PropTypes.object.isRequired,
 }
 
 export default enhance(FilterNav)

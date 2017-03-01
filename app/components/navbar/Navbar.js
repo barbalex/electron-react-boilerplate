@@ -4,8 +4,6 @@ import {
   Nav,
   NavItem,
 } from 'react-bootstrap'
-import { withRouter } from 'react-router'
-import { LinkContainer } from 'react-router-bootstrap'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
@@ -27,21 +25,19 @@ import OptionsNav from './OptionsNav'
 import styles from './Navbar.css'
 
 // eslint-disable-next-line no-unused-vars
-const GeschaefteLinkContainer = styled(({ showGeschaefteNavs, children, ...rest }) => <LinkContainer {...rest}>{children}</LinkContainer>)`
+const GeschaefteLinkContainer = styled(({ showGeschaefteNavs, children, ...rest }) => <div {...rest}>{children}</div>)`
   border-left: ${props => (props.showGeschaefteNavs ? 'solid grey 1px' : 'dotted #505050 1px')};
   border-right: ${props => (props.showGeschaefteNavs ? 'none' : 'dotted #505050 1px')};
 `
 
 const enhance = compose(
   inject('store'),
-  withRouter,
   observer
 )
 
 class NavbarComponent extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired,
   }
 
   componentWillMount() {
@@ -49,7 +45,7 @@ class NavbarComponent extends Component {
   }
 
   render() {
-    const { store, router } = this.props
+    const { store } = this.props
     const { showMessageModal } = store.app
     const { showPagesModal } = store.pages
     const {
@@ -57,7 +53,7 @@ class NavbarComponent extends Component {
       geschaeftePlusFilteredAndSorted: geschaefte,
       willDelete,
     } = store.geschaefte
-    const path = router.location.pathname
+    const path = store.history.location.pathname
     const dataIsFiltered = geschaefte.length !== geschaefteGefilterteIds.length
     const classNameBadge = dataIsFiltered ? styles.active : null
     const showBerichteNavs = (
@@ -92,7 +88,7 @@ class NavbarComponent extends Component {
         >
           <Nav>
             <GeschaefteLinkContainer
-              to={{ pathname: '/geschaefte' }}
+              onClick={() => store.history.push('/geschaefte')}
               showGeschaefteNavs={showGeschaefteNavs}
             >
               <NavItem

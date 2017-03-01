@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { AutoSizer, List } from 'react-virtualized'
 import _ from 'lodash'
 import styled from 'styled-components'
-import { withRouter } from 'react-router'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
@@ -21,14 +20,12 @@ const enhance = compose(
     onChange: props => size =>
       props.store.configSetKey('geschaefteColumnWidth', size),
   }),
-  withRouter,
   observer
 )
 
 class Geschaefte extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired,
   }
 
   state = {
@@ -36,8 +33,8 @@ class Geschaefte extends Component {
   }
 
   componentDidUpdate() {
-    const { router } = this.props
-    const path = router.location.pathname
+    const { store } = this.props
+    const path = store.history.location.pathname
 
     if (
       path === '/geschaefte' ||
@@ -96,8 +93,6 @@ class Geschaefte extends Component {
       geschaefte,
       g => g.idGeschaeft === activeId
     )
-
-    console.log('Geschaefte: location:', this.props.router.location)
 
     return (
       <div className={styles.body}>

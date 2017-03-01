@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { action } from 'mobx'
-import { browserHistory } from 'react-router'
 
 import pageStandardState from '../../src/pageStandardState'
 
@@ -24,7 +23,7 @@ export default (store) => ({
     store.pages.reportType = reportType
     store.pages.remainingGeschaefte = geschaefteGefiltert
     store.pages.building = true
-    browserHistory.push('/pages')
+    store.history.push('/pages')
   }),
   pagesFinishedBuilding: action(() => {
     store.pages.building = false

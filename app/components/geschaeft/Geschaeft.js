@@ -4,7 +4,6 @@ import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import $ from 'jquery'
 import styled from 'styled-components'
-import { withRouter } from 'react-router'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
@@ -103,14 +102,12 @@ const WrapperWideNoAreaForGeschaeftsartPdf = styled(WrapperPdf)`
 
 const enhance = compose(
   inject('store'),
-  withRouter,
   observer
 )
 
 class Geschaeft extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
   }
 
   onChangeDatePicker = (name, e, picker) => {
@@ -185,12 +182,12 @@ class Geschaeft extends Component {
   }
 
   render = () => {
-    const { store, location } = this.props
+    const { store } = this.props
     const {
       activeId,
       geschaeftePlusFilteredAndSorted: geschaefte,
     } = store.geschaefte
-    const path = location.pathname
+    const path = store.history.location.pathname
     const { config } = store.app
     const isPrintPreview = path === '/geschaeftPdf'
     const geschaeft = geschaefte.find(g =>

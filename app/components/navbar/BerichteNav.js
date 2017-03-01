@@ -4,7 +4,6 @@ import {
   MenuItem,
 } from 'react-bootstrap'
 import styled from 'styled-components'
-import { withRouter } from 'react-router'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
@@ -21,13 +20,11 @@ const StyledNavDropdown = styled(({ showBerichteNavs, children, ...rest }) => <N
 
 const enhance = compose(
   inject('store'),
-  withRouter,
   observer
 )
 
 const BerichteNav = ({
   store,
-  router,
   showBerichteNavs,
 }) => {
   const {
@@ -39,7 +36,7 @@ const BerichteNav = ({
     geschaefteResetSort,
   } = store
   const { activeId } = store.geschaefte
-  const path = router.location.pathname
+  const path = store.history.location.pathname
   const isActive = path === '/pages'
   const nameObject = {
     typFaelligeGeschaefte: 'Bericht: Typ "fällige Geschäfte"',
@@ -156,7 +153,6 @@ BerichteNav.displayName = 'BerichteNav'
 
 BerichteNav.propTypes = {
   store: PropTypes.object.isRequired,
-  router: PropTypes.object.isRequired,
   showBerichteNavs: PropTypes.bool.isRequired,
 }
 

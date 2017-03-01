@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { action } from 'mobx'
-import { browserHistory } from 'react-router'
 import _ from 'lodash'
 import moment from 'moment'
 
@@ -26,7 +25,7 @@ import geschaefteSortByFieldsGetSortFields from '../../src/geschaefteSortByField
 
 export default (store) => ({
   geschaeftPdfShow: action(() =>
-    browserHistory.push('/geschaeftPdf')
+    store.history.push('/geschaeftPdf')
   ),
   geschaefteSetGefilterteIds: action(() => {
     const { geschaefte } = store
@@ -50,7 +49,7 @@ export default (store) => ({
         store.geschaefte.error = []
         store.geschaefte.geschaefte = geschaefte
         if (window.location.pathname !== '/geschaefte') {
-          browserHistory.push('/geschaefte')
+          store.history.push('/geschaefte')
           setTimeout(() => {
             console.log('just pushed /geschaefte')
             console.log('window.location.pathname:', window.location.pathname)
@@ -148,7 +147,7 @@ export default (store) => ({
       store.pagesInitiate(reportType)
     } else {
       if (path !== '/geschaefte') {
-        browserHistory.push('/geschaefte')
+        store.history.push('/geschaefte')
       }
       if (geschaefteGefilterteIds.length === 1) {
         store.geschaeftToggleActivated(geschaefteGefilterteIds[0])
@@ -210,7 +209,7 @@ export default (store) => ({
         store.geschaefte.geschaefteGefilterteIds.unshift(geschaeft.idGeschaeft)
         store.geschaeftToggleActivated(geschaeft.idGeschaeft)
         if (window.location.pathname !== '/geschaefte') {
-          browserHistory.push('/geschaefte')
+          store.history.push('/geschaefte')
         }
       })
       .catch(error =>

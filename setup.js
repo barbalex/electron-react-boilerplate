@@ -30,16 +30,8 @@ module.exports = {
   // that match a regex pattern
   clean: [
     {
-      file: 'app/reducers/index.js',
-      pattern: /counter/
-    },
-    {
       file: 'app/app.global.css',
       clear: true
-    },
-    {
-      file: 'app/routes.js',
-      pattern: /CounterPage/
     },
     {
       file: 'test/e2e.js',

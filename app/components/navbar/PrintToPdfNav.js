@@ -3,8 +3,7 @@ import fs from 'fs'
 import React, { PropTypes } from 'react'
 import { NavItem, Glyphicon } from 'react-bootstrap'
 import styled from 'styled-components'
-import { withRouter } from 'react-router'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
 // eslint-disable-next-line no-unused-vars
@@ -56,17 +55,14 @@ const onClickPrint = (e, path) => {
 }
 
 const enhance = compose(
-  withRouter,
+  inject('store'),
   observer
 )
 
-const NavbarPrintNav = ({
-  router,
-  showBerichteNavs,
-}) =>
+const NavbarPrintNav = ({ store, showBerichteNavs }) =>
   <StyledNavItem
     onClick={e =>
-      onClickPrint(e, router.location.pathname)
+      onClickPrint(e, store.history.location.pathname)
     }
     title="PDF erzeugen"
     showBerichteNavs={showBerichteNavs}
@@ -77,7 +73,7 @@ const NavbarPrintNav = ({
 NavbarPrintNav.displayName = 'NavbarPrintNav'
 
 NavbarPrintNav.propTypes = {
-  router: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired,
   showBerichteNavs: PropTypes.bool.isRequired,
 }
 

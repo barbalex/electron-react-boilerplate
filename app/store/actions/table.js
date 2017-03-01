@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { action } from 'mobx'
-import { browserHistory } from 'react-router'
 
 import getTableFromDb from '../../src/getTableFromDb'
 import updateTableRow from '../../src/updateTableRow'
@@ -37,7 +36,7 @@ export default (store) => ({
       .then((rows) => {
         store.tableGetSuccess(table, rows)
         if (window.location.pathname !== '/table') {
-          browserHistory.push('/table')
+          store.history.push('/table')
         }
       })
       .catch(error =>
@@ -64,7 +63,7 @@ export default (store) => ({
         store.tableRowNew(table, row)
         store.tableRowToggleActivated(table, row.id)
         if (window.location.pathname !== '/table') {
-          browserHistory.push('/table')
+          store.history.push('/table')
         }
       })
       .catch(error => store.tableGetError(error))

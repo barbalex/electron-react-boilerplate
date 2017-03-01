@@ -2,9 +2,8 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'mobx-react'
 import app from 'ampersand-app'
-import { Router, hashHistory } from 'react-router'
 
-import routes from './routes'
+import App from './components/App'
 // loading store from separate file does not work for server rendering
 // see: http://stackoverflow.com/questions/33643290/how-do-i-get-a-hold-of-the-store-dispatch-in-react-router-onenter
 // but I need to fetch it from wrapComponentInProvider.js
@@ -22,7 +21,7 @@ window.app = app
 
 render(
   <Provider store={store}>
-    <Router history={hashHistory} routes={routes} />
+    <App />
   </Provider>,
   document.getElementById('root')
 )
