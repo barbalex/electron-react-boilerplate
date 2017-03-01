@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
-// add devtools below ref
-// import DevTools from 'mobx-react-devtools'
 
 import GeschaefteLayout from '../components/GeschaefteLayout'
 import FilterFieldsLayout from '../components/FilterFieldsLayout'

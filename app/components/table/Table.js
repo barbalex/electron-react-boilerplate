@@ -4,6 +4,8 @@ import _ from 'lodash'
 import $ from 'jquery'
 import Linkify from 'react-linkify'
 import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
 
 import styles from './Table.css'
 
@@ -12,18 +14,14 @@ const StyledNoRowsDiv = styled.div`
   font-weight: bold;
 `
 
+const enhance = compose(
+  inject('store'),
+  observer
+)
+
 class Table extends Component {
   static propTypes = {
-    table: PropTypes.string.isRequired,
-    rows: PropTypes.array.isRequired,
-    id: PropTypes.number,
-    tableRowToggleActivated: PropTypes.func.isRequired,
-    tableReset: PropTypes.func.isRequired,
-    config: PropTypes.object.isRequired,
-  }
-
-  static defaultProps = {
-    id: 0,
+    store: PropTypes.object.isRequired,
   }
 
   state = {
@@ -39,12 +37,13 @@ class Table extends Component {
   }
 
   componentWillUnmount = () => {
-    const { tableReset } = this.props
+    const { tableReset } = this.props.store
     tableReset()
   }
 
   onClickTableRow = (id) => {
-    const { tableRowToggleActivated, table } = this.props
+    const { tableRowToggleActivated } = this.props.store
+    const { table } = this.props.store.table
     tableRowToggleActivated(table, id)
   }
 
@@ -60,7 +59,7 @@ class Table extends Component {
     this.tableBody.offsetHeight < this.tableBody.scrollHeight
 
   itemColumns = (row) => {
-    const { config } = this.props
+    const { config } = this.props.store.app
     const keys = Object.keys(row)
     const values = _.values(row)
     const windowWidth = $(window).width()
@@ -91,7 +90,8 @@ class Table extends Component {
   }
 
   tableHeaders = () => {
-    const { rows, config } = this.props
+    const { rows } = this.props.store.table
+    const { config } = this.props.store.app
     const headers = Object.keys(rows[0])
     const windowWidth = $(window).width()
     const tableWidth = (windowWidth * config.tableColumnWidth) / 100
@@ -116,7 +116,7 @@ class Table extends Component {
   }
 
   rowRenderer = ({ key, index, style }) => {
-    const { rows, id } = this.props
+    const { rows, id } = this.props.store.table
     const row = rows[index]
     const isActive = !!id && id === row.id
     const trClassName = (
@@ -149,7 +149,7 @@ class Table extends Component {
   }
 
   render() {
-    const { rows, id } = this.props
+    const { rows, id } = this.props.store.table
     const { tableBodyOverflows } = this.state// get index of active id
     const indexOfActiveId = _.findIndex(rows, r =>
       r.id === id
@@ -194,4 +194,4 @@ class Table extends Component {
   }
 }
 
-export default Table
+export default enhance(Table)

@@ -5,8 +5,8 @@ import compose from 'recompose/compose'
 import withProps from 'recompose/withProps'
 import withHandlers from 'recompose/withHandlers'
 
-import TableRow from '../containers/table/TableRow'
-import Table from '../containers/table/Table'
+import TableRow from './table/TableRow'
+import Table from './table/Table'
 
 const enhance = compose(
   inject('store'),

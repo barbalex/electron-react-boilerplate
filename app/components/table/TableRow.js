@@ -5,6 +5,9 @@ import {
   FormControl,
   ControlLabel,
 } from 'react-bootstrap'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
+
 import styles from './TableRow.css'
 
 const change = ({
@@ -69,13 +72,14 @@ const fields = ({
     return field
   })
 
-const TableRow = ({
-  rows,
-  id,
-  table,
-  tableChangeState,
-  changeTableInDb,
-}) => {
+const enhance = compose(
+  inject('store'),
+  observer
+)
+
+const TableRow = ({ store }) => {
+  const { tableChangeState, changeTableInDb } = store
+  const { rows, id, table } = store.table
   const row = rows.find(r =>
     r.id === id
   )
@@ -100,11 +104,7 @@ const TableRow = ({
 TableRow.displayName = 'TableRow'
 
 TableRow.propTypes = {
-  table: PropTypes.string.isRequired,
-  rows: PropTypes.array.isRequired,
-  id: PropTypes.number,
-  tableChangeState: PropTypes.func.isRequired,
-  changeTableInDb: PropTypes.func.isRequired,
+  store: PropTypes.object.isRequired,
 }
 
-export default TableRow
+export default enhance(TableRow)
