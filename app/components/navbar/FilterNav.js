@@ -32,25 +32,25 @@ const FilterNav = ({ store }) => {
     geschaefteResetSort,
   } = store
   const {
+    geschaefte: geschaefteUnfiltered,
     filterFields,
     filterType,
     filterFulltext,
     sortFields,
-    geschaefteGefilterteIds,
     geschaeftePlusFilteredAndSorted: geschaefte,
   } = store.geschaefte
   const { username } = store.user
   const path = store.history.location.pathname
   const dataIsFilteredByFulltext = (
-    geschaefte.length !== geschaefteGefilterteIds.length &&
+    geschaefte.length !== geschaefteUnfiltered.length &&
     filterFulltext
   )
   const dataIsFilteredByFields = (
-    geschaefte.length !== geschaefteGefilterteIds.length &&
+    geschaefte.length !== geschaefteUnfiltered.length &&
     !filterFulltext
   )
   const dataIsFiltered = (
-    geschaefte.length !== geschaefteGefilterteIds.length
+    geschaefte.length !== geschaefteUnfiltered.length
   )
   const dataIsFilteredByFulltextStyle = [
     styles.filterInput,

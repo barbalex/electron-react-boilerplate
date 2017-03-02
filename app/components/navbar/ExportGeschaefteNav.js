@@ -69,7 +69,6 @@ const exportGeschaefteRechtsmittelVorjahre = (
 
 const exportGeschaefteAll = (
   e,
-  geschaefteGefilterteIds,
   geschaefte,
   messageShow,
 ) => {
@@ -137,10 +136,7 @@ const enhance = compose(
 
 const NavbarExportGeschaefteNav = ({ store }) => {
   const { messageShow } = store
-  const {
-    geschaefteGefilterteIds,
-    geschaeftePlusFilteredAndSorted: geschaefte,
-  } = store.geschaefte
+  const { geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
   return (
     <NavDropdown
       title="Exporte"
@@ -150,7 +146,6 @@ const NavbarExportGeschaefteNav = ({ store }) => {
         onClick={e =>
           exportGeschaefteAll(
             e,
-            geschaefteGefilterteIds,
             geschaefte,
             messageShow,
           )

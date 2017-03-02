@@ -12,8 +12,6 @@ import getInterneOptions from '../../src/getInterneOptions'
 import getExterneOptions from '../../src/getExterneOptions'
 import updateGeschaeft from '../../src/updateGeschaeft'
 import updateGeko from '../../src/updateGeko'
-import filterGeschaefte from '../../src/filterGeschaefte'
-import sortIdsBySortFields from '../../src/sortIdsBySortFields'
 import newGeschaeftInDb from '../../src/newGeschaeftInDb'
 import newGekoInDb from '../../src/newGekoInDb'
 import newLinkInDb from '../../src/newLinkInDb'
@@ -22,23 +20,10 @@ import deleteGeko from '../../src/deleteGeko'
 import deleteLink from '../../src/deleteLink'
 import geschaefteSortByFieldsGetSortFields from '../../src/geschaefteSortByFieldsGetSortFields'
 
-
 export default (store) => ({
   geschaeftPdfShow: action(() =>
     store.history.push('/geschaeftPdf')
   ),
-  geschaefteSetGefilterteIds: action(() => {
-    const { geschaefte } = store
-    const { filterFields, filterFulltext, sortFields } = geschaefte
-    // create geschaefteGefilterteIds
-    let geschaefteGefilterteIds = filterGeschaefte(
-      geschaefte,
-      filterFulltext,
-      filterFields
-    )
-    geschaefteGefilterteIds = sortIdsBySortFields(geschaefte, geschaefteGefilterteIds, sortFields)
-    store.geschaefte.geschaefteGefilterteIds = geschaefteGefilterteIds
-  }),
   getGeschaefte: action(() => {
     const { app } = store
     store.geschaefte.fetching = true
@@ -66,23 +51,11 @@ export default (store) => ({
   }),
   geschaefteFilterByFields: action((filterFields, filterType = 'nach Feldern') => {
     const { pages } = store
-    const { filterFulltext, sortFields, geschaefte } = store.geschaefte
-    // remove filterFields with empty values
-    const filterFieldsWithValues = filterFields.filter(ff =>
-      ff.value || ff.value === 0 || ff.comparator
-    )
-    // create geschaefteGefilterteIds
-    let geschaefteGefilterteIds = filterGeschaefte(
-      geschaefte,
-      filterFulltext,
-      filterFieldsWithValues
-    )
-    geschaefteGefilterteIds = sortIdsBySortFields(geschaefte, geschaefteGefilterteIds, sortFields)
+    const { geschaeftePlusFilteredAndSorted } = store.geschaefte
     store.geschaefte.filterFields = filterFields
     store.geschaefte.filterFulltext = ''
     store.geschaefte.filterType = filterType || null
     store.geschaefte.activeId = null
-    store.geschaefte.GefilterteIds = geschaefteGefilterteIds
     /**
      * if pages are active,
      * initiate with new data
@@ -91,8 +64,8 @@ export default (store) => ({
     if (path === '/pages') {
       const { reportType } = pages
       store.pagesInitiate(reportType)
-    } else if (geschaefteGefilterteIds.length === 1) {
-      store.geschaeftToggleActivated(geschaefteGefilterteIds[0])
+    } else if (geschaeftePlusFilteredAndSorted.length === 1) {
+      store.geschaeftToggleActivated(geschaeftePlusFilteredAndSorted[0].idGeschaeft)
     }
   }),
   geschaefteResetSort: action(() => {
@@ -101,12 +74,6 @@ export default (store) => ({
   geschaefteSortByFields: action((field, direction) => {
     const { pages } = store
     const sortFields = geschaefteSortByFieldsGetSortFields(store, field, direction)
-    const geschaefteGefilterteIds = sortIdsBySortFields(
-      store.geschaefte.geschaefte,
-      store.geschaefteGefilterteIds,
-      sortFields
-    )
-    store.geschaefte.geschaefteGefilterteIds = geschaefteGefilterteIds
     store.geschaefte.sortFields = sortFields
     /**
      * if pages are active,
@@ -119,16 +86,8 @@ export default (store) => ({
     }
   }),
   geschaefteFilterByFulltext: action((filterFulltext, filterType = 'nach Volltext') => {
-    const { pages } = store
-    const { filterFields, geschaefte, sortFields } = store.geschaefte
-    // create geschaefteGefilterteIds
-    let geschaefteGefilterteIds = filterGeschaefte(
-      geschaefte,
-      filterFulltext,
-      filterFields
-    )
-    geschaefteGefilterteIds = sortIdsBySortFields(geschaefte, geschaefteGefilterteIds, sortFields)
-    store.geschaefte.geschaefteGefilterteIds = geschaefteGefilterteIds
+    const { pages, geschaefte } = store
+    const { geschaeftePlusFilteredAndSorted } = geschaefte
     store.geschaefte.filterType = filterType || null
     store.geschaefte.filterFulltext = filterFulltext
     store.geschaefte.filterFields = []
@@ -145,8 +104,8 @@ export default (store) => ({
       if (path !== '/geschaefte') {
         store.history.push('/geschaefte')
       }
-      if (geschaefteGefilterteIds.length === 1) {
-        store.geschaeftToggleActivated(geschaefteGefilterteIds[0])
+      if (geschaeftePlusFilteredAndSorted.length === 1) {
+        store.geschaeftToggleActivated(geschaeftePlusFilteredAndSorted[0].idGeschaeft)
       }
     }
   }),

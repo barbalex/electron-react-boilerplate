@@ -51,7 +51,6 @@ class NavbarComponent extends Component {
     const { showMessageModal } = store.app
     const { showPagesModal } = store.pages
     const {
-      geschaefteGefilterteIds,
       geschaeftePlusFilteredAndSorted: geschaefte,
       willDelete,
     } = store.geschaefte

@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { action } from 'mobx'
+import _ from 'lodash'
 
 import pageStandardState from '../../src/pageStandardState'
 
@@ -14,14 +15,9 @@ export default (store) => ({
     store.pages.modalTextLine2 = modalTextLine2
   }),
   pagesInitiate: action((reportType) => {
-    const state = store
-    const { geschaefte } = store.geschaefte
-    const { geschaefteGefilterteIds } = state.geschaefte
-    const geschaefteGefiltert = geschaefte.filter(g =>
-      geschaefteGefilterteIds.includes(g.idGeschaeft)
-    )
+    const { geschaeftePlusFilteredAndSorted } = store.geschaefte
     store.pages.reportType = reportType
-    store.pages.remainingGeschaefte = geschaefteGefiltert
+    store.pages.remainingGeschaefte = _.clone(geschaeftePlusFilteredAndSorted)
     store.pages.building = true
     store.history.push('/pages')
   }),

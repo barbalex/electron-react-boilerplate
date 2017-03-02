@@ -103,13 +103,6 @@ function Store() {
     }),
     links: [],
     geko: [],
-    geschaefteGefilterteIds: [],
-    /*
-    geschaefteGefilterteIds: computed(() =>
-      this.geschaefte.geschaeftePlusFiltered.map(g =>
-        g.idGeschaeft
-      )
-    ),*/
     filterFields: [],
     filterFulltext: '',
     filterType: null,

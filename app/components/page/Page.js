@@ -51,9 +51,9 @@ class Page extends Component {
     const { store } = this.props
     const { pagesModalShow } = store
     const { pages, remainingGeschaefte } = store.pages
-    const { geschaefteGefilterteIds } = store.geschaefte
+    const { geschaeftePlusFilteredAndSorted } = store.geschaefte
     const msgLine2Txt = `Bisher ${pages.length} Seiten, ${remainingGeschaefte.length} Geschäfte noch zu verarbeiten`
-    const msgLine2 = geschaefteGefilterteIds.length > 50 ? msgLine2Txt : ''
+    const msgLine2 = geschaeftePlusFilteredAndSorted.length > 50 ? msgLine2Txt : ''
     pagesModalShow(true, 'Der Bericht wird aufgebaut...', msgLine2)
   }
 
