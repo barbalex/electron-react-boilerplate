@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import styled from 'styled-components'
+import styled, { injectGlobal } from 'styled-components'
 
 import Geschaeft from './geschaeft/Geschaeft'
 // import logoImg from '../etc/logo.png'
@@ -39,8 +39,9 @@ const PageContainer = styled.div`
   /* Show a drop shadow beneath each page */
   box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);
 
-  /* enable placing footer absolute */
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   /* set dimensions */
   height: 29.7cm;
@@ -65,25 +66,21 @@ const PageContainer = styled.div`
     page-break-after: avoid !important;
   }
 `
-const Footer = styled.div`
-  position: absolute;
-  width: 18cm;
-  /**
-   * push down so it is never covered
-   * by content
-   */
-  bottom: 1.2cm;
-
-  &p {
-    position: relative;
-    float: left;
-    /* push down as far as possible */
-    margin-bottom: 0;
+// eslint-disable-next-line no-unused-expressions
+injectGlobal`
+  @page .hochformat {
+    margin: 1.5cm;
+    size: A4 portrait;
   }
+`
+const Footer = styled.div`
+  /* push down as far as possible */
+  padding-top: 5px;
+  margin-bottom: 0;
 `
 
 const GeschaeftPdf = () =>
-  <Container className="geschaeftPdf">
+  <Container className="geschaeftPdf hochformat">
     <PageContainer>
       {/*
         <img
@@ -96,9 +93,7 @@ const GeschaeftPdf = () =>
       */}
       <Geschaeft />
       <Footer>
-        <p>
-          {moment().format('DD.MM.YYYY')}
-        </p>
+        {moment().format('DD.MM.YYYY')}
       </Footer>
     </PageContainer>
   </Container>

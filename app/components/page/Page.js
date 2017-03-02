@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled, { injectGlobal } from 'styled-components'
 
 import styles from './Page.css'
 import FaelligeGeschaefteHeader from './faelligeGeschaefte/Header'
@@ -14,6 +15,59 @@ import filterCriteriaToArrayOfStrings from '../../src/filterCriteriaToArrayOfStr
 import sortCriteriaToArrayOfStrings from '../../src/sortCriteriaToArrayOfStrings'
 import logoImg from '../../etc/logo.png'
 import PageTitle from './PageTitle'
+
+const PageContainer = styled(({ building, children, ...rest }) => <div {...rest}>{ children }</div>)`
+  /* Divide single pages with some space and center all pages horizontally */
+  margin: 1cm auto;
+  /* Define a white paper background that sticks out from the darker overall background */
+  background: #fff;
+  /* Show a drop shadow beneath each page */
+  box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);
+  /* place rowsContainer top and footer bottom */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* set page size and padding for screen */
+  width: 29.7cm;
+  height: 20.95cm;
+  padding: 1.5cm;
+  /*
+   * need overflow while building list
+   * so list does not flow outside padding
+   * is contained in seperate class so it can
+   * only be added while building
+   */
+  overflow-y: ${(props) => (props.building ? 'auto' : 'visible')}
+
+  /* When the document is actually printed */
+  @media print {
+    .pageContainer {
+      /**
+       * something seems to change the measurements
+       * if they are not repeated here using important
+       * seems like export to pdf is moved right down
+       * without this
+       */
+      width: 26.7cm !important;
+      height: 17cm !important;
+      top: 0 !important;
+      max-height: 17cm;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow-y: hidden !important;
+      page-break-inside: avoid !important;
+      page-break-before: always !important;
+      overflow-y: hidden !important;
+    }
+  }
+`
+// eslint-disable-next-line no-unused-expressions
+injectGlobal`
+  @page .querformat {
+    margin-top: 0 !important;
+    size: A4 landscape;
+  }
+`
 
 const enhance = compose(
   inject('store'),
@@ -154,14 +208,9 @@ class Page extends Component {
     const { pages, building, reportType } = store.pages
     const { filterFields, sortFields } = store.geschaefte
     const firstPage = pageIndex === 0
-    const pageContainerStyle = (
-      building ?
-      [styles.pageContainer, styles.pageContainerOverflow].join(' ') :
-      styles.pageContainer
-    )
 
     return (
-      <div className={pageContainerStyle}>
+      <PageContainer building={building} className="querformat">
         <div
           className={styles.rowsContainer}
           ref={(c) => { this[`rowsContainer${pageIndex}`] = c }}
@@ -221,7 +270,7 @@ class Page extends Component {
             Seite {pageIndex + 1}/{pages.length}
           </p>
         </div>
-      </div>
+      </PageContainer>
     )
   }
 }

@@ -1,62 +1,6 @@
-.pageContainer {
-  /* Divide single pages with some space and center all pages horizontally */
-  margin: 1cm auto;
-  /* Define a white paper background that sticks out from the darker overall background */
-  background: #fff;
-  /* Show a drop shadow beneath each page */
-  box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);
-  /* place rowsContainer top and footer bottom */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  /* set page size and padding for screen */
-  width: 29.7cm;
-  height: 20.95cm;
-  padding: 1.5cm;
-
-  overflow-y: visible;
-}
-
-.pageContainerOverflow {
-  /*
-   * need overflow while building list
-   * so list does not flow outside padding
-   * is contained in seperate class so it can
-   * only be added while building
-   */
-  overflow-y: auto;
-}
-
-/* When the document is actually printed */
-@media print {
-  .pageContainer {
-    /**
-     * something seems to change the measurements
-     * if they are not repeated here using important
-     * seems like export to pdf is moved right down
-     * without this
-     */
-    width: 26.7cm !important;
-    height: 17cm !important;
-    top: 0 !important;
-    max-height: 17cm;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow-y: hidden !important;
-    page-break-inside: avoid !important;
-    page-break-before: always !important;
-    overflow-y: hidden !important;
-  }
-}
-
 .rowsContainer {
   max-height: 17.5cm;
   overflow: hidden;
-}
-
-@page {
-  margin: 1.5cm;
-  size: A4 landscape;
 }
 
 .titleInput {
@@ -70,6 +14,7 @@
 }
 
 .footer {
+  padding-top: 5px;
   width: 100%;
   max-height: 0.5cm !important;
 }
