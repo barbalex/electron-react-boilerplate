@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react'
 import { AutoSizer, List } from 'react-virtualized'
 import _ from 'lodash'
 import $ from 'jquery'
-import Linkify from 'react-linkify'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
 import styles from './Table.css'
+import TableItem from './TableItem'
 
 const StyledNoRowsDiv = styled.div`
   padding: 10px;
@@ -41,12 +41,6 @@ class Table extends Component {
     tableReset()
   }
 
-  onClickTableRow = (id) => {
-    const { tableRowToggleActivated } = this.props.store
-    const { table } = this.props.store.table
-    tableRowToggleActivated(table, id)
-  }
-
   setTableBodyOverflow = () => {
     const { tableBodyOverflows } = this.state
     const overflows = this.doesTableBodyOverflow()
@@ -57,37 +51,6 @@ class Table extends Component {
 
   doesTableBodyOverflow = () =>
     this.tableBody.offsetHeight < this.tableBody.scrollHeight
-
-  itemColumns = (row) => {
-    const { config } = this.props.store.app
-    const keys = Object.keys(row)
-    const values = _.values(row)
-    const windowWidth = $(window).width()
-    const tableWidth = (windowWidth * config.tableColumnWidth) / 100
-    const normalFieldWidth = (tableWidth - 50) / (keys.length - 1)
-
-    return values.map((val, index) => {
-      const widthClass = (
-        keys[index] === 'id' ?
-        { maxWidth: 50 } :
-        { maxWidth: normalFieldWidth }
-      )
-
-      return (
-        <div
-          key={index}
-          style={widthClass}
-          className={styles.tableBodyCell}
-        >
-          {
-            <Linkify>
-              {val}
-            </Linkify>
-          }
-        </div>
-      )
-    })
-  }
 
   tableHeaders = () => {
     const { rows } = this.props.store.table
@@ -115,29 +78,15 @@ class Table extends Component {
     })
   }
 
-  rowRenderer = ({ key, index, style }) => {
-    const { rows, id } = this.props.store.table
-    const row = rows[index]
-    const isActive = !!id && id === row.id
-    const trClassName = (
-      isActive ?
-      [styles.tableBodyRow, styles.active].join(' ') :
-      styles.tableBodyRow
-    )
-
-    return (
-      <div  // eslint-disable-line jsx-a11y/no-static-element-interactions
-        key={key}
-        className={trClassName}
-        onClick={() =>
-          this.onClickTableRow(row.id)
-        }
-        style={style}
-      >
-        {this.itemColumns(row)}
-      </div>
-    )
-  }
+  rowRenderer = ({ key, index, style }) =>
+    <div
+      key={key}
+      style={style}
+    >
+      <TableItem
+        index={index}
+      />
+    </div>
 
   noRowsRenderer = () => {
     const text = 'lade Daten...'

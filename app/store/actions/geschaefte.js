@@ -44,7 +44,7 @@ export default (store) => ({
   }),
   geschaeftToggleActivated: action((idGeschaeft) => {
     store.geschaefte.activeId = (
-      store.geschaefte.activeId && store.geschaefte.activeId === action.idGeschaeft ?
+      store.geschaefte.activeId && store.geschaefte.activeId === idGeschaeft ?
       null :
       idGeschaeft
     )

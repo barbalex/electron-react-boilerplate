@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import withHandlers from 'recompose/withHandlers'
 
 import styles from './Geschaefte.css'
 
@@ -12,20 +13,33 @@ const getStatusFristInStyle = (fristMitarbeiterWarnung) => {
 
 const enhance = compose(
   inject('store'),
+  withHandlers({
+    onClick: props => () => {
+      const { store, index } = props
+      const { geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
+      const { geschaeftToggleActivated } = store
+      const path = store.history.location.pathname
+      const geschaeft = geschaefte[index]
+      // if path is not '/geschaefte', make it that
+      // because this is also called from '/fieldFilter'
+      if (path === '/filterFields') {
+        store.history.push('/geschaefte')
+      }
+      geschaeftToggleActivated(geschaeft.idGeschaeft)
+    },
+  }),
   observer
 )
 
 const GeschaefteItem = ({
   store,
   index,
-  keyPassed,
+  onClick,
 }) => {
   const {
     activeId,
     geschaeftePlusFilteredAndSorted: geschaefte,
   } = store.geschaefte
-  const { geschaeftToggleActivated } = store
-  const path = store.history.location.pathname
   const geschaeft = geschaefte[index]
   const isActive = (
     activeId &&
@@ -47,16 +61,8 @@ const GeschaefteItem = ({
 
   return (
     <div  // eslint-disable-line jsx-a11y/no-static-element-interactions
-      key={keyPassed}
       className={trClassName}
-      onClick={() => {
-        // if path is not '/geschaefte', make it that
-        // because this is also called from '/fieldFilter'
-        if (path === '/filterFields') {
-          store.history.push('/geschaefte')
-        }
-        geschaeftToggleActivated(geschaeft.idGeschaeft)
-      }}
+      onClick={onClick}
     >
       <div className={styles.bodyColumnIdGeschaeft}>
         <div>
@@ -98,7 +104,7 @@ GeschaefteItem.displayName = 'GeschaefteItem'
 GeschaefteItem.propTypes = {
   store: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
-  keyPassed: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 }
 
 export default enhance(GeschaefteItem)

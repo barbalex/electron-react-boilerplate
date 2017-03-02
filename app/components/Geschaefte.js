@@ -7,7 +7,7 @@ import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
 
 import styles from './Geschaefte.css'
-import GeschaefteItem from '../components/GeschaefteItem'
+import GeschaefteItem from './GeschaefteItem'
 
 const StyledNoRowsDiv = styled.div`
   padding: 10px;
@@ -63,7 +63,6 @@ class Geschaefte extends Component {
     <div key={key} style={style}>
       <GeschaefteItem
         index={index}
-        keyPassed={key}
       />
     </div>
 

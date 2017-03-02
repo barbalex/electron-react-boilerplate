@@ -14,7 +14,7 @@ const enhance = compose(
 const NavbarTableRowNeuNav = ({ store }) =>
   <NavItem
     onClick={() =>
-      store.tableRowNewCreate(store.table)
+      store.tableRowNewCreate(store.table.table)
     }
     title="neuer Datensatz"
   >
