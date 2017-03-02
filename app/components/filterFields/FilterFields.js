@@ -90,10 +90,20 @@ const enhance = compose(
 
 const FilterFields = ({
   store,
-  values,
   changeComparator,
   change,
 }) => {
+  let { filterFields } = store.geschaefte
+  const { config } = store.app
+  // build a fields hash for the values
+  const values = {}
+  if (filterFields.forEach) {
+    filterFields.forEach((field) => {
+      values[field.field] = field.value
+    })
+  } else {
+    filterFields = []
+  }
   const showAreaParlVorstoss = (
     values.geschaeftsart &&
     values.geschaeftsart === 'Parlament. Vorstoss'
@@ -109,7 +119,7 @@ const FilterFields = ({
 
   // need width to adapt layout to differing widths
   const windowWidth = $(window).width()
-  const areaFilterFieldsWidth = windowWidth - store.app.config.geschaefteColumnWidth
+  const areaFilterFieldsWidth = windowWidth - config.geschaefteColumnWidth
   const wrapperClassBaseString = (
     areaFilterFieldsWidth < 980 ?
     'wrapperNarrow' :
@@ -198,7 +208,6 @@ const FilterFields = ({
 
 FilterFields.propTypes = {
   store: PropTypes.object.isRequired,
-  values: PropTypes.object.isRequired,
   changeComparator: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
 }
