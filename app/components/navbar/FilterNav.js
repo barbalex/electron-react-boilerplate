@@ -98,6 +98,7 @@ const FilterNav = ({ store }) => {
           onClick={() => {
             if (path !== '/filterFields') {
               store.history.push('/filterFields')
+              store.geschaefteRemoveFilters()
             }
           }}
         >
