@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { ControlLabel } from 'react-bootstrap'
+import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
@@ -76,7 +77,7 @@ const AreaGeschaeft = ({
           values={values}
           changeComparator={changeComparator}
           tabIndex={4 + firstTabIndex}
-          options={geschaeftsartOptions}
+          options={toJS(geschaeftsartOptions)}
         />
       </div>
       <div className={styles.fieldStatus}>
@@ -89,7 +90,7 @@ const AreaGeschaeft = ({
           values={values}
           changeComparator={changeComparator}
           tabIndex={5 + firstTabIndex}
-          options={statusOptions}
+          options={toJS(statusOptions)}
         />
       </div>
       <div className={styles.fieldAbteilung}>
@@ -102,7 +103,7 @@ const AreaGeschaeft = ({
           values={values}
           changeComparator={changeComparator}
           tabIndex={6 + firstTabIndex}
-          options={abteilungOptions}
+          options={toJS(abteilungOptions)}
         />
       </div>
       <div className={styles.fieldDetails}>

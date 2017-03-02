@@ -17,8 +17,8 @@ const SelectInput = ({
   values,
   changeComparator,
   tabIndex,
-  autoFocus,
-  options,
+  autoFocus = false,
+  options = [],
 }) =>
   <InputGroup>
     <SortSelector
@@ -53,7 +53,7 @@ SelectInput.propTypes = {
   values: PropTypes.object.isRequired,
   tabIndex: PropTypes.number.isRequired,
   changeComparator: PropTypes.func.isRequired,
-  autoFocus: PropTypes.bool.isRequired,
+  autoFocus: PropTypes.bool,
   options: PropTypes.array,
 }
 

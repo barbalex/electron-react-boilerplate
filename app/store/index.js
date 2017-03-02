@@ -43,6 +43,7 @@ function Store() {
     filterType: null,
     sortFields: [],
     // dropdown lists
+    abteilungOptions: [],
     rechtsmittelErledigungOptions: [],
     parlVorstossTypOptions: [],
     statusOptions: [],

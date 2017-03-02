@@ -22,7 +22,8 @@ const enhance = compose(
   inject('store'),
   withHandlers({
     changeComparator: props => (value, name) => {
-      const { filterFields, geschaefteFilterByFields } = props
+      const { geschaefteFilterByFields } = props.store
+      const { filterFields } = props.store.geschaefte
       const newFilterFields = []
       let changedField = {
         comparator: '=',
@@ -43,10 +44,8 @@ const enhance = compose(
       geschaefteFilterByFields(newFilterFields)
     },
     change: props => (e) => {
-      const {
-        filterFields,
-        geschaefteFilterByFields,
-      } = props
+      const { geschaefteFilterByFields } = props.store
+      const { filterFields } = props.store.geschaefte
       const {
         type,
         name,

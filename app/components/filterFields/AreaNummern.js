@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { ControlLabel } from 'react-bootstrap'
+import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
@@ -199,7 +200,7 @@ const AreaNummern = ({
         values={values}
         changeComparator={changeComparator}
         tabIndex={13 + firstTabIndex}
-        options={store.geschaefte.aktenstandortOptions}
+        options={toJS(store.geschaefte.aktenstandortOptions)}
       />
     </div>
     <div className={styles.fieldAktennummer}>

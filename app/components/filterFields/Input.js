@@ -18,7 +18,7 @@ const Input = ({
   values,
   changeComparator,
   tabIndex,
-  autoFocus,
+  autoFocus = false,
 }) =>
   <InputGroup>
     <SortSelector
@@ -45,13 +45,13 @@ Input.displayName = 'Input'
  * as they may be loaded after the component
  */
 Input.propTypes = {
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   name: PropTypes.string.isRequired,
   change: PropTypes.func.isRequired,
   values: PropTypes.object.isRequired,
   changeComparator: PropTypes.func.isRequired,
   tabIndex: PropTypes.number.isRequired,
-  autoFocus: PropTypes.bool.isRequired,
+  autoFocus: PropTypes.bool,
 }
 
 export default enhance(Input)
