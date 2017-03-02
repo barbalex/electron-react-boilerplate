@@ -60,7 +60,6 @@ export default (store) => ({
     const { app } = store
     newTableRowInDb(app.db, table)
       .then((row) => {
-        console.log('tableRowNewCreate: row:', row)
         store.tableRowNew(row)
         store.tableRowToggleActivated(table, row.id)
         if (store.history.location.pathname !== '/table') {
