@@ -72,9 +72,9 @@ const BerichteNav = ({
             geschaefteFilterByFields(filterForFaelligeGeschaefte(), 'fällige')
             // only do this after former is finished
             setTimeout(() => {
-              pagesInitiate('typFaelligeGeschaefte')
               geschaefteResetSort()
               geschaefteSortByFields('idGeschaeft', 'DESCENDING')
+              pagesInitiate('typFaelligeGeschaefte')
             }, 0)
           }, 0)
         }
@@ -83,9 +83,9 @@ const BerichteNav = ({
             geschaefteFilterByFields(filterForVernehmlAngek(), 'angekündigte Vernehmlassungen')
             // only do this after former is finished
             setTimeout(() => {
-              pagesInitiate('angekVernehml')
               geschaefteResetSort()
               geschaefteSortByFields('idGeschaeft', 'DESCENDING')
+              pagesInitiate('angekVernehml')
             }, 0)
           }, 0)
         }

@@ -135,7 +135,6 @@ class Page extends Component {
       pagesModalShow,
     } = store
     const { pages, activePageIndex, remainingGeschaefte } = store.pages
-    const { geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
 
     // don't do anything on not active pages
     if (pageIndex === activePageIndex) {
@@ -146,8 +145,7 @@ class Page extends Component {
 
       if (!activePageIsFull && remainingGeschaefte.length > 0) {
         if (offsetHeight < scrollHeight) {
-          const lastGeschaeft = remainingGeschaefte[remainingGeschaefte.length - 1]
-          pagesMoveGeschaeftToNewPage(lastGeschaeft)
+          pagesMoveGeschaeftToNewPage(activePageIndex)
           this.showPagesModal()
         } else {
           pageAddGeschaeft()
@@ -155,15 +153,16 @@ class Page extends Component {
       }
       if (remainingGeschaefte.length === 0) {
         if (offsetHeight < scrollHeight) {
-          console.log('Page, nextStepp: offsetHeight < scrollHeight:', offsetHeight < scrollHeight)
-          const lastGeschaeft = geschaefte[geschaefte.length - 1]
-          pagesMoveGeschaeftToNewPage(lastGeschaeft)
+          pagesMoveGeschaeftToNewPage(activePageIndex)
           this.showPagesModal()
         } else {
           // TODO:
           // why is this run three times?????
-          pagesModalShow(false, '', '')
-          pagesFinishedBuilding()
+          // for unknown reason setTimeout is needed
+          setTimeout(() => {
+            pagesModalShow(false, '', '')
+            pagesFinishedBuilding()
+          })
         }
       }
     }
@@ -221,11 +220,19 @@ class Page extends Component {
     const { pages, building, reportType } = store.pages
     const { filterFields, sortFields } = store.geschaefte
     const firstPage = pageIndex === 0
+    const rowsContainerClass = (
+      building ?
+      styles.rowsContainerBuilding :
+      styles.rowsContainer
+    )
 
     return (
-      <PageContainer building={building} className="querformat">
+      <PageContainer
+        building={building}
+        className="querformat"
+      >
         <div
-          className={styles.rowsContainer}
+          className={rowsContainerClass}
           ref={(c) => { this[`rowsContainer${pageIndex}`] = c }}
         >
           {
@@ -233,28 +240,20 @@ class Page extends Component {
             <img
               src={logoImg}
               height="70"
-              style={{
-                marginBottom: 15
-              }}
+              style={{ marginBottom: 15 }}
               alt="Logo"
             />
           }
-          <PageTitle
-            firstPage={firstPage}
-          />
+          <PageTitle firstPage={firstPage} />
           {
             firstPage &&
-            <div
-              className={styles.filterCriteria}
-            >
+            <div className={styles.filterCriteria}>
               Filterkriterien: {filterCriteriaToArrayOfStrings(filterFields).join(' & ')}
             </div>
           }
           {
             firstPage &&
-            <div
-              className={styles.sortCriteria}
-            >
+            <div className={styles.sortCriteria}>
               Sortierkriterien: {sortCriteriaToArrayOfStrings(sortFields).join(' & ')}
             </div>
           }
