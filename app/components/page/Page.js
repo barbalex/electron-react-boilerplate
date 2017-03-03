@@ -17,7 +17,7 @@ import logoImg from '../../etc/logo.png'
 import PageTitle from './PageTitle'
 
 // eslint-disable-next-line no-unused-vars
-const PageContainer = styled(({ building, children, ...rest }) => <div {...rest}>{ children }</div>)`
+const PageContainer = styled.div`
   /* Divide single pages with some space and center all pages horizontally */
   margin: 1cm auto;
   /* Define a white paper background that sticks out from the darker overall background */
@@ -31,11 +31,7 @@ const PageContainer = styled(({ building, children, ...rest }) => <div {...rest}
   height: 20.95cm;
   padding: 1.5cm;
 
-  /*
-   * need overflow while building list
-   * so list does not flow outside padding
-   */
-  overflow-y: ${(props) => (props.building ? 'auto' : 'visible')};
+  overflow: visible;
 
   /* When the document is actually printed */
   @media print {
@@ -60,30 +56,34 @@ const PageContainer = styled(({ building, children, ...rest }) => <div {...rest}
     padding-right: 0 !important;
     padding-bottom: 0 !important;
 
-    overflow-y: visible !important;
+    overflow: visible !important;
     page-break-inside: avoid !important;
-    page-break-before: always !important;
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
   }
 `
 const Content = styled.div`
-  max-height: 17.95cm !important;
-  min-height: 17.95cm !important;
-  max-width: 26.7cm !important;
-  min-width: 26.7cm !important;
-  @media print {
-    max-height: 17.95cm !important;
-    min-height: 17.95cm !important;
-    max-width: 26.7cm !important;
-    min-width: 26.7cm !important;
-    page-break-before: avoid !important;
-    page-break-after: avoid !important;
-    page-break-inside: avoid !important;
-  }
+  max-height: 17.95cm;
+  min-height: 17.95cm;
+  max-width: 26.7cm;
+  min-width: 26.7cm;
 
   /* place rowsContainer top and footer bottom */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media print {
+    max-height: 17.95cm !important;
+    min-height: 17.95cm !important;
+    max-width: 26.7cm !important;
+    min-width: 26.7cm !important;
+
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+    overflow: visible !important;
+  }
 `
 // eslint-disable-next-line no-unused-expressions
 injectGlobal`
@@ -239,6 +239,10 @@ class Page extends Component {
     const { pages, building, reportType } = store.pages
     const { filterFields, sortFields } = store.geschaefte
     const firstPage = pageIndex === 0
+    /*
+     * need overflow while building list
+     * so list does not flow outside padding
+     */
     const rowsContainerClass = (
       building ?
       styles.rowsContainerBuilding :
