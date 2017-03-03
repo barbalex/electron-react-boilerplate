@@ -12,13 +12,15 @@ const enhance = compose(
     onClickH1: props => () =>
       props.store.pagesQueryTitle(true),
     onKeyPressTitle: props => (e) => {
-      const { pagesQueryTitle, title } = props.store
+      const { pagesQueryTitle } = props.store
+      const { title } = props.store.pages
       if (e.key === 'Enter' && title) {
         pagesQueryTitle(false)
       }
     },
     onBlurTitle: props => () => {
-      const { pagesQueryTitle, title } = props.store
+      const { pagesQueryTitle } = props.store
+      const { title } = props.store.pages
       if (title) pagesQueryTitle(false)
     },
     changeQueryTitle: props => (e) =>

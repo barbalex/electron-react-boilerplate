@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
-import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled, { injectGlobal } from 'styled-components'
@@ -36,37 +35,31 @@ const PageContainer = styled(({ building, children, ...rest }) => <div {...rest}
   /*
    * need overflow while building list
    * so list does not flow outside padding
-   * is contained in seperate class so it can
-   * only be added while building
    */
-  overflow-y: ${(props) => (props.building ? 'auto' : 'visible')}
+  overflow-y: ${(props) => (props.building ? 'auto' : 'visible')};
 
   /* When the document is actually printed */
   @media print {
-    .pageContainer {
-      /**
-       * something seems to change the measurements
-       * if they are not repeated here using important
-       * seems like export to pdf is moved right down
-       * without this
-       */
-      width: 26.7cm !important;
-      height: 17cm !important;
-      top: 0 !important;
-      max-height: 17cm;
-      margin: 0 !important;
-      padding: 0 !important;
-      overflow-y: hidden !important;
-      page-break-inside: avoid !important;
-      page-break-before: always !important;
-      overflow-y: hidden !important;
-    }
+    /**
+     * something seems to change the measurements
+     * if they are not repeated here using important
+     * seems like export to pdf is moved right down
+     * without this
+     */
+    width: 29.7cm !important;
+    height: 20.95cm !important;
+    top: 0 !important;
+    max-height: 20.95cm;
+    margin: 0 !important;
+    padding: 1.5cm !important;
+    overflow-y: visible !important;
+    page-break-inside: avoid !important;
+    page-break-before: always !important;
   }
 `
 // eslint-disable-next-line no-unused-expressions
 injectGlobal`
   @page .querformat {
-    margin-top: 0 !important;
     size: A4 landscape;
   }
 `
@@ -156,8 +149,6 @@ class Page extends Component {
           pagesMoveGeschaeftToNewPage(activePageIndex)
           this.showPagesModal()
         } else {
-          // TODO:
-          // why is this run three times?????
           // for unknown reason setTimeout is needed
           setTimeout(() => {
             pagesModalShow(false, '', '')
