@@ -44,7 +44,7 @@ const PagesModal = ({ store }) => {
           }
         </div>
         <RightDiv>
-          <Button onClick={() => pagesStop()}>
+          <Button onClick={pagesStop}>
             Abbrechen
           </Button>
         </RightDiv>

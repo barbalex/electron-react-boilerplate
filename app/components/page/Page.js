@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
+import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled, { injectGlobal } from 'styled-components'
@@ -16,6 +17,7 @@ import sortCriteriaToArrayOfStrings from '../../src/sortCriteriaToArrayOfStrings
 import logoImg from '../../etc/logo.png'
 import PageTitle from './PageTitle'
 
+// eslint-disable-next-line no-unused-vars
 const PageContainer = styled(({ building, children, ...rest }) => <div {...rest}>{ children }</div>)`
   /* Divide single pages with some space and center all pages horizontally */
   margin: 1cm auto;
@@ -144,7 +146,7 @@ class Page extends Component {
 
       if (!activePageIsFull && remainingGeschaefte.length > 0) {
         if (offsetHeight < scrollHeight) {
-          const lastGeschaeft = geschaefte[geschaefte.length - 1]
+          const lastGeschaeft = remainingGeschaefte[remainingGeschaefte.length - 1]
           pagesMoveGeschaeftToNewPage(lastGeschaeft)
           this.showPagesModal()
         } else {
@@ -153,10 +155,13 @@ class Page extends Component {
       }
       if (remainingGeschaefte.length === 0) {
         if (offsetHeight < scrollHeight) {
+          console.log('Page, nextStepp: offsetHeight < scrollHeight:', offsetHeight < scrollHeight)
           const lastGeschaeft = geschaefte[geschaefte.length - 1]
           pagesMoveGeschaeftToNewPage(lastGeschaeft)
           this.showPagesModal()
         } else {
+          // TODO:
+          // why is this run three times?????
           pagesModalShow(false, '', '')
           pagesFinishedBuilding()
         }
@@ -165,10 +170,18 @@ class Page extends Component {
   }
 
   tableRows = () => {
-    const { geschaeftePlusFilteredAndSorted: geschaefte } = this.props.store.geschaefte
-    const { reportType } = this.props.store.pages
+    const { store, pageIndex } = this.props
+    const { reportType, pages } = store.pages
+    const geschaefte = pages[pageIndex].geschaefte
+    if (!geschaefte) return null
 
     return geschaefte.map((geschaeft, index) => {
+      /**
+       * for unknown reason in bericht "laufende Vernehmlassungen"
+       * an undefined geschaeft exists
+       * return null to prevent error
+       */
+      if (!geschaeft) return null
       if (reportType === 'typFaelligeGeschaefte') {
         return (
           <FaelligeGeschaefteRows

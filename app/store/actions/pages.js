@@ -1,11 +1,25 @@
 /* eslint-disable no-param-reassign */
-import { action } from 'mobx'
+import { action, toJS } from 'mobx'
 import _ from 'lodash'
 
 import pageStandardState from '../../src/pageStandardState'
 
 export default (store) => ({
+  pagesCleanUp: action(() => {
+    console.log('pagesCleanUp')
+    store.pages.pages = [Object.assign(pageStandardState)]
+    store.pages.activePageIndex = 0
+    store.pages.remainingGeschaefte = []
+    store.pages.building = false
+    store.pages.title = ''
+    store.pages.queryTitle = true
+    store.pages.reportType = 'fristen'
+    store.pages.showPagesModal = false
+    store.pages.modalTextLine1 = ''
+    store.pages.modalTextLine2 = ''
+  }),
   pagesStop: action(() => {
+    console.log('pagesStop')
     store.pages.remainingGeschaefte = []
     store.pages.building = false
   }),
@@ -15,13 +29,17 @@ export default (store) => ({
     store.pages.modalTextLine2 = modalTextLine2
   }),
   pagesInitiate: action((reportType) => {
+    console.log('pagesInitiate')
+    store.pagesCleanUp()
     const { geschaeftePlusFilteredAndSorted } = store.geschaefte
     store.pages.reportType = reportType
     store.pages.remainingGeschaefte = _.clone(geschaeftePlusFilteredAndSorted)
+    // console.log('pagesInitiate: remainingGeschaefte.length:', store.pages.remainingGeschaefte.length)
     store.pages.building = true
     store.history.push('/pages')
   }),
   pagesFinishedBuilding: action(() => {
+    console.log('pagesFinishedBuilding')
     store.pages.building = false
   }),
   pagesQueryTitle: action((queryTitle) => {
@@ -31,27 +49,39 @@ export default (store) => ({
     store.pages.title = title
   }),
   pagesNewPage: action(() => {
+    console.log('pagesNewPage')
     store.pages.activePageIndex += 1
     store.pages.pages.push(Object.assign(pageStandardState))
   }),
   pageAddGeschaeft: action(() => {
+    console.log('pageAddGeschaeft')
     if (store.pages.building) {
-      const activePage = store.pages.pages.find(p =>
-        p.pageIndex === store.pages.activePageIndex
+      const activePage = store.pages.pages.find((p, i) =>
+        i === store.pages.activePageIndex
       )
+      // console.log('pageAddGeschaeft: pages:', toJS(store.pages.pages))
+      // console.log('pageAddGeschaeft: pages.length:', store.pages.pages.length)
+      // console.log('pageAddGeschaeft: store.pages.activePageIndex:', store.pages.activePageIndex)
+      // console.log('pageAddGeschaeft: activePage:', toJS(activePage))
       if (activePage) {
+        // console.log('pageAddGeschaeft: store.pages.remainingGeschaefte.length before pushing:', store.pages.remainingGeschaefte.length)
+        // console.log('pageAddGeschaeft: activePage.geschaefte.length before pushing:', activePage.geschaefte.length)
         activePage.geschaefte.push(store.pages.remainingGeschaefte.shift())
+        // console.log('pageAddGeschaeft: store.pages.remainingGeschaefte.length after pushing:', store.pages.remainingGeschaefte.length)
+        // console.log('pageAddGeschaeft: activePage.geschaefte.length after pushing:', activePage.geschaefte.length)
       }
     }
   }),
-  pageRemoveGeschaeft: action((pageIndex, geschaeft) => {
-    if (store.pages.building) {
-      const activePage = store.pages.pages.find(p =>
-        p.pageIndex === pageIndex
+  pageRemoveGeschaeft: action((geschaeft) => {
+    console.log('pageRemoveGeschaeft')
+    const { pages } = store
+    if (pages.building) {
+      const activePage = pages.pages.find(p =>
+        p.pageIndex === pages.activePageIndex
       )
       if (activePage) {
         activePage.geschaefte = activePage.geschaefte.filter(g =>
-          g.idGeschaeft !== geschaeft.idGeschaeft
+          g && (g.idGeschaeft !== geschaeft.idGeschaeft)
         )
         activePage.full = true
         store.pages.remainingGeschaefte.push(geschaeft)
@@ -59,6 +89,9 @@ export default (store) => ({
     }
   }),
   pagesMoveGeschaeftToNewPage: action((geschaeft) => {
+    console.log('pagesMoveGeschaeftToNewPage')
+    // console.log('pagesMoveGeschaeftToNewPage: geschaeft:', geschaeft)
+    // console.log('pagesMoveGeschaeftToNewPage: activePageIndex:', pages.activePageIndex)
     const { pages } = store
     store.pageRemoveGeschaeft(pages.activePageIndex, geschaeft)
     store.pagesNewPage()
