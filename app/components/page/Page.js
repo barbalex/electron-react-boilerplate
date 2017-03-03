@@ -22,16 +22,15 @@ const PageContainer = styled(({ building, children, ...rest }) => <div {...rest}
   margin: 1cm auto;
   /* Define a white paper background that sticks out from the darker overall background */
   background: #fff;
+
   /* Show a drop shadow beneath each page */
   box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);
-  /* place rowsContainer top and footer bottom */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+
   /* set page size and padding for screen */
   width: 29.7cm;
   height: 20.95cm;
   padding: 1.5cm;
+
   /*
    * need overflow while building list
    * so list does not flow outside padding
@@ -47,15 +46,44 @@ const PageContainer = styled(({ building, children, ...rest }) => <div {...rest}
      * without this
      */
     width: 29.7cm !important;
+    max-width: 29.7cm !important;
     height: 20.95cm !important;
-    top: 0 !important;
-    max-height: 20.95cm;
-    margin: 0 !important;
-    padding: 1.5cm !important;
+    max-height: 20.95cm !important;
+
+    /* gingerly set margins and padding */
+    margin-top: 0.5cm !important;
+    margin-left: 0.5cm !important;
+    margin-right: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
+
     overflow-y: visible !important;
     page-break-inside: avoid !important;
     page-break-before: always !important;
   }
+`
+const Content = styled.div`
+  max-height: 17.95cm !important;
+  min-height: 17.95cm !important;
+  max-width: 26.7cm !important;
+  min-width: 26.7cm !important;
+  @media print {
+    max-height: 17.95cm !important;
+    min-height: 17.95cm !important;
+    max-width: 26.7cm !important;
+    min-width: 26.7cm !important;
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* place rowsContainer top and footer bottom */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 // eslint-disable-next-line no-unused-expressions
 injectGlobal`
@@ -222,57 +250,59 @@ class Page extends Component {
         building={building}
         className="querformat"
       >
-        <div
-          className={rowsContainerClass}
-          ref={(c) => { this[`rowsContainer${pageIndex}`] = c }}
-        >
-          {
-            firstPage &&
-            <img
-              src={logoImg}
-              height="70"
-              style={{ marginBottom: 15 }}
-              alt="Logo"
-            />
-          }
-          <PageTitle firstPage={firstPage} />
-          {
-            firstPage &&
-            <div className={styles.filterCriteria}>
-              Filterkriterien: {filterCriteriaToArrayOfStrings(filterFields).join(' & ')}
-            </div>
-          }
-          {
-            firstPage &&
-            <div className={styles.sortCriteria}>
-              Sortierkriterien: {sortCriteriaToArrayOfStrings(sortFields).join(' & ')}
-            </div>
-          }
-          {
-            reportType === 'typFaelligeGeschaefte' &&
-            <FaelligeGeschaefteHeader />
-          }
-          {
-            (
-              reportType === 'angekVernehml' ||
-              reportType === 'laufendeVernehml'
-            ) &&
-            <VernehmlassungenHeader />
-          }
-          {
-            reportType === 'list1' &&
-            <List1Header />
-          }
-          {this.tableRows()}
-        </div>
-        <div className={styles.footer}>
-          <p>
-            {moment().format('DD.MM.YYYY')}
-          </p>
-          <p>
-            Seite {pageIndex + 1}/{pages.length}
-          </p>
-        </div>
+        <Content>
+          <div
+            className={rowsContainerClass}
+            ref={(c) => { this[`rowsContainer${pageIndex}`] = c }}
+          >
+            {
+              firstPage &&
+              <img
+                src={logoImg}
+                height="70"
+                style={{ marginBottom: 15 }}
+                alt="Logo"
+              />
+            }
+            <PageTitle firstPage={firstPage} />
+            {
+              firstPage &&
+              <div className={styles.filterCriteria}>
+                Filterkriterien: {filterCriteriaToArrayOfStrings(filterFields).join(' & ')}
+              </div>
+            }
+            {
+              firstPage &&
+              <div className={styles.sortCriteria}>
+                Sortierkriterien: {sortCriteriaToArrayOfStrings(sortFields).join(' & ')}
+              </div>
+            }
+            {
+              reportType === 'typFaelligeGeschaefte' &&
+              <FaelligeGeschaefteHeader />
+            }
+            {
+              (
+                reportType === 'angekVernehml' ||
+                reportType === 'laufendeVernehml'
+              ) &&
+              <VernehmlassungenHeader />
+            }
+            {
+              reportType === 'list1' &&
+              <List1Header />
+            }
+            {this.tableRows()}
+          </div>
+          <div className={styles.footer}>
+            <p>
+              {moment().format('DD.MM.YYYY')}
+            </p>
+            <p>
+              Seite {pageIndex + 1}/{pages.length}
+            </p>
+          </div>
+        </Content>
       </PageContainer>
     )
   }

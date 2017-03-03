@@ -1,11 +1,14 @@
 .rowsContainer {
-  max-height: 17.2cm;
+  max-height: 17.4cm;
+  max-width: 26.7cm;
   overflow: hidden;
 }
 
 .rowsContainerBuilding {
-  max-height: 17.2cm;
-  overflow: auto;
+  max-height: 17.4cm;
+  max-width: 26.7cm;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .titleInput {

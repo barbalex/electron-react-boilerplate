@@ -18,7 +18,7 @@ const onClickPrint = (e, path) => {
   const landscape = path === '/pages'
   const win = remote.getCurrentWindow()
   const printToPDFOptions = {
-    marginsType: 1,
+    marginsType: 0,
     pageSize: 'A4',
     landscape,
     printBackground: false,

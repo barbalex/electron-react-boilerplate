@@ -58,7 +58,7 @@ const PageContainer = styled.div`
     height: 29.7cm !important;
     width: 21cm !important;
     margin: 0 !important;
-    padding: 1.5cm !important;
+    padding: 0.5cm !important;
     overflow-y: hidden !important;
     /* try this */
     page-break-inside: avoid !important;
@@ -69,7 +69,6 @@ const PageContainer = styled.div`
 // eslint-disable-next-line no-unused-expressions
 injectGlobal`
   @page .hochformat {
-    margin: 1.5cm;
     size: A4 portrait;
   }
 `
