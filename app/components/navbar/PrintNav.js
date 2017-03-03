@@ -4,9 +4,11 @@ import { NavItem, Glyphicon } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-const onClickPrint = (e) => {
-  e.preventDefault()
-  const win = remote.getCurrentWindow()
+const onClickPrint = () => {
+  console.log('hi from onClickPrint')
+  // const win = remote.getCurrentWindow()
+  // console.log('onClickPrint, win:', win)
+  // console.log('onClickPrint, win.webContents:', win.webContents)
   // https://github.com/electron/electron/blob/master/docs/api/web-contents.md#contentsprintoptions
   /**
    * PROBLEM
@@ -17,7 +19,8 @@ const onClickPrint = (e) => {
    * MUCH BETTER would be 1 for no margin
    * but: @page css to the rescue
    */
-  win.webContents.print()
+  // win.webContents.print()
+  window.print()
 }
 
 const enhance = compose(
