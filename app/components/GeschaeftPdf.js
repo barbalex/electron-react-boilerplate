@@ -17,6 +17,30 @@ const Container = styled.div`
   overflow-y: auto;
   height: 100vh;
 
+  & div {
+    background-color: white !important;
+  }
+  & * {
+    background-color: transparent !important;
+  }
+  & input,
+  & textarea,
+  & select {
+    -webkit-appearance: none;
+    border: none;
+    border-bottom: 1px solid #CCC;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    overflow-y: visible;
+  }
+  & .form-control {
+    height: auto;
+  }
+  & .input-group-addon {
+    display: none;
+  }
+
   @media print {
     /* remove grey backgrond set for nice UI */
     background-color: #fff;

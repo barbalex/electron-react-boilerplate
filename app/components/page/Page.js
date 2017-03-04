@@ -31,7 +31,7 @@ const PageContainer = styled.div`
   height: 20.95cm;
   padding: 1.5cm;
 
-  overflow: visible;
+  overflow: hidden;
 
   /* When the document is actually printed */
   @media print {
@@ -56,7 +56,7 @@ const PageContainer = styled.div`
     padding-right: 0 !important;
     padding-bottom: 0 !important;
 
-    overflow: visible !important;
+    overflow: hidden !important;
     page-break-inside: avoid !important;
     page-break-before: avoid !important;
     page-break-after: avoid !important;

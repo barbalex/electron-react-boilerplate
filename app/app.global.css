@@ -98,41 +98,13 @@ textarea {
     padding: 0 !important;
     height: auto !important;
     overflow: visible !important;
-  }
+  }/*
   * {
     transition: none !important;
-  }
-}
-
-.geschaeftPdf {
-  /*background-color: white !important;*/
-}
-.geschaeftPdf > div {
-  background-color: white !important;
-}
-.geschaeftPdf * {
-  background-color: transparent !important;
+  }*/
 }
 
 textarea::-webkit-scrollbar {
-  display: none;
-}
-
-.geschaeftPdf input,
-.geschaeftPdf textarea,
-.geschaeftPdf select {
-  -webkit-appearance: none;
-  border: none;
-  border-bottom: 1px solid #CCC;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 0;
-  overflow-y: visible;
-}
-.geschaeftPdf .form-control {
-  height: auto;
-}
-.geschaeftPdf .input-group-addon {
   display: none;
 }
 
