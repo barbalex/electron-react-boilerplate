@@ -57,6 +57,10 @@ textarea {
   overflow-y: scroll;
 }
 
+textarea::-webkit-scrollbar {
+  display: none;
+}
+
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -102,10 +106,6 @@ textarea {
   * {
     transition: none !important;
   }*/
-}
-
-textarea::-webkit-scrollbar {
-  display: none;
 }
 
 

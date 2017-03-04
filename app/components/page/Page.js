@@ -117,8 +117,7 @@ class Page extends Component {
       // need to wait for next tick
       // otherwise in vernehmlassungen
       // some rows were only listed on second call
-      const that = this
-      setTimeout(() => that.nextStepp())
+      setTimeout(() => this.nextStepp())
     } else {
       this.nextStepp()
     }
