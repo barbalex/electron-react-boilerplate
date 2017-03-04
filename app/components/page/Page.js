@@ -63,22 +63,12 @@ const PageContainer = styled.div`
   }
 `
 const Content = styled.div`
-  max-height: 17.95cm;
-  min-height: 17.95cm;
-  max-width: 26.7cm;
-  min-width: 26.7cm;
-
   /* place rowsContainer top and footer bottom */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   @media print {
-    max-height: 17.95cm !important;
-    min-height: 17.95cm !important;
-    max-width: 26.7cm !important;
-    min-width: 26.7cm !important;
-
     page-break-before: avoid !important;
     page-break-after: avoid !important;
     page-break-inside: avoid !important;
