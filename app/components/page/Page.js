@@ -56,12 +56,18 @@ const PageContainer = styled.div`
     margin-left: 0 !important;
     margin-right: 0 !important;
     margin-bottom: 0 !important;
-    padding-top: 0.5cm !important;
+    padding-top: 0 !important;
     padding-left: 0.5cm !important;
-    padding-right: 2.5cm !important;
+    padding-right: 0 !important;
     padding-bottom: 0 !important;
 
     overflow: hidden !important;
+
+    /* place rowsContainer top and footer bottom */
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+
     page-break-inside: avoid !important;
     page-break-before: always !important;
     page-break-after: always !important;
