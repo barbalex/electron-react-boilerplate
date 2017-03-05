@@ -24,8 +24,10 @@
 }
 
 .footer {
-  height: 0.3cm !important;
-  max-height: 0.3cm !important;
+  height: 0.5cm !important;
+  max-height: 0.5cm !important;
+  width: 26.7cm;
+  max-width: 26.7cm;
 
   @media print {
     page-break-before: avoid !important;
