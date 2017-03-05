@@ -47,10 +47,6 @@ const Container = styled.div`
     overflow-y: visible;
     /* make sure body grows as needed */
     height: auto !important;
-    /* try this */
-    page-break-inside: avoid !important;
-    page-break-before: avoid !important;
-    page-break-after: avoid !important;
   }
 `
 const PageContainer = styled.div`
@@ -74,19 +70,13 @@ const PageContainer = styled.div`
   overflow-y: visible;
 
   @media print {
-    /**
-     * something seems to change the measurements
-     * if they are not repeated here using important
-     */
-    height: 29.7cm !important;
-    width: 21cm !important;
     margin: 0 !important;
     padding: 0.5cm !important;
     overflow-y: hidden !important;
     /* try this */
     page-break-inside: avoid !important;
-    page-break-before: always !important;
-    page-break-after: always !important;
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
   }
 `
 // eslint-disable-next-line no-unused-expressions
@@ -96,14 +86,12 @@ injectGlobal`
   }
 `
 const Footer = styled.div`
-  /* push down as far as possible */
   padding-top: 5px;
-  margin-bottom: 0;
 `
 
 const GeschaeftPdf = () =>
-  <Container className="geschaeftPdf hochformat">
-    <PageContainer>
+  <Container>
+    <PageContainer className="hochformat">
       <Geschaeft />
       <Footer>
         {moment().format('DD.MM.YYYY')}
