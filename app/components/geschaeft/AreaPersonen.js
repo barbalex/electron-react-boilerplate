@@ -87,7 +87,7 @@ const AreaPersonenDivPrint = styled(AreaPersonenDivBase)`
 const Title = styled.div`
   font-weight: 900;
   font-size: 16px;
-  grid-column: 1 / span 2;
+  grid-column: 1;
 `
 const SubtitleBase = styled.div`
   font-weight: 900;
