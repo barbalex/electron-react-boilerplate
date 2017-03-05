@@ -47,6 +47,12 @@ const Container = styled.div`
     overflow-y: visible;
     /* make sure body grows as needed */
     height: auto !important;
+
+    @media print {
+      page-break-inside: avoid !important;
+      page-break-before: avoid !important;
+      page-break-after: avoid !important;
+    }
   }
 `
 const PageContainer = styled.div`

@@ -30,6 +30,12 @@ const ScrollContainerPdf = styled.div`
   overflow: hidden;
   height: 26cm;
   max-height: 26cm;
+
+  @media print {
+    page-break-inside: avoid !important;
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+  }
 `
 const WrapperNarrow = styled.div`
   display: grid;
