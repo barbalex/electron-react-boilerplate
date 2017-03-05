@@ -32,6 +32,7 @@ const PageContainer = styled.div`
   padding: 1.5cm;
 
   overflow: hidden;
+  overflow-y: visible;
 
   /* place rowsContainer top and footer bottom */
   display: flex;
@@ -46,10 +47,8 @@ const PageContainer = styled.div`
      * seems like export to pdf is moved right down
      * without this
      */
-    width: 29.7cm !important;
-    max-width: 29.7cm !important;
-    height: 20.95cm !important;
-    max-height: 20.95cm !important;
+    width: inherit;
+    height: inherit;
 
     /* gingerly set margins and padding */
     margin-top: 0 !important;
@@ -62,11 +61,6 @@ const PageContainer = styled.div`
     padding-bottom: 0 !important;
 
     overflow: hidden !important;
-
-    /* place rowsContainer top and footer bottom */
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: space-between !important;
 
     page-break-inside: avoid !important;
     page-break-before: always !important;

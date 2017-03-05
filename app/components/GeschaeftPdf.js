@@ -48,11 +48,9 @@ const Container = styled.div`
     /* make sure body grows as needed */
     height: auto !important;
 
-    @media print {
-      page-break-inside: avoid !important;
-      page-break-before: avoid !important;
-      page-break-after: avoid !important;
-    }
+    page-break-inside: avoid;
+    page-break-before: avoid;
+    page-break-after: avoid;
   }
 `
 const PageContainer = styled.div`
@@ -76,6 +74,9 @@ const PageContainer = styled.div`
   overflow-y: visible;
 
   @media print {
+    height: inherit;
+    width: inherit;
+
     margin: 0 !important;
     padding: 0.5cm !important;
     overflow-y: hidden !important;
@@ -93,6 +94,11 @@ injectGlobal`
 `
 const Footer = styled.div`
   padding-top: 5px;
+  @media print {
+    page-break-inside: avoid !important;
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+  }
 `
 
 const GeschaeftPdf = () =>
