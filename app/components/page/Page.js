@@ -31,12 +31,7 @@ const PageContainer = styled.div`
   height: 20.95cm;
   padding: 1.5cm;
 
-  /* place rowsContainer top and footer bottom */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  overflow: visible;
+  overflow: hidden;
 
   /* When the document is actually printed */
   @media print {
@@ -52,19 +47,32 @@ const PageContainer = styled.div`
     max-height: 20.95cm !important;
 
     /* gingerly set margins and padding */
-    margin-top: 0 !important;
-    margin-left: 0 !important;
+    margin-top: 0.5cm !important;
+    margin-left: 0.5cm !important;
     margin-right: 0 !important;
     margin-bottom: 0 !important;
-    padding-top: 0.5cm !important;
-    padding-left: 0.5cm !important;
-    padding-right: 2.5cm !important;
-    padding-bottom: 2.5cm !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
 
     overflow: hidden !important;
     page-break-inside: avoid !important;
     page-break-before: avoid !important;
     page-break-after: avoid !important;
+  }
+`
+const Content = styled.div`
+  /* place rowsContainer top and footer bottom */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media print {
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+    overflow: visible !important;
   }
 `
 // eslint-disable-next-line no-unused-expressions
@@ -235,57 +243,59 @@ class Page extends Component {
         building={building}
         className="querformat"
       >
-        <div
-          className={rowsContainerClass}
-          ref={(c) => { this[`rowsContainer${pageIndex}`] = c }}
-        >
-          {
-            firstPage &&
-            <img
-              src={logoImg}
-              height="70"
-              style={{ marginBottom: 15 }}
-              alt="Logo"
-            />
-          }
-          <PageTitle firstPage={firstPage} />
-          {
-            firstPage &&
-            <div className={styles.filterCriteria}>
-              Filterkriterien: {filterCriteriaToArrayOfStrings(filterFields).join(' & ')}
-            </div>
-          }
-          {
-            firstPage &&
-            <div className={styles.sortCriteria}>
-              Sortierkriterien: {sortCriteriaToArrayOfStrings(sortFields).join(' & ')}
-            </div>
-          }
-          {
-            reportType === 'typFaelligeGeschaefte' &&
-            <FaelligeGeschaefteHeader />
-          }
-          {
-            (
-              reportType === 'angekVernehml' ||
-              reportType === 'laufendeVernehml'
-            ) &&
-            <VernehmlassungenHeader />
-          }
-          {
-            reportType === 'list1' &&
-            <List1Header />
-          }
-          {this.tableRows()}
-        </div>
-        <div className={styles.footer}>
-          <p>
-            {moment().format('DD.MM.YYYY')}
-          </p>
-          <p>
-            Seite {pageIndex + 1}/{pages.length}
-          </p>
-        </div>
+        <Content>
+          <div
+            className={rowsContainerClass}
+            ref={(c) => { this[`rowsContainer${pageIndex}`] = c }}
+          >
+            {
+              firstPage &&
+              <img
+                src={logoImg}
+                height="70"
+                style={{ marginBottom: 15 }}
+                alt="Logo"
+              />
+            }
+            <PageTitle firstPage={firstPage} />
+            {
+              firstPage &&
+              <div className={styles.filterCriteria}>
+                Filterkriterien: {filterCriteriaToArrayOfStrings(filterFields).join(' & ')}
+              </div>
+            }
+            {
+              firstPage &&
+              <div className={styles.sortCriteria}>
+                Sortierkriterien: {sortCriteriaToArrayOfStrings(sortFields).join(' & ')}
+              </div>
+            }
+            {
+              reportType === 'typFaelligeGeschaefte' &&
+              <FaelligeGeschaefteHeader />
+            }
+            {
+              (
+                reportType === 'angekVernehml' ||
+                reportType === 'laufendeVernehml'
+              ) &&
+              <VernehmlassungenHeader />
+            }
+            {
+              reportType === 'list1' &&
+              <List1Header />
+            }
+            {this.tableRows()}
+          </div>
+          <div className={styles.footer}>
+            <p>
+              {moment().format('DD.MM.YYYY')}
+            </p>
+            <p>
+              Seite {pageIndex + 1}/{pages.length}
+            </p>
+          </div>
+        </Content>
       </PageContainer>
     )
   }
