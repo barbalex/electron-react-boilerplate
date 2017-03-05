@@ -3,7 +3,6 @@ import moment from 'moment'
 import styled, { injectGlobal } from 'styled-components'
 
 import Geschaeft from './geschaeft/Geschaeft'
-// import logoImg from '../etc/logo.png'
 
 /*
  * need defined height and overflow
@@ -86,8 +85,8 @@ const PageContainer = styled.div`
     overflow-y: hidden !important;
     /* try this */
     page-break-inside: avoid !important;
-    page-break-before: avoid !important;
-    page-break-after: avoid !important;
+    page-break-before: always !important;
+    page-break-after: always !important;
   }
 `
 // eslint-disable-next-line no-unused-expressions
