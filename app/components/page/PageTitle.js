@@ -59,12 +59,12 @@ const Page = ({
     {
       firstPage &&
       !store.pages.queryTitle &&
-      <h1
+      <div
         onClick={onClickH1}
         className={styles.h1}
       >
         {store.pages.title}
-      </h1>
+      </div>
     }
   </div>
 

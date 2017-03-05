@@ -23,16 +23,6 @@
   }
 }
 
-.titleInput {
-  margin-top: 3px;
-  margin-bottom: 7px;
-}
-
-.tableHeader {
-  border-bottom: 2px solid #717171;
-  font-weight: 700;
-}
-
 .footer {
   padding-top: 5px;
   width: 100%;
@@ -57,12 +47,28 @@
   text-align: left;
 }
 
+.titleInput {
+  margin-top: 3px;
+  margin-bottom: 7px;
+}
+
+.tableHeader {
+  border-bottom: 2px solid #717171;
+  font-weight: 700;
+}
+
 .h1 {
   cursor: pointer;
   margin-top: 0;
   font-weight: 700;
   font-size: 32px;
   padding-left: 5px;
+
+  @media print {
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
 }
 
 .filterCriteria {
