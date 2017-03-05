@@ -285,12 +285,12 @@ class Page extends Component {
           {this.tableRows()}
         </div>
         <div className={styles.footer}>
-          <p>
+          <div>
             {moment().format('DD.MM.YYYY')}
-          </p>
-          <p>
+          </div>
+          <div>
             Seite {pageIndex + 1}/{pages.length}
-          </p>
+          </div>
         </div>
       </PageContainer>
     )

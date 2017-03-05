@@ -24,10 +24,13 @@
 }
 
 .footer {
-  height: 0.5cm !important;
-  max-height: 0.5cm !important;
+  height: 0.4cm !important;
+  max-height: 0.4cm !important;
   width: 26.7cm;
   max-width: 26.7cm;
+
+  display: flex;
+  justify-content: space-between;
 
   @media print {
     page-break-before: avoid !important;
@@ -36,15 +39,13 @@
   }
 }
 
-.footer p {
+.footer div {
   /* push down as far as possible */
   margin-bottom: 0;
-  float: right;
   text-align: right;
 }
 
-.footer p:first-of-type {
-  float: left;
+.footer div:first-of-type {
   text-align: left;
 }
 
