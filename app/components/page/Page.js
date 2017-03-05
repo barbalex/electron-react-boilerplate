@@ -16,7 +16,11 @@ import sortCriteriaToArrayOfStrings from '../../src/sortCriteriaToArrayOfStrings
 import logoImg from '../../etc/logo.png'
 import PageTitle from './PageTitle'
 
-// eslint-disable-next-line no-unused-vars
+/**
+ * The size of PageContainer is set in Print by @page, together with portrait/landscape
+ * That is necessary because otherwise portrait/landscape is not set correctly
+ * This only works when width and height are NOT set in @media print!!!!
+ */
 const PageContainer = styled.div`
   /* Divide single pages with some space and center all pages horizontally */
   margin: 1cm auto;
@@ -34,11 +38,6 @@ const PageContainer = styled.div`
   overflow: hidden;
   overflow-y: visible;
 
-  /* place rowsContainer top and footer bottom */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
   /* When the document is actually printed */
   @media print {
     /**
@@ -55,7 +54,7 @@ const PageContainer = styled.div`
     margin-left: 0 !important;
     margin-right: 0 !important;
     margin-bottom: 0 !important;
-    padding-top: 0 !important;
+    padding-top: 0.5cm !important;
     padding-left: 0.5cm !important;
     padding-right: 0 !important;
     padding-bottom: 0 !important;
@@ -66,6 +65,24 @@ const PageContainer = styled.div`
     page-break-before: always !important;
     page-break-after: always !important;
   }
+`
+/**
+ * width of PageContainer is set in print by @page
+ * somehow this makes positioning of its children not react as usual
+ * flex and relative/absolute positioning behave as if the page were not full size
+ * but would grow with the rowsContainer
+ * Solution:
+ * set a InnerPageContainer inside PageContainer
+ * and give it full page size
+ */
+const InnerPageContainer = styled.div`
+  width: 26.7cm;
+  height: 17.95cm;
+
+  /* place rowsContainer top and footer bottom */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 // eslint-disable-next-line no-unused-expressions
 injectGlobal`
@@ -235,57 +252,59 @@ class Page extends Component {
         building={building}
         className="querformat"
       >
-        <div
-          className={rowsContainerClass}
-          ref={(c) => { this[`rowsContainer${pageIndex}`] = c }}
-        >
-          {
-            firstPage &&
-            <img
-              src={logoImg}
-              height="70"
-              style={{ marginBottom: 15 }}
-              alt="Logo"
-            />
-          }
-          <PageTitle firstPage={firstPage} />
-          {
-            firstPage &&
-            <div className={styles.filterCriteria}>
-              Filterkriterien: {filterCriteriaToArrayOfStrings(filterFields).join(' & ')}
-            </div>
-          }
-          {
-            firstPage &&
-            <div className={styles.sortCriteria}>
-              Sortierkriterien: {sortCriteriaToArrayOfStrings(sortFields).join(' & ')}
-            </div>
-          }
-          {
-            reportType === 'typFaelligeGeschaefte' &&
-            <FaelligeGeschaefteHeader />
-          }
-          {
-            (
-              reportType === 'angekVernehml' ||
-              reportType === 'laufendeVernehml'
-            ) &&
-            <VernehmlassungenHeader />
-          }
-          {
-            reportType === 'list1' &&
-            <List1Header />
-          }
-          {this.tableRows()}
-        </div>
-        <div className={styles.footer}>
-          <div>
-            {moment().format('DD.MM.YYYY')}
+        <InnerPageContainer>
+          <div
+            className={rowsContainerClass}
+            ref={(c) => { this[`rowsContainer${pageIndex}`] = c }}
+          >
+            {
+              firstPage &&
+              <img
+                src={logoImg}
+                height="70"
+                style={{ marginBottom: 15 }}
+                alt="Logo"
+              />
+            }
+            <PageTitle firstPage={firstPage} />
+            {
+              firstPage &&
+              <div className={styles.filterCriteria}>
+                Filterkriterien: {filterCriteriaToArrayOfStrings(filterFields).join(' & ')}
+              </div>
+            }
+            {
+              firstPage &&
+              <div className={styles.sortCriteria}>
+                Sortierkriterien: {sortCriteriaToArrayOfStrings(sortFields).join(' & ')}
+              </div>
+            }
+            {
+              reportType === 'typFaelligeGeschaefte' &&
+              <FaelligeGeschaefteHeader />
+            }
+            {
+              (
+                reportType === 'angekVernehml' ||
+                reportType === 'laufendeVernehml'
+              ) &&
+              <VernehmlassungenHeader />
+            }
+            {
+              reportType === 'list1' &&
+              <List1Header />
+            }
+            {this.tableRows()}
           </div>
-          <div>
-            Seite {pageIndex + 1}/{pages.length}
+          <div className={styles.footer}>
+            <div>
+              {moment().format('DD.MM.YYYY')}
+            </div>
+            <div>
+              Seite {pageIndex + 1}/{pages.length}
+            </div>
           </div>
-        </div>
+        </InnerPageContainer>
       </PageContainer>
     )
   }
