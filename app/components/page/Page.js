@@ -59,12 +59,12 @@ const PageContainer = styled.div`
     padding-top: 0.5cm !important;
     padding-left: 0.5cm !important;
     padding-right: 2.5cm !important;
-    padding-bottom: 2.5cm !important;
+    padding-bottom: 0 !important;
 
     overflow: hidden !important;
     page-break-inside: avoid !important;
     page-break-before: always !important;
-    page-break-after: avoid !important;
+    page-break-after: always !important;
   }
 `
 // eslint-disable-next-line no-unused-expressions

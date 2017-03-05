@@ -38,7 +38,7 @@ const Page = ({
   onBlurTitle,
   changeQueryTitle,
 }) =>
-  <div>
+  <div className={styles.titleContainer}>
     {
       firstPage &&
       store.pages.queryTitle &&
@@ -59,9 +59,9 @@ const Page = ({
     {
       firstPage &&
       !store.pages.queryTitle &&
-      <div
+      <div // eslint-disable-line jsx-a11y/no-static-element-interactions
         onClick={onClickH1}
-        className={styles.h1}
+        className={styles.title}
       >
         {store.pages.title}
       </div>

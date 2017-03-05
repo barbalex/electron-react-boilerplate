@@ -24,8 +24,7 @@
 }
 
 .footer {
-  padding-top: 5px;
-  width: 100%;
+  height: 0.5cm !important;
   max-height: 0.5cm !important;
 
   @media print {
@@ -57,7 +56,15 @@
   font-weight: 700;
 }
 
-.h1 {
+.titleContainer {
+  @media print {
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}
+
+.title {
   cursor: pointer;
   margin-top: 0;
   font-weight: 700;
