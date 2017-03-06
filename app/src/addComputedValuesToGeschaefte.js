@@ -6,7 +6,13 @@ import getVornameNameForVerantwortlich from './getVornameNameForVerantwortlich'
 
 export default (store) =>
   store.geschaefte.geschaefte.map((g) => {
-    const { interneOptions, externeOptions, geko, links, faelligeStatiOptions } = store.geschaefte
+    const {
+      interneOptions,
+      externeOptions,
+      geko,
+      links,
+      faelligeStatiOptions,
+    } = store.geschaefte
     const interne = store.geschaefteKontakteIntern.geschaefteKontakteIntern
     const externe = store.geschaefteKontakteExtern.geschaefteKontakteExtern
     g.verantwortlichName = getVornameNameForVerantwortlich(interneOptions, g.verantwortlich)
@@ -25,7 +31,7 @@ export default (store) =>
       .filter(gko => gko.idGeschaeft === g.idGeschaeft)
     g.links = links
       .filter(link => link.idGeschaeft === g.idGeschaeft)
-    g.kannFaelligSein = faelligeStatiOptions ? faelligeStatiOptions.includes(g.status) : false
+    g.kannFaelligSein = faelligeStatiOptions && faelligeStatiOptions.includes ? faelligeStatiOptions.includes(g.status) : false
     g.dauerBisFristMitarbeiter = getDauerBisFristMitarbeiter(g)
     g.fristMitarbeiterWarnung = getFristMitarbeiterWarnung(g.dauerBisFristMitarbeiter)
     return g

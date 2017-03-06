@@ -49,7 +49,8 @@ const PageVernehmlassungenRows = ({
     styles.tableBodyRowShaded :
     styles.tableBodyRow
   )
-  const gekoValue = geschaeft.geko
+  const geko = geschaeft.geko || []
+  const gekoValue = geko
     .map(g => g.gekoNr)
     .map(val =>
       <div key={val}>
