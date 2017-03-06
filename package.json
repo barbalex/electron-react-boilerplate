@@ -147,12 +147,12 @@
     "webpack-validator": "2.3.0"
   },
   "dependencies": {
-    "ampersand-app": "^2.0.0",
+    "ampersand-app": "2.0.0",
     "electron-debug": "1.1.0",
     "exceljs": "0.3.0",
     "file-loader": "0.9.0",
     "font-awesome": "4.7.0",
-    "history": "^4.5.1",
+    "history": "4.5.1",
     "jquery": "3.1.1",
     "lodash": "4.17.4",
     "mobx": "3.1.3",
