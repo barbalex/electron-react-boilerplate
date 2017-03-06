@@ -107,21 +107,3 @@
   composes: tableBodyCell;
   composes: columnKontaktIntern;
 }
-
-.fieldWarnung {
-  font-weight: 900;
-  letter-spacing: 0.35em;
-  font-size: 16px;
-  -webkit-text-stroke-color: black;
-  -webkit-text-stroke-width: 1.3px;
-}
-
-.fieldWarnungFaellig {
-  composes: fieldWarnung;
-  -webkit-text-fill-color: red;
-}
-
-.fieldWarnungHeute {
-  composes: fieldWarnung;
-  -webkit-text-fill-color: yellow;
-}

@@ -2,12 +2,30 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
+import styled from 'styled-components'
 
 import styles from './Geschaefte.css'
 
+const FristMitarbeiterWarnungDiv = styled(
+  ({ fristInStyle, children, ...rest }) => // eslint-disable-line no-unused-vars
+    <div {...rest}>
+      {children}
+    </div>
+)`
+  font-weight: ${(props) => (props.fristInStyle ? 900 : 'inherit')};
+  letter-spacing: ${(props) => (props.fristInStyle ? '0.35em' : 'inherit')};
+  font-size: ${(props) => (props.fristInStyle ? '16px' : 'inherit')};
+  -webkit-text-stroke-color: ${(props) => (props.fristInStyle ? 'black' : 'inherit')};
+  -webkit-text-stroke-width: ${(props) => (props.fristInStyle ? '1.3px' : 'inherit')};
+  -webkit-text-fill-color: ${(props) => {
+    if (props.fristInStyle === 'red') return 'red'
+    if (props.fristInStyle === 'yellow') return 'yellow'
+    return 'inherit'
+  }};
+`
 const getStatusFristInStyle = (fristMitarbeiterWarnung) => {
-  if (fristMitarbeiterWarnung === 'FÄLLIG') return styles.fieldWarnungFaellig
-  if (fristMitarbeiterWarnung === 'HEUTE') return styles.fieldWarnungHeute
+  if (fristMitarbeiterWarnung === 'FÄLLIG') return 'red'
+  if (fristMitarbeiterWarnung === 'HEUTE') return 'yellow'
   return null
 }
 
@@ -81,11 +99,11 @@ const GeschaefteItem = ({
         <div>
           {fristMitarbeiter}
         </div>
-        <div
-          className={getStatusFristInStyle(geschaeft.fristMitarbeiterWarnung)}
+        <FristMitarbeiterWarnungDiv
+          fristInStyle={getStatusFristInStyle(geschaeft.fristMitarbeiterWarnung)}
         >
           {geschaeft.fristMitarbeiterWarnung}
-        </div>
+        </FristMitarbeiterWarnungDiv>
       </div>
       <div className={styles.bodyColumnKontaktIntern}>
         <div>
