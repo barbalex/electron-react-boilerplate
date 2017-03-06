@@ -19,6 +19,10 @@
   font-size: 10px;
 }
 
+.dropzoneContainer {
+  display: none;
+}
+
 .title {
   composes: areaTitle;
   grid-area: title;
