@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-import Page from './page/Page'
+import Page from './Page'
 import styles from './Pages.css'
 
 const enhance = compose(
