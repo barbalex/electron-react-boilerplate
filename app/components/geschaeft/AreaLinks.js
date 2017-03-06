@@ -4,6 +4,7 @@ import { Glyphicon } from 'react-bootstrap'
 import { shell } from 'electron'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import withHandlers from 'recompose/withHandlers'
 import styled from 'styled-components'
 
 import regularStyles from './areaLinks.css'
@@ -21,18 +22,24 @@ const DropzoneInnerDiv = styled.div`
 
 const enhance = compose(
   inject('store'),
+  withHandlers({
+    onDrop: props => files => {
+      const { store } = props
+      const { linkNewCreate } = store
+      const { activeId } = store.geschaefte
+      linkNewCreate(activeId, files[0].path)
+    },
+  }),
   observer
 )
 
-const AreaLinks = ({ store, links }) => {
-  const { linkNewCreate, linkRemove } = store
-  const { activeId } = store.geschaefte
+const AreaLinks = ({ store, onDrop }) => {
+  const { linkRemove } = store
+  const { activeId, links } = store.geschaefte
+  const myLinks = links.filter(l => l.idGeschaeft === activeId)
   const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
   const styles = isPrintPreview ? pdfStyles : regularStyles
-
-  const onDrop = files =>
-    linkNewCreate(activeId, files[0].path)
 
   return (
     <div className={styles.areaLinks}>
@@ -41,7 +48,7 @@ const AreaLinks = ({ store, links }) => {
       </div>
       <div className={styles.links}>
         {
-          links.map(link =>
+          myLinks.map(link =>
             <div
               key={`${link.idGeschaeft}${link.url}`}
               className={styles.fields}
@@ -111,8 +118,8 @@ const AreaLinks = ({ store, links }) => {
 AreaLinks.displayName = 'AreaLinks'
 
 AreaLinks.propTypes = {
-  links: PropTypes.array.isRequired,
   store: PropTypes.object.isRequired,
+  onDrop: PropTypes.func.isRequired,
 }
 
 export default enhance(AreaLinks)

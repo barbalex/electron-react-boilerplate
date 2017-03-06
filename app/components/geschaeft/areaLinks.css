@@ -31,16 +31,6 @@
   height: 100%;
 }
 
-.dropzone {
-  width: 100%;
-  height: 100%;
-  border-width: 2px;
-  border-color: #666;
-  border-style: dashed;
-  border-radius: 5px;
-  padding: 5px;
-}
-
 .fields {
   grid-column: 1;
   display: grid;

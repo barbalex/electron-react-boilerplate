@@ -304,9 +304,7 @@ class Geschaeft extends Component {
           />
           {
             showLinks &&
-            <AreaLinks
-              links={geschaeft.links}
-            />
+            <AreaLinks />
           }
           <AreaHistory
             blur={this.blur}
