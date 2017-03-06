@@ -17,7 +17,7 @@
 
 .tableBody {
   height: calc(100vh - 82px);
-  overflow: auto;
+  overflow: hidden;
 }
 
 .tableHeaderRow,
@@ -46,10 +46,7 @@
 }
 
 .tableBodyCell {
-  flex: 1;
-  padding: 5px;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  composes: tableHeaderCell;
   min-height: 67px;
   max-height: 67px;
 }

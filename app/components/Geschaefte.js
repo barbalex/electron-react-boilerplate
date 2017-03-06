@@ -28,37 +28,6 @@ class Geschaefte extends Component {
     store: PropTypes.object.isRequired,
   }
 
-  state = {
-    tableBodyOverflows: true,
-  }
-
-  componentDidUpdate() {
-    const { store } = this.props
-    const path = store.history.location.pathname
-
-    if (
-      path === '/geschaefte' ||
-      path === '/'
-    ) {
-      /**
-       * this only works in a setTimeout!
-       * otherwise tableBody scrollHeight equals offsetHeight
-       */
-      setTimeout(() => this.setTableBodyOverflow(), 0)
-    }
-  }
-
-  setTableBodyOverflow = () => {
-    const { tableBodyOverflows } = this.state
-    const overflows = this.doesTableBodyOverflow()
-    if (overflows !== tableBodyOverflows) {
-      this.setState({ tableBodyOverflows: !tableBodyOverflows })
-    }
-  }
-
-  doesTableBodyOverflow = () =>
-    this.tableBody.offsetHeight < this.tableBody.scrollHeight
-
   rowRenderer = ({ key, index, style }) =>
     <div key={key} style={style}>
       <GeschaefteItem
@@ -85,8 +54,10 @@ class Geschaefte extends Component {
   }
 
   render() {
-    const { activeId, geschaeftePlusFilteredAndSorted: geschaefte } = this.props.store.geschaefte
-    const { tableBodyOverflows } = this.state
+    const { store } = this.props
+    const { setGeschaefteListOverflowing } = store
+    const { geschaefteListOverflowing } = store.ui
+    const { activeId, geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
     // get index of active id
     const indexOfActiveId = _.findIndex(
       geschaefte,
@@ -100,7 +71,7 @@ class Geschaefte extends Component {
             <div
               className={styles.tableHeaderRow}
               style={{
-                paddingRight: tableBodyOverflows ? 17 : null
+                paddingRight: geschaefteListOverflowing ? 17 : 5,
               }}
             >
               <div
@@ -142,19 +113,25 @@ class Geschaefte extends Component {
             ref={(c) => { this.tableBody = c }}
           >
             <AutoSizer>
-              {({ height, width }) =>
-                <List
-                  height={height}
-                  rowCount={geschaefte.length}
-                  rowHeight={77}
-                  rowRenderer={this.rowRenderer}
-                  noRowsRenderer={this.noRowsRenderer}
-                  width={width}
-                  scrollToIndex={indexOfActiveId}
-                  ref={(c) => { this.reactList = c }}
-                  {...geschaefte}
-                />
-              }
+              {({ height, width }) => {
+                const overflowing = height < geschaefte.length * 77
+                // need to setTimeout because changing state in render
+                // is a no go
+                setTimeout(() => setGeschaefteListOverflowing(overflowing))
+                return (
+                  <List
+                    height={height}
+                    rowCount={geschaefte.length}
+                    rowHeight={77}
+                    rowRenderer={this.rowRenderer}
+                    noRowsRenderer={this.noRowsRenderer}
+                    width={width}
+                    scrollToIndex={indexOfActiveId}
+                    ref={(c) => { this.reactList = c }}
+                    {...geschaefte}
+                  />
+                )
+              }}
             </AutoSizer>
           </div>
         </div>

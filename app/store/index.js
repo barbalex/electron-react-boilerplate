@@ -1,6 +1,7 @@
 import { extendObservable, computed } from 'mobx'
 
 import observablehistory from './observableHistory'
+import uiActions from './actions/ui'
 import app from './app'
 import appActions from './actions/app'
 import user from './user'
@@ -20,6 +21,11 @@ import sortGeschaeftePlusFiltered from '../src/sortGeschaeftePlusFiltered'
 
 function Store() {
   this.history = observablehistory
+  this.ui = {}
+  extendObservable(this.ui, {
+    geschaefteListOverflowing: true,
+  })
+  extendObservable(this, uiActions(this))
   this.app = app
   extendObservable(this, appActions(this))
   this.geschaefte = {}
