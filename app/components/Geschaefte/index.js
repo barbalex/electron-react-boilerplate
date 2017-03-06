@@ -7,7 +7,7 @@ import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
 
 import styles from './Geschaefte.css'
-import GeschaefteItem from './GeschaefteItem'
+import RowRenderer from './RowRenderer'
 
 const StyledNoRowsDiv = styled.div`
   padding: 10px;
@@ -27,13 +27,6 @@ class Geschaefte extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
   }
-
-  rowRenderer = ({ key, index, style }) =>
-    <div key={key} style={style}>
-      <GeschaefteItem
-        index={index}
-      />
-    </div>
 
   noRowsRenderer = () => {
     const { filterFields, filterFulltext, geschaefte } = this.props.store.geschaefte
@@ -123,7 +116,7 @@ class Geschaefte extends Component {
                     height={height}
                     rowCount={geschaefte.length}
                     rowHeight={77}
-                    rowRenderer={this.rowRenderer}
+                    rowRenderer={RowRenderer}
                     noRowsRenderer={this.noRowsRenderer}
                     width={width}
                     scrollToIndex={indexOfActiveId}
