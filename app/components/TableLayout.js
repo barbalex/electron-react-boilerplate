@@ -4,8 +4,8 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
 
-import TableRow from './table/TableRow'
-import Table from './table/Table'
+import TableRow from './Table/TableRow'
+import Table from './Table'
 
 const enhance = compose(
   inject('store'),
