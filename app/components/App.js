@@ -5,7 +5,7 @@ import compose from 'recompose/compose'
 import GeschaefteLayout from '../components/GeschaefteLayout'
 import FilterFieldsLayout from '../components/FilterFieldsLayout'
 import TableLayout from '../components/TableLayout'
-import Navbar from '../components/navbar/Navbar'
+import Navbar from '../components/Navbar'
 
 const enhance = compose(
   inject('store'),
