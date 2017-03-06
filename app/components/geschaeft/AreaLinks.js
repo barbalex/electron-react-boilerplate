@@ -4,9 +4,20 @@ import { Glyphicon } from 'react-bootstrap'
 import { shell } from 'electron'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
 import regularStyles from './areaLinks.css'
 import pdfStyles from './areaLinksPdf.css'
+
+const DropzoneInnerDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  border-width: 2px;
+  border-color: #666;
+  border-style: dashed;
+  border-radius: 5px;
+  padding: 5px;
+`
 
 const enhance = compose(
   inject('store'),
@@ -61,10 +72,36 @@ const AreaLinks = ({ store, links }) => {
       <div className={styles.dropzoneContainer}>
         <Dropzone
           onDrop={onDrop}
-          className={styles.dropzone}
+          style={{
+            width: '100%',
+            height: '100%',
+            borderColor: 'transparent',
+          }}
         >
-          <div>Datei hierhin ziehen...</div>
-          <div>...oder klicken, um sie zu wählen.</div>
+          {
+            ({ isDragActive, isDragReject }) => {
+              if (isDragActive) {
+                return (
+                  <DropzoneInnerDiv>
+                    <div>jetzt fallen lassen...</div>
+                  </DropzoneInnerDiv>
+                )
+              }
+              if (isDragReject) {
+                return (
+                  <DropzoneInnerDiv>
+                    <div>Hm. Da ging etwas schief :-(</div>
+                  </DropzoneInnerDiv>
+                )
+              }
+              return (
+                <DropzoneInnerDiv>
+                  <div>Datei hierhin ziehen...</div>
+                  <div>...oder klicken, um sie zu wählen.</div>
+                </DropzoneInnerDiv>
+              )
+            }
+          }
         </Dropzone>
       </div>
     </div>
