@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import styled, { injectGlobal } from 'styled-components'
 
-import Geschaeft from './geschaeft/Geschaeft'
+import Geschaeft from './Geschaeft'
 
 /*
  * need defined height and overflow

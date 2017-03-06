@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
 
-import Geschaeft from '../components/geschaeft/Geschaeft'
+import Geschaeft from '../components/Geschaeft'
 import Pages from './Pages'
 import GeschaeftPdf from '../components/GeschaeftPdf'
 import Geschaefte from '../components/Geschaefte'
