@@ -58,7 +58,6 @@ const AreaHistoryRows = ({ store }) => {
   } = store.geschaefte
   const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
-  // TODO: compute?
   const history = getHistoryOfGeschaeft(geschaefte, activeId)
 
   return (
