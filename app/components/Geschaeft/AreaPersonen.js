@@ -196,7 +196,7 @@ const AreaPersonen = ({
           <Verantwortlich>
             <FormControl
               componentClass="select"
-              value={geschaeft.verantwortlich || undefined}
+              value={geschaeft.verantwortlich || ''}
               name="verantwortlich"
               onChange={change}
               bsSize="small"
