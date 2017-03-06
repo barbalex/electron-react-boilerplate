@@ -11,7 +11,7 @@ export default (store) =>
     g.verantwortlichName = interneOptions
       .filter(i => i.kurzzeichen === g.verantwortlich)
       .map(i =>
-        (i.name ? `${i.vorname} ${i.name}` : '')
+        (i.name ? `${i.vorname ? `${i.vorname} ` : ''}${i.name}` : '')
       )
       .join(', ')
     g.interne = interne
