@@ -1,18 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import { AutoSizer, List } from 'react-virtualized'
 import _ from 'lodash'
-import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
 
 import styles from './Geschaefte.css'
 import RowRenderer from './RowRenderer'
-
-const StyledNoRowsDiv = styled.div`
-  padding: 10px;
-  font-weight: bold;
-`
+import NoRowsRenderer from './NoRowsRenderer'
 
 const enhance = compose(
   inject('store'),
@@ -26,24 +21,6 @@ const enhance = compose(
 class Geschaefte extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
-  }
-
-  noRowsRenderer = () => {
-    const { filterFields, filterFulltext, geschaefte } = this.props.store.geschaefte
-    const isFiltered = (
-      geschaefte.length > 0 &&
-      (filterFields.length > 0 || !!filterFulltext)
-    )
-    const text = (
-      isFiltered ?
-      'Keine Daten entsprechen dem Filter' :
-      'lade Daten...'
-    )
-    return (
-      <StyledNoRowsDiv>
-        {text}
-      </StyledNoRowsDiv>
-    )
   }
 
   render() {
@@ -117,7 +94,7 @@ class Geschaefte extends Component {
                     rowCount={geschaefte.length}
                     rowHeight={77}
                     rowRenderer={RowRenderer}
-                    noRowsRenderer={this.noRowsRenderer}
+                    noRowsRenderer={() => <NoRowsRenderer />}
                     width={width}
                     scrollToIndex={indexOfActiveId}
                     ref={(c) => { this.reactList = c }}
