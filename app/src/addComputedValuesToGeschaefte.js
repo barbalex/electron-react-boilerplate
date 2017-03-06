@@ -2,18 +2,14 @@
 import getDauerBisFristMitarbeiter from './getDauerBisFristMitarbeiter'
 import getFristMitarbeiterWarnung from './getFristMitarbeiterWarnung'
 import getItKontoForVerantwortlich from './getItKontoForVerantwortlich'
+import getVornameNameForVerantwortlich from './getVornameNameForVerantwortlich'
 
 export default (store) =>
   store.geschaefte.geschaefte.map((g) => {
     const { interneOptions, externeOptions, geko, links, faelligeStatiOptions } = store.geschaefte
     const interne = store.geschaefteKontakteIntern.geschaefteKontakteIntern
     const externe = store.geschaefteKontakteExtern.geschaefteKontakteExtern
-    g.verantwortlichName = interneOptions
-      .filter(i => i.kurzzeichen === g.verantwortlich)
-      .map(i =>
-        (i.name ? `${i.vorname ? `${i.vorname} ` : ''}${i.name}` : '')
-      )
-      .join(', ')
+    g.verantwortlichName = getVornameNameForVerantwortlich(interneOptions, g.verantwortlich)
     g.interne = interne
       .filter(i => i.idGeschaeft === g.idGeschaeft)
       .map((gk) =>
