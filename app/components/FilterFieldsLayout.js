@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
 
-import FilterFields from './filterFields/FilterFields'
+import FilterFields from './FilterFields'
 import Geschaefte from './Geschaefte'
 
 const enhance = compose(
