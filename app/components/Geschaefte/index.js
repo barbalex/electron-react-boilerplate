@@ -18,6 +18,11 @@ const enhance = compose(
   observer
 )
 
+/**
+ * need to keep this as es6 class
+ * at least: after refactoring to a functional component
+ * the row renderer rendered no rows any more :-(
+ */
 class Geschaefte extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
