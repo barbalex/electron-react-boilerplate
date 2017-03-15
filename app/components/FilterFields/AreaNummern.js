@@ -47,7 +47,7 @@ const AreaNummern = ({
     </ControlLabel>
     <div className={styles.fieldGekoNr}>
       <Input
-        type="number"
+        type="text"
         name="gekoNr"
         change={change}
         values={values}
