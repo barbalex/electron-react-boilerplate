@@ -1,7 +1,7 @@
 {
   "name": "Kapla",
   "productName": "Kapla",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Instrument, mit dem die Abteilung Recht des AWEL Geschäfte erfasst und Fristen kontrolliert",
   "main": "main.js",
   "scripts": {
