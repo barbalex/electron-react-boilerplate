@@ -223,7 +223,7 @@ const AreaNummern = ({
   const tabsToAdd = viewIsNarrow ? 0 : nrOfGFields
   const Container = isPrintPreview ? ContainerPrint : ContainerView
   const gekoValues = (
-    geschaeft.geko ?
+    geschaeft.geko && geschaeft.geko.filter ?
     geschaeft.geko
       .filter(g => g.idGeschaeft === geschaeft.idGeschaeft)
       .map(g => g.gekoNr)
