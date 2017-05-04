@@ -42,26 +42,27 @@ Ich will diese Kombination nachfolgend der Einfachheit halber "electron-Anwendun
 Für die BenutzerInnen:
 
 - die Benutzeroberfläche kann so einfach und intuitiv gebaut werden, wie es das Budget und das Knowhow des Entwicklers zulassen. Im Gegensatz zu Access und FileMaker gibt es kaum Einschränkungen
+- beispielsweise wäre die in Kapla verwendete Kombination von Listen- und Detailansicht mit Access in dieser Art nicht möglich gewesen
 
 Im Betrieb:
 
 - installiert wird die Anwendung wahlweise durch simples Kopieren eines Dateiordners oder mit Hilfe einer Installations-Routine
-- die exe-Datei in Kombination mit der sqlite-Datei bringen alles mit, was es für den Betrieb von Kapla braucht: Im Betrieb gibt es keine Software-Abhängigkeiten!
-- die exe-Datei und die sqlite-Datei funktionieren auf allen aktuellen 64bit-Versionen von Windows. Daher kann man davon ausgehen, dass sie noch längere Zeit unverändert weiter benutzt werden können
+- electron-Anwendung und sqlite-Datei bringen alles mit: Ausser dem Betriebssystem gibt es keine Software-Abhängigkeiten!
+- electron-Anwendung und sqlite-Datei funktionieren auf allen aktuellen 64bit-Versionen von Windows. Daher kann man davon ausgehen, dass sie noch längere Zeit unverändert weiter benutzt werden können
 - electron-Anwendungen können so gebaut werden, dass sie sich bei Vorliegen eines Updates automatisch aktualisieren
 - es wird ausschliesslich open source Software verwendet. Daher fallen keine Lizenzgebühren an
 - weder Datenbank noch Anwendung brauchen Unterhalt. Das gilt natürlich nur, solange nicht sehr viele Benutzer gleichzeitig schreibend auf die Datenbank zugreifen können müssen. In diesem Fall müsste ein Datenbank-Server benutzt werden
 
 Für die Entwicklung:
 
-- die verwendeten Technologien sind viel moderner und geben dem Entwickler viel mehr Möglichkeiten als Access bzw. FileMaker. Anwendungen können massgescheidet(er), und leistungsfähig(er) gebaut werden
+- die verwendeten Technologien sind viel moderner und geben dem Entwickler viel mehr Möglichkeiten als Access bzw. FileMaker. Anwendungen können massgeschneidert(er) und leistungsfähig(er) gebaut werden
 - ab einer gewissen Komplexität sind die verwendeten Werkzeuge viel besser geeignet, um eine Anwendung zu entwickeln. Mit der rasanten technologischen Entwicklung sinkt die minimale Komplexität, ab der sich die Verwendung moderner JavaScript-Werkzeuge lohnt momentan beinahe jährlich
-- das Know-How für die Entwicklung moderner JavaScript-Anwendungen inklusive einer relativ komplexen Entwicklungsumgebung wird vorausgesetzt. Im Gegensatz zu FileMaker und Access ist das keine Möglichkeit für (noch-)Nicht-Entwickler, eine Anwendung aufzubauen
 - ganz einfache Anwendungen sind in FileMaker und Access schneller und einfacher gebaut
+- das Know-How für die Entwicklung moderner JavaScript-Anwendungen inklusive einer relativ komplexen Entwicklungsumgebung wird vorausgesetzt. Im Gegensatz zu FileMaker und Access ist das keine Möglichkeit für (noch-)Nicht-Entwickler, eine Anwendung aufzubauen
 
 Für den künftigen Unterhalt/Ausbau:
 
-- im Prinzip ist nach Bereinigung der Kinderkrankheiten kaum je Unterhalt nötig :-) Im Gegensatz zu Web-Anwendungen kann darauf verzichtet werden, die verwendete Software laufend zu aktualisieren. Die Anwendung wird ja hinter der Firmen-Firewall betrieben 
+- im Prinzip ist nach Bereinigung der Kinderkrankheiten kaum je Unterhalt nötig :-) Im Gegensatz zu Web-Anwendungen kann darauf verzichtet werden, die verwendete Software laufend zu aktualisieren. Die Anwendung wird ja hinter der Firmen-Firewall betrieben
 - aufgrund der modernen Architektur ist eine electron-Anwendung im Bedarfsfall für professionelle JavaScript-Entwickler wesentlich einfacher zu unterhalten
 - electron-Anwendungen können wenn nötig zu Server-Client-Anwendungen oder gar Web-Applikationen ausgebaut werden, wobei der grösste Teil des Codes unangetastet bleibt
 - die Funktionalität kann wenn gewünscht mit automatisierten Test hinterlegt werden, was die Unterhalt- und Erweiterbarkeit im Bedarfsfall stark verbessert
@@ -69,9 +70,9 @@ Für den künftigen Unterhalt/Ausbau:
 Ich habe früher diverse teilweise recht anspruchsvolle Access-Anwendungen gebaut, danach Web-Anwendungen und nun mit Kapla die erste electron-Anwendung. Mein persönliches **Fazit**:
 
 - Access würde ich nur noch für sehr sehr einfache Anwendungsfälle benutzen
-- und vor allem dann, wenn die Anwender den Umgang mit Access gewohnt sind und daher auf einen grossen Teil der Funktionalität einer eigentlichen Anwendung verzichtet werden kann (Automatisierung, Benutzerführung, intuitive, minimalistische und einfache Benutzeroberfläche)
-- wenn eine einfache und übersichtliche Benutzeroberfläche benötigt werden, ist die Grenze schnell erreicht, ab der sich eine electron-Anwendung lohnt
-- wenn es gut möglich ist, dass die Anwendung später erweitert wird, von sehr vielen Benutzern genutzt wird oder gar über das Internet, drängt sich eine JavaScript-Anwendung geradezu auf
+- Access ist am ehesten geeignet, wenn die Anwender den Umgang mit Access gewohnt sind und daher auf einen grossen Teil der Funktionalität einer eigentlichen Anwendung verzichtet werden kann (Automatisierung, Benutzerführung, intuitive, minimalistische und einfache Benutzeroberfläche). Und die Access-Anwendung im Wesentlichen nur die benötigte Datenstruktur inklusive Abfragen bereitstellt
+- wird eine einfache und übersichtliche Benutzeroberfläche benötigt, ist die Grenze schnell erreicht, ab der sich eine electron-Anwendung lohnt
+- eine JavaScript-Anwendung drängt sich geradezu auf, wenn es gut möglich ist, dass sie später erweitert wird, von sehr vielen Benutzern genutzt wird oder gar über das Internet
 
 ## Entwicklungsumgebung installieren ##
 
