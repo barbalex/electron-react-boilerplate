@@ -27,13 +27,13 @@ Mehr Info hier: [Projektbeschreibung.pdf](https://github.com/barbalex/kapla3/raw
 Kapla löst ein FileMaker Projekt ab.
 Es ist in JavaScript geschrieben und benutzt unter anderem:
 
-- [sqlite](http://sqlite.org)
-- [electron](http://electron.atom.io)
-- [nodejs](https://nodejs.org)
-- [React](https://facebook.github.io/react)
-- [MobX](https://github.com/mobxjs/mobx)
-- [styled components](https://github.com/styled-components/styled-components)
-- [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/grid)
+- [sqlite](http://sqlite.org): simpler speichern Daten nimmer :-)
+- [electron](http://electron.atom.io): JavaScript-Anwendung lokal installieren
+- [nodejs](https://nodejs.org): mit JavaScript mit dem PC kommunizieren
+- [React](https://facebook.github.io/react): die Benutzeroberfläche ist eine Funktion der Anwendungs-Daten! Und erst noch modularisiert
+- [MobX](https://github.com/mobxjs/mobx): Anwendungs-Daten managen wie ein Profi
+- [styled components](https://github.com/styled-components/styled-components): Styling für Module
+- [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/grid): mit CSS anspruchsvolle Seiten gestalten
 
 Ich will diese Kombination nachfolgend der Einfachheit halber "electron-Anwendung" nennen.
 
