@@ -39,6 +39,10 @@ Ich will diese Kombination nachfolgend der Einfachheit halber "electron-Anwendun
 
 ### Unterschiede gegenüber FileMaker bzw. Access-Anwendungen
 
+Für die BenutzerInnen:
+
+- die Benutzeroberfläche kann so einfach und intuitiv gebaut werden, wie es das Budget und das Knowhow des Entwicklers zulassen. Im Gegensatz zu Access und FileMaker gibt es kaum Einschränkungen
+
 Im Betrieb:
 
 - installiert wird die Anwendung wahlweise durch simples Kopieren eines Dateiordners oder mit Hilfe einer Installations-Routine
@@ -47,10 +51,6 @@ Im Betrieb:
 - electron-Anwendungen können so gebaut werden, dass sie sich bei Vorliegen eines Updates automatisch aktualisieren
 - es wird ausschliesslich open source Software verwendet. Daher fallen keine Lizenzgebühren an
 - weder Datenbank noch Anwendung brauchen Unterhalt. Das gilt natürlich nur, solange nicht sehr viele Benutzer gleichzeitig schreibend auf die Datenbank zugreifen können müssen. In diesem Fall müsste ein Datenbank-Server benutzt werden
-
-Für die BenutzerInnen:
-
-- die Benutzeroberfläche kann so einfach und intuitiv gebaut werden, wie es das Budget und das Knowhow des Entwicklers zulassen. Im Gegensatz zu Access und FileMaker gibt es kaum Einschränkungen
 
 Für die Entwicklung:
 
