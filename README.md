@@ -27,7 +27,7 @@ Mehr Info hier: [Projektbeschreibung.pdf](https://github.com/barbalex/kapla3/raw
 Kapla löst ein FileMaker Projekt ab.
 Es ist in JavaScript geschrieben und benutzt unter anderem:
 
-- [sqlite](http://sqlite.org): simpler speichern Daten nimmer :-)
+- [sqlite](http://sqlite.org): simpler lagern Daten nimmer :-)
 - [electron](http://electron.atom.io): JavaScript-Anwendung lokal installieren
 - [nodejs](https://nodejs.org): mit JavaScript mit dem PC kommunizieren
 - [React](https://facebook.github.io/react): die Benutzeroberfläche ist eine Funktion der Anwendungs-Daten! Und erst noch modularisiert
