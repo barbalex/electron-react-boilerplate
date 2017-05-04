@@ -29,11 +29,11 @@ Es ist in JavaScript geschrieben und benutzt unter anderem:
 
 - [sqlite](http://sqlite.org): simpler lagern Daten nimmer :-)
 - [electron](http://electron.atom.io): JavaScript-Anwendung lokal installieren
-- [nodejs](https://nodejs.org): mit JavaScript mit dem PC kommunizieren
+- [nodejs](https://nodejs.org): JavaScript kann auch mit dem PC kommunizieren
 - [React](https://facebook.github.io/react): die Benutzeroberfläche ist eine Funktion der Anwendungs-Daten! Und erst noch modularisiert
 - [MobX](https://github.com/mobxjs/mobx): Anwendungs-Daten managen wie ein Profi
 - [styled components](https://github.com/styled-components/styled-components): Styling für Module
-- [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/grid): mit CSS anspruchsvolle Seiten gestalten
+- [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/grid): anspruchsvolle Layouts gestalten
 
 Ich will diese Kombination nachfolgend der Einfachheit halber "electron-Anwendung" nennen.
 
