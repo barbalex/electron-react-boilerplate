@@ -44,8 +44,9 @@ Im Betrieb:
 - installiert wird die Anwendung wahlweise durch simples Kopieren eines Dateiordners oder mit Hilfe einer Installations-Routine
 - die exe-Datei in Kombination mit der sqlite-Datei bringen alles mit, was es für den Betrieb von Kapla braucht: Im Betrieb gibt es keine Software-Abhängigkeiten!
 - die exe-Datei und die sqlite-Datei funktionieren auf allen aktuellen 64bit-Versionen von Windows. Daher kann man davon ausgehen, dass sie noch längere Zeit unverändert weiter benutzt werden können
-- electron-Anwendungen können so gebaut werden, dass sie sich bei Vorliegen eines Updates automatisch aktualisieren (bei Kapla ist das nicht vorgesehen)
+- electron-Anwendungen können so gebaut werden, dass sie sich bei Vorliegen eines Updates automatisch aktualisieren
 - es wird ausschliesslich open source Software verwendet. Daher fallen keine Lizenzgebühren an
+- weder Datenbank noch Anwendung brauchen Unterhalt. Das gilt natürlich nur, solange nicht sehr viele Benutzer gleichzeitig schreibend auf die Datenbank zugreifen können müssen. In diesem Fall müsste ein Datenbank-Server benutzt werden
 
 Für die BenutzerInnen:
 
@@ -60,7 +61,7 @@ Für die Entwicklung:
 
 Für den künftigen Unterhalt/Ausbau:
 
-- im Prinzip ist nach Bereinigung der Kinderkrankheiten kaum je Unterhalt nötig :-)
+- im Prinzip ist nach Bereinigung der Kinderkrankheiten kaum je Unterhalt nötig :-) Im Gegensatz zu Web-Anwendungen kann darauf verzichtet werden, die verwendete Software laufend zu aktualisieren. Die Anwendung wird ja hinter der Firmen-Firewall betrieben 
 - aufgrund der modernen Architektur ist eine electron-Anwendung im Bedarfsfall für professionelle JavaScript-Entwickler wesentlich einfacher zu unterhalten
 - electron-Anwendungen können wenn nötig zu Server-Client-Anwendungen oder gar Web-Applikationen ausgebaut werden, wobei der grösste Teil des Codes unangetastet bleibt
 - die Funktionalität kann wenn gewünscht mit automatisierten Test hinterlegt werden, was die Unterhalt- und Erweiterbarkeit im Bedarfsfall stark verbessert
