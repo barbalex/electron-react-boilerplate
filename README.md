@@ -41,10 +41,11 @@ Ich will diese Kombination nachfolgend der Einfachheit halber "electron-Anwendun
 
 Im Betrieb:
 
+- installiert wird die Anwendung wahlweise durch simples Kopieren eines Dateiordners oder mit Hilfe einer Installations-Routine
 - die exe-Datei in Kombination mit der sqlite-Datei bringen alles mit, was es für den Betrieb von Kapla braucht: Im Betrieb gibt es keine Software-Abhängigkeiten!
 - die exe-Datei und die sqlite-Datei funktionieren auf allen aktuellen 64bit-Versionen von Windows. Daher kann man davon ausgehen, dass sie noch längere Zeit unverändert weiter benutzt werden können
 - electron-Anwendungen können so gebaut werden, dass sie sich bei Vorliegen eines Updates automatisch aktualisieren (bei Kapla ist das nicht vorgesehen)
-- die Anwendung kann wahlweise durch simples Kopieren eines Dateiordners oder mit Hilfe einer Installations-Routine installiert werden
+- es wird ausschliesslich open source Software verwendet. Daher fallen keine Lizenzgebühren an
 
 Für die BenutzerInnen:
 
