@@ -42,7 +42,7 @@ Ich will diese Kombination nachfolgend der Einfachheit halber "electron-Anwendun
 
 Für die BenutzerInnen:
 
-- die Benutzeroberfläche kann so einfach und intuitiv gebaut werden, wie es das Budget und das Knowhow des Entwicklers zulassen. Im Gegensatz zu Access und FileMaker gibt es kaum Einschränkungen
+- die Benutzeroberfläche kann so einfach und intuitiv gebaut werden, wie es das Budget und das Knowhow des Entwicklers zulassen. Im Gegensatz zu Access gibt es kaum Einschränkungen
 - beispielsweise wäre die in Kapla verwendete Kombination von Listen- und Detailansicht mit Access in dieser Art nicht möglich gewesen
 
 Im Betrieb:
@@ -56,11 +56,14 @@ Im Betrieb:
 
 Für die Entwicklung:
 
-- die verwendeten Technologien sind viel moderner und geben dem Entwickler viel mehr Möglichkeiten als Access bzw. FileMaker. Anwendungen können massgeschneidert(er) und leistungsfähig(er) gebaut werden
-- was diese Technologien besonders auszeichnet und meines Wissens in keiner anderen Programmiersprache bisher existiert (aber bestimmt bald nachgeholt wird), ist die saubere Trennung von Daten und Logik, die Benutzeroberfläche als eine Funktion der Daten und dass Daten immer nur in einer Richtung fliessen ([flux](https://github.com/facebook/flux/tree/master/examples/flux-concepts#overview)).
-- ab einer gewissen Komplexität sind die verwendeten Werkzeuge viel besser geeignet, um eine Anwendung zu entwickeln. Mit der rasanten technologischen Entwicklung sinkt die minimale Komplexität, ab der sich die Verwendung moderner JavaScript-Werkzeuge lohnt
-- ganz einfache Anwendungen sind in FileMaker und Access schneller und einfacher gebaut
-- das Know-How für die Entwicklung moderner JavaScript-Anwendungen inklusive einer relativ komplexen Entwicklungsumgebung wird vorausgesetzt. Im Gegensatz zu FileMaker und Access können (noch-)Nicht-Entwickler (momentan noch) kaum eine electron-Anwendung aufbauen. Bei der rasanten Entwicklung im ganzen JavaScript-Ökosystem und angesichts der Tatsache, dass z.B. Access schon lange nicht mehr wesentlich weiter entwickelt wurde, könnte sich das aber ändern
+- die verwendeten Technologien sind viel moderner und geben dem Entwickler viel mehr Möglichkeiten als Access. Anwendungen können massgeschneidert(er) und leistungsfähig(er) gebaut werden
+- was diese Technologien besonders auszeichnet und meines Wissens in keiner anderen Programmiersprache bisher existiert (aber bestimmt bald nachgeholt wird):
+  - die saubere Trennung von Daten und Logik
+  - die Benutzeroberfläche als eine Funktion der Daten
+  - dass Daten immer nur in einer Richtung fliessen ([flux](https://github.com/facebook/flux/tree/master/examples/flux-concepts#overview))
+- ab einer gewissen Komplexität sind die verwendeten Werkzeuge viel besser geeignet, um eine Anwendung zu entwickeln. Mit der rasanten technologischen Entwicklung sinkt die minimale Komplexität, ab der sich ihre Verwendung lohnt
+- ganz einfache Anwendungen sind in Access schneller und einfacher gebaut
+- das Know-How für die Entwicklung moderner JavaScript-Anwendungen inklusive einer komplexen Entwicklungsumgebung wird vorausgesetzt. Im Gegensatz zu Access können (noch-)Nicht-Entwickler (momentan noch) kaum eine electron-Anwendung aufbauen. Bei der rasanten Entwicklung im ganzen JavaScript-Ökosystem und angesichts der Tatsache, dass z.B. Access schon lange nicht mehr wesentlich weiter entwickelt wurde, könnte sich das aber ändern
 - JavaScript ist heute schon weit verbreitet und stark im Kommen. Entwickler mit dem nötigen Know-How um eine electron-Anwendung zu bauen oder unterhalten sind verhältnismässig einfach zu finden
 
 Für den künftigen Unterhalt/Ausbau:
@@ -80,7 +83,9 @@ Ich habe früher diverse teilweise recht anspruchsvolle Access-Anwendungen gebau
 
 - Access würde ich - in meiner jetzigen Rolle als externer Entwickler und mit meinem JavaScript Know-How - nur noch für _sehr_ einfache Anwendungsfälle benutzen
 - Access ist - technisch gesehen - am ehesten geeignet, wenn die Anwender den Umgang damit gewohnt sind und daher auf einen grossen Teil der Funktionalität einer eigentlichen Anwendung verzichtet werden kann (Automatisierung, Benutzerführung, individualisierte Benutzeroberfläche). In diesem Fall stellt die Access-Anwendung im Wesentlichen nur die benötigte Datenstruktur inklusive Abfragen bereit
-- Access oder FileMaker sind ideal, wenn die Anwendung technisch keine zu hohen Anforderungen stellt und dank ihrer einfachen Entwicklungsumgebung von einer firmen- bzw. abteilungsinternen Person entwickelt werden kann, die über grosses Know-How über das zu lösende Problem verfügt und dank ihrer dauernden Anwesenheit die Anwendung schrittweise verbessern kann. Das war meine frühere Rolle und ich finde sie nach wie vor ideal. Denn das grösste Problem beim Aufbau einer neuen Anwendung ist die Kommunikation zwischen den künftigen Benutzern und den Entwicklern
+- Access ist ideal, wenn:
+  - die Anwendung technisch keine zu hohen Anforderungen stellt
+  - und dank ihrer einfachen Entwicklungsumgebung von einer firmen- bzw. abteilungsinternen Person entwickelt werden kann, die über grosses Know-How über das zu lösende Problem verfügt und dank ihrer dauernden Anwesenheit die Anwendung schrittweise verbessern kann.<br/>Das war meine frühere Rolle und ich finde sie nach wie vor ideal. Denn das grösste Problem beim Aufbau einer neuen Anwendung ist die Kommunikation zwischen den künftigen Benutzern und den Entwicklern
 - wird eine intuitive, minimalistische und übersichtliche Benutzeroberfläche benötigt, ist die Grenze schnell erreicht, ab der sich eine electron-Anwendung lohnt
 - eine JavaScript-Anwendung drängt sich geradezu auf, wenn es gut möglich ist, dass sie später erweitert wird, von sehr vielen Benutzern genutzt wird oder gar über das Internet
 
