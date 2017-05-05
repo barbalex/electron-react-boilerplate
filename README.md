@@ -75,7 +75,7 @@ Für den künftigen Unterhalt/Ausbau:
 
 Für den Rest der Welt:
 
-In node.js und JavaScript gibt es eine starke Tradition von open source und Arbeiten mit kleinen Modulen, die nur etwas machen, aber das richtig. Entsprechend bestehen JavaScript-Anwendungen so weit wie möglich aus solchen freien Modulen. Und sie werden schon während der Entwicklung auf Plattformen publiziert, die eine offene Zusammenarbeit ermöglichen. In diesem Sinne steht der Code von Kapla auch auf GitHub zur freien Verfügung. Und ich habe während der Entwicklung von Kapla mit mehreren Entwicklern von verwendeten Modulen zusammengearbeitet, um Fehler in diesen Modulen zu korrigieren oder neue Fähigkeiten zu ergänzen. Am Ende profitieren alle davon :-)
+In node.js und JavaScript gibt es eine starke Tradition von open source und Arbeiten mit kleinen Modulen, die nur etwas machen, aber das richtig. Entsprechend bestehen JavaScript-Anwendungen so weit wie möglich aus solchen freien Modulen. Und sie werden schon während der Entwicklung auf Plattformen publiziert, die eine offene Zusammenarbeit ermöglichen. In diesem Sinne steht der Code von Kapla auch auf GitHub zur freien Verfügung. Und ich habe während der Entwicklung von Kapla mit mehreren Entwicklern von verwendeten Modulen zusammengearbeitet, um Fehler in diesen Modulen zu korrigieren oder neue Fähigkeiten zu ergänzen. Am Ende profitieren alle :-)
 
 **Fazit:**
 
