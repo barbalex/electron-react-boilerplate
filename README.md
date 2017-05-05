@@ -68,7 +68,7 @@ Für die Entwicklung:
 
 Für den künftigen Unterhalt/Ausbau:
 
-- im Prinzip ist nach Bereinigung der Kinderkrankheiten kaum je Unterhalt nötig. Im Gegensatz zu Web-Anwendungen kann darauf verzichtet werden, die verwendete Software laufend zu aktualisieren. Die Anwendung wird ja hinter der Firmen-Firewall betrieben
+- im Prinzip ist nach Bereinigung der Kinderkrankheiten kaum je Unterhalt nötig. Im Gegensatz zu Web-Anwendungen kann darauf verzichtet werden, die verwendeten Fremd-Module laufend zu aktualisieren. Die Anwendung wird ja hinter der Firmen-Firewall betrieben
 - aufgrund der modernen Architektur ist eine electron-Anwendung im Bedarfsfall für professionelle JavaScript-Entwickler wesentlich einfacher zu unterhalten
 - electron-Anwendungen können wenn nötig zu Server-Client-Anwendungen oder gar Web-Applikationen ausgebaut werden, wobei der grösste Teil des Codes unangetastet bleibt
 - die Funktionalität kann wenn gewünscht mit automatisierten Test hinterlegt werden, was die Unterhalt- und Erweiterbarkeit nochmals stark verbessert
