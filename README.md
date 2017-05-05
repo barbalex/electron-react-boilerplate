@@ -36,7 +36,7 @@ Es ist in JavaScript geschrieben und benutzt unter anderem:
 - [styled components](https://github.com/styled-components/styled-components): Styling für Module
 - [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/grid): anspruchsvolle Layouts gestalten
 
-Ich will diese Kombination nachfolgend der Einfachheit halber "electron-Anwendung" nennen. Und FileMaker und Access-Anwendungen als "Access-Anwendung" zusammenfassen.
+Ich will diese Kombination nachfolgend der Einfachheit halber "electron-Anwendung" nennen. Und FileMaker ist bei der Erwähnung von Access immer mit gemeint.
 
 ## Electron- versus Access-Anwendung
 
