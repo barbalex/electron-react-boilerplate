@@ -52,7 +52,7 @@ Im Betrieb:
 - electron-Anwendung und sqlite-Datei funktionieren auf allen aktuellen 64bit-Versionen von Windows. Daher kann man davon ausgehen, dass sie noch längere Zeit unverändert weiter benutzt werden können
 - electron-Anwendungen können so gebaut werden, dass sie sich bei Vorliegen eines Updates automatisch aktualisieren
 - es wird ausschliesslich open source Software verwendet. Daher fallen keine Lizenzgebühren an
-- weder Datenbank noch Anwendung brauchen Unterhalt. Das gilt natürlich nur, solange nicht sehr viele Benutzer gleichzeitig schreibend auf die Datenbank zugreifen können müssen. In diesem Fall müsste statt sqlite ein Datenbank-Server benutzt werden
+- weder Datenbank noch Anwendung brauchen Unterhalt. Das gilt natürlich nur, solange nicht sehr viele Benutzer gleichzeitig schreibend auf die Datenbank zugreifen. In diesem Fall müsste statt sqlite ein Datenbank-Server benutzt werden
 
 Für die Entwicklung:
 
