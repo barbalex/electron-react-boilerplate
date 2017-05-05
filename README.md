@@ -69,7 +69,13 @@ Für den künftigen Unterhalt/Ausbau:
 - electron-Anwendungen können wenn nötig zu Server-Client-Anwendungen oder gar Web-Applikationen ausgebaut werden, wobei der grösste Teil des Codes unangetastet bleibt
 - die Funktionalität kann wenn gewünscht mit automatisierten Test hinterlegt werden, was die Unterhalt- und Erweiterbarkeit nochmals stark verbessert
 
-Ich habe früher diverse teilweise recht anspruchsvolle Access-Anwendungen gebaut, danach Web-Anwendungen und nun mit Kapla die erste electron-Anwendung. Mein persönliches **Fazit**:
+Für den Rest der Welt:
+
+- in node.js und JavaScript gibt es eine starke Tradition von open source und Arbeiten mit kleinen Modulen, die nur etwas machen, aber das richtig. Entsprechend bestehen JavaScript-Anwendungen so weit wie möglich aus solchen freien Modulen. Und sie werden schon während der Entwicklung auf Plattformen publiziert, die eine offene Zusammenarbeit ermöglichen. In diesem Sinne steht der Code von Kapla auch auf GitHub zur freien Verfügung.
+
+**Fazit:**
+
+Ich habe früher diverse teilweise recht anspruchsvolle Access-Anwendungen gebaut, danach Web-Anwendungen und nun mit Kapla die erste electron-Anwendung.
 
 - Access würde ich nur noch für sehr sehr einfache Anwendungsfälle benutzen
 - Access ist am ehesten geeignet, wenn die Anwender den Umgang damit gewohnt sind und daher auf einen grossen Teil der Funktionalität einer eigentlichen Anwendung verzichtet werden kann (Automatisierung, Benutzerführung, intuitive, minimalistische und einfache Benutzeroberfläche). In diesem Fall stellt die Access-Anwendung im Wesentlichen nur die benötigte Datenstruktur inklusive Abfragen bereit
