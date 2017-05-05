@@ -61,8 +61,6 @@ Für die Entwicklung:
   - die saubere Trennung von Daten und Logik
   - die Benutzeroberfläche als eine Funktion der Daten
   - dass Daten immer nur in einer Richtung fliessen ([flux](https://github.com/facebook/flux/tree/master/examples/flux-concepts#overview))
-
-  Diese drei Neuerungen haben die Programmierung in JavaScript in meinen Augen revolutioniert.
 - ab einer gewissen Komplexität sind die verwendeten Werkzeuge viel besser geeignet, um eine Anwendung zu entwickeln. Mit der rasanten technologischen Entwicklung sinkt die minimale Komplexität, ab der sich ihre Verwendung lohnt
 - ganz einfache Anwendungen sind in Access schneller und einfacher gebaut
 - das Know-How für die Entwicklung moderner JavaScript-Anwendungen inklusive einer komplexen Entwicklungsumgebung wird vorausgesetzt. Im Gegensatz zu Access können (noch-)Nicht-Entwickler (momentan noch) kaum eine electron-Anwendung aufbauen. Bei der rasanten Entwicklung im ganzen JavaScript-Ökosystem und angesichts der Tatsache, dass z.B. Access schon lange nicht mehr wesentlich weiter entwickelt wurde, könnte sich das aber ändern
