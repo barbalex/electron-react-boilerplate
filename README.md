@@ -65,14 +65,14 @@ Für die Entwicklung:
 
 Für den künftigen Unterhalt/Ausbau:
 
-- im Prinzip ist nach Bereinigung der Kinderkrankheiten kaum je Unterhalt nötig :-) Im Gegensatz zu Web-Anwendungen kann darauf verzichtet werden, die verwendete Software laufend zu aktualisieren. Die Anwendung wird ja hinter der Firmen-Firewall betrieben
+- im Prinzip ist nach Bereinigung der Kinderkrankheiten kaum je Unterhalt nötig. Im Gegensatz zu Web-Anwendungen kann darauf verzichtet werden, die verwendete Software laufend zu aktualisieren. Die Anwendung wird ja hinter der Firmen-Firewall betrieben
 - aufgrund der modernen Architektur ist eine electron-Anwendung im Bedarfsfall für professionelle JavaScript-Entwickler wesentlich einfacher zu unterhalten
 - electron-Anwendungen können wenn nötig zu Server-Client-Anwendungen oder gar Web-Applikationen ausgebaut werden, wobei der grösste Teil des Codes unangetastet bleibt
 - die Funktionalität kann wenn gewünscht mit automatisierten Test hinterlegt werden, was die Unterhalt- und Erweiterbarkeit nochmals stark verbessert
 
 Für den Rest der Welt:
 
-- in node.js und JavaScript gibt es eine starke Tradition von open source und Arbeiten mit kleinen Modulen, die nur etwas machen, aber das richtig. Entsprechend bestehen JavaScript-Anwendungen so weit wie möglich aus solchen freien Modulen. Und sie werden schon während der Entwicklung auf Plattformen publiziert, die eine offene Zusammenarbeit ermöglichen. In diesem Sinne steht der Code von Kapla auch auf GitHub zur freien Verfügung
+In node.js und JavaScript gibt es eine starke Tradition von open source und Arbeiten mit kleinen Modulen, die nur etwas machen, aber das richtig. Entsprechend bestehen JavaScript-Anwendungen so weit wie möglich aus solchen freien Modulen. Und sie werden schon während der Entwicklung auf Plattformen publiziert, die eine offene Zusammenarbeit ermöglichen. In diesem Sinne steht der Code von Kapla auch auf GitHub zur freien Verfügung. Und ich habe während der Entwicklung von Kapla mit mehreren Entwicklern von verwendeten Modulen zusammengearbeitet, um Fehler in diesen Modulen zu korrigieren oder neue Fähigkeiten zu ergänzen. Am Ende profitieren alle davon :-)
 
 **Fazit:**
 
