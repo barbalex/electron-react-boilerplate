@@ -60,7 +60,7 @@ Für die Entwicklung:
 - was diese Technologien besonders auszeichnet und meines Wissens in keiner anderen Programmiersprache bisher existiert (aber bestimmt sehr schnell nachgeholt wird), ist die saubere Trennung von Daten und Logik, die Benutzeroberfläche als eine Funktion der Daten und dass Daten immer nur in einer Richtung fliessen ([flux](https://github.com/facebook/flux/tree/master/examples/flux-concepts#overview)).
 - ab einer gewissen Komplexität sind die verwendeten Werkzeuge viel besser geeignet, um eine Anwendung zu entwickeln. Mit der rasanten technologischen Entwicklung sinkt die minimale Komplexität, ab der sich die Verwendung moderner JavaScript-Werkzeuge lohnt
 - ganz einfache Anwendungen sind in FileMaker und Access schneller und einfacher gebaut
-- das Know-How für die Entwicklung moderner JavaScript-Anwendungen inklusive einer relativ komplexen Entwicklungsumgebung wird vorausgesetzt. Im Gegensatz zu FileMaker und Access können (noch-)Nicht-Entwickler kaum eine electron-Anwendung aufbauen
+- das Know-How für die Entwicklung moderner JavaScript-Anwendungen inklusive einer relativ komplexen Entwicklungsumgebung wird vorausgesetzt. Im Gegensatz zu FileMaker und Access können (noch-)Nicht-Entwickler (momentan noch) kaum eine electron-Anwendung aufbauen. Bei der rasanten Entwicklung im ganzen JavaScript-Ökosystem und angesichts der Tatsache, dass z.B. Access schon lange nicht mehr wesentlich weiter entwickelt wurde, könnte sich das aber ändern
 - JavaScript ist heute schon weit verbreitet und stark im Kommen. Entwickler mit dem nötigen Know-How um eine electron-Anwendung zu bauen oder unterhalten sind verhältnismässig einfach zu finden
 
 Für den künftigen Unterhalt/Ausbau:
