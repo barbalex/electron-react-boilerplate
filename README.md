@@ -32,6 +32,7 @@ Es ist in JavaScript geschrieben und benutzt unter anderem:
 - [nodejs](https://nodejs.org): JavaScript kommuniziert mit dem PC
 - [React](https://facebook.github.io/react): die Benutzeroberfläche ist eine Funktion der Anwendungs-Daten! Und erst noch modular
 - [MobX](https://github.com/mobxjs/mobx): Anwendungs-Daten managen wie ein Profi
+- [recompose](https://github.com/acdlite/recompose): Anwendungs-Logik sauber von der Benutzeroberfläche trennen
 - [styled components](https://github.com/styled-components/styled-components): Styling für Module
 - [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/grid): anspruchsvolle Layouts gestalten
 
@@ -56,6 +57,7 @@ Im Betrieb:
 Für die Entwicklung:
 
 - die verwendeten Technologien sind viel moderner und geben dem Entwickler viel mehr Möglichkeiten als Access bzw. FileMaker. Anwendungen können massgeschneidert(er) und leistungsfähig(er) gebaut werden
+- was diese Technologien besonders auszeichnet und meines Wissens in keiner anderen Programmiersprache bisher existiert (aber bestimmt sehr schnell nachgeholt wird), ist die saubere Trennung von Daten und Logik, die Benutzeroberfläche als eine Funktion der Daten und dass Daten immer nur in einer Richtung fliessen ([flux](https://github.com/facebook/flux/tree/master/examples/flux-concepts#overview)).
 - ab einer gewissen Komplexität sind die verwendeten Werkzeuge viel besser geeignet, um eine Anwendung zu entwickeln. Mit der rasanten technologischen Entwicklung sinkt die minimale Komplexität, ab der sich die Verwendung moderner JavaScript-Werkzeuge lohnt
 - ganz einfache Anwendungen sind in FileMaker und Access schneller und einfacher gebaut
 - das Know-How für die Entwicklung moderner JavaScript-Anwendungen inklusive einer relativ komplexen Entwicklungsumgebung wird vorausgesetzt. Im Gegensatz zu FileMaker und Access können (noch-)Nicht-Entwickler kaum eine electron-Anwendung aufbauen
