@@ -61,7 +61,7 @@ Für die Entwicklung:
 - ab einer gewissen Komplexität sind die verwendeten Werkzeuge viel besser geeignet, um eine Anwendung zu entwickeln. Mit der rasanten technologischen Entwicklung sinkt die minimale Komplexität, ab der sich die Verwendung moderner JavaScript-Werkzeuge lohnt
 - ganz einfache Anwendungen sind in FileMaker und Access schneller und einfacher gebaut
 - das Know-How für die Entwicklung moderner JavaScript-Anwendungen inklusive einer relativ komplexen Entwicklungsumgebung wird vorausgesetzt. Im Gegensatz zu FileMaker und Access können (noch-)Nicht-Entwickler kaum eine electron-Anwendung aufbauen
-- JavaScript ist heute schon sehr stark verbreitet und stark im Kommen. Entwickler mit dem nötigen Know-How um eine electron-Anwendung zu bauen oder unterhalten sind verhältnismässig einfach zu finden
+- JavaScript ist heute schon weit verbreitet und stark im Kommen. Entwickler mit dem nötigen Know-How um eine electron-Anwendung zu bauen oder unterhalten sind verhältnismässig einfach zu finden
 
 Für den künftigen Unterhalt/Ausbau:
 
