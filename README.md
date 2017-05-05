@@ -78,8 +78,8 @@ Für den Rest der Welt:
 Ich habe früher diverse teilweise recht anspruchsvolle Access-Anwendungen gebaut, danach Web-Anwendungen und nun mit Kapla die erste electron-Anwendung.
 
 - Access würde ich nur noch für _sehr_ einfache Anwendungsfälle benutzen
-- Access ist am ehesten geeignet, wenn die Anwender den Umgang damit gewohnt sind und daher auf einen grossen Teil der Funktionalität einer eigentlichen Anwendung verzichtet werden kann (Automatisierung, Benutzerführung, intuitive, minimalistische und einfache Benutzeroberfläche). In diesem Fall stellt die Access-Anwendung im Wesentlichen nur die benötigte Datenstruktur inklusive Abfragen bereit
-- wird eine einfache und übersichtliche Benutzeroberfläche benötigt, ist die Grenze schnell erreicht, ab der sich eine electron-Anwendung lohnt
+- Access ist am ehesten geeignet, wenn die Anwender den Umgang damit gewohnt sind und daher auf einen grossen Teil der Funktionalität einer eigentlichen Anwendung verzichtet werden kann (Automatisierung, Benutzerführung, individualisierte Benutzeroberfläche). In diesem Fall stellt die Access-Anwendung im Wesentlichen nur die benötigte Datenstruktur inklusive Abfragen bereit
+- wird eine intuitive, minimalistische und übersichtliche Benutzeroberfläche benötigt, ist die Grenze schnell erreicht, ab der sich eine electron-Anwendung lohnt
 - eine JavaScript-Anwendung drängt sich geradezu auf, wenn es gut möglich ist, dass sie später erweitert wird, von sehr vielen Benutzern genutzt wird oder gar über das Internet
 
 ## Entwicklungsumgebung installieren ##
