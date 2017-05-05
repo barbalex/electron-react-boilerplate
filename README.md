@@ -32,7 +32,7 @@ Es ist in JavaScript geschrieben und benutzt unter anderem:
 - [nodejs](https://nodejs.org): JavaScript kommuniziert mit dem PC
 - [React](https://facebook.github.io/react): die Benutzeroberfläche ist eine Funktion der Anwendungs-Daten! Und erst noch modular
 - [MobX](https://github.com/mobxjs/mobx): Anwendungs-Daten managen wie ein Profi
-- [recompose](https://github.com/acdlite/recompose): Anwendungs-Logik sauber von der Benutzeroberfläche trennen
+- [recompose](https://github.com/acdlite/recompose): Logik sauber von Daten und Benutzeroberfläche trennen
 - [styled components](https://github.com/styled-components/styled-components): Styling für Module
 - [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/grid): anspruchsvolle Layouts gestalten
 
