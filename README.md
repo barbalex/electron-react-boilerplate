@@ -61,12 +61,12 @@ Für die Entwicklung:
 - ab einer gewissen Komplexität sind die verwendeten Werkzeuge viel besser geeignet, um eine Anwendung zu entwickeln. Mit der rasanten technologischen Entwicklung sinkt die minimale Komplexität, ab der sich die Verwendung moderner JavaScript-Werkzeuge lohnt
 - ganz einfache Anwendungen sind in FileMaker und Access schneller und einfacher gebaut
 - das Know-How für die Entwicklung moderner JavaScript-Anwendungen inklusive einer relativ komplexen Entwicklungsumgebung wird vorausgesetzt. Im Gegensatz zu FileMaker und Access können (noch-)Nicht-Entwickler kaum eine electron-Anwendung aufbauen
+- JavaScript ist heute schon sehr stark verbreitet und stark im Kommen. Entwickler mit dem nötigen Know-How um eine electron-Anwendung zu bauen oder unterhalten sind verhältnismässig einfach zu finden
 
 Für den künftigen Unterhalt/Ausbau:
 
 - im Prinzip ist nach Bereinigung der Kinderkrankheiten kaum je Unterhalt nötig :-) Im Gegensatz zu Web-Anwendungen kann darauf verzichtet werden, die verwendete Software laufend zu aktualisieren. Die Anwendung wird ja hinter der Firmen-Firewall betrieben
 - aufgrund der modernen Architektur ist eine electron-Anwendung im Bedarfsfall für professionelle JavaScript-Entwickler wesentlich einfacher zu unterhalten
-- JavaScript ist heute schon sehr stark verbreitet und stark im Kommen. Entwickler mit dem nötigen Know-How um eine electron-Anwendung zu bauen oder unterhalten sind verhältnismässig einfach zu finden
 - electron-Anwendungen können wenn nötig zu Server-Client-Anwendungen oder gar Web-Applikationen ausgebaut werden, wobei der grösste Teil des Codes unangetastet bleibt
 - die Funktionalität kann wenn gewünscht mit automatisierten Test hinterlegt werden, was die Unterhalt- und Erweiterbarkeit nochmals stark verbessert
 
