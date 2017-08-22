@@ -23,8 +23,8 @@
     "package-win": "npm run build && build --win --x64",
     "package-linux": "npm run build && build --linux",
     "package-all": "npm run build && build -mwl",
-    "build-sqlite3-win64": "cd node_modules/sqlite3 && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/node-v48-win32-x64 && node-gyp rebuild --target=1.4.15 --arch=x64 --target_platform=win32 --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-win32-x64",
-    "build-sqlite3-mac": "cd node_modules/sqlite3 && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/node-v48-darwin-x64 && node-gyp rebuild --target=1.4.15 --arch=x64 --target_platform=darwin --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-darwin-x64"
+    "build-sqlite3-win64": "cd node_modules/sqlite3 && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/node-v57-win32-x64 && node-gyp rebuild --target=1.7.5 --arch=x64 --target_platform=win32 --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.7-win32-x64",
+    "build-sqlite3-mac": "cd node_modules/sqlite3 && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/node-v57-darwin-x64 && node-gyp rebuild --target=1.7.5 --arch=x64 --target_platform=darwin --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.7-darwin-x64"
   },
   "browserslist": "electron 1.4",
   "build": {
@@ -109,9 +109,9 @@
     "cross-env": "3.2.4",
     "css-loader": "0.28.5",
     "devtron": "1.4.0",
-    "electron": "1.4.15",
+    "electron": "1.7.5",
     "electron-builder": "15.4.3",
-    "electron-devtools-installer": "2.1.0",
+    "electron-devtools-installer": "2.2.0",
     "enzyme": "2.9.1",
     "eslint": "3.6.0",
     "eslint-config-airbnb": "12.0.0",
