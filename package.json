@@ -166,9 +166,9 @@
     "react-split-pane": "0.1.59",
     "react-textarea-autosize": "4.0.5",
     "react-virtualized": "9.2.3",
-    "recompose": "0.22.0",
-    "source-map-support": "0.4.12",
-    "sqlite3": "3.1.8",
+    "recompose": "0.25.0",
+    "source-map-support": "0.4.16",
+    "sqlite3": "3.1.9",
     "styled-components": "1.4.4",
     "username": "2.3.0"
   },
