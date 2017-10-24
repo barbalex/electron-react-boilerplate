@@ -281,7 +281,7 @@ const AreaNummern = ({
           {
             isPrintPreview &&
             <FormControl
-              type="text"
+              componentClass="textarea"
               defaultValue={gekoValuesString}
               name="gekoNr"
               bsSize="small"
