@@ -8,19 +8,16 @@ import compose from 'recompose/compose'
 import KontakteIntern from './KontakteIntern'
 import KontakteExtern from './KontakteExtern'
 
-const verwantwortlichOptions = (interneOptions) => {
+const verwantwortlichOptions = interneOptions => {
   // sort interneOptions by kurzzeichen
   const interneOptionsSorted = _.sortBy(interneOptions, o => {
     const sort = `${o.name || 'zz'} ${o.vorname || 'zz'} (${o.kurzzeichen})`
     return sort.toLowerCase()
   })
-  const options = interneOptionsSorted.map((o) => {
+  const options = interneOptionsSorted.map(o => {
     const name = `${o.name || '(kein Name)'} ${o.vorname || '(kein Vorname)'} (${o.kurzzeichen})`
     return (
-      <option
-        key={o.id}
-        value={o.kurzzeichen}
-      >
+      <option key={o.id} value={o.kurzzeichen}>
         {name}
       </option>
     )
@@ -42,30 +39,27 @@ const verantwortlichData = (geschaeft, interneOptions, isPrintPreview) => {
     name = `${data.name} ${data.vorname}, `
   }
   const abt = data.abteilung ? `${data.abteilung}` : ''
-  const emailHtml = (
-    <a
-      href={`mailto:${data.eMail}`}
-    >
-      {data.eMail}
-    </a>
-  )
+  const emailHtml = <a href={`mailto:${data.eMail}`}>{data.eMail}</a>
   const telefon = data.telefon ? `, ${data.telefon}` : ''
   if (data.eMail) {
     return (
-      <span>{`${name}${abt}, `}{emailHtml}{`${telefon}`}</span>
+      <span>
+        {`${name}${abt}, `}
+        {emailHtml}
+        {`${telefon}`}
+      </span>
     )
   }
   return <span>{`${name}${abt}${telefon}`}</span>
 }
 
-const ContainerBase = styled.div`
-  grid-area: areaPersonen;
-`
+const ContainerBase = styled.div`grid-area: areaPersonen;`
 const ContainerView = styled(ContainerBase)`
   background-color: rgb(246, 255, 245);
+  max-width: 100%;
 `
 const ContainerPrint = styled(ContainerBase)`
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   border-bottom: none;
   border-left: none;
 `
@@ -89,9 +83,7 @@ const Title = styled.div`
   font-size: 16px;
   grid-column: 1;
 `
-const SubtitleBase = styled.div`
-  font-weight: 900;
-`
+const SubtitleBase = styled.div`font-weight: 900;`
 const SubtitleView = styled(SubtitleBase)`
   font-size: 12px;
   margin-top: 5px;
@@ -102,9 +94,7 @@ const SubtitlePrint = styled(SubtitleBase)`
   margin-top: 2px;
   grid-column: 1;
 `
-const VerantwortlichView = styled.div`
-  grid-column: 1 / span 1;
-`
+const VerantwortlichView = styled.div`grid-column: 1 / span 1;`
 const VerantwortlichPrint = styled.div`
   grid-column: 1;
   display: none;
@@ -128,71 +118,26 @@ const StyledFormcontrolStaticPrint = styled(FormControl.Static)`
   min-height: 0;
 `
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
-const AreaPersonen = ({
-  store,
-  nrOfFieldsBeforePersonen = 0,
-  change,
-}) => {
-  const {
-    activeId,
-    geschaeftePlusFilteredAndSorted: geschaefte,
-    interneOptions,
-  } = store.geschaefte
+const AreaPersonen = ({ store, nrOfFieldsBeforePersonen = 0, change }) => {
+  const { activeId, geschaeftePlusFilteredAndSorted: geschaefte, interneOptions } = store.geschaefte
   const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
-  const geschaeft = geschaefte.find(g =>
-    g.idGeschaeft === activeId
-  ) || {}
-  const Container = (
-    isPrintPreview ?
-    ContainerPrint :
-    ContainerView
-  )
-  const AreaPersonenDiv = (
-    isPrintPreview ?
-    AreaPersonenDivPrint :
-    AreaPersonenDivView
-  )
-  const Subtitle = (
-    isPrintPreview ?
-    SubtitlePrint :
-    SubtitleView
-  )
-  const Verantwortlich = (
-    isPrintPreview ?
-    VerantwortlichPrint :
-    VerantwortlichView
-  )
-  const VerantwortlichName = (
-    isPrintPreview ?
-    VerantwortlichNamePrint :
-    VerantwortlichNameView
-  )
-  const StyledFormcontrolStatic = (
-    isPrintPreview ?
-    StyledFormcontrolStaticPrint :
-    StyledFormcontrolStaticView
-  )
+  const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
+  const Container = isPrintPreview ? ContainerPrint : ContainerView
+  const AreaPersonenDiv = isPrintPreview ? AreaPersonenDivPrint : AreaPersonenDivView
+  const Subtitle = isPrintPreview ? SubtitlePrint : SubtitleView
+  const Verantwortlich = isPrintPreview ? VerantwortlichPrint : VerantwortlichView
+  const VerantwortlichName = isPrintPreview ? VerantwortlichNamePrint : VerantwortlichNameView
+  const StyledFormcontrolStatic = isPrintPreview ? StyledFormcontrolStaticPrint : StyledFormcontrolStaticView
 
   return (
     <Container>
       <AreaPersonenDiv>
-        <Title>
-          Personen
-        </Title>
-        {
-          !(isPrintPreview && !geschaeft.verantwortlich) &&
-          <Subtitle>
-            Verantwortlich
-          </Subtitle>
-        }
-        {
-          !(isPrintPreview && !geschaeft.verantwortlich) &&
+        <Title>Personen</Title>
+        {!(isPrintPreview && !geschaeft.verantwortlich) && <Subtitle>Verantwortlich</Subtitle>}
+        {!(isPrintPreview && !geschaeft.verantwortlich) && (
           <Verantwortlich>
             <FormControl
               componentClass="select"
@@ -205,39 +150,16 @@ const AreaPersonen = ({
               {verwantwortlichOptions(interneOptions)}
             </FormControl>
           </Verantwortlich>
-        }
-        {
-          !(isPrintPreview && !geschaeft.verantwortlich) &&
+        )}
+        {!(isPrintPreview && !geschaeft.verantwortlich) && (
           <VerantwortlichName>
-            <StyledFormcontrolStatic>
-              {verantwortlichData(geschaeft, interneOptions, isPrintPreview)}
-            </StyledFormcontrolStatic>
+            <StyledFormcontrolStatic>{verantwortlichData(geschaeft, interneOptions, isPrintPreview)}</StyledFormcontrolStatic>
           </VerantwortlichName>
-        }
-        {
-          !(isPrintPreview && geschaeft.interne.length === 0) &&
-          <Subtitle>
-            Interne Kontakte
-          </Subtitle>
-        }
-        {
-          !(isPrintPreview && geschaeft.interne.length === 0) &&
-          <KontakteIntern
-            tabIndex={nrOfFieldsBeforePersonen + 1}
-          />
-        }
-        {
-          !(isPrintPreview && geschaeft.externe.length === 0) &&
-          <Subtitle>
-            Externe Kontakte
-          </Subtitle>
-        }
-        {
-          !(isPrintPreview && geschaeft.externe.length === 0) &&
-          <KontakteExtern
-            tabIndex={nrOfFieldsBeforePersonen + 2}
-          />
-        }
+        )}
+        {!(isPrintPreview && geschaeft.interne.length === 0) && <Subtitle>Interne Kontakte</Subtitle>}
+        {!(isPrintPreview && geschaeft.interne.length === 0) && <KontakteIntern tabIndex={nrOfFieldsBeforePersonen + 1} />}
+        {!(isPrintPreview && geschaeft.externe.length === 0) && <Subtitle>Externe Kontakte</Subtitle>}
+        {!(isPrintPreview && geschaeft.externe.length === 0) && <KontakteExtern tabIndex={nrOfFieldsBeforePersonen + 2} />}
       </AreaPersonenDiv>
     </Container>
   )
