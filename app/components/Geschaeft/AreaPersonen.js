@@ -54,10 +54,7 @@ const verantwortlichData = (geschaeft, interneOptions, isPrintPreview) => {
 }
 
 const ContainerBase = styled.div`grid-area: areaPersonen;`
-const ContainerView = styled(ContainerBase)`
-  background-color: rgb(246, 255, 245);
-  max-width: 100%;
-`
+const ContainerView = styled(ContainerBase)`background-color: rgb(246, 255, 245);`
 const ContainerPrint = styled(ContainerBase)`
   border: 1px solid #ccc;
   border-bottom: none;
