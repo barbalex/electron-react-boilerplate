@@ -10,6 +10,11 @@ import styled from 'styled-components'
 import regularStyles from './areaLinks.css'
 import pdfStyles from './areaLinksPdf.css'
 
+const StyledDropzone = styled(Dropzone)`
+  width: 100%;
+  height: 100%;
+  border-color: transparent;
+`
 const DropzoneInnerDiv = styled.div`
   width: 100%;
   height: 100%;
@@ -30,7 +35,7 @@ const enhance = compose(
       linkNewCreate(activeId, files[0].path)
     },
   }),
-  observer
+  observer,
 )
 
 const AreaLinks = ({ store, onDrop }) => {
@@ -43,73 +48,57 @@ const AreaLinks = ({ store, onDrop }) => {
 
   return (
     <div className={styles.areaLinks}>
-      <div className={styles.title}>
-        Links
-      </div>
+      <div className={styles.title}>Links</div>
       <div className={styles.links}>
-        {
-          myLinks.map(link =>
-            <div
-              key={`${link.idGeschaeft}${link.url}`}
-              className={styles.fields}
-            >
-              <div className={styles.url}>
-                <a
-                  href={link.url}
-                  onClick={(event) => {
-                    event.preventDefault()
-                    shell.openItem(link.url)
-                  }}
-                >
-                  {link.url}
-                </a>
-              </div>
-              <div className={styles.deleteGlyphiconDiv}>
-                <Glyphicon
-                  glyph="remove-circle"
-                  onClick={() => linkRemove(activeId, link.url)}
-                  className={styles.removeGlyphicon}
-                  title="Link entfernen"
-                />
-              </div>
+        {myLinks.map(link => (
+          <div key={`${link.idGeschaeft}${link.url}`} className={styles.fields}>
+            <div className={styles.url}>
+              <a
+                href={link.url}
+                onClick={event => {
+                  event.preventDefault()
+                  shell.openItem(link.url)
+                }}
+              >
+                {link.url}
+              </a>
             </div>
-          )
-        }
+            <div className={styles.deleteGlyphiconDiv}>
+              <Glyphicon
+                glyph="remove-circle"
+                onClick={() => linkRemove(activeId, link.url)}
+                className={styles.removeGlyphicon}
+                title="Link entfernen"
+              />
+            </div>
+          </div>
+        ))}
       </div>
       <div className={styles.dropzoneContainer}>
-        <Dropzone
-          onDrop={onDrop}
-          style={{
-            width: '100%',
-            height: '100%',
-            borderColor: 'transparent',
-          }}
-        >
-          {
-            ({ isDragActive, isDragReject }) => {
-              if (isDragActive) {
-                return (
-                  <DropzoneInnerDiv>
-                    <div>jetzt fallen lassen...</div>
-                  </DropzoneInnerDiv>
-                )
-              }
-              if (isDragReject) {
-                return (
-                  <DropzoneInnerDiv>
-                    <div>Hm. Da ging etwas schief :-(</div>
-                  </DropzoneInnerDiv>
-                )
-              }
+        <StyledDropzone onDrop={onDrop}>
+          {({ isDragActive, isDragReject }) => {
+            if (isDragActive) {
               return (
                 <DropzoneInnerDiv>
-                  <div>Datei hierhin ziehen...</div>
-                  <div>...oder klicken, um sie zu wählen.</div>
+                  <div>jetzt fallen lassen...</div>
                 </DropzoneInnerDiv>
               )
             }
-          }
-        </Dropzone>
+            if (isDragReject) {
+              return (
+                <DropzoneInnerDiv>
+                  <div>Hm. Da ging etwas schief :-(</div>
+                </DropzoneInnerDiv>
+              )
+            }
+            return (
+              <DropzoneInnerDiv>
+                <div>Datei hierhin ziehen...</div>
+                <div>...oder klicken, um sie zu wählen.</div>
+              </DropzoneInnerDiv>
+            )
+          }}
+        </StyledDropzone>
       </div>
     </div>
   )
