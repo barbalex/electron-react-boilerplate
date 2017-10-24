@@ -30,7 +30,7 @@ const History = {
 extendObservable(History, {
   location: history.location,
 })
-history.listen((location) => {
+history.listen(location => {
   History.location = location
 })
 

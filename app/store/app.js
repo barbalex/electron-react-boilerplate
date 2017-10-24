@@ -1,6 +1,4 @@
-import {
-  extendObservable,
-} from 'mobx'
+import { extendObservable } from 'mobx'
 
 import standardConfig from '../src/standardConfig'
 

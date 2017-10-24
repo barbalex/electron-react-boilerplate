@@ -33,15 +33,9 @@ function Store() {
     fetching: false,
     error: [],
     geschaefte: [],
-    geschaeftePlus: computed(() =>
-      addComputedValuesToGeschaefte(this)
-    ),
-    geschaeftePlusFiltered: computed(() =>
-      filterGeschaeftePlus(this)
-    ),
-    geschaeftePlusFilteredAndSorted: computed(() =>
-      sortGeschaeftePlusFiltered(this)
-    ),
+    geschaeftePlus: computed(() => addComputedValuesToGeschaefte(this)),
+    geschaeftePlusFiltered: computed(() => filterGeschaeftePlus(this)),
+    geschaeftePlusFilteredAndSorted: computed(() => sortGeschaeftePlusFiltered(this)),
     links: [],
     geko: [],
     filterFields: [],

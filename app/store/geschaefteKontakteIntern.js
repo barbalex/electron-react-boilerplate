@@ -1,6 +1,4 @@
-import {
-  extendObservable,
-} from 'mobx'
+import { extendObservable } from 'mobx'
 
 import geschaefteKontakteInternStandardState from '../src/geschaefteKontakteInternStandardState'
 
