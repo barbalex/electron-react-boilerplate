@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel } from 'react-bootstrap'
+import Textarea from 'react-textarea-autosize'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
@@ -7,6 +8,16 @@ import compose from 'recompose/compose'
 import GekoNrField from './GekoNrField'
 import createOptions from '../../src/createOptions'
 
+const StyledTextarea = styled(Textarea)`
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  line-height: 1.42857143;
+  color: #555;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+`
 const ContainerBase = styled.div`
   grid-area: areaNummern
   display: grid;
@@ -116,6 +127,11 @@ const Field = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{
     font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
   }
 `
+const TextareaField = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
+  input {
+    font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+  }
+`
 const FieldIdGeschaeft = styled(Field)`
   grid-area: fieldIdGeschaeft;
 `
@@ -125,7 +141,7 @@ const LabelIdGeschaeft = styled(LabelHorizontal)`
 const InputIdGeschaeft = styled(FormControl)`
   background: transparent !important;
 `
-const FieldGekoNr = styled(Field)`
+const FieldGekoNr = styled(TextareaField)`
   grid-area: fieldGekoNr;
 `
 const LabelGekoNr = styled(LabelHorizontal)`
@@ -280,11 +296,9 @@ const AreaNummern = ({
         <FieldGekoNr isPrintPreview={isPrintPreview}>
           {
             isPrintPreview &&
-            <FormControl
-              componentClass="textarea"
-              defaultValue={gekoValuesString}
+            <StyledTextarea
+              value={gekoValuesString}
               name="gekoNr"
-              bsSize="small"
               tabIndex={1 + tabsToAdd}
             />
           }
