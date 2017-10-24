@@ -11,7 +11,7 @@ import chooseDb from '../../src/chooseDb'
 
 const sqlite3 = require('sqlite3').verbose()
 
-export default (store) => ({
+export default store => ({
   configSetKey: action((key, value) => {
     const { config } = store.app
     if (value) {
@@ -22,18 +22,18 @@ export default (store) => ({
     saveConfig(config)
     store.app.config = config
   }),
-  dbGet: (() => {
+  dbGet: () => {
     store.app.fetchingDb = true
     store.app.errorFetchingDb = null
     chooseDb()
-      .then((dbPath) => {
+      .then(dbPath => {
         const db = new sqlite3.Database(dbPath)
         store.dbChooseSuccess(dbPath, db)
         store.configSetKey('dbPath', dbPath)
       })
       .catch(err => store.dbChooseError(err))
-  }),
-  dbChooseError: action((err) => {
+  },
+  dbChooseError: action(err => {
     store.fetchingDb = false
     store.errorFetchingDb = err
     store.db = null
@@ -41,11 +41,7 @@ export default (store) => ({
   dbChooseSuccess: action((dbPath, db) => {
     store.app.fetchingDb = false
     store.app.db = db
-    store.app.config = Object.assign(
-      {},
-      store.app.config,
-      { dbPath },
-    )
+    store.app.config = Object.assign({}, store.app.config, { dbPath })
     // get data
     store.faelligeStatiOptionsGet()
     store.getGeko()
@@ -80,19 +76,18 @@ export default (store) => ({
       store.app.fetchingDb = true
       store.app.errorFetchingDb = null
       chooseDb()
-        .then((dbPath) => {
+        .then(dbPath => {
           const db = new sqlite3.Database(dbPath)
           store.dbChooseSuccess(dbPath, db)
           store.configSetKey('dbPath', dbPath)
         })
-        .catch(err =>
-          store.dbChooseError(err)
-        )
+        .catch(err => store.dbChooseError(err))
     }
   }),
-  configGet: action(() =>  // or "getConfig"???
+  configGet: action(() =>
+    // or "getConfig"???
     getConfig()
-      .then((config) => {
+      .then(config => {
         const newConfig = config || standardConfig
         store.config = newConfig
         const { dbPath } = newConfig
@@ -106,11 +101,9 @@ export default (store) => ({
         const db = new sqlite3.Database(dbPath)
         store.dbChooseSuccess(dbPath, db)
       })
-      .catch(error =>
-        console.error(error)
-      )
+      .catch(error => console.error(error)),
   ),
-  configUiReset: (() => {
+  configUiReset: () => {
     const { config } = store.app
     const newConfig = {}
     const dbPath = config.dbPath
@@ -119,14 +112,10 @@ export default (store) => ({
     }
     saveConfig(newConfig)
     store.app.config = newConfig
-  }),
-  messageShow: ((
-    showMessageModal,
-    messageTextLine1,
-    messageTextLine2
-  ) => {
+  },
+  messageShow: (showMessageModal, messageTextLine1, messageTextLine2) => {
     store.app.showMessageModal = showMessageModal
     store.app.messageTextLine1 = messageTextLine1
     store.app.messageTextLine2 = messageTextLine2
-  }),
+  },
 })

@@ -5,10 +5,8 @@ import isDateField from './isDateField'
 export default (geschaefte, filterFieldsPassed) => {
   // some filterFields may only have a comparator >
   // reduce to filterFields with values
-  const filterFields = filterFieldsPassed.filter(ff =>
-    ff.value || ff.value === 0
-  )
-  return geschaefte.filter((geschaeft) => {
+  const filterFields = filterFieldsPassed.filter(ff => ff.value || ff.value === 0)
+  return geschaefte.filter(geschaeft => {
     // if all conditions are met, include the geschaeft
     let satisfiesFilter = true
     filterFields.forEach((filterField, index) => {
@@ -39,10 +37,7 @@ export default (geschaefte, filterFieldsPassed) => {
         if (isString(filterValue)) {
           filterValue = filterValue.toLowerCase()
         }
-        const fieldsWithList = [
-          'kontaktInternVornameName',
-          'kontaktExternNameVorname',
-        ]
+        const fieldsWithList = ['kontaktInternVornameName', 'kontaktExternNameVorname']
         const isFieldWithList = fieldsWithList.includes(filterField.field)
         if (isFieldWithList) {
           // this field is special: a comma separated list of "vorname name"
@@ -50,11 +45,13 @@ export default (geschaefte, filterFieldsPassed) => {
         } else {
           const comparator = filterFields[index].comparator || '='
           if (filterValue === '') {
-            if (!!geschaeftValue) satisfiesFilter = false  // eslint-disable-line no-extra-boolean-cast
+            if (!!geschaeftValue) satisfiesFilter = false // eslint-disable-line no-extra-boolean-cast
           } else if (comparator === '!==') {
             if (!(geschaeftValue !== filterValue)) satisfiesFilter = false
           } else if (comparator === '<') {
             if (!(geschaeftValue < filterValue)) satisfiesFilter = false
+          } else if (comparator === '<=') {
+            if (!(geschaeftValue <= filterValue)) satisfiesFilter = false
           } else if (comparator === '>') {
             if (!(geschaeftValue > filterValue)) satisfiesFilter = false
           } else if (comparator === '=') {
@@ -66,7 +63,7 @@ export default (geschaefte, filterFieldsPassed) => {
               satisfiesFilter = false
             }
           } else if (comparator === '===') {
-            if (geschaeftValue != filterValue) satisfiesFilter = false  // eslint-disable-line eqeqeq
+            if (geschaeftValue != filterValue) satisfiesFilter = false // eslint-disable-line eqeqeq
           }
         }
       }
