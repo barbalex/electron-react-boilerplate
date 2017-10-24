@@ -7,17 +7,17 @@ import { action } from 'mobx'
  */
 import getMyName from 'username'
 
-export default (store) => ({
+export default store => ({
   getUsername: action(() => {
     store.user.fetching = true
     store.user.error = null
   }),
-  gotUsername: action((username) => {
+  gotUsername: action(username => {
     store.user.fetching = false
     store.user.error = null
     store.user.username = username
   }),
-  didntGetUsername: action((error) => {
+  didntGetUsername: action(error => {
     store.user.fetching = false
     store.user.error = error
     store.user.username = ''

@@ -7,13 +7,13 @@ import tableStandardState from '../../src/tableStandardState'
 import newTableRowInDb from '../../src/newTableRowInDb'
 import deleteTableRow from '../../src/deleteTableRow'
 
-export default (store) => ({
+export default store => ({
   tableReset: action(() => {
     Object.keys(tableStandardState).forEach(k => {
       store.table[k] = tableStandardState[k]
     })
   }),
-  tableGet: action((table) => {
+  tableGet: action(table => {
     store.table.table = table
     store.table.fetching = true
     store.table.error = []
@@ -25,41 +25,33 @@ export default (store) => ({
     store.table.rows = rows
     store.table.id = null
   }),
-  tableGetError: action((error) => {
+  tableGetError: action(error => {
     store.table.fetching = false
     store.table.error = [...store.table.error, error]
   }),
-  getTable: action((table) => {
+  getTable: action(table => {
     const { app } = store
     store.tableGet(table)
     getTableFromDb(app.db, table)
-      .then((rows) => {
+      .then(rows => {
         store.tableGetSuccess(table, rows)
         if (store.history.location.pathname !== '/table') {
           store.history.push('/table')
         }
       })
-      .catch(error =>
-        store.tableGetError(error)
-      )
+      .catch(error => store.tableGetError(error))
   }),
   /*
    * ROW
    */
-  tableRowNew: action((row) =>
-    store.table.rows.push(row)
-  ),
+  tableRowNew: action(row => store.table.rows.push(row)),
   tableRowToggleActivated: action((table, id) => {
-    store.table.id = (
-      store.table.id && store.table.id === id ?
-      null :
-      id
-    )
+    store.table.id = store.table.id && store.table.id === id ? null : id
   }),
-  tableRowNewCreate: action((table) => {
+  tableRowNewCreate: action(table => {
     const { app } = store
     newTableRowInDb(app.db, table)
-      .then((row) => {
+      .then(row => {
         store.tableRowNew(row)
         store.tableRowToggleActivated(table, row.id)
         if (store.history.location.pathname !== '/table') {
@@ -75,9 +67,7 @@ export default (store) => ({
     store.table.willDelete = false
   }),
   tableRowDelete: action((table, id) => {
-    store.table.rows = store.table.rows.filter(g =>
-      g.id !== id
-    )
+    store.table.rows = store.table.rows.filter(g => g.id !== id)
   }),
   tableRowRemove: action((table, id) => {
     const { app } = store
@@ -87,9 +77,7 @@ export default (store) => ({
         store.tableRowRemoveDeleteIntended()
         store.tableRowDelete(table, id)
       })
-      .catch(error =>
-        store.tableChangeDbError(error)
-      )
+      .catch(error => store.tableChangeDbError(error))
   }),
   tableChangeState: action((id, field, value) => {
     const row = store.table.rows.find(r => r.id === id)
@@ -97,9 +85,7 @@ export default (store) => ({
       row[field] = value
     }
   }),
-  tableChangeDbError: action((error) =>
-    store.table.error.push(error)
-  ),
+  tableChangeDbError: action(error => store.table.error.push(error)),
   changeTableInDb: action((table, id, field, value) => {
     const { app } = store
     // no need to do something on then
@@ -110,7 +96,7 @@ export default (store) => ({
         const actionName = `${table}OptionsGet`
         store[actionName]()
       })
-      .catch((error) => {
+      .catch(error => {
         // TODO: reset ui
         store.tableChangeDbError(error)
       })

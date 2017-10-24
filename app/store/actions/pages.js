@@ -4,7 +4,7 @@ import _ from 'lodash'
 
 import pageStandardState from '../../src/pageStandardState'
 
-export default (store) => ({
+export default store => ({
   pagesCleanUp: action(() => {
     store.pages.pages = [Object.assign(pageStandardState)]
     store.pages.activePageIndex = 0
@@ -29,7 +29,7 @@ export default (store) => ({
     store.pages.modalTextLine1 = modalTextLine1
     store.pages.modalTextLine2 = modalTextLine2
   }),
-  pagesInitiate: action((reportType) => {
+  pagesInitiate: action(reportType => {
     store.pagesCleanUp()
     const { geschaeftePlusFilteredAndSorted } = store.geschaefte
     store.pages.reportType = reportType
@@ -40,10 +40,10 @@ export default (store) => ({
   pagesFinishedBuilding: action(() => {
     store.pages.building = false
   }),
-  pagesQueryTitle: action((queryTitle) => {
+  pagesQueryTitle: action(queryTitle => {
     store.pages.queryTitle = queryTitle
   }),
-  pagesSetTitle: action((title) => {
+  pagesSetTitle: action(title => {
     store.pages.title = title
   }),
   pagesNewPage: action(() => {
@@ -52,9 +52,7 @@ export default (store) => ({
   }),
   pageAddGeschaeft: action(() => {
     if (store.pages.building) {
-      const activePage = store.pages.pages.find((p, i) =>
-        i === store.pages.activePageIndex
-      )
+      const activePage = store.pages.pages.find((p, i) => i === store.pages.activePageIndex)
       if (activePage) {
         activePage.geschaefte.push(store.pages.remainingGeschaefte.shift())
       }
@@ -64,9 +62,7 @@ export default (store) => ({
     // remove geschaeft from active page
     const { pages } = store
     const { activePageIndex } = pages
-    const activePage = pages.pages.find((p, i) =>
-      i === activePageIndex
-    )
+    const activePage = pages.pages.find((p, i) => i === activePageIndex)
     if (activePage) {
       activePage.full = true
       store.pages.remainingGeschaefte.unshift(activePage.geschaefte.pop())
