@@ -1,8 +1,5 @@
 import React, { PropTypes } from 'react'
-import {
-  FormControl,
-  ControlLabel,
-} from 'react-bootstrap'
+import { FormControl, ControlLabel } from 'react-bootstrap'
 import Textarea from 'react-textarea-autosize'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
@@ -12,18 +9,9 @@ import pdfStyles from './areaRechtsmittelPdf.css'
 import DateField from './DateField'
 import createOptions from '../../src/createOptions'
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
-const AreaRechtsmittel = ({
-  store,
-  nrOfFieldsBeforePv,
-  change,
-  blur,
-  onChangeDatePicker,
-}) => {
+const AreaRechtsmittel = ({ store, nrOfFieldsBeforePv, change, blur, onChangeDatePicker }) => {
   const {
     activeId,
     geschaeftePlusFilteredAndSorted: geschaefte,
@@ -32,22 +20,15 @@ const AreaRechtsmittel = ({
   } = store.geschaefte
   const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
-  const geschaeft = geschaefte.find(g =>
-    g.idGeschaeft === activeId
-  ) || {}
+  const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
   const styles = isPrintPreview ? pdfStyles : regularStyles
 
   return (
     <div className={styles.areaForGeschaeftsart}>
-      <div className={styles.areaRechtsmittelTitle}>
-        Rekurs / Beschwerde
-      </div>
-      {
-        !(isPrintPreview && !geschaeft.rechtsmittelInstanz) &&
+      <div className={styles.areaRechtsmittelTitle}>Rekurs / Beschwerde</div>
+      {!(isPrintPreview && !geschaeft.rechtsmittelInstanz) && (
         <div className={styles.fieldInstanz}>
-          <ControlLabel>
-            Instanz
-          </ControlLabel>
+          <ControlLabel>Instanz</ControlLabel>
           <FormControl
             componentClass="select"
             value={geschaeft.rechtsmittelInstanz || ''}
@@ -59,15 +40,12 @@ const AreaRechtsmittel = ({
             {createOptions(rechtsmittelInstanzOptions)}
           </FormControl>
         </div>
-      }
-      {
-        !(isPrintPreview && !geschaeft.rechtsmittelEntscheidNr) &&
+      )}
+      {!(isPrintPreview && !geschaeft.rechtsmittelEntscheidNr) && (
         <div className={styles.fieldEntscheidNr}>
-          <ControlLabel>
-            Entscheid Nr.
-          </ControlLabel>
+          <ControlLabel>Entscheid Nr.</ControlLabel>
           <FormControl
-            type="number"
+            type="text"
             value={geschaeft.rechtsmittelEntscheidNr || ''}
             name="rechtsmittelEntscheidNr"
             onChange={change}
@@ -76,9 +54,8 @@ const AreaRechtsmittel = ({
             tabIndex={2 + nrOfFieldsBeforePv}
           />
         </div>
-      }
-      {
-        !(isPrintPreview && !geschaeft.rechtsmittelEntscheidDatum) &&
+      )}
+      {!(isPrintPreview && !geschaeft.rechtsmittelEntscheidDatum) && (
         <div className={styles.fieldEntscheidDatum}>
           <DateField
             name="rechtsmittelEntscheidDatum"
@@ -89,13 +66,10 @@ const AreaRechtsmittel = ({
             tabIndex={3 + nrOfFieldsBeforePv}
           />
         </div>
-      }
-      {
-        !(isPrintPreview && !geschaeft.rechtsmittelErledigung) &&
+      )}
+      {!(isPrintPreview && !geschaeft.rechtsmittelErledigung) && (
         <div className={styles.fieldErledigung}>
-          <ControlLabel>
-            Erledigung
-          </ControlLabel>
+          <ControlLabel>Erledigung</ControlLabel>
           <FormControl
             componentClass="select"
             value={geschaeft.rechtsmittelErledigung || ''}
@@ -107,13 +81,10 @@ const AreaRechtsmittel = ({
             {createOptions(rechtsmittelErledigungOptions)}
           </FormControl>
         </div>
-      }
-      {
-        !(isPrintPreview && !geschaeft.rechtsmittelTxt) &&
+      )}
+      {!(isPrintPreview && !geschaeft.rechtsmittelTxt) && (
         <div className={styles.fieldRechtsmittelTxt}>
-          <ControlLabel>
-            Bemerkungen
-          </ControlLabel>
+          <ControlLabel>Bemerkungen</ControlLabel>
           <Textarea
             value={geschaeft.rechtsmittelTxt || ''}
             name="rechtsmittelTxt"
@@ -123,7 +94,7 @@ const AreaRechtsmittel = ({
             className={styles.textarea}
           />
         </div>
-      }
+      )}
     </div>
   )
 }
