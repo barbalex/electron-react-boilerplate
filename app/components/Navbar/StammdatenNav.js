@@ -4,8 +4,6 @@ import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-import styles from './Navbar.css'
-
 const stammdatenTitle = (table, rows) => {
   const tableNameObject = {
     interne: 'Stammdaten: Interne',
@@ -29,9 +27,9 @@ const stammdatenTitle = (table, rows) => {
 }
 
 // eslint-disable-next-line no-unused-vars
-const StyledNavDropdown = styled(({ showTableNavs, children, ...rest }) => <NavDropdown {...rest}>{children}</NavDropdown>)`
-  border-left: ${props => (props.showTableNavs ? 'solid grey 1px' : 'dotted #505050 1px')}
-  border-right: ${props => (props.showTableNavs ? 'none' : 'dotted #505050 1px')};
+const StyledNavDropdown = styled(NavDropdown)`
+  border-left: ${props => (props['data-showTableNavs'] ? 'solid grey 1px' : 'dotted #505050 1px')};
+  border-right: ${props => (props['data-showTableNavs'] ? 'none' : 'dotted #505050 1px')};
 `
 
 const enhance = compose(inject('store'), observer)
@@ -39,21 +37,9 @@ const enhance = compose(inject('store'), observer)
 const NavbarStammdatenNav = ({ store, showTableNavs }) => {
   const { getTable } = store
   const { table, rows } = store.table
-  /**
-   * does not work - should keep menu active when table is loaded
-   * probably a bug in react-bootstrap
-   * see: https://github.com/react-bootstrap/react-bootstrap/issues/1878
-   */
-  const isStammdatenMenuActive = !!table
 
   return (
-    <StyledNavDropdown
-      title={stammdatenTitle(table, rows)}
-      id="stammdaten-nav-dropdown"
-      active={isStammdatenMenuActive}
-      className={isStammdatenMenuActive ? styles.navActive : null}
-      showTableNavs={showTableNavs}
-    >
+    <StyledNavDropdown title={stammdatenTitle(table, rows)} id="stammdaten-nav-dropdown" data-showTableNavs={showTableNavs}>
       <MenuItem onClick={() => getTable('interne')} active={table === 'interne'}>
         Interne
       </MenuItem>
