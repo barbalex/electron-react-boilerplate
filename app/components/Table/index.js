@@ -14,10 +14,7 @@ const StyledNoRowsDiv = styled.div`
   font-weight: bold;
 `
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 class Table extends Component {
   static propTypes = {
@@ -25,7 +22,7 @@ class Table extends Component {
   }
 
   state = {
-    tableBodyOverflows: true
+    tableBodyOverflows: true,
   }
 
   componentDidUpdate = () => {
@@ -49,60 +46,41 @@ class Table extends Component {
     }
   }
 
-  doesTableBodyOverflow = () =>
-    this.tableBody.offsetHeight < this.tableBody.scrollHeight
+  doesTableBodyOverflow = () => this.tableBody.offsetHeight < this.tableBody.scrollHeight
 
   tableHeaders = () => {
     const { rows } = this.props.store.table
     const { config } = this.props.store.app
     const headers = Object.keys(rows[0])
     const windowWidth = $(window).width()
-    const tableWidth = (windowWidth * config.tableColumnWidth) / 100
+    const tableWidth = windowWidth * config.tableColumnWidth / 100
 
     const normalFieldWidth = (tableWidth - 50) / (headers.length - 1)
     return headers.map((header, index) => {
-      const widthClass = (
-        header === 'id' ?
-        { maxWidth: 50 } :
-        { maxWidth: normalFieldWidth }
-      )
+      const widthClass = header === 'id' ? { maxWidth: 50 } : { maxWidth: normalFieldWidth }
       return (
-        <div
-          key={index}
-          style={widthClass}
-          className={styles.tableHeaderCell}
-        >
+        <div key={index} style={widthClass} className={styles.tableHeaderCell}>
           {header}
         </div>
       )
     })
   }
 
-  rowRenderer = ({ key, index, style }) =>
-    <div
-      key={key}
-      style={style}
-    >
-      <TableItem
-        index={index}
-      />
+  rowRenderer = ({ key, index, style }) => (
+    <div key={key} style={style}>
+      <TableItem index={index} />
     </div>
+  )
 
   noRowsRenderer = () => {
     const text = 'lade Daten...'
-    return (
-      <StyledNoRowsDiv>
-        {text}
-      </StyledNoRowsDiv>
-    )
+    return <StyledNoRowsDiv>{text}</StyledNoRowsDiv>
   }
 
   render() {
     const { rows, id } = this.props.store.table
-    const { tableBodyOverflows } = this.state// get index of active id
-    const indexOfActiveId = _.findIndex(rows, r =>
-      r.id === id
-    )
+    const { tableBodyOverflows } = this.state // get index of active id
+    const indexOfActiveId = _.findIndex(rows, r => r.id === id)
 
     return (
       <div className={styles.body}>
@@ -111,7 +89,7 @@ class Table extends Component {
             <div
               className={styles.tableHeaderRow}
               style={{
-                paddingRight: tableBodyOverflows ? 17 : null
+                paddingRight: tableBodyOverflows ? 17 : null,
               }}
             >
               {this.tableHeaders()}
@@ -119,10 +97,12 @@ class Table extends Component {
           </div>
           <div
             className={styles.tableBody}
-            ref={(c) => { this.tableBody = c }}
+            ref={c => {
+              this.tableBody = c
+            }}
           >
             <AutoSizer>
-              {({ height, width }) =>
+              {({ height, width }) => (
                 <List
                   height={height}
                   rowCount={rows.length}
@@ -131,10 +111,12 @@ class Table extends Component {
                   noRowsRenderer={this.noRowsRenderer}
                   width={width}
                   scrollToIndex={indexOfActiveId}
-                  ref={(c) => { this.reactList = c }}
+                  ref={c => {
+                    this.reactList = c
+                  }}
                   {...rows}
                 />
-              }
+              )}
             </AutoSizer>
           </div>
         </div>

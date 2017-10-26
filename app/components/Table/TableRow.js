@@ -1,20 +1,12 @@
 import React, { PropTypes } from 'react'
-import {
-  Form,
-  FormGroup,
-  FormControl,
-  ControlLabel,
-} from 'react-bootstrap'
+import { Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
 import styles from './TableRow.css'
 
-const change = ({
-  event,
-  id,
-  tableChangeState,
-}) => {
+const change = ({ event, id, tableChangeState }) => {
   const { type, name, dataset } = event.target
   let { value } = event.target
   if (type === 'radio') {
@@ -25,64 +17,39 @@ const change = ({
   tableChangeState(id, name, value)
 }
 
-const blur = ({
-  event,
-  table,
-  id,
-  changeTableInDb,
-}) => {
+const blur = ({ event, table, id, changeTableInDb }) => {
   const { type, name, dataset } = event.target
   let { value } = event.target
   if (type === 'radio') value = dataset.value
   changeTableInDb(table, id, name, value)
 }
 
-const fields = ({
-  row,
-  table,
-  id,
-  tableChangeState,
-  changeTableInDb,
-}) =>
+const fields = ({ row, table, id, tableChangeState, changeTableInDb }) =>
   Object.keys(row).map((fieldName, index) => {
     let value = row[fieldName]
     // react complains if value is null
     if (value === null) value = ''
     const field = (
-      <FormGroup
-        key={index}
-        className={styles.formGroup}
-      >
-        <ControlLabel>
-          {fieldName}
-        </ControlLabel>
+      <FormGroup key={index} className={styles.formGroup}>
+        <ControlLabel>{fieldName}</ControlLabel>
         <FormControl
           type="text"
           name={fieldName}
           value={value}
-          onChange={event =>
-            change({ event, table, id, tableChangeState })
-          }
-          onBlur={event =>
-            blur({ event, table, id, changeTableInDb })
-          }
+          onChange={event => change({ event, table, id, tableChangeState })}
+          onBlur={event => blur({ event, table, id, changeTableInDb })}
         />
       </FormGroup>
     )
     return field
   })
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 const TableRow = ({ store }) => {
   const { tableChangeState, changeTableInDb } = store
   const { rows, id, table } = store.table
-  const row = rows.find(r =>
-    r.id === id
-  )
+  const row = rows.find(r => r.id === id)
 
   if (row === undefined) return null
 
