@@ -7,16 +7,13 @@ import FilterFieldsLayout from '../components/FilterFieldsLayout'
 import TableLayout from '../components/TableLayout'
 import Navbar from '../components/Navbar'
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 const App = ({ store }) => {
   // setting ref according to this:
   // http://stackoverflow.com/questions/35918706/overcoming-lack-of-refs-in-stateless-components
-  let app  // eslint-disable-line no-unused-vars
-  const setRef = (passedApp) => {
+  let app // eslint-disable-line no-unused-vars
+  const setRef = passedApp => {
     app = passedApp
   }
   const { pathname } = store.history.location
@@ -26,18 +23,9 @@ const App = ({ store }) => {
   return (
     <div ref={setRef}>
       <Navbar />
-      {
-        showGeschaefteLayout &&
-        <GeschaefteLayout />
-      }
-      {
-        showFilterFieldsLayout &&
-        <FilterFieldsLayout />
-      }
-      {
-        showTableLayout &&
-        <TableLayout />
-      }
+      {showGeschaefteLayout && <GeschaefteLayout />}
+      {showFilterFieldsLayout && <FilterFieldsLayout />}
+      {showTableLayout && <TableLayout />}
     </div>
   )
 }

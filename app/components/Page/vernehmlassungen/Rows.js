@@ -3,23 +3,15 @@
  */
 
 import React, { PropTypes } from 'react'
+import styled from 'styled-components'
 
 import styles from './vernehmlassungen.css'
 import shorten from '../../../src/shortenGegenstandField'
 
-const isOdd = (num) =>
-  num % 2
+const isOdd = num => num % 2
 
-
-const PageVernehmlassungenRows = ({
-  geschaeft,
-  rowIndex,
-}) => {
-  const fristMitarbeiter = (
-    geschaeft.fristMitarbeiter ?
-    `Frist: ${geschaeft.fristMitarbeiter}` :
-    ''
-  )
+const PageVernehmlassungenRows = ({ geschaeft, rowIndex }) => {
+  const fristMitarbeiter = geschaeft.fristMitarbeiter ? `Frist: ${geschaeft.fristMitarbeiter}` : ''
   /**
    * need to enforce max string length
    * if a field contains more text than fits on a page
@@ -44,113 +36,32 @@ const PageVernehmlassungenRows = ({
     faelligkeitText = faelligkeitText.substring(0, maxStringLength)
     faelligkeitText += '... (Text gekürzt)'
   }
-  const rowClassName = (
-    !isOdd(rowIndex) ?
-    styles.tableBodyRowShaded :
-    styles.tableBodyRow
-  )
+  const rowClassName = !isOdd(rowIndex) ? styles.tableBodyRowShaded : styles.tableBodyRow
   const geko = geschaeft.geko || []
-  const gekoValue = geko
-    .map(g => g.gekoNr)
-    .map(val =>
-      <div key={val}>
-        {val}
-      </div>
-    )
+  const gekoValue = geko.map(g => g.gekoNr).map(val => <div key={val}>{val}</div>)
   const verantwortlichName = `${geschaeft.verantwortlichName}${geschaeft.verantwortlich ? ` (${geschaeft.verantwortlich})` : ''}`
 
   return (
-    <div
-      key={geschaeft.idGeschaeft}
-      className={rowClassName}
-    >
-      <div
-        className={[
-          styles.columnIdGeschaeft,
-          styles.tableBodyCell,
-        ].join(' ')}
-      >
-        <div className={styles.fieldBold}>
-          {geschaeft.idGeschaeft}
-        </div>
-        {
-          gekoValue.length > 0 &&
-          <div className={styles.verticallyStackedFields}>
-            {gekoValue}
-          </div>
-        }
+    <div key={geschaeft.idGeschaeft} className={rowClassName}>
+      <div className={[styles.columnIdGeschaeft, styles.tableBodyCell].join(' ')}>
+        <div className={styles.fieldBold}>{geschaeft.idGeschaeft}</div>
+        {gekoValue.length > 0 && <div className={styles.verticallyStackedFields}>{gekoValue}</div>}
       </div>
-      <div
-        className={[
-          styles.columnGegenstand,
-          styles.tableBodyCell,
-        ].join(' ')}
-      >
-        <div className={styles.fieldBold}>
-          {gegenstand}
-        </div>
-        {
-          ausloeser &&
-          <div className={styles.verticallyStackedFields}>
-            {ausloeser}
-          </div>
-        }
-        {
-          details &&
-          <div className={styles.verticallyStackedFields}>
-            {details}
-          </div>
-        }
-        {
-          vermerk &&
-          <div className={styles.verticallyStackedFields}>
-            {vermerk}
-          </div>
-        }
-        {
-          naechsterSchritt &&
-          <div className={styles.verticallyStackedFields}>
-            {naechsterSchritt}
-          </div>
-        }
+      <div className={[styles.columnGegenstand, styles.tableBodyCell].join(' ')}>
+        <div className={styles.fieldBold}>{gegenstand}</div>
+        {ausloeser && <div className={styles.verticallyStackedFields}>{ausloeser}</div>}
+        {details && <div className={styles.verticallyStackedFields}>{details}</div>}
+        {vermerk && <div className={styles.verticallyStackedFields}>{vermerk}</div>}
+        {naechsterSchritt && <div className={styles.verticallyStackedFields}>{naechsterSchritt}</div>}
       </div>
-      <div
-        className={[
-          styles.columnStatus,
-          styles.tableBodyCell,
-        ].join(' ')}
-      >
-        <div className={styles.fieldBold}>
-          {geschaeft.status}
-        </div>
-        {
-          fristMitarbeiter &&
-          <div className={styles.verticallyStackedFields}>
-            {fristMitarbeiter}
-          </div>
-        }
-        {
-          faelligkeitText &&
-          <div className={styles.verticallyStackedFields}>
-            {faelligkeitText}
-          </div>
-        }
+      <div className={[styles.columnStatus, styles.tableBodyCell].join(' ')}>
+        <div className={styles.fieldBold}>{geschaeft.status}</div>
+        {fristMitarbeiter && <div className={styles.verticallyStackedFields}>{fristMitarbeiter}</div>}
+        {faelligkeitText && <div className={styles.verticallyStackedFields}>{faelligkeitText}</div>}
       </div>
-      <div
-        className={[
-          styles.columnKontaktIntern,
-          styles.tableBodyCell,
-        ].join(' ')}
-      >
-        <div className={styles.fieldBold}>
-          {verantwortlichName}
-        </div>
-        {
-          geschaeft.abteilung &&
-          <div className={styles.verticallyStackedFields}>
-            {geschaeft.abteilung}
-          </div>
-        }
+      <div className={[styles.columnKontaktIntern, styles.tableBodyCell].join(' ')}>
+        <div className={styles.fieldBold}>{verantwortlichName}</div>
+        {geschaeft.abteilung && <div className={styles.verticallyStackedFields}>{geschaeft.abteilung}</div>}
       </div>
     </div>
   )
