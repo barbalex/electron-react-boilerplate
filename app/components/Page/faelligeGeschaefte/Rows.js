@@ -1,8 +1,38 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 
-import styles from './FaelligeGeschaefte.css'
 import shorten from '../../../src/shortenGegenstandField'
+
+const StyledRow = styled.div`
+  display: flex;
+  padding: 3px;
+  background-color: ${props => (props.shaded ? 'rgba(0, 0, 0, 0.05)' : 'inherit')};
+`
+const FieldBold = styled.div`font-weight: 700;`
+const FieldVerticallyStacked = styled.div`padding-top: 5px;`
+const StyledId = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 50px;
+  max-width: 50px;
+`
+const StyledGegenstand = styled.div`
+  flex: 1;
+  padding: 2px;
+  width: calc(100% - 340px);
+`
+const StyledStatus = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 140px;
+  max-width: 140px;
+`
+const StyledKontakt = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 100px;
+  max-width: 100px;
+`
 
 function isOdd(num) {
   return num % 2
@@ -28,30 +58,30 @@ const PageFristenRows = ({ geschaeft, rowIndex }) => {
   const details = shorten(geschaeft.details, 'Details', maxStringLength)
   const faelligkeitText = shorten(geschaeft.faelligkeitText, '', 200)
 
-  const rowClassName = !isOdd(rowIndex) ? styles.tableBodyRowShaded : styles.tableBodyRow
+  const shaded = !isOdd(rowIndex)
   const verantwortlichName = `${geschaeft.verantwortlichName}${geschaeft.verantwortlich ? ` (${geschaeft.verantwortlich})` : ''}`
 
   return (
-    <div key={geschaeft.idGeschaeft} className={rowClassName}>
-      <div className={[styles.columnIdGeschaeft, styles.tableBodyCell].join(' ')}>
-        <div className={styles.fieldBold}>{geschaeft.idGeschaeft}</div>
-        {geschaeft.entscheidKrNr && <div className={styles.verticallyStackedFields}>{geschaeft.entscheidKrNr}</div>}
-      </div>
-      <div className={[styles.columnGegenstand, styles.tableBodyCell].join(' ')}>
-        <div className={styles.fieldBold}>{gegenstand}</div>
-        {ausloeser && <div className={styles.verticallyStackedFields}>{ausloeser}</div>}
-        {details && <div className={styles.verticallyStackedFields}>{details}</div>}
-        {naechsterSchritt && <div className={styles.verticallyStackedFields}>{naechsterSchritt}</div>}
-      </div>
-      <div className={[styles.columnStatus, styles.tableBodyCell].join(' ')}>
-        <div className={styles.fieldBold}>{geschaeft.status}</div>
-        <div className={styles.verticallyStackedFields}>{fristMitarbeiter}</div>
-        <div className={styles.verticallyStackedFields}>{faelligkeitText}</div>
-      </div>
-      <div className={[styles.columnKontaktIntern, styles.tableBodyCell].join(' ')}>
-        <div className={styles.fieldBold}>{verantwortlichName}</div>
-      </div>
-    </div>
+    <StyledRow key={geschaeft.idGeschaeft} shaded={shaded}>
+      <StyledId>
+        <FieldBold>{geschaeft.idGeschaeft}</FieldBold>
+        {geschaeft.entscheidKrNr && <FieldVerticallyStacked>{geschaeft.entscheidKrNr}</FieldVerticallyStacked>}
+      </StyledId>
+      <StyledGegenstand>
+        <FieldBold>{gegenstand}</FieldBold>
+        {ausloeser && <FieldVerticallyStacked>{ausloeser}</FieldVerticallyStacked>}
+        {details && <FieldVerticallyStacked>{details}</FieldVerticallyStacked>}
+        {naechsterSchritt && <FieldVerticallyStacked>{naechsterSchritt}</FieldVerticallyStacked>}
+      </StyledGegenstand>
+      <StyledStatus>
+        <FieldBold>{geschaeft.status}</FieldBold>
+        <FieldVerticallyStacked>{fristMitarbeiter}</FieldVerticallyStacked>
+        <FieldVerticallyStacked>{faelligkeitText}</FieldVerticallyStacked>
+      </StyledStatus>
+      <StyledKontakt>
+        <FieldBold>{verantwortlichName}</FieldBold>
+      </StyledKontakt>
+    </StyledRow>
   )
 }
 
