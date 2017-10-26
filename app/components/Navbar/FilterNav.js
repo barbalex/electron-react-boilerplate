@@ -10,7 +10,29 @@ import filterForVernehmlAngek from '../../src/filterForVernehmlAngek'
 import filterForVernehmlLaeuft from '../../src/filterForVernehmlLaeuft'
 import filterCriteriaToArrayOfStrings from '../../src/filterCriteriaToArrayOfStrings'
 import sortCriteriaToArrayOfStrings from '../../src/sortCriteriaToArrayOfStrings'
-import styles from './Navbar.css'
+
+const Container = styled(Navbar.Form)`padding-right: 10px;`
+const SubContainer = styled.div`display: flex;`
+const StyledVolltextControl = styled(FormControl)`
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 186px !important;
+  background-color: ${props => (props['data-dataIsFilteredByFulltext'] ? '#FFBF73' : 'white')};
+`
+const StyledFilterDropdown = styled(SplitButton)`
+  border-radius: 0;
+  min-width: 160px;
+  font-weight: 700;
+  background-color: ${props => (props['data-dataIsFilteredByFields'] ? '#FFBF73' : 'white')};
+`
+const StyledCriteria = styled.span`
+  cursor: default !important;
+  font-style: italic;
+`
+const FilterRemoveButton = styled(Button)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+`
 
 const enhance = compose(inject('store'), observer)
 
@@ -35,8 +57,6 @@ const FilterNav = ({ store }) => {
   const dataIsFilteredByFulltext = geschaefte.length !== geschaefteUnfiltered.length && filterFulltext
   const dataIsFilteredByFields = geschaefte.length !== geschaefteUnfiltered.length && !filterFulltext
   const dataIsFiltered = geschaefte.length !== geschaefteUnfiltered.length
-  const dataIsFilteredByFulltextStyle = [styles.filterInput, styles.filterInputActive].join(' ')
-  const classNameFilterInput = dataIsFilteredByFulltext ? dataIsFilteredByFulltextStyle : styles.filterInput
   const activeFiltercriteria = dataIsFilteredByFields
     ? filterCriteriaToArrayOfStrings(filterFields).join(' & ')
     : '(es werden keine Felder gefiltert)'
@@ -44,23 +64,20 @@ const FilterNav = ({ store }) => {
     sortFields.length > 0 ? sortCriteriaToArrayOfStrings(sortFields).join(' & ') : '(die Geschäfte werden nicht sortiert)'
   const title = filterType ? `Filter: ${filterType}` : 'Felder filtern / sortieren'
   return (
-    <Navbar.Form pullLeft className={styles.filterGroupContainer}>
-      <div className={styles.filterGroup}>
-        <FormControl
+    <Container pullLeft>
+      <SubContainer>
+        <StyledVolltextControl
           type="text"
           placeholder="Volltext filtern"
           value={filterFulltext}
           onChange={e => geschaefteFilterByFulltext(e.target.value)}
-          className={classNameFilterInput}
+          data-dataIsFilteredByFulltext={dataIsFilteredByFulltext}
           title="Zum Filtern drücken Sie die Enter-Taste"
         />
-        <SplitButton
+        <StyledFilterDropdown
           id="field-filter-dropdown"
           title={title}
-          className={styles.fieldFilterDropdown}
-          style={{
-            backgroundColor: dataIsFilteredByFields ? '#FFBF73' : null,
-          }}
+          data-dataIsFilteredByFields={dataIsFilteredByFields}
           onClick={() => {
             if (path !== '/filterFields') {
               store.history.push('/filterFields')
@@ -70,11 +87,11 @@ const FilterNav = ({ store }) => {
         >
           <MenuItem header>aktive Filterkriterien:</MenuItem>
           <MenuItem>
-            <span className={styles.filterCriteria}>{activeFiltercriteria}</span>
+            <StyledCriteria>{activeFiltercriteria}</StyledCriteria>
           </MenuItem>
           <MenuItem header>aktive Sortierkriterien:</MenuItem>
           <MenuItem>
-            <span className={styles.filterCriteria}>{activeSortcriteria}</span>
+            <StyledCriteria>{activeSortcriteria}</StyledCriteria>
           </MenuItem>
           <MenuItem header>vorbereitete Filter:</MenuItem>
           <MenuItem
@@ -146,12 +163,12 @@ const FilterNav = ({ store }) => {
           >
             laufende Vernehmlassungen
           </MenuItem>
-        </SplitButton>
-        <Button disabled={!dataIsFiltered} className={styles.filterRemoveButton} onClick={() => geschaefteRemoveFilters()}>
+        </StyledFilterDropdown>
+        <FilterRemoveButton disabled={!dataIsFiltered} onClick={() => geschaefteRemoveFilters()}>
           <Glyphicon glyph="remove" title="Filter entfernen" />
-        </Button>
-      </div>
-    </Navbar.Form>
+        </FilterRemoveButton>
+      </SubContainer>
+    </Container>
   )
 }
 
