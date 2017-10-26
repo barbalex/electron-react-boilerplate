@@ -1,48 +1,55 @@
-/*
- * This component builds and displays a single page header for page FaelligeGeschaefte
- */
-
 import React from 'react'
 import styled from 'styled-components'
 
-import styles from './vernehmlassungen.css'
-
 const Container = styled.div`border-bottom: 2px solid #717171;`
-const StyledHeaderRow = styled.div`
+const StyledRow = styled.div`
   display: flex;
   padding: 3px;
 `
-const StyledHeaderCell = styled.div`
-  flex: 1;
-  padding: 2px;
-`
-const StyledHeaderId = styled.div`
+const StyledId = styled.div`
   flex: 1;
   padding: 2px;
   min-width: 65px;
   max-width: 65px;
 `
+const StyledGegenstand = styled.div`
+  flex: 1;
+  padding: 2px;
+  width: calc(100% - 290px);
+`
+const StyledStatus = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 140px;
+  max-width: 140px;
+`
+const StyledKontaktIntern = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 100px;
+  max-width: 100px;
+`
 
 const PageFristenHeader = () => (
   <Container>
-    <StyledHeaderRow>
-      <StyledHeaderId>
+    <StyledRow>
+      <StyledId>
         <b>ID</b>
         <br />Geko Nr.
-      </StyledHeaderId>
-      <div className={[styles.columnGegenstand, styles.tableHeaderCell].join(' ')}>
+      </StyledId>
+      <StyledGegenstand>
         <b>Gegenstand</b>
         <br />Auslöser / Details / Vermerk / nächster Schritt
-      </div>
-      <div className={[styles.columnStatus, styles.tableHeaderCell].join(' ')}>
+      </StyledGegenstand>
+      <StyledStatus>
         <b>Status</b>
         <br />Frist
-      </div>
-      <div className={[styles.columnKontaktIntern, styles.tableHeaderCell].join(' ')}>
+      </StyledStatus>
+      <StyledKontaktIntern>
         <b>Verantwortlich</b>
         <br />Abteilung
-      </div>
-    </StyledHeaderRow>
+      </StyledKontaktIntern>
+    </StyledRow>
   </Container>
 )
 
