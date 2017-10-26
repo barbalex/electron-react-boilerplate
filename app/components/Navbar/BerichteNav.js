@@ -4,16 +4,23 @@ import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-import styles from './Navbar.css'
-
 import filterForVernehmlAngek from '../../src/filterForVernehmlAngek'
 import filterForVernehmlLaeuft from '../../src/filterForVernehmlLaeuft'
 import filterForFaelligeGeschaefte from '../../src/filterForFaelligeGeschaefte'
 
 // eslint-disable-next-line no-unused-vars
-const StyledNavDropdown = styled(({ showBerichteNavs, children, ...rest }) => <NavDropdown {...rest}>{children}</NavDropdown>)`
-  border-left: ${props => (props.showBerichteNavs ? 'solid grey 1px' : 'dotted #505050 1px')}
+const StyledNavDropdown = styled(NavDropdown)`
+  border-left: ${props => (props.showBerichteNavs ? 'solid grey 1px' : 'dotted #505050 1px')};
   border-right: ${props => (props.showBerichteNavs ? 'none' : 'dotted #505050 1px')};
+  /**
+   * in react-bootstrap the active
+   * prop of NavDropdown does not work
+   * see: https://github.com/react-bootstrap/react-bootstrap/issues/1878
+   */
+  background-color: ${props => (props.active ? '#080808' : 'inherit')};
+  > a {
+    color: ${props => (props.active ? '#fff !important' : 'inherit')};
+  }
 `
 
 const enhance = compose(inject('store'), observer)
@@ -38,7 +45,6 @@ const BerichteNav = ({ store, showBerichteNavs }) => {
       title={title}
       id="reports-nav-dropdown"
       active={isActive}
-      className={isActive ? styles.navActive : null}
       onSelect={eventKey => {
         /*
          * react-bootstrap has an error causing the dropdown to stay open
