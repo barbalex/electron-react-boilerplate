@@ -1,9 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import {
-  Navbar,
-  Nav,
-  NavItem,
-} from 'react-bootstrap'
+import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
@@ -25,17 +21,13 @@ import OptionsNav from './OptionsNav'
 import styles from './Navbar.css'
 
 // eslint-disable-next-line no-unused-vars
-const GeschaefteNavItem = styled(({ showGeschaefteNavs, children, ...rest }) =>
-  <NavItem {...rest}>{children}</NavItem>
-)`
+const GeschaefteNavItem = styled(({ showGeschaefteNavs, children, ...rest }) => <NavItem {...rest}>{children}</NavItem>)`
   border-left: ${props => (props.showGeschaefteNavs ? 'solid grey 1px' : 'dotted #505050 1px')};
   border-right: ${props => (props.showGeschaefteNavs ? 'none' : 'dotted #505050 1px')};
 `
+const StyledBadge = styled.sup`color: ${props => (props.dataIsFiltered ? '#FF9416' : 'inherit')};`
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 class NavbarComponent extends Component {
   static propTypes = {
@@ -50,90 +42,36 @@ class NavbarComponent extends Component {
     const { store } = this.props
     const { showMessageModal } = store.app
     const { showPagesModal } = store.pages
-    const {
-      geschaeftePlusFilteredAndSorted: geschaefte,
-      willDelete,
-    } = store.geschaefte
+    const { geschaeftePlusFilteredAndSorted: geschaefte, willDelete } = store.geschaefte
     const path = store.history.location.pathname
     const dataIsFiltered = geschaefte.length !== store.geschaefte.geschaefte.length
-    const classNameBadge = dataIsFiltered ? styles.active : null
-    const showBerichteNavs = (
-      path === '/pages' ||
-      path === '/geschaeftPdf'
-    )
-    const showGeschaefteNavs = (
-      path === '/geschaefte' ||
-      path === '/filterFields'
-    )
+    const showBerichteNavs = path === '/pages' || path === '/geschaeftPdf'
+    const showGeschaefteNavs = path === '/geschaefte' || path === '/filterFields'
     const showGeschaefteAndPrint = showBerichteNavs || showGeschaefteNavs
     const showTableNavs = path === '/table'
 
     return (
       <div>
-        {
-          willDelete &&
-          <ModalGeschaeftDelete />
-        }
-        {
-          showMessageModal &&
-          <ModalMessage />
-        }
-        {
-          showPagesModal &&
-          <PagesModal />
-        }
-        <Navbar
-          inverse
-          fluid
-          className={styles.navbar}
-        >
+        {willDelete && <ModalGeschaeftDelete />}
+        {showMessageModal && <ModalMessage />}
+        {showPagesModal && <PagesModal />}
+        <Navbar inverse fluid className={styles.navbar}>
           <Nav>
-            <GeschaefteNavItem
-              href="#"
-              onClick={() => store.history.push('/geschaefte')}
-              showGeschaefteNavs={showGeschaefteNavs}
-            >
-              Geschäfte <sup className={classNameBadge}>{geschaefte.length}</sup>
+            <GeschaefteNavItem href="#" onClick={() => store.history.push('/geschaefte')} showGeschaefteNavs={showGeschaefteNavs}>
+              Geschäfte <StyledBadge dataIsFiltered={dataIsFiltered}>{geschaefte.length}</StyledBadge>
             </GeschaefteNavItem>
-            {
-              showGeschaefteNavs &&
-              <GeschaeftNeuNav />
-            }
-            {
-              showGeschaefteNavs &&
-              <GeschaeftLoeschenNav showGeschaefteNavs={showGeschaefteNavs} />
-            }
-            {
-              showGeschaefteAndPrint &&
-              <ExportGeschaefteNav />
-            }
-            {
-              showGeschaefteAndPrint &&
-              <BerichteNav showBerichteNavs={showBerichteNavs} />
-            }
-            {
-              showBerichteNavs &&
-              <PrintNav />
-            }
-            {
-              showBerichteNavs &&
-              <PrintToPdfNav showBerichteNavs={showBerichteNavs} />
-            }
+            {showGeschaefteNavs && <GeschaeftNeuNav />}
+            {showGeschaefteNavs && <GeschaeftLoeschenNav showGeschaefteNavs={showGeschaefteNavs} />}
+            {showGeschaefteAndPrint && <ExportGeschaefteNav />}
+            {showGeschaefteAndPrint && <BerichteNav showBerichteNavs={showBerichteNavs} />}
+            {showBerichteNavs && <PrintNav />}
+            {showBerichteNavs && <PrintToPdfNav showBerichteNavs={showBerichteNavs} />}
             <StammdatenNav showTableNavs={showTableNavs} />
-            {
-              showTableNavs &&
-              <TableRowNeuNav />
-            }
-            {
-              showTableNavs &&
-              <TableRowDeleteNav showTableNavs={showTableNavs} />
-            }
+            {showTableNavs && <TableRowNeuNav />}
+            {showTableNavs && <TableRowDeleteNav showTableNavs={showTableNavs} />}
           </Nav>
           <Nav pullRight>
-            {
-              !showTableNavs &&
-              <FilterNav />
-            }
+            {!showTableNavs && <FilterNav />}
             <OptionsNav />
           </Nav>
         </Navbar>
