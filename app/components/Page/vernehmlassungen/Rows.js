@@ -1,12 +1,34 @@
-/*
- * This component builds and displays a single page
- */
-
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 
 import styles from './vernehmlassungen.css'
 import shorten from '../../../src/shortenGegenstandField'
+
+const StyledId = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 65px;
+  max-width: 65px;
+`
+const StyledGegenstand = styled.div`
+  flex: 1;
+  padding: 2px;
+  width: calc(100% - 290px);
+`
+const StyledStatus = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 140px;
+  max-width: 140px;
+`
+const StyledKontakt = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 100px;
+  max-width: 100px;
+`
+const BoldField = styled.div`font-weight: 700;`
+const VerticallyStackedFields = styled.div`padding-top: 5px;`
 
 const isOdd = num => num % 2
 
@@ -43,26 +65,26 @@ const PageVernehmlassungenRows = ({ geschaeft, rowIndex }) => {
 
   return (
     <div key={geschaeft.idGeschaeft} className={rowClassName}>
-      <div className={[styles.columnIdGeschaeft, styles.tableBodyCell].join(' ')}>
-        <div className={styles.fieldBold}>{geschaeft.idGeschaeft}</div>
+      <StyledId>
+        <BoldField>{geschaeft.idGeschaeft}</BoldField>
         {gekoValue.length > 0 && <div className={styles.verticallyStackedFields}>{gekoValue}</div>}
-      </div>
-      <div className={[styles.columnGegenstand, styles.tableBodyCell].join(' ')}>
-        <div className={styles.fieldBold}>{gegenstand}</div>
-        {ausloeser && <div className={styles.verticallyStackedFields}>{ausloeser}</div>}
-        {details && <div className={styles.verticallyStackedFields}>{details}</div>}
-        {vermerk && <div className={styles.verticallyStackedFields}>{vermerk}</div>}
-        {naechsterSchritt && <div className={styles.verticallyStackedFields}>{naechsterSchritt}</div>}
-      </div>
-      <div className={[styles.columnStatus, styles.tableBodyCell].join(' ')}>
-        <div className={styles.fieldBold}>{geschaeft.status}</div>
-        {fristMitarbeiter && <div className={styles.verticallyStackedFields}>{fristMitarbeiter}</div>}
-        {faelligkeitText && <div className={styles.verticallyStackedFields}>{faelligkeitText}</div>}
-      </div>
-      <div className={[styles.columnKontaktIntern, styles.tableBodyCell].join(' ')}>
-        <div className={styles.fieldBold}>{verantwortlichName}</div>
-        {geschaeft.abteilung && <div className={styles.verticallyStackedFields}>{geschaeft.abteilung}</div>}
-      </div>
+      </StyledId>
+      <StyledGegenstand>
+        <BoldField>{gegenstand}</BoldField>
+        {ausloeser && <VerticallyStackedFields>{ausloeser}</VerticallyStackedFields>}
+        {details && <VerticallyStackedFields>{details}</VerticallyStackedFields>}
+        {vermerk && <VerticallyStackedFields>{vermerk}</VerticallyStackedFields>}
+        {naechsterSchritt && <VerticallyStackedFields>{naechsterSchritt}</VerticallyStackedFields>}
+      </StyledGegenstand>
+      <StyledStatus>
+        <BoldField>{geschaeft.status}</BoldField>
+        {fristMitarbeiter && <VerticallyStackedFields>{fristMitarbeiter}</VerticallyStackedFields>}
+        {faelligkeitText && <VerticallyStackedFields>{faelligkeitText}</VerticallyStackedFields>}
+      </StyledStatus>
+      <StyledKontakt>
+        <BoldField>{verantwortlichName}</BoldField>
+        {geschaeft.abteilung && <VerticallyStackedFields>{geschaeft.abteilung}</VerticallyStackedFields>}
+      </StyledKontakt>
     </div>
   )
 }
