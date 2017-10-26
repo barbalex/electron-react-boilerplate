@@ -1,11 +1,53 @@
-/*
- * This component builds and displays a single page
- */
-
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 
-import styles from './List1.css'
+const StyledRow = styled.div`
+  display: flex;
+  padding: 3px;
+  background-color: ${props => (props.shaded ? 'rgba(0, 0, 0, 0.05)' : 'inherit')};
+`
+const StyledGegenstand = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: calc(100% - 480px);
+  max-width: calc(100% - 480px);
+`
+const StyledGeschaeftsart = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 140px;
+  max-width: 140px;
+`
+const StyledStatus = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 110px;
+  max-width: 110px;
+`
+const StyledVerantwortlich = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 60px;
+  max-width: 60px;
+`
+const StyledFrist = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 70px;
+  max-width: 70px;
+`
+const StyledIdVg = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 50px;
+  max-width: 50px;
+`
+const StyledId = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 50px;
+  max-width: 50px;
+`
 
 function isOdd(num) {
   return num % 2
@@ -27,32 +69,32 @@ const PageList1Rows = ({ geschaeft, rowIndex }) => {
     gegenstand += '... (Text gekürzt)'
   }
 
-  const rowClassName = !isOdd(rowIndex) ? styles.tableBodyRowShaded : styles.tableBodyRow
+  const shaded = !isOdd(rowIndex)
 
   return (
-    <div key={geschaeft.idGeschaeft} className={rowClassName}>
-      <div className={[styles.columnGegenstand, styles.tableBodyCell].join(' ')}>
+    <StyledRow key={geschaeft.idGeschaeft} shaded={shaded}>
+      <StyledGegenstand>
         <div>{gegenstand}</div>
-      </div>
-      <div className={[styles.columnGeschaeftsart, styles.tableBodyCell].join(' ')}>
+      </StyledGegenstand>
+      <StyledGeschaeftsart>
         <div>{geschaeft.geschaeftsart}</div>
-      </div>
-      <div className={[styles.columnStatus, styles.tableBodyCell].join(' ')}>
+      </StyledGeschaeftsart>
+      <StyledStatus>
         <div>{geschaeft.status}</div>
-      </div>
-      <div className={[styles.columnVerantwortlich, styles.tableBodyCell].join(' ')}>
+      </StyledStatus>
+      <StyledVerantwortlich>
         <div>{geschaeft.verantwortlich}</div>
-      </div>
-      <div className={[styles.columnFristMitarbeiter, styles.tableBodyCell].join(' ')}>
+      </StyledVerantwortlich>
+      <StyledFrist>
         <div>{geschaeft.fristMitarbeiter}</div>
-      </div>
-      <div className={[styles.columnIdVorgeschaeft, styles.tableBodyCell].join(' ')}>
+      </StyledFrist>
+      <StyledIdVg>
         <div>{geschaeft.idVorgeschaeft}</div>
-      </div>
-      <div className={[styles.columnIdGeschaeft, styles.tableBodyCell].join(' ')}>
+      </StyledIdVg>
+      <StyledId>
         <div>{geschaeft.idGeschaeft}</div>
-      </div>
-    </div>
+      </StyledId>
+    </StyledRow>
   )
 }
 

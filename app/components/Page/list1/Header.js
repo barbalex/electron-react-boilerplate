@@ -1,24 +1,69 @@
-/*
- * This component builds and displays a single page header for page List1
- */
-
 import React from 'react'
 import styled from 'styled-components'
 
-import styles from './List1.css'
+const StyledHeader = styled.div`
+  border-bottom: 2px solid #717171;
+  font-weight: 700;
+`
+const StyledRow = styled.div`
+  display: flex;
+  padding: 3px;
+`
+const StyledGegenstand = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: calc(100% - 480px);
+  max-width: calc(100% - 480px);
+`
+const StyledGeschaeftsart = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 140px;
+  max-width: 140px;
+`
+const StyledStatus = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 110px;
+  max-width: 110px;
+`
+const StyledVerantwortlich = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 60px;
+  max-width: 60px;
+`
+const StyledFrist = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 70px;
+  max-width: 70px;
+`
+const StyledIdVg = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 50px;
+  max-width: 50px;
+`
+const StyledId = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 50px;
+  max-width: 50px;
+`
 
 const PageList1Header = () => (
-  <div className={styles.tableHeader}>
-    <div className={styles.tableHeaderRow}>
-      <div className={[styles.columnGegenstand, styles.tableHeaderCell].join(' ')}>Gegenstand, Auslöser</div>
-      <div className={[styles.columnGeschaeftsart, styles.tableHeaderCell].join(' ')}>Geschäftsart</div>
-      <div className={[styles.columnStatus, styles.tableHeaderCell].join(' ')}>Status</div>
-      <div className={[styles.columnVerantwortlich, styles.tableHeaderCell].join(' ')}>Verant- wortlich</div>
-      <div className={[styles.columnFristMitarbeiter, styles.tableHeaderCell].join(' ')}>Frist</div>
-      <div className={[styles.columnIdVorgeschaeft, styles.tableHeaderCell].join(' ')}>Vorge- schäft</div>
-      <div className={[styles.columnIdGeschaeft, styles.tableHeaderCell].join(' ')}>ID</div>
-    </div>
-  </div>
+  <StyledHeader>
+    <StyledRow>
+      <StyledGegenstand>Gegenstand, Auslöser</StyledGegenstand>
+      <StyledGeschaeftsart>Geschäftsart</StyledGeschaeftsart>
+      <StyledStatus>Status</StyledStatus>
+      <StyledVerantwortlich>Verant- wortlich</StyledVerantwortlich>
+      <StyledFrist>Frist</StyledFrist>
+      <StyledIdVg>Vorge- schäft</StyledIdVg>
+      <StyledId>ID</StyledId>
+    </StyledRow>
+  </StyledHeader>
 )
 
 PageList1Header.displayName = 'PageList1Header'
