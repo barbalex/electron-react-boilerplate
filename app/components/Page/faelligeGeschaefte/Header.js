@@ -1,27 +1,55 @@
 import React from 'react'
 import styled from 'styled-components'
-import styles from './FaelligeGeschaefte.css'
+
+const StyledHeader = styled.div`border-bottom: 2px solid #717171;`
+const StyledRow = styled.div`
+  display: flex;
+  padding: 3px;
+`
+const StyledId = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 50px;
+  max-width: 50px;
+`
+const StyledGegenstand = styled.div`
+  flex: 1;
+  padding: 2px;
+  width: calc(100% - 340px);
+`
+const StyledStatus = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 140px;
+  max-width: 140px;
+`
+const StyledKontakt = styled.div`
+  flex: 1;
+  padding: 2px;
+  min-width: 100px;
+  max-width: 100px;
+`
 
 const PageFristenHeader = () => (
-  <div className={styles.tableHeader}>
-    <div className={styles.tableHeaderRow}>
-      <div className={[styles.columnIdGeschaeft, styles.tableHeaderCell].join(' ')}>
+  <StyledHeader>
+    <StyledRow>
+      <StyledId>
         <b>ID</b>
         <br />KR Nr.
-      </div>
-      <div className={[styles.columnGegenstand, styles.tableHeaderCell].join(' ')}>
+      </StyledId>
+      <StyledGegenstand>
         <b>Gegenstand</b>
         <br />Auslöser / Details / nächster Schritt
-      </div>
-      <div className={[styles.columnStatus, styles.tableHeaderCell].join(' ')}>
+      </StyledGegenstand>
+      <StyledStatus>
         <b>Status</b>
         <br />Frist
-      </div>
-      <div className={[styles.columnKontaktIntern, styles.tableHeaderCell].join(' ')}>
+      </StyledStatus>
+      <StyledKontakt>
         <b>Verantwortlich</b>
-      </div>
-    </div>
-  </div>
+      </StyledKontakt>
+    </StyledRow>
+  </StyledHeader>
 )
 
 PageFristenHeader.displayName = 'PageFristenHeader'
