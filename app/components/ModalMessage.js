@@ -2,32 +2,23 @@ import React, { PropTypes } from 'react'
 import { Modal } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
-import styles from './ModalMessage.css'
+const StyledP = styled.p`
+  text-align: center;
+  margin-top: 8px;
+`
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 const ModalMessage = ({ store }) => {
   const { messageTextLine1, messageTextLine2 } = store.app
 
   return (
-    <Modal.Dialog
-      bsSize={messageTextLine2 ? 'large' : 'small'}
-      dialogClassName={styles.modal}
-    >
+    <Modal.Dialog bsSize={messageTextLine2 ? 'large' : 'small'}>
       <Modal.Body>
-        <p className={styles.p}>
-          {messageTextLine1}
-        </p>
-        {
-          messageTextLine2 &&
-          <p className={styles.p}>
-            {messageTextLine2}
-          </p>
-        }
+        <StyledP>{messageTextLine1}</StyledP>
+        {messageTextLine2 && <StyledP>{messageTextLine2}</StyledP>}
       </Modal.Body>
     </Modal.Dialog>
   )
