@@ -7,7 +7,7 @@ import styled from 'styled-components'
 const StyledRow = styled.div`
   background-image: linear-gradient(45deg, rgba(255, 236, 195, 0.5) 10%, rgba(255, 232, 147, 0.7));
   height: calc(100vh - 52px);
-  padding-top: 30px;
+  padding: 10px;
   overflow-y: auto;
 `
 const StyledFormGroup = styled(FormGroup)`
