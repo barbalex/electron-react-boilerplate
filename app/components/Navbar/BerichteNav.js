@@ -1,13 +1,11 @@
 import React, { PropTypes } from 'react'
-import {
-  NavDropdown,
-  MenuItem,
-} from 'react-bootstrap'
+import { NavDropdown, MenuItem } from 'react-bootstrap'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
 import styles from './Navbar.css'
+
 import filterForVernehmlAngek from '../../src/filterForVernehmlAngek'
 import filterForVernehmlLaeuft from '../../src/filterForVernehmlLaeuft'
 import filterForFaelligeGeschaefte from '../../src/filterForFaelligeGeschaefte'
@@ -18,23 +16,10 @@ const StyledNavDropdown = styled(({ showBerichteNavs, children, ...rest }) => <N
   border-right: ${props => (props.showBerichteNavs ? 'none' : 'dotted #505050 1px')};
 `
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
-const BerichteNav = ({
-  store,
-  showBerichteNavs,
-}) => {
-  const {
-    pages,
-    pagesInitiate,
-    geschaeftPdfShow,
-    geschaefteFilterByFields,
-    geschaefteSortByFields,
-    geschaefteResetSort,
-  } = store
+const BerichteNav = ({ store, showBerichteNavs }) => {
+  const { pages, pagesInitiate, geschaeftPdfShow, geschaefteFilterByFields, geschaefteSortByFields, geschaefteResetSort } = store
   const { activeId } = store.geschaefte
   const path = store.history.location.pathname
   const isActive = path === '/pages'
@@ -42,7 +27,7 @@ const BerichteNav = ({
     typFaelligeGeschaefte: 'Bericht: Typ "fällige Geschäfte"',
     list1: 'Bericht: Einfache Liste',
     angekVernehml: 'Bericht: angekündigte Vernehmlassungen',
-    laufendeVernehml: 'Bericht: laufende Vernehmlassungen'
+    laufendeVernehml: 'Bericht: laufende Vernehmlassungen',
   }
   const name = nameObject[pages.reportType] || 'Berichte'
   const title = isActive ? name : 'Berichte'
@@ -54,7 +39,7 @@ const BerichteNav = ({
       id="reports-nav-dropdown"
       active={isActive}
       className={isActive ? styles.navActive : null}
-      onSelect={(eventKey) => {
+      onSelect={eventKey => {
         /*
          * react-bootstrap has an error causing the dropdown to stay open
          * and the message modal not to show!!!!
@@ -111,40 +96,17 @@ const BerichteNav = ({
       <MenuItem header>
         Vorlagen,<br />übernehmen den gesetzten Filter:
       </MenuItem>
-      <MenuItem eventKey={7.2}>
-        {'Vorlage "einfache Liste"'}
-      </MenuItem>
+      <MenuItem eventKey={7.2}>{'Vorlage "einfache Liste"'}</MenuItem>
       <MenuItem divider />
       <MenuItem header>
         Vorbereitete,<br />setzen einen eigenen Filter:
       </MenuItem>
-      <MenuItem eventKey={7.7}>
-        fällige Geschäfte
-      </MenuItem>
-      <MenuItem eventKey={7.3}>
-        angekündigte Vernehmlassungen
-      </MenuItem>
-      <MenuItem eventKey={7.4}>
-        laufende Vernehmlassungen
-      </MenuItem>
-      {
-        activeId &&
-        <MenuItem divider />
-      }
-      {
-        activeId &&
-        <MenuItem header>
-          Für das aktive Geschäft:
-        </MenuItem>
-      }
-      {
-        activeId &&
-        <MenuItem
-          eventKey={7.5}
-        >
-          Deckblatt
-        </MenuItem>
-      }
+      <MenuItem eventKey={7.7}>fällige Geschäfte</MenuItem>
+      <MenuItem eventKey={7.3}>angekündigte Vernehmlassungen</MenuItem>
+      <MenuItem eventKey={7.4}>laufende Vernehmlassungen</MenuItem>
+      {activeId && <MenuItem divider />}
+      {activeId && <MenuItem header>Für das aktive Geschäft:</MenuItem>}
+      {activeId && <MenuItem eventKey={7.5}>Deckblatt</MenuItem>}
     </StyledNavDropdown>
   )
 }

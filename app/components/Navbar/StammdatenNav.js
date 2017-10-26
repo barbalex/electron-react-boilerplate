@@ -1,8 +1,5 @@
 import React, { PropTypes } from 'react'
-import {
-  NavDropdown,
-  MenuItem,
-} from 'react-bootstrap'
+import { NavDropdown, MenuItem } from 'react-bootstrap'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
@@ -37,10 +34,7 @@ const StyledNavDropdown = styled(({ showTableNavs, children, ...rest }) => <NavD
   border-right: ${props => (props.showTableNavs ? 'none' : 'dotted #505050 1px')};
 `
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 const NavbarStammdatenNav = ({ store, showTableNavs }) => {
   const { getTable } = store
@@ -60,56 +54,30 @@ const NavbarStammdatenNav = ({ store, showTableNavs }) => {
       className={isStammdatenMenuActive ? styles.navActive : null}
       showTableNavs={showTableNavs}
     >
-      <MenuItem
-        onClick={() => getTable('interne')}
-        active={table === 'interne'}
-      >
+      <MenuItem onClick={() => getTable('interne')} active={table === 'interne'}>
         Interne
       </MenuItem>
-      <MenuItem
-        onClick={() => getTable('externe')}
-        active={table === 'externe'}
-      >
+      <MenuItem onClick={() => getTable('externe')} active={table === 'externe'}>
         Externe
       </MenuItem>
       <MenuItem divider />
-      <MenuItem header>
-        Auswahllisten:
-      </MenuItem>
-      <MenuItem
-        onClick={() => getTable('aktenstandort')}
-        active={table === 'aktenstandort'}
-      >
+      <MenuItem header>Auswahllisten:</MenuItem>
+      <MenuItem onClick={() => getTable('aktenstandort')} active={table === 'aktenstandort'}>
         Aktenstandort
       </MenuItem>
-      <MenuItem
-        onClick={() => getTable('geschaeftsart')}
-        active={table === 'geschaeftsart'}
-      >
+      <MenuItem onClick={() => getTable('geschaeftsart')} active={table === 'geschaeftsart'}>
         Geschäftsart
       </MenuItem>
-      <MenuItem
-        onClick={() => getTable('parlVorstossTyp')}
-        active={table === 'parlVorstossTyp'}
-      >
+      <MenuItem onClick={() => getTable('parlVorstossTyp')} active={table === 'parlVorstossTyp'}>
         Parlament. Vorstoss Typ
       </MenuItem>
-      <MenuItem
-        onClick={() => getTable('rechtsmittelInstanz')}
-        active={table === 'rechtsmittelInstanz'}
-      >
+      <MenuItem onClick={() => getTable('rechtsmittelInstanz')} active={table === 'rechtsmittelInstanz'}>
         Rechtsmittel-Instanz
       </MenuItem>
-      <MenuItem
-        onClick={() => getTable('rechtsmittelErledigung')}
-        active={table === 'rechtsmittelErledigung'}
-      >
+      <MenuItem onClick={() => getTable('rechtsmittelErledigung')} active={table === 'rechtsmittelErledigung'}>
         Rechtsmittel-Erledigung
       </MenuItem>
-      <MenuItem
-        onClick={() => getTable('status')}
-        active={table === 'status'}
-      >
+      <MenuItem onClick={() => getTable('status')} active={table === 'status'}>
         Status
       </MenuItem>
     </StyledNavDropdown>

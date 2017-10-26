@@ -18,7 +18,6 @@ import PrintNav from './PrintNav'
 import StammdatenNav from './StammdatenNav'
 import FilterNav from './FilterNav'
 import OptionsNav from './OptionsNav'
-import styles from './Navbar.css'
 
 // eslint-disable-next-line no-unused-vars
 const GeschaefteNavItem = styled(({ showGeschaefteNavs, children, ...rest }) => <NavItem {...rest}>{children}</NavItem>)`
@@ -26,6 +25,14 @@ const GeschaefteNavItem = styled(({ showGeschaefteNavs, children, ...rest }) => 
   border-right: ${props => (props.showGeschaefteNavs ? 'none' : 'dotted #505050 1px')};
 `
 const StyledBadge = styled.sup`color: ${props => (props.dataIsFiltered ? '#FF9416' : 'inherit')};`
+const StyledNavbar = styled(Navbar)`
+  margin-bottom: 0;
+  -webkit-user-select: none;
+  a:not(.dropdown-header):not([role='menuitem']) {
+    font-size: 15px;
+    font-weight: 700;
+  }
+`
 
 const enhance = compose(inject('store'), observer)
 
@@ -55,7 +62,7 @@ class NavbarComponent extends Component {
         {willDelete && <ModalGeschaeftDelete />}
         {showMessageModal && <ModalMessage />}
         {showPagesModal && <PagesModal />}
-        <Navbar inverse fluid className={styles.navbar}>
+        <StyledNavbar inverse fluid>
           <Nav>
             <GeschaefteNavItem href="#" onClick={() => store.history.push('/geschaefte')} showGeschaefteNavs={showGeschaefteNavs}>
               Geschäfte <StyledBadge dataIsFiltered={dataIsFiltered}>{geschaefte.length}</StyledBadge>
@@ -74,7 +81,7 @@ class NavbarComponent extends Component {
             {!showTableNavs && <FilterNav />}
             <OptionsNav />
           </Nav>
-        </Navbar>
+        </StyledNavbar>
       </div>
     )
   }
