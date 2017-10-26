@@ -1,9 +1,14 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 
-import styles from './vernehmlassungen.css'
 import shorten from '../../../src/shortenGegenstandField'
 
+const Row = styled.div`
+  display: flex;
+  padding: 3px;
+  border-bottom: 1px solid #bbbbbb;
+  background-color: ${props => (props.shaded ? 'rgba(0, 0, 0, 0.05)' : 'inherit')};
+`
 const StyledId = styled.div`
   flex: 1;
   padding: 2px;
@@ -58,16 +63,16 @@ const PageVernehmlassungenRows = ({ geschaeft, rowIndex }) => {
     faelligkeitText = faelligkeitText.substring(0, maxStringLength)
     faelligkeitText += '... (Text gekürzt)'
   }
-  const rowClassName = !isOdd(rowIndex) ? styles.tableBodyRowShaded : styles.tableBodyRow
+  const shaded = !isOdd(rowIndex)
   const geko = geschaeft.geko || []
   const gekoValue = geko.map(g => g.gekoNr).map(val => <div key={val}>{val}</div>)
   const verantwortlichName = `${geschaeft.verantwortlichName}${geschaeft.verantwortlich ? ` (${geschaeft.verantwortlich})` : ''}`
 
   return (
-    <div key={geschaeft.idGeschaeft} className={rowClassName}>
+    <Row key={geschaeft.idGeschaeft} shaded={shaded}>
       <StyledId>
         <BoldField>{geschaeft.idGeschaeft}</BoldField>
-        {gekoValue.length > 0 && <div className={styles.verticallyStackedFields}>{gekoValue}</div>}
+        {gekoValue.length > 0 && <VerticallyStackedFields>{gekoValue}</VerticallyStackedFields>}
       </StyledId>
       <StyledGegenstand>
         <BoldField>{gegenstand}</BoldField>
@@ -85,7 +90,7 @@ const PageVernehmlassungenRows = ({ geschaeft, rowIndex }) => {
         <BoldField>{verantwortlichName}</BoldField>
         {geschaeft.abteilung && <VerticallyStackedFields>{geschaeft.abteilung}</VerticallyStackedFields>}
       </StyledKontakt>
-    </div>
+    </Row>
   )
 }
 
