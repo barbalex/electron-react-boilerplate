@@ -115,7 +115,7 @@ class Table extends Component {
             <StyledTableHeaderRow paddingRight={tableBodyOverflows ? '17px' : 'inherit'}>{this.tableHeaders()}</StyledTableHeaderRow>
           </StyledTableHeader>
           <StyledTableBody
-            ref={c => {
+            innerRef={c => {
               this.tableBody = c
             }}
           >
