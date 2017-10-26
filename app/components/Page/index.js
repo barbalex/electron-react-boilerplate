@@ -4,7 +4,6 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled, { injectGlobal } from 'styled-components'
 
-import styles from './Page.css'
 import FaelligeGeschaefteHeader from './faelligeGeschaefte/Header'
 import FaelligeGeschaefteRows from './faelligeGeschaefte/Rows'
 import VernehmlassungenHeader from './vernehmlassungen/Header'
@@ -84,6 +83,57 @@ const InnerPageContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `
+const StyledRowsContainer = styled.div`
+  max-height: 17.2cm;
+  max-width: 26.7cm;
+  /*
+   * need overflow while building list
+   * so list does not flow outside padding
+   */
+  overflow-y: ${props => (props.building ? 'auto' : 'hidden')};
+  overflow-x: hidden;
+
+  @media print {
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+`
+const StyledFilterCriteria = styled.div`
+  margin-top: 10px;
+  margin-bottom: 0;
+  padding-left: 5px;
+`
+const StyledSortCriteria = styled.div`
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding-left: 5px;
+`
+const StyledFooter = styled.div`
+  height: 0.4cm !important;
+  max-height: 0.4cm !important;
+  width: 26.7cm;
+  max-width: 26.7cm;
+
+  display: flex;
+  justify-content: space-between;
+
+  div {
+    /* push down as far as possible */
+    margin-bottom: 0;
+    text-align: right;
+  }
+
+  div:first-of-type {
+    text-align: left;
+  }
+
+  @media print {
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+`
 // eslint-disable-next-line no-unused-expressions
 injectGlobal`
   @page .querformat {
@@ -91,10 +141,7 @@ injectGlobal`
   }
 `
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 class Page extends Component {
   static propTypes = {
@@ -128,11 +175,7 @@ class Page extends Component {
     const { pages, remainingGeschaefte } = store.pages
     const { geschaeftePlusFilteredAndSorted } = store.geschaefte
     const msgLine2Txt = `Bisher ${pages.length} Seiten, ${remainingGeschaefte.length} Geschäfte noch zu verarbeiten`
-    const msgLine2 = (
-      geschaeftePlusFilteredAndSorted.length > 50 ?
-      msgLine2Txt :
-      ''
-    )
+    const msgLine2 = geschaeftePlusFilteredAndSorted.length > 50 ? msgLine2Txt : ''
     pagesModalShow(true, 'Der Bericht wird aufgebaut...', msgLine2)
   }
 
@@ -147,12 +190,7 @@ class Page extends Component {
      *  - render
      */
     const { store, pageIndex } = this.props
-    const {
-      pageAddGeschaeft,
-      pagesMoveGeschaeftToNewPage,
-      pagesFinishedBuilding,
-      pagesModalShow,
-    } = store
+    const { pageAddGeschaeft, pagesMoveGeschaeftToNewPage, pagesFinishedBuilding, pagesModalShow } = store
     const { pages, activePageIndex, remainingGeschaefte } = store.pages
 
     // don't do anything on not active pages
@@ -199,34 +237,13 @@ class Page extends Component {
        */
       if (!geschaeft) return null
       if (reportType === 'typFaelligeGeschaefte') {
-        return (
-          <FaelligeGeschaefteRows
-            geschaeft={geschaeft}
-            key={geschaeft.idGeschaeft}
-            rowIndex={index}
-          />
-        )
+        return <FaelligeGeschaefteRows geschaeft={geschaeft} key={geschaeft.idGeschaeft} rowIndex={index} />
       }
-      if (
-        reportType === 'angekVernehml' ||
-        reportType === 'laufendeVernehml'
-      ) {
-        return (
-          <VernehmlassungenRows
-            geschaeft={geschaeft}
-            key={geschaeft.idGeschaeft}
-            rowIndex={index}
-          />
-        )
+      if (reportType === 'angekVernehml' || reportType === 'laufendeVernehml') {
+        return <VernehmlassungenRows geschaeft={geschaeft} key={geschaeft.idGeschaeft} rowIndex={index} />
       }
       if (reportType === 'list1') {
-        return (
-          <List1Rows
-            geschaeft={geschaeft}
-            key={geschaeft.idGeschaeft}
-            rowIndex={index}
-          />
-        )
+        return <List1Rows geschaeft={geschaeft} key={geschaeft.idGeschaeft} rowIndex={index} />
       }
       return null
     })
@@ -237,73 +254,33 @@ class Page extends Component {
     const { pages, building, reportType } = store.pages
     const { filterFields, sortFields } = store.geschaefte
     const firstPage = pageIndex === 0
-    /*
-     * need overflow while building list
-     * so list does not flow outside padding
-     */
-    const rowsContainerClass = (
-      building ?
-      styles.rowsContainerBuilding :
-      styles.rowsContainer
-    )
 
     return (
-      <PageContainer
-        building={building}
-        className="querformat"
-      >
+      <PageContainer building={building} className="querformat">
         <InnerPageContainer>
-          <div
-            className={rowsContainerClass}
-            ref={(c) => { this[`rowsContainer${pageIndex}`] = c }}
+          <StyledRowsContainer
+            building={building}
+            innerRef={c => {
+              this[`rowsContainer${pageIndex}`] = c
+            }}
           >
-            {
-              firstPage &&
-              <img
-                src={logoImg}
-                height="70"
-                style={{ marginBottom: 15 }}
-                alt="Logo"
-              />
-            }
+            {firstPage && <img src={logoImg} height="70" style={{ marginBottom: 15 }} alt="Logo" />}
             <PageTitle firstPage={firstPage} />
-            {
-              firstPage &&
-              <div className={styles.filterCriteria}>
-                Filterkriterien: {filterCriteriaToArrayOfStrings(filterFields).join(' & ')}
-              </div>
-            }
-            {
-              firstPage &&
-              <div className={styles.sortCriteria}>
-                Sortierkriterien: {sortCriteriaToArrayOfStrings(sortFields).join(' & ')}
-              </div>
-            }
-            {
-              reportType === 'typFaelligeGeschaefte' &&
-              <FaelligeGeschaefteHeader />
-            }
-            {
-              (
-                reportType === 'angekVernehml' ||
-                reportType === 'laufendeVernehml'
-              ) &&
-              <VernehmlassungenHeader />
-            }
-            {
-              reportType === 'list1' &&
-              <List1Header />
-            }
+            {firstPage && (
+              <StyledFilterCriteria>Filterkriterien: {filterCriteriaToArrayOfStrings(filterFields).join(' & ')}</StyledFilterCriteria>
+            )}
+            {firstPage && <StyledSortCriteria>Sortierkriterien: {sortCriteriaToArrayOfStrings(sortFields).join(' & ')}</StyledSortCriteria>}
+            {reportType === 'typFaelligeGeschaefte' && <FaelligeGeschaefteHeader />}
+            {(reportType === 'angekVernehml' || reportType === 'laufendeVernehml') && <VernehmlassungenHeader />}
+            {reportType === 'list1' && <List1Header />}
             {this.tableRows()}
-          </div>
-          <div className={styles.footer}>
-            <div>
-              {moment().format('DD.MM.YYYY')}
-            </div>
+          </StyledRowsContainer>
+          <StyledFooter>
+            <div>{moment().format('DD.MM.YYYY')}</div>
             <div>
               Seite {pageIndex + 1}/{pages.length}
             </div>
-          </div>
+          </StyledFooter>
         </InnerPageContainer>
       </PageContainer>
     )
