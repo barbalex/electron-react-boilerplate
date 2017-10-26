@@ -4,7 +4,16 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled from 'styled-components'
 
-import styles from './TableRow.css'
+const StyledRow = styled.div`
+  background-image: linear-gradient(45deg, rgba(255, 236, 195, 0.5) 10%, rgba(255, 232, 147, 0.7));
+  height: calc(100vh - 52px);
+  padding-top: 30px;
+  overflow-y: auto;
+`
+const StyledFormGroup = styled(FormGroup)`
+  padding-top: 3px;
+  padding-bottom: 3px;
+`
 
 const change = ({ event, id, tableChangeState }) => {
   const { type, name, dataset } = event.target
@@ -30,7 +39,7 @@ const fields = ({ row, table, id, tableChangeState, changeTableInDb }) =>
     // react complains if value is null
     if (value === null) value = ''
     const field = (
-      <FormGroup key={index} className={styles.formGroup}>
+      <StyledFormGroup key={index}>
         <ControlLabel>{fieldName}</ControlLabel>
         <FormControl
           type="text"
@@ -39,7 +48,7 @@ const fields = ({ row, table, id, tableChangeState, changeTableInDb }) =>
           onChange={event => change({ event, table, id, tableChangeState })}
           onBlur={event => blur({ event, table, id, changeTableInDb })}
         />
-      </FormGroup>
+      </StyledFormGroup>
     )
     return field
   })
@@ -54,7 +63,7 @@ const TableRow = ({ store }) => {
   if (row === undefined) return null
 
   return (
-    <div className={styles.body}>
+    <StyledRow>
       <Form>
         {fields({
           row,
@@ -64,7 +73,7 @@ const TableRow = ({ store }) => {
           changeTableInDb,
         })}
       </Form>
-    </div>
+    </StyledRow>
   )
 }
 
