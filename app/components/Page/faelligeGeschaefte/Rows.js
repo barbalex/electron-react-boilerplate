@@ -1,8 +1,5 @@
-/*
- * This component builds and displays a single page
- */
-
 import React, { PropTypes } from 'react'
+import styled from 'styled-components'
 
 import styles from './FaelligeGeschaefte.css'
 import shorten from '../../../src/shortenGegenstandField'
@@ -11,15 +8,8 @@ function isOdd(num) {
   return num % 2
 }
 
-const PageFristenRows = ({
-  geschaeft,
-  rowIndex,
-}) => {
-  const fristMitarbeiter = (
-    geschaeft.fristMitarbeiter ?
-    `Frist: ${geschaeft.fristMitarbeiter}` :
-    ''
-  )
+const PageFristenRows = ({ geschaeft, rowIndex }) => {
+  const fristMitarbeiter = geschaeft.fristMitarbeiter ? `Frist: ${geschaeft.fristMitarbeiter}` : ''
   /**
    * need to enforce max string length
    * if a field contains more text than fits on a page
@@ -38,87 +28,28 @@ const PageFristenRows = ({
   const details = shorten(geschaeft.details, 'Details', maxStringLength)
   const faelligkeitText = shorten(geschaeft.faelligkeitText, '', 200)
 
-  const rowClassName = (
-    !isOdd(rowIndex) ?
-    styles.tableBodyRowShaded :
-    styles.tableBodyRow
-  )
+  const rowClassName = !isOdd(rowIndex) ? styles.tableBodyRowShaded : styles.tableBodyRow
   const verantwortlichName = `${geschaeft.verantwortlichName}${geschaeft.verantwortlich ? ` (${geschaeft.verantwortlich})` : ''}`
 
   return (
-    <div
-      key={geschaeft.idGeschaeft}
-      className={rowClassName}
-    >
-      <div
-        className={[
-          styles.columnIdGeschaeft,
-          styles.tableBodyCell,
-        ].join(' ')}
-      >
-        <div className={styles.fieldBold}>
-          {geschaeft.idGeschaeft}
-        </div>
-        {
-          geschaeft.entscheidKrNr &&
-          <div className={styles.verticallyStackedFields}>
-            {geschaeft.entscheidKrNr}
-          </div>
-        }
+    <div key={geschaeft.idGeschaeft} className={rowClassName}>
+      <div className={[styles.columnIdGeschaeft, styles.tableBodyCell].join(' ')}>
+        <div className={styles.fieldBold}>{geschaeft.idGeschaeft}</div>
+        {geschaeft.entscheidKrNr && <div className={styles.verticallyStackedFields}>{geschaeft.entscheidKrNr}</div>}
       </div>
-      <div
-        className={[
-          styles.columnGegenstand,
-          styles.tableBodyCell,
-        ].join(' ')}
-      >
-        <div className={styles.fieldBold}>
-          {gegenstand}
-        </div>
-        {
-          ausloeser &&
-          <div className={styles.verticallyStackedFields}>
-            {ausloeser}
-          </div>
-        }
-        {
-          details &&
-          <div className={styles.verticallyStackedFields}>
-            {details}
-          </div>
-        }
-        {
-          naechsterSchritt &&
-          <div className={styles.verticallyStackedFields}>
-            {naechsterSchritt}
-          </div>
-        }
+      <div className={[styles.columnGegenstand, styles.tableBodyCell].join(' ')}>
+        <div className={styles.fieldBold}>{gegenstand}</div>
+        {ausloeser && <div className={styles.verticallyStackedFields}>{ausloeser}</div>}
+        {details && <div className={styles.verticallyStackedFields}>{details}</div>}
+        {naechsterSchritt && <div className={styles.verticallyStackedFields}>{naechsterSchritt}</div>}
       </div>
-      <div
-        className={[
-          styles.columnStatus,
-          styles.tableBodyCell,
-        ].join(' ')}
-      >
-        <div className={styles.fieldBold}>
-          {geschaeft.status}
-        </div>
-        <div className={styles.verticallyStackedFields}>
-          {fristMitarbeiter}
-        </div>
-        <div className={styles.verticallyStackedFields}>
-          {faelligkeitText}
-        </div>
+      <div className={[styles.columnStatus, styles.tableBodyCell].join(' ')}>
+        <div className={styles.fieldBold}>{geschaeft.status}</div>
+        <div className={styles.verticallyStackedFields}>{fristMitarbeiter}</div>
+        <div className={styles.verticallyStackedFields}>{faelligkeitText}</div>
       </div>
-      <div
-        className={[
-          styles.columnKontaktIntern,
-          styles.tableBodyCell,
-        ].join(' ')}
-      >
-        <div className={styles.fieldBold}>
-          {verantwortlichName}
-        </div>
+      <div className={[styles.columnKontaktIntern, styles.tableBodyCell].join(' ')}>
+        <div className={styles.fieldBold}>{verantwortlichName}</div>
       </div>
     </div>
   )
