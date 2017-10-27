@@ -4,10 +4,31 @@ import _ from 'lodash'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
+import styled from 'styled-components'
 
 import styles from './Geschaefte.css'
 import RowRenderer from './RowRenderer'
 import NoRowsRenderer from './NoRowsRenderer'
+
+const Container = styled.div`
+  background-image: linear-gradient(45deg, rgba(235, 255, 229, 0.5) 10%, rgba(216, 255, 200, 0.7));
+  height: 100vh;
+`
+const StyledTable = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  -webkit-user-select: none;
+`
+const StyledHeader = styled.div`
+  border-bottom: 2px solid #717171;
+  font-weight: 700;
+`
+const StyledRow = styled.div`
+  display: flex;
+  padding: 5px;
+  padding-right: ${props => (props['data-overflowing'] ? '17px' : '5px')};
+`
 
 const enhance = compose(
   inject('store'),
@@ -36,21 +57,16 @@ class Geschaefte extends Component {
     const indexOfActiveId = _.findIndex(geschaefte, g => g.idGeschaeft === activeId)
 
     return (
-      <div className={styles.body}>
-        <div className={styles.table}>
-          <div className={styles.tableHeader}>
-            <div
-              className={styles.tableHeaderRow}
-              style={{
-                paddingRight: geschaefteListOverflowing ? 17 : 5,
-              }}
-            >
+      <Container>
+        <StyledTable>
+          <StyledHeader>
+            <StyledRow data-overflowing={geschaefteListOverflowing}>
               <div className={[styles.columnIdGeschaeft, styles.tableHeaderCell].join(' ')}>ID</div>
               <div className={[styles.columnGegenstand, styles.tableHeaderCell].join(' ')}>Gegenstand</div>
               <div className={[styles.columnStatus, styles.tableHeaderCell].join(' ')}>Status</div>
               <div className={[styles.columnKontaktIntern, styles.tableHeaderCell].join(' ')}>Verantwortlich</div>
-            </div>
-          </div>
+            </StyledRow>
+          </StyledHeader>
           <div
             className={styles.tableBody}
             ref={c => {
@@ -81,8 +97,8 @@ class Geschaefte extends Component {
               }}
             </AutoSizer>
           </div>
-        </div>
-      </div>
+        </StyledTable>
+      </Container>
     )
   }
 }
