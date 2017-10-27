@@ -9,6 +9,28 @@ import regularStyles from './areaGeschaeft.css'
 import pdfStyles from './areaGeschaeftPdf.css'
 import createOptions from '../../src/createOptions'
 
+const Container = styled.div`
+  grid-area: areaGeschaeft;
+  background-color: ${props => (props.isPdf ? 'white' : 'rgb(255, 186, 137)')};
+  display: grid;
+  grid-template-columns: repeat(12, calc((100% - 55px) / 12));
+  grid-template-rows: auto;
+  grid-template-areas: 'areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle areaGeschaeftTitle'
+    'fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand fieldGegenstand'
+    'fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser fieldAusloeser'
+    'fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt fieldOrt'
+    'fieldGeschaeftsart fieldGeschaeftsart fieldGeschaeftsart fieldGeschaeftsart fieldGeschaeftsart fieldStatus fieldStatus fieldStatus fieldStatus fieldStatus fieldAbteilung fieldAbteilung'
+    'fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails fieldDetails'
+    'fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt fieldNaechsterSchritt'
+    'fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk fieldVermerk'
+    'fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern fieldVermerkIntern';
+  grid-column-gap: 5px;
+  grid-row-gap: 2px;
+  padding: 8px;
+  border: ${props => (props.isPdf ? '1px solid #ccc' : 'none')};
+  border-bottom: none;
+`
+
 const enhance = compose(inject('store'), observer)
 
 const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
@@ -26,7 +48,7 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
   const tabsToAdd = viewIsNarrow ? nrOfGFields : 0
 
   return (
-    <div className={styles.areaGeschaeft}>
+    <Container>
       <div className={styles.areaGeschaeftTitle}>Geschäft</div>
       <div className={styles.fieldGegenstand}>
         <ControlLabel>Gegenstand</ControlLabel>
@@ -164,7 +186,7 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
           className={styles.textarea}
         />
       </div>
-    </div>
+    </Container>
   )
 }
 
