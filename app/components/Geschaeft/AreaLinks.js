@@ -24,6 +24,25 @@ const DropzoneInnerDiv = styled.div`
   border-radius: 5px;
   padding: 5px;
 `
+const Container = styled.div`
+  grid-area: areaLinks;
+  background-color: ${props =>
+    props['data-isPdf'] ? 'rgb(227, 232, 255)' : '#e3fff0'};
+  display: grid;
+  grid-template-columns: ${props =>
+    props['data-isPdf'] ? '100%' : 'calc(100% - 308px) 300px'};
+  grid-template-areas: ${props =>
+    props['data-isPdf']
+      ? `'title' 'links'`
+      : `'title dropzone' 'links dropzone'`};
+  grid-column-gap: 8px;
+  grid-row-gap: ${props => (props['data-isPdf'] ? '1px' : '8px')};
+  padding: 8px;
+  /*pdf*/
+  border: ${props => (props['data-isPdf'] ? '1px solid #ccc' : 'none')};
+  border-bottom: none;
+  font-size: ${props => (props['data-isPdf'] ? '10px' : 'inherit')};
+`
 
 const enhance = compose(
   inject('store'),
@@ -35,7 +54,7 @@ const enhance = compose(
       linkNewCreate(activeId, files[0].path)
     },
   }),
-  observer,
+  observer
 )
 
 const AreaLinks = ({ store, onDrop }) => {
@@ -43,11 +62,11 @@ const AreaLinks = ({ store, onDrop }) => {
   const { activeId, links } = store.geschaefte
   const myLinks = links.filter(l => l.idGeschaeft === activeId)
   const path = store.history.location.pathname
-  const isPrintPreview = path === '/geschaeftPdf'
-  const styles = isPrintPreview ? pdfStyles : regularStyles
+  const isPdf = path === '/geschaeftPdf'
+  const styles = isPdf ? pdfStyles : regularStyles
 
   return (
-    <div className={styles.areaLinks}>
+    <Container data-isPdf={isPdf}>
       <div className={styles.title}>Links</div>
       <div className={styles.links}>
         {myLinks.map(link => (
@@ -100,7 +119,7 @@ const AreaLinks = ({ store, onDrop }) => {
           }}
         </StyledDropzone>
       </div>
-    </div>
+    </Container>
   )
 }
 
