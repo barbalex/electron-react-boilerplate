@@ -4,8 +4,6 @@ import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
 import styled from 'styled-components'
 
-import styles from './Geschaefte.css'
-
 const StyledId = styled.div`
   flex: 1;
   padding: 5px;
@@ -25,9 +23,27 @@ const StyledGegenstand = styled.div`
   max-height: 67px;
   width: 100%;
 `
-const FristMitarbeiterWarnungDiv = styled((
-  { fristInStyle, children, ...rest }, // eslint-disable-line no-unused-vars
-) => <div {...rest}>{children}</div>)`
+const StyledStatus = styled.div`
+  flex: 1;
+  padding: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  min-height: 67px;
+  max-height: 67px;
+  min-width: 120px;
+  max-width: 120px;
+`
+const StyledKontakt = styled.div`
+  flex: 1;
+  padding: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  min-height: 67px;
+  max-height: 67px;
+  min-width: 100px;
+  max-width: 100px;
+`
+const FristMitarbeiterWarnungDiv = styled.div`
   font-weight: ${props => (props.fristInStyle ? 900 : 'inherit')};
   letter-spacing: ${props => (props.fristInStyle ? '0.35em' : 'inherit')};
   font-size: ${props => (props.fristInStyle ? '16px' : 'inherit')};
@@ -38,6 +54,28 @@ const FristMitarbeiterWarnungDiv = styled((
     if (props.fristInStyle === 'yellow') return 'yellow'
     return 'inherit'
   }};
+`
+const StyledRow = styled.div`
+  display: flex;
+  padding: 5px;
+  border-bottom: 1px solid #bbbbbb;
+  cursor: pointer;
+  min-height: 77px;
+  max-height: 77px;
+  background-color: ${props => (props.active ? '#FFBF73' : 'inherit')};
+`
+const GegenstandDiv = styled.div`
+  font-weight: 700;
+  /**
+   * show ellipsis ... when text
+   * overflows three lines
+   * source: http://stackoverflow.com/a/18458345/712005;
+   */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  max-height: 4.1em;
+  overflow: hidden;
 `
 const getStatusFristInStyle = fristMitarbeiterWarnung => {
   if (fristMitarbeiterWarnung === 'FÄLLIG') return 'red'
@@ -68,35 +106,31 @@ const enhance = compose(
 const GeschaefteItem = ({ store, index, onClick }) => {
   const { activeId, geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
   const geschaeft = geschaefte[index]
-  const isActive = activeId && activeId === geschaeft.idGeschaeft
-  const trClassName = isActive ? [styles.tableBodyRow, styles.active].join(' ') : styles.tableBodyRow
+  const active = activeId && activeId === geschaeft.idGeschaeft
   // make sure geschaeft exists
   if (!geschaeft) return null
   const fristMitarbeiter = geschaeft.fristMitarbeiter ? `Frist: ${geschaeft.fristMitarbeiter}` : ''
 
   return (
-    <div // eslint-disable-line jsx-a11y/no-static-element-interactions
-      className={trClassName}
-      onClick={onClick}
-    >
+    <StyledRow active={active} onClick={onClick}>
       <StyledId>
         <div>{geschaeft.idGeschaeft}</div>
       </StyledId>
       <StyledGegenstand>
-        <div className={styles.fieldGegenstand}>{geschaeft.gegenstand}</div>
+        <GegenstandDiv>{geschaeft.gegenstand}</GegenstandDiv>
       </StyledGegenstand>
-      <div className={styles.bodyColumnStatus}>
+      <StyledStatus>
         <div>{geschaeft.status}</div>
         <div>{fristMitarbeiter}</div>
         <FristMitarbeiterWarnungDiv fristInStyle={getStatusFristInStyle(geschaeft.fristMitarbeiterWarnung)}>
           {geschaeft.fristMitarbeiterWarnung}
         </FristMitarbeiterWarnungDiv>
-      </div>
-      <div className={styles.bodyColumnKontaktIntern}>
+      </StyledStatus>
+      <StyledKontakt>
         <div>{geschaeft.verantwortlichName}</div>
         <div>{geschaeft.verantwortlich}</div>
-      </div>
-    </div>
+      </StyledKontakt>
+    </StyledRow>
   )
 }
 
