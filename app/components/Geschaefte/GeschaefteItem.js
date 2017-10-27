@@ -6,6 +6,16 @@ import styled from 'styled-components'
 
 import styles from './Geschaefte.css'
 
+const StyledId = styled.div`
+  flex: 1;
+  padding: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  min-height: 67px;
+  max-height: 67px;
+  min-width: 44px;
+  max-width: 44px;
+`
 const FristMitarbeiterWarnungDiv = styled((
   { fristInStyle, children, ...rest }, // eslint-disable-line no-unused-vars
 ) => <div {...rest}>{children}</div>)`
@@ -60,9 +70,9 @@ const GeschaefteItem = ({ store, index, onClick }) => {
       className={trClassName}
       onClick={onClick}
     >
-      <div className={styles.bodyColumnIdGeschaeft}>
+      <StyledId>
         <div>{geschaeft.idGeschaeft}</div>
-      </div>
+      </StyledId>
       <div className={styles.bodyColumnGegenstand}>
         <div className={styles.fieldGegenstand}>{geschaeft.gegenstand}</div>
       </div>
