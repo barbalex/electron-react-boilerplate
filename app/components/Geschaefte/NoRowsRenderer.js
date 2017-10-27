@@ -8,27 +8,13 @@ const StyledNoRowsDiv = styled.div`
   font-weight: bold;
 `
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 const NoRowsRenderer = ({ store }) => {
   const { filterFields, filterFulltext, geschaefte } = store.geschaefte
-  const isFiltered = (
-    geschaefte.length > 0 &&
-    (filterFields.length > 0 || !!filterFulltext)
-  )
-  const text = (
-    isFiltered ?
-    'Keine Daten entsprechen dem Filter' :
-    'lade Daten...'
-  )
-  return (
-    <StyledNoRowsDiv>
-      {text}
-    </StyledNoRowsDiv>
-  )
+  const isFiltered = geschaefte.length > 0 && (filterFields.length > 0 || !!filterFulltext)
+  const text = isFiltered ? 'Keine Daten entsprechen dem Filter' : 'lade Daten...'
+  return <StyledNoRowsDiv>{text}</StyledNoRowsDiv>
 }
 
 NoRowsRenderer.propTypes = {

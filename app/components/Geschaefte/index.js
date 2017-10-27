@@ -12,10 +12,9 @@ import NoRowsRenderer from './NoRowsRenderer'
 const enhance = compose(
   inject('store'),
   withHandlers({
-    onChange: props => size =>
-      props.store.configSetKey('geschaefteColumnWidth', size),
+    onChange: props => size => props.store.configSetKey('geschaefteColumnWidth', size),
   }),
-  observer
+  observer,
 )
 
 /**
@@ -34,10 +33,7 @@ class Geschaefte extends Component {
     const { geschaefteListOverflowing } = store.ui
     const { activeId, geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
     // get index of active id
-    const indexOfActiveId = _.findIndex(
-      geschaefte,
-      g => g.idGeschaeft === activeId
-    )
+    const indexOfActiveId = _.findIndex(geschaefte, g => g.idGeschaeft === activeId)
 
     return (
       <div className={styles.body}>
@@ -49,43 +45,17 @@ class Geschaefte extends Component {
                 paddingRight: geschaefteListOverflowing ? 17 : 5,
               }}
             >
-              <div
-                className={[
-                  styles.columnIdGeschaeft,
-                  styles.tableHeaderCell,
-                ].join(' ')}
-              >
-                ID
-              </div>
-              <div
-                className={[
-                  styles.columnGegenstand,
-                  styles.tableHeaderCell,
-                ].join(' ')}
-              >
-                Gegenstand
-              </div>
-              <div
-                className={[
-                  styles.columnStatus,
-                  styles.tableHeaderCell,
-                ].join(' ')}
-              >
-                Status
-              </div>
-              <div
-                className={[
-                  styles.columnKontaktIntern,
-                  styles.tableHeaderCell,
-                ].join(' ')}
-              >
-                Verantwortlich
-              </div>
+              <div className={[styles.columnIdGeschaeft, styles.tableHeaderCell].join(' ')}>ID</div>
+              <div className={[styles.columnGegenstand, styles.tableHeaderCell].join(' ')}>Gegenstand</div>
+              <div className={[styles.columnStatus, styles.tableHeaderCell].join(' ')}>Status</div>
+              <div className={[styles.columnKontaktIntern, styles.tableHeaderCell].join(' ')}>Verantwortlich</div>
             </div>
           </div>
           <div
             className={styles.tableBody}
-            ref={(c) => { this.tableBody = c }}
+            ref={c => {
+              this.tableBody = c
+            }}
           >
             <AutoSizer>
               {({ height, width }) => {
@@ -102,7 +72,9 @@ class Geschaefte extends Component {
                     noRowsRenderer={() => <NoRowsRenderer />}
                     width={width}
                     scrollToIndex={indexOfActiveId}
-                    ref={(c) => { this.reactList = c }}
+                    ref={c => {
+                      this.reactList = c
+                    }}
                     {...geschaefte}
                   />
                 )
