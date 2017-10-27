@@ -16,6 +16,15 @@ const StyledId = styled.div`
   min-width: 44px;
   max-width: 44px;
 `
+const StyledGegenstand = styled.div`
+  flex: 1;
+  padding: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  min-height: 67px;
+  max-height: 67px;
+  width: 100%;
+`
 const FristMitarbeiterWarnungDiv = styled((
   { fristInStyle, children, ...rest }, // eslint-disable-line no-unused-vars
 ) => <div {...rest}>{children}</div>)`
@@ -73,9 +82,9 @@ const GeschaefteItem = ({ store, index, onClick }) => {
       <StyledId>
         <div>{geschaeft.idGeschaeft}</div>
       </StyledId>
-      <div className={styles.bodyColumnGegenstand}>
+      <StyledGegenstand>
         <div className={styles.fieldGegenstand}>{geschaeft.gegenstand}</div>
-      </div>
+      </StyledGegenstand>
       <div className={styles.bodyColumnStatus}>
         <div>{geschaeft.status}</div>
         <div>{fristMitarbeiter}</div>
