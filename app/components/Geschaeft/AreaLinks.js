@@ -38,10 +38,35 @@ const Container = styled.div`
   grid-column-gap: 8px;
   grid-row-gap: ${props => (props['data-isPdf'] ? '1px' : '8px')};
   padding: 8px;
-  /*pdf*/
   border: ${props => (props['data-isPdf'] ? '1px solid #ccc' : 'none')};
   border-bottom: none;
   font-size: ${props => (props['data-isPdf'] ? '10px' : 'inherit')};
+`
+const Title = styled.div`
+  font-weight: 900;
+  font-size: 16px;
+  grid-area: title;
+`
+const Links = styled.div`
+  grid-area: links;
+  /*pdf*/
+  display: ${props => (props['data-isPdf'] ? 'grid' : 'block')};
+  display: ${props => (props['data-isPdf'] ? '100%' : 'none')};
+`
+const Field = styled.div`
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: calc(100% - 20px) 20px;
+  grid-gap: 0;
+  border-bottom: thin solid #cecbcb;
+  padding: 3px;
+  align-items: center;
+  &:first-of-type {
+    border-top: thin solid #cecbcb;
+  }
+  &:hover {
+    background-color: #ceffe5;
+  }
 `
 
 const enhance = compose(
@@ -51,6 +76,8 @@ const enhance = compose(
       const { store } = props
       const { linkNewCreate } = store
       const { activeId } = store.geschaefte
+      console.log('AreaLinks: activeId:', activeId)
+      console.log('AreaLinks: path:', files[0].path)
       linkNewCreate(activeId, files[0].path)
     },
   }),
@@ -67,10 +94,10 @@ const AreaLinks = ({ store, onDrop }) => {
 
   return (
     <Container data-isPdf={isPdf}>
-      <div className={styles.title}>Links</div>
-      <div className={styles.links}>
+      <Title>Links</Title>
+      <Links data-isPdf={isPdf}>
         {myLinks.map(link => (
-          <div key={`${link.idGeschaeft}${link.url}`} className={styles.fields}>
+          <Field key={`${link.idGeschaeft}${link.url}`}>
             <div className={styles.url}>
               <a
                 href={link.url}
@@ -90,9 +117,9 @@ const AreaLinks = ({ store, onDrop }) => {
                 title="Link entfernen"
               />
             </div>
-          </div>
+          </Field>
         ))}
-      </div>
+      </Links>
       <div className={styles.dropzoneContainer}>
         <StyledDropzone onDrop={onDrop}>
           {({ isDragActive, isDragReject }) => {
