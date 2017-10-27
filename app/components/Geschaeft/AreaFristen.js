@@ -5,49 +5,9 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled from 'styled-components'
 
-import regularStyles from './areaFristen.css'
-import pdfStyles from './areaFristenPdf.css'
 import DateField from './DateField'
 
 moment.locale('de')
-
-const FieldFristDauerBisMitarbeiter = styled.div``
-const StyledFristDauerBisMitarbeiter = styled(FormControl.Static)`
-  font-weight: 900;
-  letter-spacing: 0.13em;
-  font-size: ${props => (props.isPdf ? '14px' : '16px')};
-  padding-top: 0;
-  padding-bottom: ${props => (props.isPdf ? 0 : 'inherit')};
-  margin-top: 0;
-  margin-bottom: ${props => (props.isPdf ? '-12px' : 'inherit')};
-  -webkit-text-stroke-color: black;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-fill-color: ${props => props.color};
-`
-
-const fieldFristDauerBisMitarbeiter = (geschaeft, isPdf) => {
-  const { dauerBisFristMitarbeiter } = geschaeft
-  let color = 'black'
-  if (!isPdf) {
-    if (dauerBisFristMitarbeiter < 0) color = 'red'
-    if (dauerBisFristMitarbeiter === 0) color = 'orange'
-  } else if (isPdf) {
-    if (dauerBisFristMitarbeiter === 0) color = 'grey'
-  }
-
-  return (
-    <div className={regularStyles.fieldFristDauerBisMitarbeiter}>
-      <ControlLabel>Tage bis Frist Mitarbeiter</ControlLabel>
-      <StyledFristDauerBisMitarbeiter
-        color={color}
-        isPdf={isPdf}
-        className="formControlStatic"
-      >
-        {geschaeft.dauerBisFristMitarbeiter}
-      </StyledFristDauerBisMitarbeiter>
-    </div>
-  )
-}
 
 const Container = styled.div`
   grid-area: areaFristen;
@@ -63,6 +23,23 @@ const Title = styled.div`
   font-weight: 900;
   font-size: 16px;
   grid-column: 1;
+`
+const FieldFristDauerBisMitarbeiter = styled.div`
+  grid-column: 1;
+  font-weight: 700;
+  font-size: 14px;
+`
+const StyledFristDauerBisMitarbeiter = styled(FormControl.Static)`
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  font-size: ${props => (props.isPdf ? '14px' : '16px')};
+  padding-top: 0;
+  padding-bottom: ${props => (props.isPdf ? 0 : 'inherit')};
+  margin-top: 0;
+  margin-bottom: ${props => (props['data-isPdf'] ? '-12px' : 'inherit')};
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-fill-color: ${props => props.color};
 `
 
 const enhance = compose(inject('store'), observer)
@@ -81,7 +58,14 @@ const AreaFristen = ({
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
-  const styles = isPdf ? pdfStyles : regularStyles
+  const { dauerBisFristMitarbeiter } = geschaeft
+  let colorDauerBisFristMitarbeiter = 'black'
+  if (!isPdf) {
+    if (dauerBisFristMitarbeiter < 0) colorDauerBisFristMitarbeiter = 'red'
+    if (dauerBisFristMitarbeiter === 0) colorDauerBisFristMitarbeiter = 'orange'
+  } else if (isPdf) {
+    if (dauerBisFristMitarbeiter === 0) colorDauerBisFristMitarbeiter = 'grey'
+  }
 
   return (
     <Container data-isPdf={isPdf}>
@@ -137,8 +121,18 @@ const AreaFristen = ({
         />
       )}
       {(!!geschaeft.dauerBisFristMitarbeiter ||
-        geschaeft.dauerBisFristMitarbeiter === 0) &&
-        fieldFristDauerBisMitarbeiter(geschaeft, isPdf)}
+        geschaeft.dauerBisFristMitarbeiter === 0) && (
+          <FieldFristDauerBisMitarbeiter>
+            <ControlLabel>Tage bis Frist Mitarbeiter</ControlLabel>
+            <StyledFristDauerBisMitarbeiter
+              color={colorDauerBisFristMitarbeiter}
+              data-isPdf={isPdf}
+              className="formControlStatic"
+            >
+              {geschaeft.dauerBisFristMitarbeiter}
+            </StyledFristDauerBisMitarbeiter>
+          </FieldFristDauerBisMitarbeiter>
+        )}
       {!(!geschaeft.datumAusgangAwel && isPdf) && (
         <DateField
           name="datumAusgangAwel"
