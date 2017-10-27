@@ -1,52 +1,7 @@
-.areaTitle {
-  font-weight: 900;
-  font-size: 16px;
-}
-
-.areaLinks {
-  grid-area: areaLinks;
-  background-color: #e3fff0;
-  display: grid;
-  grid-template-columns: calc(100% - 308px) 300px;
-  grid-template-areas:
-    "title dropzone"
-    "links dropzone";
-  grid-column-gap: 8px;
-  grid-row-gap: 8px;
-  padding: 8px;
-}
-
-.title {
-  composes: areaTitle;
-  grid-area: title;
-}
-
-.links {
-  grid-area: links;
-}
-
 .dropzoneContainer {
   grid-area: dropzone;
   width: 100%;
   height: 100%;
-}
-
-.fields {
-  grid-column: 1;
-  display: grid;
-  grid-template-columns: calc(100% - 20px) 20px;
-  grid-gap: 0;
-  border-bottom: thin solid #CECBCB;
-  padding: 3px;
-  align-items: center;
-}
-
-.fields:first-of-type {
-  border-top: thin solid #CECBCB;
-}
-
-.fields:hover {
-  background-color: #ceffe5;
 }
 
 .url {
