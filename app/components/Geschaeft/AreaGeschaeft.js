@@ -5,8 +5,6 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled from 'styled-components'
 
-import regularStyles from './areaGeschaeft.css'
-import pdfStyles from './areaGeschaeftPdf.css'
 import createOptions from '../../src/createOptions'
 
 const Container = styled.div`
@@ -27,7 +25,7 @@ const Container = styled.div`
   grid-column-gap: 5px;
   grid-row-gap: 2px;
   padding: 8px;
-  border: ${props => (props.isPdf ? '1px solid #ccc' : 'none')};
+  border: ${props => (props['data-isPdf'] ? '1px solid #ccc' : 'none')};
   border-bottom: none;
 `
 const Title = styled.div`
@@ -35,7 +33,6 @@ const Title = styled.div`
   font-size: 16px;
   grid-area: areaGeschaeftTitle;
 `
-const Gegenstand = styled.div`grid-area: fieldGegenstand;`
 const StyledTextarea = styled(Textarea)`
   display: block;
   width: 100%;
@@ -52,6 +49,16 @@ const StyledTextarea = styled(Textarea)`
       0 0 8px rgba(102, 175, 233, 0.6);
   }
 `
+const Ausloeser = styled.div`grid-area: fieldAusloeser;`
+const Ort = styled.div`grid-area: fieldOrt;`
+const Geschaeftsart = styled.div`grid-area: fieldGeschaeftsart;`
+const Gegenstand = styled.div`grid-area: fieldGegenstand;`
+const Details = styled.div`grid-area: fieldDetails;`
+const Status = styled.div`grid-area: fieldStatus;`
+const Abteilung = styled.div`grid-area: fieldAbteilung;`
+const NaechsterSchritt = styled.div`grid-area: fieldNaechsterSchritt;`
+const Vermerk = styled.div`grid-area: fieldVermerk;`
+const VermerkIntern = styled.div`grid-area: fieldVermerkIntern;`
 
 const enhance = compose(inject('store'), observer)
 
@@ -64,13 +71,12 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
     geschaeftsartOptions,
   } = store.geschaefte
   const path = store.history.location.pathname
-  const isPrintPreview = path === '/geschaeftPdf'
+  const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
-  const styles = isPrintPreview ? pdfStyles : regularStyles
   const tabsToAdd = viewIsNarrow ? nrOfGFields : 0
 
   return (
-    <Container>
+    <Container data-isPdf={isPdf}>
       <Title>Geschäft</Title>
       <Gegenstand>
         <ControlLabel>Gegenstand</ControlLabel>
@@ -80,11 +86,11 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
           onChange={change}
           onBlur={blur}
           tabIndex={1 + tabsToAdd}
-          autoFocus={!viewIsNarrow && !isPrintPreview}
+          autoFocus={!viewIsNarrow && !isPdf}
         />
       </Gegenstand>
-      {!(!geschaeft.ausloeser && isPrintPreview) && (
-        <div className={styles.fieldAusloeser}>
+      {!(!geschaeft.ausloeser && isPdf) && (
+        <Ausloeser>
           <ControlLabel>Auslöser</ControlLabel>
           <StyledTextarea
             value={geschaeft.ausloeser || ''}
@@ -93,10 +99,10 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
             onBlur={blur}
             tabIndex={2 + tabsToAdd}
           />
-        </div>
+        </Ausloeser>
       )}
-      {!(!geschaeft.ort && isPrintPreview) && (
-        <div className={styles.fieldOrt}>
+      {!(!geschaeft.ort && isPdf) && (
+        <Ort>
           <ControlLabel>Ort</ControlLabel>
           <FormControl
             type="text"
@@ -107,10 +113,10 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
             bsSize="small"
             tabIndex={3 + tabsToAdd}
           />
-        </div>
+        </Ort>
       )}
-      {!(!geschaeft.geschaeftsart && isPrintPreview) && (
-        <div className={styles.fieldGeschaeftsart}>
+      {!(!geschaeft.geschaeftsart && isPdf) && (
+        <Geschaeftsart>
           <ControlLabel>Geschäftsart</ControlLabel>
           <FormControl
             componentClass="select"
@@ -122,10 +128,10 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
           >
             {createOptions(geschaeftsartOptions)}
           </FormControl>
-        </div>
+        </Geschaeftsart>
       )}
-      {!(!geschaeft.status && isPrintPreview) && (
-        <div className={styles.fieldStatus}>
+      {!(!geschaeft.status && isPdf) && (
+        <Status>
           <ControlLabel>Status</ControlLabel>
           <FormControl
             componentClass="select"
@@ -137,10 +143,10 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
           >
             {createOptions(statusOptions)}
           </FormControl>
-        </div>
+        </Status>
       )}
-      {!(!geschaeft.abteilung && isPrintPreview) && (
-        <div className={styles.fieldAbteilung}>
+      {!(!geschaeft.abteilung && isPdf) && (
+        <Abteilung>
           <ControlLabel>Abteilung</ControlLabel>
           <FormControl
             componentClass="select"
@@ -152,10 +158,10 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
           >
             {createOptions(abteilungOptions)}
           </FormControl>
-        </div>
+        </Abteilung>
       )}
-      {!(!geschaeft.details && isPrintPreview) && (
-        <div className={styles.fieldDetails}>
+      {!(!geschaeft.details && isPdf) && (
+        <Details>
           <ControlLabel>Details</ControlLabel>
           <StyledTextarea
             value={geschaeft.details || ''}
@@ -164,10 +170,10 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
             onBlur={blur}
             tabIndex={7 + tabsToAdd}
           />
-        </div>
+        </Details>
       )}
-      {!(!geschaeft.naechsterSchritt && isPrintPreview) && (
-        <div className={styles.fieldNaechsterSchritt}>
+      {!(!geschaeft.naechsterSchritt && isPdf) && (
+        <NaechsterSchritt>
           <ControlLabel>Nächster Schritt</ControlLabel>
           <StyledTextarea
             value={geschaeft.naechsterSchritt || ''}
@@ -176,10 +182,10 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
             onBlur={blur}
             tabIndex={8 + tabsToAdd}
           />
-        </div>
+        </NaechsterSchritt>
       )}
-      {!(!geschaeft.vermerk && isPrintPreview) && (
-        <div className={styles.fieldVermerk}>
+      {!(!geschaeft.vermerk && isPdf) && (
+        <Vermerk>
           <ControlLabel>Vermerk</ControlLabel>
           <StyledTextarea
             value={geschaeft.vermerk || ''}
@@ -188,9 +194,9 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
             onBlur={blur}
             tabIndex={9 + tabsToAdd}
           />
-        </div>
+        </Vermerk>
       )}
-      <div className={styles.fieldVermerkIntern}>
+      <VermerkIntern>
         <ControlLabel>
           Vermerk intern (in Berichten nicht angezeigt)
         </ControlLabel>
@@ -201,7 +207,7 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
           onBlur={blur}
           tabIndex={9 + tabsToAdd}
         />
-      </div>
+      </VermerkIntern>
     </Container>
   )
 }
