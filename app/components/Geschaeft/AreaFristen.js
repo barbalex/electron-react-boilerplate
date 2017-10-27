@@ -36,19 +36,30 @@ const fieldFristDauerBisMitarbeiter = (geschaeft, styles) => (
   </div>
 )
 
+const Container = styled.div`
+  grid-area: areaFristen;
+  background-color: rgb(252, 255, 194);
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 2px;
+  padding: 8px;
+  border: ${props => (props['data-isPdf'] ? '1px solid #CCC' : 'none')};
+  border-bottom: ${props => (props['data-isPdf'] ? 'none' : 'inherit')};
+`
+
 const enhance = compose(inject('store'), observer)
 
 const AreaFristen = ({ store, blur, change, nrOfFieldsBeforeFristen, onChangeDatePicker }) => {
   const { activeId, geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
   const path = store.history.location.pathname
-  const isPrintPreview = path === '/geschaeftPdf'
+  const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
-  const styles = isPrintPreview ? pdfStyles : regularStyles
+  const styles = isPdf ? pdfStyles : regularStyles
 
   return (
-    <div className={styles.areaFristen}>
+    <Container data-isPdf={isPdf}>
       <div className={styles.areaFristenTitle}>Fristen</div>
-      {!(!geschaeft.datumEingangAwel && isPrintPreview) && (
+      {!(!geschaeft.datumEingangAwel && isPdf) && (
         <DateField
           name="datumEingangAwel"
           label="Datum des Eingangs im AWEL"
@@ -58,7 +69,7 @@ const AreaFristen = ({ store, blur, change, nrOfFieldsBeforeFristen, onChangeDat
           tabIndex={1 + nrOfFieldsBeforeFristen}
         />
       )}
-      {!(!geschaeft.fristAwel && isPrintPreview) && (
+      {!(!geschaeft.fristAwel && isPdf) && (
         <DateField
           name="fristAwel"
           label="Frist für Erledigung durch AWEL"
@@ -68,7 +79,7 @@ const AreaFristen = ({ store, blur, change, nrOfFieldsBeforeFristen, onChangeDat
           tabIndex={2 + nrOfFieldsBeforeFristen}
         />
       )}
-      {!(!geschaeft.fristAmtschef && isPrintPreview) && (
+      {!(!geschaeft.fristAmtschef && isPdf) && (
         <DateField
           name="fristAmtschef"
           label="Frist Vorlage an Amtschef"
@@ -78,7 +89,7 @@ const AreaFristen = ({ store, blur, change, nrOfFieldsBeforeFristen, onChangeDat
           tabIndex={3 + nrOfFieldsBeforeFristen}
         />
       )}
-      {!(!geschaeft.fristAbteilung && isPrintPreview) && (
+      {!(!geschaeft.fristAbteilung && isPdf) && (
         <DateField
           name="fristAbteilung"
           label="Frist für Erledigung durch Abteilung"
@@ -88,7 +99,7 @@ const AreaFristen = ({ store, blur, change, nrOfFieldsBeforeFristen, onChangeDat
           tabIndex={4 + nrOfFieldsBeforeFristen}
         />
       )}
-      {!(!geschaeft.fristMitarbeiter && isPrintPreview) && (
+      {!(!geschaeft.fristMitarbeiter && isPdf) && (
         <DateField
           name="fristMitarbeiter"
           label="Frist Erledigung nächster Schritt Re"
@@ -99,7 +110,7 @@ const AreaFristen = ({ store, blur, change, nrOfFieldsBeforeFristen, onChangeDat
         />
       )}
       {!!geschaeft.dauerBisFristMitarbeiter && fieldFristDauerBisMitarbeiter(geschaeft, styles)}
-      {!(!geschaeft.datumAusgangAwel && isPrintPreview) && (
+      {!(!geschaeft.datumAusgangAwel && isPdf) && (
         <DateField
           name="datumAusgangAwel"
           label="Datum Ausgang AWEL (erledigt)"
@@ -109,7 +120,7 @@ const AreaFristen = ({ store, blur, change, nrOfFieldsBeforeFristen, onChangeDat
           tabIndex={6 + nrOfFieldsBeforeFristen}
         />
       )}
-      {!(!geschaeft.fristDirektion && isPrintPreview) && (
+      {!(!geschaeft.fristDirektion && isPdf) && (
         <DateField
           name="fristDirektion"
           label="Frist für Erledigung durch Direktion"
@@ -119,7 +130,7 @@ const AreaFristen = ({ store, blur, change, nrOfFieldsBeforeFristen, onChangeDat
           tabIndex={7 + nrOfFieldsBeforeFristen}
         />
       )}
-    </div>
+    </Container>
   )
 }
 
