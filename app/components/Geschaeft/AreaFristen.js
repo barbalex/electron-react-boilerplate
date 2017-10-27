@@ -11,30 +11,43 @@ import DateField from './DateField'
 
 moment.locale('de')
 
-const statusFristInStyle = (dauerBisFristMitarbeiter, styles) => {
-  if (dauerBisFristMitarbeiter < 0) {
-    return [styles.fieldWarnungFaellig, 'formControlStatic'].join(' ')
-  }
-  if (dauerBisFristMitarbeiter === 0) {
-    return [styles.fieldWarnungHeute, 'formControlStatic'].join(' ')
-  }
-  return 'formControlStatic'
-}
+const FieldFristDauerBisMitarbeiter = styled.div``
+const StyledFristDauerBisMitarbeiter = styled(FormControl.Static)`
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  font-size: ${props => (props.isPdf ? '14px' : '16px')};
+  padding-top: 0;
+  padding-bottom: ${props => (props.isPdf ? 0 : 'inherit')};
+  margin-top: 0;
+  margin-bottom: ${props => (props.isPdf ? '-12px' : 'inherit')};
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-fill-color: ${props => props.color};
+`
 
-const fieldFristDauerBisMitarbeiter = (geschaeft, styles) => (
-  <div className={regularStyles.fieldFristDauerBisMitarbeiter}>
-    <ControlLabel>Tage bis Frist Mitarbeiter</ControlLabel>
-    <FormControl.Static
-      style={{
-        paddingTop: 0,
-        marginTop: 0,
-      }}
-      className={statusFristInStyle(geschaeft.dauerBisFristMitarbeiter, styles)}
-    >
-      {geschaeft.dauerBisFristMitarbeiter}
-    </FormControl.Static>
-  </div>
-)
+const fieldFristDauerBisMitarbeiter = (geschaeft, isPdf) => {
+  const { dauerBisFristMitarbeiter } = geschaeft
+  let color = 'black'
+  if (!isPdf) {
+    if (dauerBisFristMitarbeiter < 0) color = 'red'
+    if (dauerBisFristMitarbeiter === 0) color = 'orange'
+  } else if (isPdf) {
+    if (dauerBisFristMitarbeiter === 0) color = 'grey'
+  }
+
+  return (
+    <div className={regularStyles.fieldFristDauerBisMitarbeiter}>
+      <ControlLabel>Tage bis Frist Mitarbeiter</ControlLabel>
+      <StyledFristDauerBisMitarbeiter
+        color={color}
+        isPdf={isPdf}
+        className="formControlStatic"
+      >
+        {geschaeft.dauerBisFristMitarbeiter}
+      </StyledFristDauerBisMitarbeiter>
+    </div>
+  )
+}
 
 const Container = styled.div`
   grid-area: areaFristen;
@@ -46,11 +59,25 @@ const Container = styled.div`
   border: ${props => (props['data-isPdf'] ? '1px solid #CCC' : 'none')};
   border-bottom: ${props => (props['data-isPdf'] ? 'none' : 'inherit')};
 `
+const Title = styled.div`
+  font-weight: 900;
+  font-size: 16px;
+  grid-column: 1;
+`
 
 const enhance = compose(inject('store'), observer)
 
-const AreaFristen = ({ store, blur, change, nrOfFieldsBeforeFristen, onChangeDatePicker }) => {
-  const { activeId, geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
+const AreaFristen = ({
+  store,
+  blur,
+  change,
+  nrOfFieldsBeforeFristen,
+  onChangeDatePicker,
+}) => {
+  const {
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+  } = store.geschaefte
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
@@ -58,7 +85,7 @@ const AreaFristen = ({ store, blur, change, nrOfFieldsBeforeFristen, onChangeDat
 
   return (
     <Container data-isPdf={isPdf}>
-      <div className={styles.areaFristenTitle}>Fristen</div>
+      <Title>Fristen</Title>
       {!(!geschaeft.datumEingangAwel && isPdf) && (
         <DateField
           name="datumEingangAwel"
@@ -109,7 +136,9 @@ const AreaFristen = ({ store, blur, change, nrOfFieldsBeforeFristen, onChangeDat
           tabIndex={5 + nrOfFieldsBeforeFristen}
         />
       )}
-      {!!geschaeft.dauerBisFristMitarbeiter && fieldFristDauerBisMitarbeiter(geschaeft, styles)}
+      {(!!geschaeft.dauerBisFristMitarbeiter ||
+        geschaeft.dauerBisFristMitarbeiter === 0) &&
+        fieldFristDauerBisMitarbeiter(geschaeft, isPdf)}
       {!(!geschaeft.datumAusgangAwel && isPdf) && (
         <DateField
           name="datumAusgangAwel"
