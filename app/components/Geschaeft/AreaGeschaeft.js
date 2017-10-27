@@ -30,6 +30,28 @@ const Container = styled.div`
   border: ${props => (props.isPdf ? '1px solid #ccc' : 'none')};
   border-bottom: none;
 `
+const Title = styled.div`
+  font-weight: 900;
+  font-size: 16px;
+  grid-area: areaGeschaeftTitle;
+`
+const Gegenstand = styled.div`grid-area: fieldGegenstand;`
+const StyledTextarea = styled(Textarea)`
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  line-height: 1.42857143;
+  color: #555;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  &:focus {
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+      0 0 8px rgba(102, 175, 233, 0.6);
+  }
+`
 
 const enhance = compose(inject('store'), observer)
 
@@ -49,29 +71,27 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
 
   return (
     <Container>
-      <div className={styles.areaGeschaeftTitle}>Geschäft</div>
-      <div className={styles.fieldGegenstand}>
+      <Title>Geschäft</Title>
+      <Gegenstand>
         <ControlLabel>Gegenstand</ControlLabel>
-        <Textarea
+        <StyledTextarea
           value={geschaeft.gegenstand || ''}
           name="gegenstand"
           onChange={change}
           onBlur={blur}
           tabIndex={1 + tabsToAdd}
           autoFocus={!viewIsNarrow && !isPrintPreview}
-          className={styles.textarea}
         />
-      </div>
+      </Gegenstand>
       {!(!geschaeft.ausloeser && isPrintPreview) && (
         <div className={styles.fieldAusloeser}>
           <ControlLabel>Auslöser</ControlLabel>
-          <Textarea
+          <StyledTextarea
             value={geschaeft.ausloeser || ''}
             name="ausloeser"
             onChange={change}
             onBlur={blur}
             tabIndex={2 + tabsToAdd}
-            className={styles.textarea}
           />
         </div>
       )}
@@ -137,39 +157,36 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
       {!(!geschaeft.details && isPrintPreview) && (
         <div className={styles.fieldDetails}>
           <ControlLabel>Details</ControlLabel>
-          <Textarea
+          <StyledTextarea
             value={geschaeft.details || ''}
             name="details"
             onChange={change}
             onBlur={blur}
             tabIndex={7 + tabsToAdd}
-            className={styles.textarea}
           />
         </div>
       )}
       {!(!geschaeft.naechsterSchritt && isPrintPreview) && (
         <div className={styles.fieldNaechsterSchritt}>
           <ControlLabel>Nächster Schritt</ControlLabel>
-          <Textarea
+          <StyledTextarea
             value={geschaeft.naechsterSchritt || ''}
             name="naechsterSchritt"
             onChange={change}
             onBlur={blur}
             tabIndex={8 + tabsToAdd}
-            className={styles.textarea}
           />
         </div>
       )}
       {!(!geschaeft.vermerk && isPrintPreview) && (
         <div className={styles.fieldVermerk}>
           <ControlLabel>Vermerk</ControlLabel>
-          <Textarea
+          <StyledTextarea
             value={geschaeft.vermerk || ''}
             name="vermerk"
             onChange={change}
             onBlur={blur}
             tabIndex={9 + tabsToAdd}
-            className={styles.textarea}
           />
         </div>
       )}
@@ -177,13 +194,12 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
         <ControlLabel>
           Vermerk intern (in Berichten nicht angezeigt)
         </ControlLabel>
-        <Textarea
+        <StyledTextarea
           value={geschaeft.vermerkIntern || ''}
           name="vermerkIntern"
           onChange={change}
           onBlur={blur}
           tabIndex={9 + tabsToAdd}
-          className={styles.textarea}
         />
       </div>
     </Container>
