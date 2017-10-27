@@ -3,23 +3,15 @@ import { FormControl, ControlLabel } from 'react-bootstrap'
 import Textarea from 'react-textarea-autosize'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
 import regularStyles from './areaGeschaeft.css'
 import pdfStyles from './areaGeschaeftPdf.css'
 import createOptions from '../../src/createOptions'
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
-const AreaGeschaeft = ({
-  store,
-  blur,
-  change,
-  nrOfGFields,
-  viewIsNarrow,
-}) => {
+const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
   const {
     activeId,
     geschaeftePlusFilteredAndSorted: geschaefte,
@@ -29,21 +21,15 @@ const AreaGeschaeft = ({
   } = store.geschaefte
   const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
-  const geschaeft = geschaefte.find(g =>
-    g.idGeschaeft === activeId
-  ) || {}
+  const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
   const styles = isPrintPreview ? pdfStyles : regularStyles
   const tabsToAdd = viewIsNarrow ? nrOfGFields : 0
 
   return (
     <div className={styles.areaGeschaeft}>
-      <div className={styles.areaGeschaeftTitle}>
-        Geschäft
-      </div>
+      <div className={styles.areaGeschaeftTitle}>Geschäft</div>
       <div className={styles.fieldGegenstand}>
-        <ControlLabel>
-          Gegenstand
-        </ControlLabel>
+        <ControlLabel>Gegenstand</ControlLabel>
         <Textarea
           value={geschaeft.gegenstand || ''}
           name="gegenstand"
@@ -54,14 +40,9 @@ const AreaGeschaeft = ({
           className={styles.textarea}
         />
       </div>
-      {
-        !(!geschaeft.ausloeser && isPrintPreview) &&
-        <div
-          className={styles.fieldAusloeser}
-        >
-          <ControlLabel>
-            Auslöser
-          </ControlLabel>
+      {!(!geschaeft.ausloeser && isPrintPreview) && (
+        <div className={styles.fieldAusloeser}>
+          <ControlLabel>Auslöser</ControlLabel>
           <Textarea
             value={geschaeft.ausloeser || ''}
             name="ausloeser"
@@ -71,15 +52,10 @@ const AreaGeschaeft = ({
             className={styles.textarea}
           />
         </div>
-      }
-      {
-        !(!geschaeft.ort && isPrintPreview) &&
-        <div
-          className={styles.fieldOrt}
-        >
-          <ControlLabel>
-            Ort
-          </ControlLabel>
+      )}
+      {!(!geschaeft.ort && isPrintPreview) && (
+        <div className={styles.fieldOrt}>
+          <ControlLabel>Ort</ControlLabel>
           <FormControl
             type="text"
             value={geschaeft.ort || ''}
@@ -90,15 +66,10 @@ const AreaGeschaeft = ({
             tabIndex={3 + tabsToAdd}
           />
         </div>
-      }
-      {
-        !(!geschaeft.geschaeftsart && isPrintPreview) &&
-        <div
-          className={styles.fieldGeschaeftsart}
-        >
-          <ControlLabel>
-            Geschäftsart
-          </ControlLabel>
+      )}
+      {!(!geschaeft.geschaeftsart && isPrintPreview) && (
+        <div className={styles.fieldGeschaeftsart}>
+          <ControlLabel>Geschäftsart</ControlLabel>
           <FormControl
             componentClass="select"
             value={geschaeft.geschaeftsart || ''}
@@ -110,15 +81,10 @@ const AreaGeschaeft = ({
             {createOptions(geschaeftsartOptions)}
           </FormControl>
         </div>
-      }
-      {
-        !(!geschaeft.status && isPrintPreview) &&
-        <div
-          className={styles.fieldStatus}
-        >
-          <ControlLabel>
-            Status
-          </ControlLabel>
+      )}
+      {!(!geschaeft.status && isPrintPreview) && (
+        <div className={styles.fieldStatus}>
+          <ControlLabel>Status</ControlLabel>
           <FormControl
             componentClass="select"
             value={geschaeft.status || ''}
@@ -130,15 +96,10 @@ const AreaGeschaeft = ({
             {createOptions(statusOptions)}
           </FormControl>
         </div>
-      }
-      {
-        !(!geschaeft.abteilung && isPrintPreview) &&
-        <div
-          className={styles.fieldAbteilung}
-        >
-          <ControlLabel>
-            Abteilung
-          </ControlLabel>
+      )}
+      {!(!geschaeft.abteilung && isPrintPreview) && (
+        <div className={styles.fieldAbteilung}>
+          <ControlLabel>Abteilung</ControlLabel>
           <FormControl
             componentClass="select"
             value={geschaeft.abteilung || ''}
@@ -150,15 +111,10 @@ const AreaGeschaeft = ({
             {createOptions(abteilungOptions)}
           </FormControl>
         </div>
-        }
-      {
-        !(!geschaeft.details && isPrintPreview) &&
-        <div
-          className={styles.fieldDetails}
-        >
-          <ControlLabel>
-            Details
-          </ControlLabel>
+      )}
+      {!(!geschaeft.details && isPrintPreview) && (
+        <div className={styles.fieldDetails}>
+          <ControlLabel>Details</ControlLabel>
           <Textarea
             value={geschaeft.details || ''}
             name="details"
@@ -168,15 +124,10 @@ const AreaGeschaeft = ({
             className={styles.textarea}
           />
         </div>
-      }
-      {
-        !(!geschaeft.naechsterSchritt && isPrintPreview) &&
-        <div
-          className={styles.fieldNaechsterSchritt}
-        >
-          <ControlLabel>
-            Nächster Schritt
-          </ControlLabel>
+      )}
+      {!(!geschaeft.naechsterSchritt && isPrintPreview) && (
+        <div className={styles.fieldNaechsterSchritt}>
+          <ControlLabel>Nächster Schritt</ControlLabel>
           <Textarea
             value={geschaeft.naechsterSchritt || ''}
             name="naechsterSchritt"
@@ -186,15 +137,10 @@ const AreaGeschaeft = ({
             className={styles.textarea}
           />
         </div>
-      }
-      {
-        !(!geschaeft.vermerk && isPrintPreview) &&
-        <div
-          className={styles.fieldVermerk}
-        >
-          <ControlLabel>
-            Vermerk
-          </ControlLabel>
+      )}
+      {!(!geschaeft.vermerk && isPrintPreview) && (
+        <div className={styles.fieldVermerk}>
+          <ControlLabel>Vermerk</ControlLabel>
           <Textarea
             value={geschaeft.vermerk || ''}
             name="vermerk"
@@ -204,7 +150,7 @@ const AreaGeschaeft = ({
             className={styles.textarea}
           />
         </div>
-      }
+      )}
       <div className={styles.fieldVermerkIntern}>
         <ControlLabel>
           Vermerk intern (in Berichten nicht angezeigt)

@@ -1,25 +1,32 @@
 import React, { PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
-import styles from './areaFristen.css'
 import DateField from './DateField'
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const Container = styled.div`
+  grid-area: areaFristen;
+  background-color: white;
+  box-shadow: inset 1em 1em 2em rgb(252, 255, 194),
+    inset -1em -1em 2em rgb(252, 255, 194);
+  outline: 1px solid #efefef;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 2px;
+  padding: 8px;
+`
+const Title = styled.div`
+  font-weight: 900;
+  font-size: 16px;
+  grid-column: 1;
+`
 
-const AreaFristen = ({
-  values,
-  firstTabIndex,
-  change,
-  changeComparator,
-}) =>
-  <div className={styles.areaFristen}>
-    <div className={styles.areaFristenTitle}>
-      Fristen
-    </div>
+const enhance = compose(inject('store'), observer)
+
+const AreaFristen = ({ values, firstTabIndex, change, changeComparator }) => (
+  <Container>
+    <Title>Fristen</Title>
     <DateField
       name="datumEingangAwel"
       label="Datum des Eingangs im AWEL"
@@ -76,7 +83,8 @@ const AreaFristen = ({
       change={change}
       changeComparator={changeComparator}
     />
-  </div>
+  </Container>
+)
 
 AreaFristen.displayName = 'AreaFristen'
 
