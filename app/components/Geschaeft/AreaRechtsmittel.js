@@ -5,8 +5,6 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled from 'styled-components'
 
-import regularStyles from './areaRechtsmittel.css'
-import pdfStyles from './areaRechtsmittelPdf.css'
 import DateField from './DateField'
 import createOptions from '../../src/createOptions'
 
@@ -30,6 +28,32 @@ const Container = styled.div`
   border-bottom: none;
   border-left: none;
 `
+const Title = styled.div`
+  font-weight: 900;
+  font-size: 16px;
+  grid-area: areaRechtsmittelTitle;
+`
+const FieldInstanz = styled.div`grid-area: fieldInstanz;`
+const FieldEntscheidNr = styled.div`grid-area: fieldEntscheidNr;`
+const FieldEntscheidDatum = styled.div`grid-area: fieldEntscheidDatum;`
+const FieldErledigung = styled.div`grid-area: fieldErledigung;`
+const FieldRechtsmittelTxt = styled.div`grid-area: fieldRechtsmittelTxt;`
+const StyledTextarea = styled(Textarea)`
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  line-height: 1.42857143;
+  color: #555;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  &:focus {
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+      0 0 8px rgba(102, 175, 233, 0.6);
+  }
+`
 
 const enhance = compose(inject('store'), observer)
 
@@ -49,13 +73,12 @@ const AreaRechtsmittel = ({
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
-  const styles = isPdf ? pdfStyles : regularStyles
 
   return (
     <Container data-isPdf={isPdf}>
-      <div className={styles.areaRechtsmittelTitle}>Rekurs / Beschwerde</div>
+      <Title>Rekurs / Beschwerde</Title>
       {!(isPdf && !geschaeft.rechtsmittelInstanz) && (
-        <div className={styles.fieldInstanz}>
+        <FieldInstanz>
           <ControlLabel>Instanz</ControlLabel>
           <FormControl
             componentClass="select"
@@ -67,10 +90,10 @@ const AreaRechtsmittel = ({
           >
             {createOptions(rechtsmittelInstanzOptions)}
           </FormControl>
-        </div>
+        </FieldInstanz>
       )}
       {!(isPdf && !geschaeft.rechtsmittelEntscheidNr) && (
-        <div className={styles.fieldEntscheidNr}>
+        <FieldEntscheidNr>
           <ControlLabel>Entscheid Nr.</ControlLabel>
           <FormControl
             type="text"
@@ -81,10 +104,10 @@ const AreaRechtsmittel = ({
             bsSize="small"
             tabIndex={2 + nrOfFieldsBeforePv}
           />
-        </div>
+        </FieldEntscheidNr>
       )}
       {!(isPdf && !geschaeft.rechtsmittelEntscheidDatum) && (
-        <div className={styles.fieldEntscheidDatum}>
+        <FieldEntscheidDatum>
           <DateField
             name="rechtsmittelEntscheidDatum"
             label="Entscheid Datum"
@@ -93,10 +116,10 @@ const AreaRechtsmittel = ({
             onChangeDatePicker={onChangeDatePicker}
             tabIndex={3 + nrOfFieldsBeforePv}
           />
-        </div>
+        </FieldEntscheidDatum>
       )}
       {!(isPdf && !geschaeft.rechtsmittelErledigung) && (
-        <div className={styles.fieldErledigung}>
+        <FieldErledigung>
           <ControlLabel>Erledigung</ControlLabel>
           <FormControl
             componentClass="select"
@@ -108,20 +131,19 @@ const AreaRechtsmittel = ({
           >
             {createOptions(rechtsmittelErledigungOptions)}
           </FormControl>
-        </div>
+        </FieldErledigung>
       )}
       {!(isPdf && !geschaeft.rechtsmittelTxt) && (
-        <div className={styles.fieldRechtsmittelTxt}>
+        <FieldRechtsmittelTxt>
           <ControlLabel>Bemerkungen</ControlLabel>
-          <Textarea
+          <StyledTextarea
             value={geschaeft.rechtsmittelTxt || ''}
             name="rechtsmittelTxt"
             onChange={change}
             onBlur={blur}
             tabIndex={5 + nrOfFieldsBeforePv}
-            className={styles.textarea}
           />
-        </div>
+        </FieldRechtsmittelTxt>
       )}
     </Container>
   )

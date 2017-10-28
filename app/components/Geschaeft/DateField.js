@@ -10,16 +10,16 @@ import moment from 'moment'
 import DateRangePicker from 'react-bootstrap-daterangepicker'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
-import styles from './dateField.css'
 import getDateValidationStateDate from '../../src/getDateValidationStateDate'
 
 moment.locale('de')
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const StyledFormGroup = styled(FormGroup)`grid-column: 1;`
+const StyledDatePicker = styled(DateRangePicker)`cursor: pointer;`
+
+const enhance = compose(inject('store'), observer)
 
 const DateField = ({
   store,
@@ -34,9 +34,7 @@ const DateField = ({
     activeId,
     geschaeftePlusFilteredAndSorted: geschaefte,
   } = store.geschaefte
-  const geschaeft = geschaefte.find(g =>
-    g.idGeschaeft === activeId
-  ) || {}
+  const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
   /**
    * need to give addon no padding
    * and the originally addon's padding to the glyphicon
@@ -54,13 +52,10 @@ const DateField = ({
   }
 
   return (
-    <FormGroup
-      className={styles.field}
+    <StyledFormGroup
       validationState={getDateValidationStateDate(geschaeft[name])}
     >
-      <ControlLabel>
-        {label}
-      </ControlLabel>
+      <ControlLabel>{label}</ControlLabel>
       <InputGroup>
         <FormControl
           type="text"
@@ -72,21 +67,17 @@ const DateField = ({
           tabIndex={tabIndex}
         />
         <InputGroup.Addon style={datePickerAddonStyle}>
-          <DateRangePicker
+          <StyledDatePicker
             singleDatePicker
             drops="up"
             opens="left"
             onApply={onChangeDatePicker.bind(this, name)}
-            className={styles.datePicker}
           >
-            <Glyphicon
-              glyph="calendar"
-              style={datePickerCalendarStyle}
-            />
-          </DateRangePicker>
+            <Glyphicon glyph="calendar" style={datePickerCalendarStyle} />
+          </StyledDatePicker>
         </InputGroup.Addon>
       </InputGroup>
-    </FormGroup>
+    </StyledFormGroup>
   )
 }
 
