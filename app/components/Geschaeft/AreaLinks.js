@@ -7,23 +7,6 @@ import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
 import styled from 'styled-components'
 
-import regularStyles from './areaLinks.css'
-import pdfStyles from './areaLinksPdf.css'
-
-const StyledDropzone = styled(Dropzone)`
-  width: 100%;
-  height: 100%;
-  border-color: transparent;
-`
-const DropzoneInnerDiv = styled.div`
-  width: 100%;
-  height: 100%;
-  border-width: 2px;
-  border-color: #666;
-  border-style: dashed;
-  border-radius: 5px;
-  padding: 5px;
-`
 const Container = styled.div`
   grid-area: areaLinks;
   background-color: ${props =>
@@ -60,12 +43,48 @@ const Field = styled.div`
   border-bottom: thin solid #cecbcb;
   padding: 3px;
   align-items: center;
+  min-height: ${props => (props['data-isPdf'] ? 0 : '35px')};
   &:first-of-type {
     border-top: thin solid #cecbcb;
   }
   &:hover {
     background-color: #ceffe5;
   }
+`
+const UrlDiv = styled.div`
+  grid-column: 1 / span 1;
+  grid-column: 1;
+`
+const RemoveGlyphiconDiv = styled.div`
+  grid-column: 2 / span 1;
+  margin-top: -2px;
+  display: ${props => (props['data-isPdf'] ? 'none' : 'block')};
+`
+const RemoveGlyphicon = styled(Glyphicon)`
+  color: red;
+  font-size: 18px;
+  cursor: pointer;
+  display: ${props => (props['data-isPdf'] ? 'none' : 'block')};
+`
+const DropzoneContainer = styled.div`
+  grid-area: dropzone;
+  width: 100%;
+  height: 100%;
+  display: ${props => (props['data-isPdf'] ? 'none' : 'block')};
+`
+const StyledDropzone = styled(Dropzone)`
+  width: 100%;
+  height: 100%;
+  border-color: transparent;
+`
+const DropzoneInnerDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  border-width: 2px;
+  border-color: #666;
+  border-style: dashed;
+  border-radius: 5px;
+  padding: 5px;
 `
 
 const enhance = compose(
@@ -75,8 +94,6 @@ const enhance = compose(
       const { store } = props
       const { linkNewCreate } = store
       const { activeId } = store.geschaefte
-      console.log('AreaLinks: activeId:', activeId)
-      console.log('AreaLinks: path:', files[0].path)
       linkNewCreate(activeId, files[0].path)
     },
   }),
@@ -87,18 +104,16 @@ const AreaLinks = ({ store, onDrop }) => {
   const { linkRemove } = store
   const { activeId, links } = store.geschaefte
   const myLinks = links.filter(l => l.idGeschaeft === activeId)
-  console.log('AreaLinks: myLinks:', myLinks)
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
-  const styles = isPdf ? pdfStyles : regularStyles
 
   return (
     <Container data-isPdf={isPdf}>
       <Title>Links</Title>
       <Links data-isPdf={isPdf}>
         {myLinks.map(link => (
-          <Field key={`${link.idGeschaeft}${link.url}`}>
-            <div className={styles.url}>
+          <Field key={`${link.idGeschaeft}${link.url}`} data-isPdf={isPdf}>
+            <UrlDiv>
               <a
                 href={link.url}
                 onClick={event => {
@@ -108,19 +123,18 @@ const AreaLinks = ({ store, onDrop }) => {
               >
                 {link.url}
               </a>
-            </div>
-            <div className={styles.deleteGlyphiconDiv}>
-              <Glyphicon
+            </UrlDiv>
+            <RemoveGlyphiconDiv data-isPdf={isPdf}>
+              <RemoveGlyphicon
                 glyph="remove-circle"
                 onClick={() => linkRemove(activeId, link.url)}
-                className={styles.removeGlyphicon}
                 title="Link entfernen"
               />
-            </div>
+            </RemoveGlyphiconDiv>
           </Field>
         ))}
       </Links>
-      <div className={styles.dropzoneContainer}>
+      <DropzoneContainer data-isPdf={isPdf}>
         <StyledDropzone onDrop={onDrop}>
           {({ isDragActive, isDragReject }) => {
             if (isDragActive) {
@@ -145,7 +159,7 @@ const AreaLinks = ({ store, onDrop }) => {
             )
           }}
         </StyledDropzone>
-      </div>
+      </DropzoneContainer>
     </Container>
   )
 }
