@@ -1,8 +1,3 @@
-/**
- * WEIRD
- * This component is never shown when isPdf (see Geschaeft.js)
- * but it works hard to show radios nicely in print...
- */
 import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel, Radio } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
@@ -12,103 +7,6 @@ import styled from 'styled-components'
 import createOptions from '../../src/createOptions'
 
 const enhance = compose(inject('store'), observer)
-
-const parlVorstossStufe = (isPdf, geschaeft, change, nrOfFieldsBeforePv) => {
-  if (!isPdf) {
-    return (
-      <div>
-        <ControlLabel>Stufe</ControlLabel>
-        <Radio
-          data-value="1"
-          checked={geschaeft.parlVorstossStufe === '1'}
-          onChange={change}
-          bsSize="small"
-          name="parlVorstossStufe"
-          tabIndex={2 + nrOfFieldsBeforePv}
-        >
-          1: nicht überwiesen
-        </Radio>
-        <Radio
-          data-value="2"
-          checked={geschaeft.parlVorstossStufe === '2'}
-          name="parlVorstossStufe"
-          onChange={change}
-          bsSize="small"
-          tabIndex={3 + nrOfFieldsBeforePv}
-        >
-          2: überwiesen
-        </Radio>
-      </div>
-    )
-  }
-  let value = ''
-  if (geschaeft.parlVorstossStufe === '1') value = '1: nicht überwiesen'
-  if (geschaeft.parlVorstossStufe === '2') value = '2: überwiesen'
-  return (
-    <div>
-      <ControlLabel>Stufe</ControlLabel>
-      <FormControl
-        type="text"
-        defaultValue={value}
-        bsSize="small"
-        tabIndex={2 + nrOfFieldsBeforePv}
-      />
-    </div>
-  )
-}
-
-const parlVorstossZustaendigkeit = (
-  isPdf,
-  geschaeft,
-  change,
-  nrOfFieldsBeforePv
-) => {
-  if (!isPdf) {
-    return (
-      <div>
-        <ControlLabel>Zuständigkeit</ControlLabel>
-        <Radio
-          data-value="hauptzuständig"
-          checked={
-            geschaeft.parlVorstossZustaendigkeitAwel === 'hauptzuständig'
-          }
-          name="parlVorstossZustaendigkeitAwel"
-          onChange={change}
-          bsSize="small"
-          tabIndex={6 + nrOfFieldsBeforePv}
-        >
-          haupt
-        </Radio>
-        <Radio
-          data-value="mitberichtzuständig"
-          checked={
-            geschaeft.parlVorstossZustaendigkeitAwel === 'mitberichtzuständig'
-          }
-          name="parlVorstossZustaendigkeitAwel"
-          onChange={change}
-          bsSize="small"
-          tabIndex={7 + nrOfFieldsBeforePv}
-        >
-          mitbericht
-        </Radio>
-      </div>
-    )
-  }
-  const value = geschaeft.parlVorstossZustaendigkeitAwel
-    ? geschaeft.parlVorstossZustaendigkeitAwel.replace('zuständig', '')
-    : ''
-  return (
-    <div>
-      <ControlLabel>Zuständigkeit</ControlLabel>
-      <FormControl
-        type="text"
-        defaultValue={value}
-        bsSize="small"
-        tabIndex={6 + nrOfFieldsBeforePv}
-      />
-    </div>
-  )
-}
 
 const Container = styled.div`
   grid-area: areaForGeschaeftsart;
@@ -143,6 +41,12 @@ const AreaParlVorstoss = ({ store, nrOfFieldsBeforePv, change }) => {
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
+  let stufeValue = ''
+  if (geschaeft.parlVorstossStufe === '1') stufeValue = '1: nicht überwiesen'
+  if (geschaeft.parlVorstossStufe === '2') stufeValue = '2: überwiesen'
+  const zustaendigkeitValue = geschaeft.parlVorstossZustaendigkeitAwel
+    ? geschaeft.parlVorstossZustaendigkeitAwel.replace('zuständig', '')
+    : ''
 
   return (
     <Container data-isPdf={isPdf}>
@@ -164,16 +68,86 @@ const AreaParlVorstoss = ({ store, nrOfFieldsBeforePv, change }) => {
       )}
       {!(isPdf && !geschaeft.parlVorstossStufe) && (
         <FieldStufe>
-          {parlVorstossStufe(isPdf, geschaeft, change, nrOfFieldsBeforePv)}
+          {!isPdf && (
+            <div>
+              <ControlLabel>Stufe</ControlLabel>
+              <Radio
+                data-value="1"
+                checked={geschaeft.parlVorstossStufe === '1'}
+                onChange={change}
+                bsSize="small"
+                name="parlVorstossStufe"
+                tabIndex={2 + nrOfFieldsBeforePv}
+              >
+                1: nicht überwiesen
+              </Radio>
+              <Radio
+                data-value="2"
+                checked={geschaeft.parlVorstossStufe === '2'}
+                name="parlVorstossStufe"
+                onChange={change}
+                bsSize="small"
+                tabIndex={3 + nrOfFieldsBeforePv}
+              >
+                2: überwiesen
+              </Radio>
+            </div>
+          )}
+          {isPdf && (
+            <div>
+              <ControlLabel>Stufe</ControlLabel>
+              <FormControl
+                type="text"
+                defaultValue={stufeValue}
+                bsSize="small"
+                tabIndex={2 + nrOfFieldsBeforePv}
+              />
+            </div>
+          )}
         </FieldStufe>
       )}
       {!(isPdf && !geschaeft.parlVorstossZustaendigkeitAwel) && (
         <FieldZustaendigkeit>
-          {parlVorstossZustaendigkeit(
-            isPdf,
-            geschaeft,
-            change,
-            nrOfFieldsBeforePv
+          {isPdf && (
+            <div>
+              <ControlLabel>Zuständigkeit</ControlLabel>
+              <FormControl
+                type="text"
+                defaultValue={zustaendigkeitValue}
+                bsSize="small"
+                tabIndex={6 + nrOfFieldsBeforePv}
+              />
+            </div>
+          )}
+          {!isPdf && (
+            <div>
+              <ControlLabel>Zuständigkeit</ControlLabel>
+              <Radio
+                data-value="hauptzuständig"
+                checked={
+                  geschaeft.parlVorstossZustaendigkeitAwel === 'hauptzuständig'
+                }
+                name="parlVorstossZustaendigkeitAwel"
+                onChange={change}
+                bsSize="small"
+                tabIndex={6 + nrOfFieldsBeforePv}
+              >
+                haupt
+              </Radio>
+              <Radio
+                data-value="mitberichtzuständig"
+                checked={
+                  geschaeft.parlVorstossZustaendigkeitAwel ===
+                  'mitberichtzuständig'
+                }
+                name="parlVorstossZustaendigkeitAwel"
+                onChange={change}
+                bsSize="small"
+                tabIndex={7 + nrOfFieldsBeforePv}
+              >
+                mitbericht
+              </Radio>
+            </div>
           )}
         </FieldZustaendigkeit>
       )}
