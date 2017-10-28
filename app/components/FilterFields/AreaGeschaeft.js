@@ -3,15 +3,44 @@ import { ControlLabel } from 'react-bootstrap'
 import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
-import styles from './areaGeschaeft.css'
 import SelectInput from './SelectInput'
 import Input from './Input'
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const Container = styled.div`
+  grid-area: areaGeschaeft;
+  background-color: white;
+  box-shadow: inset 1em 1em 2em rgb(255, 186, 137),
+    inset -1em -1em 2em rgb(255, 186, 137);
+  outline: 1px solid #efefef;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: auto;
+  grid-template-areas: 'areaGeschaeftTitle' 'fieldGegenstand' 'fieldAusloeser'
+    'fieldOrt' 'fieldGeschaeftsart' 'fieldStatus' 'fieldAbteilung'
+    'fieldDetails' 'fieldNaechsterSchritt' 'fieldVermerk' 'fieldVermerkIntern';
+  grid-column-gap: 5px;
+  grid-row-gap: 2px;
+  padding: 8px;
+`
+const Title = styled.div`
+  font-weight: 900;
+  font-size: 16px;
+  grid-area: areaGeschaeftTitle;
+`
+const FieldGegenstand = styled.div`grid-area: fieldGegenstand;`
+const FieldAusloeser = styled.div`grid-area: fieldAusloeser;`
+const FieldOrt = styled.div`grid-area: fieldOrt;`
+const FieldGeschaeftsart = styled.div`grid-area: fieldGeschaeftsart;`
+const FieldStatus = styled.div`grid-area: fieldStatus;`
+const FieldAbteilung = styled.div`grid-area: fieldAbteilung;`
+const FieldDetails = styled.div`grid-area: fieldDetails;`
+const FieldNaechsterSchritt = styled.div`grid-area: fieldNaechsterSchritt;`
+const FieldVermerk = styled.div`grid-area: fieldVermerk;`
+const FieldVermerkIntern = styled.div`grid-area: fieldVermerkIntern;`
+
+const enhance = compose(inject('store'), observer)
 
 const AreaGeschaeft = ({
   store,
@@ -27,14 +56,10 @@ const AreaGeschaeft = ({
   } = store.geschaefte
 
   return (
-    <div className={styles.areaGeschaeft}>
-      <div className={styles.areaGeschaeftTitle}>
-        Geschäft
-      </div>
-      <div className={styles.fieldGegenstand}>
-        <ControlLabel>
-          Gegenstand
-        </ControlLabel>
+    <Container>
+      <Title>Geschäft</Title>
+      <FieldGegenstand>
+        <ControlLabel>Gegenstand</ControlLabel>
         <Input
           name="gegenstand"
           change={change}
@@ -42,11 +67,9 @@ const AreaGeschaeft = ({
           changeComparator={changeComparator}
           tabIndex={1 + firstTabIndex}
         />
-      </div>
-      <div className={styles.fieldAusloeser}>
-        <ControlLabel>
-          Auslöser
-        </ControlLabel>
+      </FieldGegenstand>
+      <FieldAusloeser>
+        <ControlLabel>Auslöser</ControlLabel>
         <Input
           name="ausloeser"
           change={change}
@@ -54,11 +77,9 @@ const AreaGeschaeft = ({
           changeComparator={changeComparator}
           tabIndex={2 + firstTabIndex}
         />
-      </div>
-      <div className={styles.fieldOrt}>
-        <ControlLabel>
-          Ort
-        </ControlLabel>
+      </FieldAusloeser>
+      <FieldOrt>
+        <ControlLabel>Ort</ControlLabel>
         <Input
           name="ort"
           change={change}
@@ -66,11 +87,9 @@ const AreaGeschaeft = ({
           changeComparator={changeComparator}
           tabIndex={3 + firstTabIndex}
         />
-      </div>
-      <div className={styles.fieldGeschaeftsart}>
-        <ControlLabel>
-          Geschäftsart
-        </ControlLabel>
+      </FieldOrt>
+      <FieldGeschaeftsart>
+        <ControlLabel>Geschäftsart</ControlLabel>
         <SelectInput
           name="geschaeftsart"
           change={change}
@@ -79,11 +98,9 @@ const AreaGeschaeft = ({
           tabIndex={4 + firstTabIndex}
           options={toJS(geschaeftsartOptions)}
         />
-      </div>
-      <div className={styles.fieldStatus}>
-        <ControlLabel>
-          Status
-        </ControlLabel>
+      </FieldGeschaeftsart>
+      <FieldStatus>
+        <ControlLabel>Status</ControlLabel>
         <SelectInput
           name="status"
           change={change}
@@ -92,11 +109,9 @@ const AreaGeschaeft = ({
           tabIndex={5 + firstTabIndex}
           options={toJS(statusOptions)}
         />
-      </div>
-      <div className={styles.fieldAbteilung}>
-        <ControlLabel>
-          Abteilung
-        </ControlLabel>
+      </FieldStatus>
+      <FieldAbteilung>
+        <ControlLabel>Abteilung</ControlLabel>
         <SelectInput
           name="abteilung"
           change={change}
@@ -105,11 +120,9 @@ const AreaGeschaeft = ({
           tabIndex={6 + firstTabIndex}
           options={toJS(abteilungOptions)}
         />
-      </div>
-      <div className={styles.fieldDetails}>
-        <ControlLabel>
-          Details
-        </ControlLabel>
+      </FieldAbteilung>
+      <FieldDetails>
+        <ControlLabel>Details</ControlLabel>
         <Input
           name="details"
           change={change}
@@ -117,11 +130,9 @@ const AreaGeschaeft = ({
           changeComparator={changeComparator}
           tabIndex={7 + firstTabIndex}
         />
-      </div>
-      <div className={styles.fieldNaechsterSchritt}>
-        <ControlLabel>
-          Nächster Schritt
-        </ControlLabel>
+      </FieldDetails>
+      <FieldNaechsterSchritt>
+        <ControlLabel>Nächster Schritt</ControlLabel>
         <Input
           name="naechsterSchritt"
           change={change}
@@ -129,11 +140,9 @@ const AreaGeschaeft = ({
           changeComparator={changeComparator}
           tabIndex={8 + firstTabIndex}
         />
-      </div>
-      <div className={styles.fieldVermerk}>
-        <ControlLabel>
-          Vermerk
-        </ControlLabel>
+      </FieldNaechsterSchritt>
+      <FieldVermerk>
+        <ControlLabel>Vermerk</ControlLabel>
         <Input
           name="vermerk"
           change={change}
@@ -141,8 +150,8 @@ const AreaGeschaeft = ({
           changeComparator={changeComparator}
           tabIndex={9 + firstTabIndex}
         />
-      </div>
-      <div className={styles.fieldVermerkIntern}>
+      </FieldVermerk>
+      <FieldVermerkIntern>
         <ControlLabel>
           Vermerk intern (in Berichten nicht angezeigt)
         </ControlLabel>
@@ -153,8 +162,8 @@ const AreaGeschaeft = ({
           changeComparator={changeComparator}
           tabIndex={10 + firstTabIndex}
         />
-      </div>
-    </div>
+      </FieldVermerkIntern>
+    </Container>
   )
 }
 
