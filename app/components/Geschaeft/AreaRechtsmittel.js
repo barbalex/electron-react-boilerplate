@@ -3,6 +3,7 @@ import { FormControl, ControlLabel } from 'react-bootstrap'
 import Textarea from 'react-textarea-autosize'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
 import regularStyles from './areaRechtsmittel.css'
 import pdfStyles from './areaRechtsmittelPdf.css'
@@ -11,7 +12,13 @@ import createOptions from '../../src/createOptions'
 
 const enhance = compose(inject('store'), observer)
 
-const AreaRechtsmittel = ({ store, nrOfFieldsBeforePv, change, blur, onChangeDatePicker }) => {
+const AreaRechtsmittel = ({
+  store,
+  nrOfFieldsBeforePv,
+  change,
+  blur,
+  onChangeDatePicker,
+}) => {
   const {
     activeId,
     geschaeftePlusFilteredAndSorted: geschaefte,
@@ -19,14 +26,14 @@ const AreaRechtsmittel = ({ store, nrOfFieldsBeforePv, change, blur, onChangeDat
     rechtsmittelInstanzOptions,
   } = store.geschaefte
   const path = store.history.location.pathname
-  const isPrintPreview = path === '/geschaeftPdf'
+  const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
-  const styles = isPrintPreview ? pdfStyles : regularStyles
+  const styles = isPdf ? pdfStyles : regularStyles
 
   return (
     <div className={styles.areaForGeschaeftsart}>
       <div className={styles.areaRechtsmittelTitle}>Rekurs / Beschwerde</div>
-      {!(isPrintPreview && !geschaeft.rechtsmittelInstanz) && (
+      {!(isPdf && !geschaeft.rechtsmittelInstanz) && (
         <div className={styles.fieldInstanz}>
           <ControlLabel>Instanz</ControlLabel>
           <FormControl
@@ -41,7 +48,7 @@ const AreaRechtsmittel = ({ store, nrOfFieldsBeforePv, change, blur, onChangeDat
           </FormControl>
         </div>
       )}
-      {!(isPrintPreview && !geschaeft.rechtsmittelEntscheidNr) && (
+      {!(isPdf && !geschaeft.rechtsmittelEntscheidNr) && (
         <div className={styles.fieldEntscheidNr}>
           <ControlLabel>Entscheid Nr.</ControlLabel>
           <FormControl
@@ -55,7 +62,7 @@ const AreaRechtsmittel = ({ store, nrOfFieldsBeforePv, change, blur, onChangeDat
           />
         </div>
       )}
-      {!(isPrintPreview && !geschaeft.rechtsmittelEntscheidDatum) && (
+      {!(isPdf && !geschaeft.rechtsmittelEntscheidDatum) && (
         <div className={styles.fieldEntscheidDatum}>
           <DateField
             name="rechtsmittelEntscheidDatum"
@@ -67,7 +74,7 @@ const AreaRechtsmittel = ({ store, nrOfFieldsBeforePv, change, blur, onChangeDat
           />
         </div>
       )}
-      {!(isPrintPreview && !geschaeft.rechtsmittelErledigung) && (
+      {!(isPdf && !geschaeft.rechtsmittelErledigung) && (
         <div className={styles.fieldErledigung}>
           <ControlLabel>Erledigung</ControlLabel>
           <FormControl
@@ -82,7 +89,7 @@ const AreaRechtsmittel = ({ store, nrOfFieldsBeforePv, change, blur, onChangeDat
           </FormControl>
         </div>
       )}
-      {!(isPrintPreview && !geschaeft.rechtsmittelTxt) && (
+      {!(isPdf && !geschaeft.rechtsmittelTxt) && (
         <div className={styles.fieldRechtsmittelTxt}>
           <ControlLabel>Bemerkungen</ControlLabel>
           <Textarea
