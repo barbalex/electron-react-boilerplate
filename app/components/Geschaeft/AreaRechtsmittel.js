@@ -10,6 +10,27 @@ import pdfStyles from './areaRechtsmittelPdf.css'
 import DateField from './DateField'
 import createOptions from '../../src/createOptions'
 
+const Container = styled.div`
+  grid-area: areaForGeschaeftsart;
+  background-color: rgb(255, 237, 199);
+  display: grid;
+  grid-template-columns: ${props =>
+    props['data-isPdf']
+      ? 'calc((100% - 8px) * 0.4) calc((100% - 8px) * 0.6)'
+      : 'calc(100% - 138px) 130px'};
+  grid-template-rows: auto;
+  grid-template-areas: 'areaRechtsmittelTitle areaRechtsmittelTitle'
+    'fieldInstanz fieldInstanz' 'fieldEntscheidNr fieldEntscheidDatum'
+    'fieldErledigung fieldErledigung'
+    'fieldRechtsmittelTxt fieldRechtsmittelTxt';
+  grid-column-gap: 8px;
+  grid-row-gap: 8px;
+  padding: 8px;
+  border: ${props => (props['data-isPdf'] ? '1px solid #ccc' : 'none')};
+  border-bottom: none;
+  border-left: none;
+`
+
 const enhance = compose(inject('store'), observer)
 
 const AreaRechtsmittel = ({
@@ -31,7 +52,7 @@ const AreaRechtsmittel = ({
   const styles = isPdf ? pdfStyles : regularStyles
 
   return (
-    <div className={styles.areaForGeschaeftsart}>
+    <Container data-isPdf={isPdf}>
       <div className={styles.areaRechtsmittelTitle}>Rekurs / Beschwerde</div>
       {!(isPdf && !geschaeft.rechtsmittelInstanz) && (
         <div className={styles.fieldInstanz}>
@@ -102,7 +123,7 @@ const AreaRechtsmittel = ({
           />
         </div>
       )}
-    </div>
+    </Container>
   )
 }
 
