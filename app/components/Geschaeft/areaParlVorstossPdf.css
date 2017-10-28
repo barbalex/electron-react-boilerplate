@@ -3,23 +3,6 @@
   font-size: 16px;
 }
 
-.areaForGeschaeftsart {
-  grid-area: areaForGeschaeftsart;
-  background-color: rgb(255, 237, 199);
-  display: grid;
-  grid-template-columns: 60% 40%;
-  grid-template-rows: auto;
-  grid-template-areas:
-    "areaParlVorstTitle areaParlVorstTitle"
-    "fieldParlVorstossTyp fieldParlVorstossTyp"
-    "fieldStufe fieldZustaendigkeit";
-  grid-gap: 15px 8px;
-  padding: 8px;
-  border: 1px solid #CCC;
-  border-bottom: none;
-  border-left: none;
-}
-
 .areaParlVorstTitle {
   composes: areaTitle;
   grid-area: areaParlVorstTitle;

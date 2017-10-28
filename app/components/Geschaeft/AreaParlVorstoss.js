@@ -10,13 +10,8 @@ import createOptions from '../../src/createOptions'
 
 const enhance = compose(inject('store'), observer)
 
-const parlVorstossStufe = (
-  isPrintPreview,
-  geschaeft,
-  change,
-  nrOfFieldsBeforePv
-) => {
-  if (!isPrintPreview) {
+const parlVorstossStufe = (isPdf, geschaeft, change, nrOfFieldsBeforePv) => {
+  if (!isPdf) {
     return (
       <div>
         <ControlLabel>Stufe</ControlLabel>
@@ -60,12 +55,12 @@ const parlVorstossStufe = (
 }
 
 const parlVorstossZustaendigkeit = (
-  isPrintPreview,
+  isPdf,
   geschaeft,
   change,
   nrOfFieldsBeforePv
 ) => {
-  if (!isPrintPreview) {
+  if (!isPdf) {
     return (
       <div>
         <ControlLabel>Zuständigkeit</ControlLabel>
@@ -112,6 +107,22 @@ const parlVorstossZustaendigkeit = (
   )
 }
 
+const Container = styled.div`
+  grid-area: areaForGeschaeftsart;
+  background-color: rgb(255, 237, 199);
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-template-rows: auto;
+  grid-template-areas: 'areaParlVorstTitle areaParlVorstTitle'
+    'fieldParlVorstossTyp fieldParlVorstossTyp' 'fieldStufe fieldZustaendigkeit';
+  grid-gap: 15px 8px;
+  padding: 8px;
+  padding-right: 15px;
+  border: ${props => (props['data-isPdf'] ? '1px solid #ccc' : 'none')};
+  border-bottom: none;
+  border-left: none;
+`
+
 const AreaParlVorstoss = ({ store, nrOfFieldsBeforePv, change }) => {
   const {
     activeId,
@@ -119,16 +130,16 @@ const AreaParlVorstoss = ({ store, nrOfFieldsBeforePv, change }) => {
     parlVorstossTypOptions,
   } = store.geschaefte
   const path = store.history.location.pathname
-  const isPrintPreview = path === '/geschaeftPdf'
+  const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
-  const styles = isPrintPreview ? pdfStyles : regularStyles
+  const styles = isPdf ? pdfStyles : regularStyles
 
   return (
-    <div className={styles.areaForGeschaeftsart}>
+    <Container data-isPdf={isPdf}>
       <div className={styles.areaParlVorstTitle}>
         Parlamentarischer Vorstoss
       </div>
-      {!(isPrintPreview && !geschaeft.parlVorstossTyp) && (
+      {!(isPdf && !geschaeft.parlVorstossTyp) && (
         <div className={styles.fieldParlVorstossTyp}>
           <ControlLabel>Typ</ControlLabel>
           <FormControl
@@ -143,27 +154,22 @@ const AreaParlVorstoss = ({ store, nrOfFieldsBeforePv, change }) => {
           </FormControl>
         </div>
       )}
-      {!(isPrintPreview && !geschaeft.parlVorstossStufe) && (
+      {!(isPdf && !geschaeft.parlVorstossStufe) && (
         <div className={styles.fieldStufe}>
-          {parlVorstossStufe(
-            isPrintPreview,
-            geschaeft,
-            change,
-            nrOfFieldsBeforePv
-          )}
+          {parlVorstossStufe(isPdf, geschaeft, change, nrOfFieldsBeforePv)}
         </div>
       )}
-      {!(isPrintPreview && !geschaeft.parlVorstossZustaendigkeitAwel) && (
+      {!(isPdf && !geschaeft.parlVorstossZustaendigkeitAwel) && (
         <div className={styles.fieldZustaendigkeit}>
           {parlVorstossZustaendigkeit(
-            isPrintPreview,
+            isPdf,
             geschaeft,
             change,
             nrOfFieldsBeforePv
           )}
         </div>
       )}
-    </div>
+    </Container>
   )
 }
 
