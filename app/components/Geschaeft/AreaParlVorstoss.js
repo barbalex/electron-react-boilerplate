@@ -1,33 +1,25 @@
 import React, { PropTypes } from 'react'
-import {
-  FormControl,
-  ControlLabel,
-  Radio,
-} from 'react-bootstrap'
+import { FormControl, ControlLabel, Radio } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
 import regularStyles from './areaParlVorstoss.css'
 import pdfStyles from './areaParlVorstossPdf.css'
 import createOptions from '../../src/createOptions'
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 const parlVorstossStufe = (
   isPrintPreview,
   geschaeft,
   change,
-  nrOfFieldsBeforePv,
+  nrOfFieldsBeforePv
 ) => {
   if (!isPrintPreview) {
     return (
       <div>
-        <ControlLabel>
-          Stufe
-        </ControlLabel>
+        <ControlLabel>Stufe</ControlLabel>
         <Radio
           data-value="1"
           checked={geschaeft.parlVorstossStufe === '1'}
@@ -56,9 +48,7 @@ const parlVorstossStufe = (
   if (geschaeft.parlVorstossStufe === '2') value = '2: überwiesen'
   return (
     <div>
-      <ControlLabel>
-        Stufe
-      </ControlLabel>
+      <ControlLabel>Stufe</ControlLabel>
       <FormControl
         type="text"
         defaultValue={value}
@@ -73,17 +63,17 @@ const parlVorstossZustaendigkeit = (
   isPrintPreview,
   geschaeft,
   change,
-  nrOfFieldsBeforePv,
+  nrOfFieldsBeforePv
 ) => {
   if (!isPrintPreview) {
     return (
       <div>
-        <ControlLabel>
-          Zuständigkeit
-        </ControlLabel>
+        <ControlLabel>Zuständigkeit</ControlLabel>
         <Radio
           data-value="hauptzuständig"
-          checked={geschaeft.parlVorstossZustaendigkeitAwel === 'hauptzuständig'}
+          checked={
+            geschaeft.parlVorstossZustaendigkeitAwel === 'hauptzuständig'
+          }
           name="parlVorstossZustaendigkeitAwel"
           onChange={change}
           bsSize="small"
@@ -93,7 +83,9 @@ const parlVorstossZustaendigkeit = (
         </Radio>
         <Radio
           data-value="mitberichtzuständig"
-          checked={geschaeft.parlVorstossZustaendigkeitAwel === 'mitberichtzuständig'}
+          checked={
+            geschaeft.parlVorstossZustaendigkeitAwel === 'mitberichtzuständig'
+          }
           name="parlVorstossZustaendigkeitAwel"
           onChange={change}
           bsSize="small"
@@ -104,16 +96,12 @@ const parlVorstossZustaendigkeit = (
       </div>
     )
   }
-  const value = (
-    geschaeft.parlVorstossZustaendigkeitAwel ?
-    geschaeft.parlVorstossZustaendigkeitAwel.replace('zuständig', '') :
-    ''
-  )
+  const value = geschaeft.parlVorstossZustaendigkeitAwel
+    ? geschaeft.parlVorstossZustaendigkeitAwel.replace('zuständig', '')
+    : ''
   return (
     <div>
-      <ControlLabel>
-        Zuständigkeit
-      </ControlLabel>
+      <ControlLabel>Zuständigkeit</ControlLabel>
       <FormControl
         type="text"
         defaultValue={value}
@@ -124,11 +112,7 @@ const parlVorstossZustaendigkeit = (
   )
 }
 
-const AreaParlVorstoss = ({
-  store,
-  nrOfFieldsBeforePv,
-  change,
-}) => {
+const AreaParlVorstoss = ({ store, nrOfFieldsBeforePv, change }) => {
   const {
     activeId,
     geschaeftePlusFilteredAndSorted: geschaefte,
@@ -136,9 +120,7 @@ const AreaParlVorstoss = ({
   } = store.geschaefte
   const path = store.history.location.pathname
   const isPrintPreview = path === '/geschaeftPdf'
-  const geschaeft = geschaefte.find(g =>
-    g.idGeschaeft === activeId
-  ) || {}
+  const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
   const styles = isPrintPreview ? pdfStyles : regularStyles
 
   return (
@@ -146,12 +128,9 @@ const AreaParlVorstoss = ({
       <div className={styles.areaParlVorstTitle}>
         Parlamentarischer Vorstoss
       </div>
-      {
-        !(isPrintPreview && !geschaeft.parlVorstossTyp) &&
+      {!(isPrintPreview && !geschaeft.parlVorstossTyp) && (
         <div className={styles.fieldParlVorstossTyp}>
-          <ControlLabel>
-            Typ
-          </ControlLabel>
+          <ControlLabel>Typ</ControlLabel>
           <FormControl
             componentClass="select"
             value={geschaeft.parlVorstossTyp || ''}
@@ -163,19 +142,27 @@ const AreaParlVorstoss = ({
             {createOptions(parlVorstossTypOptions)}
           </FormControl>
         </div>
-      }
-      {
-        !(isPrintPreview && !geschaeft.parlVorstossStufe) &&
+      )}
+      {!(isPrintPreview && !geschaeft.parlVorstossStufe) && (
         <div className={styles.fieldStufe}>
-          {parlVorstossStufe(isPrintPreview, geschaeft, change, nrOfFieldsBeforePv)}
+          {parlVorstossStufe(
+            isPrintPreview,
+            geschaeft,
+            change,
+            nrOfFieldsBeforePv
+          )}
         </div>
-      }
-      {
-        !(isPrintPreview && !geschaeft.parlVorstossZustaendigkeitAwel) &&
+      )}
+      {!(isPrintPreview && !geschaeft.parlVorstossZustaendigkeitAwel) && (
         <div className={styles.fieldZustaendigkeit}>
-          {parlVorstossZustaendigkeit(isPrintPreview, geschaeft, change, nrOfFieldsBeforePv)}
+          {parlVorstossZustaendigkeit(
+            isPrintPreview,
+            geschaeft,
+            change,
+            nrOfFieldsBeforePv
+          )}
         </div>
-      }
+      )}
     </div>
   )
 }
