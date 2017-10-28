@@ -81,10 +81,10 @@ const LabelNrDiv = styled.div`
   bottom: 1px;
 `
 // eslint-disable-next-line no-unused-vars
-const Slash = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
-  margin-top: ${(props) => (props.isPrintPreview ? '-3px' : '2px')};
-  font-size: ${(props) => (props.isPrintPreview ? '18px' : '22px')};
-  height: ${(props) => (props.isPrintPreview ? '17px' : 'auto')};
+const Slash = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
+  margin-top: ${(props) => (props.isPdf ? '-3px' : '2px')};
+  font-size: ${(props) => (props.isPdf ? '18px' : '22px')};
+  height: ${(props) => (props.isPdf ? '17px' : 'auto')};
   color: #757575;
   margin-left: 1px;
 `
@@ -98,9 +98,9 @@ const SlashKr = styled(Slash)`
   grid-area: slashKr;
 `
 // eslint-disable-next-line no-unused-vars
-const SlashBvv = styled(({ isPrintPreview, children, ...rest }) => <Slash {...rest}>{children}</Slash>)`
+const SlashBvv = styled(({ isPdf, children, ...rest }) => <Slash {...rest}>{children}</Slash>)`
   grid-area: slashBvv;
-  margin-top: ${(props) => (props.isPrintPreview ? '-7px' : 'inherit')};
+  margin-top: ${(props) => (props.isPdf ? '-7px' : 'inherit')};
   div {
     margin-left: -1px;
   }
@@ -109,11 +109,11 @@ const SlashRrb = styled(Slash)`
   grid-area: slashRrb;
 `
 // eslint-disable-next-line no-unused-vars
-const LabelHorizontal = styled(({ isPrintPreview, children, ...rest }) => <ControlLabel {...rest}>{children}</ControlLabel>)`
-  margin-top: ${(props) => (props.isPrintPreview ? 0 : '11px')};
+const LabelHorizontal = styled(({ isPdf, children, ...rest }) => <ControlLabel {...rest}>{children}</ControlLabel>)`
+  margin-top: ${(props) => (props.isPdf ? 0 : '11px')};
   text-align: right;
-  font-size: ${(props) => (props.isPrintPreview ? '10px !important' : '11px')};
-  height: ${(props) => (props.isPrintPreview ? '17px' : 'auto')};
+  font-size: ${(props) => (props.isPdf ? '10px !important' : '11px')};
+  height: ${(props) => (props.isPdf ? '17px' : 'auto')};
 `
 const AreaNummernTitle = styled.div`
   font-weight: 900;
@@ -121,15 +121,15 @@ const AreaNummernTitle = styled.div`
   grid-area: areaNummernTitle;
 `
 // eslint-disable-next-line no-unused-vars
-const Field = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
-  height: ${(props) => (props.isPrintPreview ? '17px' : 'auto')};
+const Field = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
+  height: ${(props) => (props.isPdf ? '17px' : 'auto')};
   input {
-    font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+    font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
   }
 `
-const TextareaField = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
+const TextareaField = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
   input {
-    font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+    font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
   }
 `
 const FieldIdGeschaeft = styled(Field)`
@@ -193,24 +193,24 @@ const FieldEntscheidRrbJahr = styled(Field)`
   grid-area: fieldEntscheidRrbJahr;
 `
 // eslint-disable-next-line no-unused-vars
-const FieldAktenstandort = styled(({ isPrintPreview, children, ...rest }) => <Field {...rest}>{children}</Field>)`
-  height: ${(props) => (props.isPrintPreview ? '29px' : 'auto')};
+const FieldAktenstandort = styled(({ isPdf, children, ...rest }) => <Field {...rest}>{children}</Field>)`
+  height: ${(props) => (props.isPdf ? '29px' : 'auto')};
   grid-area: fieldAktenstandort;
-  font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+  font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
   select, label {
-    font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+    font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
   }
   select {
-    height: ${(props) => (props.isPrintPreview ? '15px !important' : '34px')};
+    height: ${(props) => (props.isPdf ? '15px !important' : '34px')};
   }
 `
 // eslint-disable-next-line no-unused-vars
-const FieldAktennummer = styled(({ isPrintPreview, children, ...rest }) => <Field {...rest}>{children}</Field>)`
-  height: ${(props) => (props.isPrintPreview ? '29px' : 'auto')};
+const FieldAktennummer = styled(({ isPdf, children, ...rest }) => <Field {...rest}>{children}</Field>)`
+  height: ${(props) => (props.isPdf ? '29px' : 'auto')};
   grid-area: fieldAktennummer;
-  font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+  font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
   input, label {
-    font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+    font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
   }
 `
 
@@ -232,12 +232,12 @@ const AreaNummern = ({
     geschaeftePlusFilteredAndSorted: geschaefte,
   } = store.geschaefte
   const path = store.history.location.pathname
-  const isPrintPreview = path === '/geschaeftPdf'
+  const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
   ) || {}
   const tabsToAdd = viewIsNarrow ? 0 : nrOfGFields
-  const Container = isPrintPreview ? ContainerPrint : ContainerView
+  const Container = isPdf ? ContainerPrint : ContainerView
   const gekoValues = (
     geschaeft.geko && geschaeft.geko.filter ?
     geschaeft.geko
@@ -274,10 +274,10 @@ const AreaNummern = ({
           Nr.
         </LabelNrDiv>
       </LabelNr>
-      <LabelIdGeschaeft isPrintPreview={isPrintPreview}>
+      <LabelIdGeschaeft isPdf={isPdf}>
         ID
       </LabelIdGeschaeft>
-      <FieldIdGeschaeft isPrintPreview={isPrintPreview}>
+      <FieldIdGeschaeft isPdf={isPdf}>
         <InputIdGeschaeft
           type="number"
           value={geschaeft.idGeschaeft}
@@ -286,16 +286,16 @@ const AreaNummern = ({
         />
       </FieldIdGeschaeft>
       {
-        !(isPrintPreview && !gekoValuesString) &&
-        <LabelGekoNr isPrintPreview={isPrintPreview}>
+        !(isPdf && !gekoValuesString) &&
+        <LabelGekoNr isPdf={isPdf}>
           Geko
         </LabelGekoNr>
       }
       {
-        !(isPrintPreview && !gekoValuesString) &&
-        <FieldGekoNr isPrintPreview={isPrintPreview}>
+        !(isPdf && !gekoValuesString) &&
+        <FieldGekoNr isPdf={isPdf}>
           {
-            isPrintPreview &&
+            isPdf &&
             <StyledTextarea
               value={gekoValuesString}
               name="gekoNr"
@@ -303,7 +303,7 @@ const AreaNummern = ({
             />
           }
           {
-            !isPrintPreview &&
+            !isPdf &&
             <div>
               {gekoFields}
             </div>
@@ -312,7 +312,7 @@ const AreaNummern = ({
       }
       {
         !(
-          isPrintPreview &&
+          isPdf &&
           !geschaeft.entscheidAwelNr &&
           !geschaeft.entscheidBdvNr &&
           !geschaeft.entscheidRrbNr &&
@@ -326,14 +326,14 @@ const AreaNummern = ({
         </LabelJahre>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidAwelNr) &&
-        <LabelEntscheidAwel isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidAwelNr) &&
+        <LabelEntscheidAwel isPdf={isPdf}>
           AWEL
         </LabelEntscheidAwel>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidAwelNr) &&
-        <FieldEntscheidAwelNr isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidAwelNr) &&
+        <FieldEntscheidAwelNr isPdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidAwelNr || ''}
@@ -346,14 +346,14 @@ const AreaNummern = ({
         </FieldEntscheidAwelNr>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidAwelNr) &&
-        <SlashAwel isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidAwelNr) &&
+        <SlashAwel isPdf={isPdf}>
           <div>/</div>
         </SlashAwel>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidAwelNr) &&
-        <FieldEntscheidAwelJahr isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidAwelNr) &&
+        <FieldEntscheidAwelJahr isPdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidAwelJahr || ''}
@@ -366,14 +366,14 @@ const AreaNummern = ({
         </FieldEntscheidAwelJahr>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidBdvNr) &&
-        <LabelEntscheidBdv isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidBdvNr) &&
+        <LabelEntscheidBdv isPdf={isPdf}>
           BDV
         </LabelEntscheidBdv>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidBdvNr) &&
-        <FieldEntscheidBdvNr isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidBdvNr) &&
+        <FieldEntscheidBdvNr isPdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidBdvNr || ''}
@@ -386,14 +386,14 @@ const AreaNummern = ({
         </FieldEntscheidBdvNr>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidBdvNr) &&
-        <SlashBdv isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidBdvNr) &&
+        <SlashBdv isPdf={isPdf}>
           <div>/</div>
         </SlashBdv>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidBdvNr) &&
-        <FieldEntscheidBdvJahr isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidBdvNr) &&
+        <FieldEntscheidBdvJahr isPdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidBdvJahr || ''}
@@ -406,14 +406,14 @@ const AreaNummern = ({
         </FieldEntscheidBdvJahr>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidRrbNr) &&
-        <LabelEntscheidRrb isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidRrbNr) &&
+        <LabelEntscheidRrb isPdf={isPdf}>
           RRB
         </LabelEntscheidRrb>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidRrbNr) &&
-        <FieldEntscheidRrbNr isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidRrbNr) &&
+        <FieldEntscheidRrbNr isPdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidRrbNr || ''}
@@ -426,14 +426,14 @@ const AreaNummern = ({
         </FieldEntscheidRrbNr>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidRrbNr) &&
-        <SlashRrb isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidRrbNr) &&
+        <SlashRrb isPdf={isPdf}>
           <div>/</div>
         </SlashRrb>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidRrbNr) &&
-        <FieldEntscheidRrbJahr isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidRrbNr) &&
+        <FieldEntscheidRrbJahr isPdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidRrbJahr || ''}
@@ -446,14 +446,14 @@ const AreaNummern = ({
         </FieldEntscheidRrbJahr>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidBvvNr) &&
-        <LabelEntscheidBvv isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidBvvNr) &&
+        <LabelEntscheidBvv isPdf={isPdf}>
           BVV
         </LabelEntscheidBvv>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidBvvNr) &&
-        <FieldEntscheidBvvNr isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidBvvNr) &&
+        <FieldEntscheidBvvNr isPdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidBvvNr || ''}
@@ -466,14 +466,14 @@ const AreaNummern = ({
         </FieldEntscheidBvvNr>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidBvvNr) &&
-        <SlashBvv isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidBvvNr) &&
+        <SlashBvv isPdf={isPdf}>
           <div style={{ marginLeft: '-1px' }}>-</div>
         </SlashBvv>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidBvvNr) &&
-        <FieldEntscheidBvvJahr isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidBvvNr) &&
+        <FieldEntscheidBvvJahr isPdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidBvvJahr || ''}
@@ -486,14 +486,14 @@ const AreaNummern = ({
         </FieldEntscheidBvvJahr>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidKrNr) &&
-        <LabelEntscheidKr isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidKrNr) &&
+        <LabelEntscheidKr isPdf={isPdf}>
           KR
         </LabelEntscheidKr>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidKrNr) &&
-        <FieldEntscheidKrNr isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidKrNr) &&
+        <FieldEntscheidKrNr isPdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidKrNr || ''}
@@ -506,14 +506,14 @@ const AreaNummern = ({
         </FieldEntscheidKrNr>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidKrNr) &&
-        <SlashKr isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidKrNr) &&
+        <SlashKr isPdf={isPdf}>
           <div>/</div>
         </SlashKr>
       }
       {
-        !(isPrintPreview && !geschaeft.entscheidKrNr) &&
-        <FieldEntscheidKrJahr isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.entscheidKrNr) &&
+        <FieldEntscheidKrJahr isPdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidKrJahr || ''}
@@ -526,8 +526,8 @@ const AreaNummern = ({
         </FieldEntscheidKrJahr>
       }
       {
-        !(isPrintPreview && !geschaeft.aktenstandort) &&
-        <FieldAktenstandort isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.aktenstandort) &&
+        <FieldAktenstandort isPdf={isPdf}>
           <ControlLabel>
             Aktenstandort
           </ControlLabel>
@@ -544,8 +544,8 @@ const AreaNummern = ({
         </FieldAktenstandort>
       }
       {
-        !(isPrintPreview && !geschaeft.aktenstandort) &&
-        <FieldAktennummer isPrintPreview={isPrintPreview}>
+        !(isPdf && !geschaeft.aktenstandort) &&
+        <FieldAktennummer isPdf={isPdf}>
           <ControlLabel>
             Nr.
           </ControlLabel>

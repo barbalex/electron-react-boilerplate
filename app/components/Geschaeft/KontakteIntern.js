@@ -65,17 +65,17 @@ const Container = styled.div`
   grid-gap: 0;
 `
 // eslint-disable-next-line no-unused-vars
-const RowfVDropdown = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
+const RowfVDropdown = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 1 / span 1;
   display: grid;
-  grid-template-columns: ${(props) => (props.isPrintPreview ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)')};
+  grid-template-columns: ${(props) => (props.isPdf ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)')};
   grid-gap: 4px;
   margin-top: 5px;
 `
 // eslint-disable-next-line no-unused-vars
-const FvDropdown = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
+const FvDropdown = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 1 / span 1;
-  display: ${(props) => (props.isPrintPreview ? 'none' : 'inherit')};
+  display: ${(props) => (props.isPdf ? 'none' : 'inherit')};
 `
 
 const enhance = compose(
@@ -88,13 +88,13 @@ const GeschaefteKontakteIntern = ({ tabIndex, store }) => {
   const { interneOptions, activeId } = store.geschaefte
   const { geschaefteKontakteIntern } = store.geschaefteKontakteIntern
   const path = store.history.location.pathname
-  const isPrintPreview = path === '/geschaeftPdf'
+  const isPdf = path === '/geschaeftPdf'
 
   return (
     <Container>
       <KontakteInternItems />
-      <RowfVDropdown isPrintPreview={isPrintPreview}>
-        <FvDropdown isPrintPreview={isPrintPreview}>
+      <RowfVDropdown isPdf={isPdf}>
+        <FvDropdown isPdf={isPdf}>
           <FormControl
             componentClass="select"
             bsSize="small"

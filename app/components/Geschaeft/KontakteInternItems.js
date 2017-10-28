@@ -30,17 +30,17 @@ const Container = styled.div`
   grid-gap: 0;
 `
 // eslint-disable-next-line no-unused-vars
-const Row = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
+const Row = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 1 / span 1;
   display: grid;
-  grid-template-columns: ${props => (props.isPrintPreview ? '100%' : 'calc(100% - 20px) 20px')};
+  grid-template-columns: ${props => (props.isPdf ? '100%' : 'calc(100% - 20px) 20px')};
   grid-gap: 0;
   padding: 3px;
-  margin-right: ${props => (props.isPrintPreview ? '9px' : 'inherit')};
+  margin-right: ${props => (props.isPdf ? '9px' : 'inherit')};
   align-items: center;
-  min-height: ${props => (props.isPrintPreview ? 0 : '35px')};
+  min-height: ${props => (props.isPdf ? 0 : '35px')};
   border-bottom: thin solid #cecbcb;
-  font-size: ${props => (props.isPrintPreview ? '10px' : 'inherit')};
+  font-size: ${props => (props.isPdf ? '10px' : 'inherit')};
   &:first-of-type {
     border-top: thin solid #cecbcb;
   }
@@ -61,10 +61,10 @@ const Fv = styled.div`
   }
 `
 // eslint-disable-next-line no-unused-vars
-const DeleteGlyphiconDiv = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
+const DeleteGlyphiconDiv = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 2 / span 1;
   margin-top: -2px;
-  display: ${props => (props.isPrintPreview ? 'none' : 'inherit')};
+  display: ${props => (props.isPdf ? 'none' : 'inherit')};
 `
 const RemoveGlyphicon = styled(Glyphicon)`
   color: red;
@@ -79,7 +79,7 @@ const GeschaefteKontakteInternItems = ({ store }) => {
   const { interneOptions, activeId } = store.geschaefte
   const path = store.history.location.pathname
   const { geschaefteKontakteIntern } = store.geschaefteKontakteIntern
-  const isPrintPreview = path === '/geschaeftPdf'
+  const isPdf = path === '/geschaeftPdf'
   // filter for this geschaeft
   const gkIFiltered = geschaefteKontakteIntern.filter(g => g.idGeschaeft === activeId)
   const gkISorted = _.sortBy(gkIFiltered, g => {
@@ -91,9 +91,9 @@ const GeschaefteKontakteInternItems = ({ store }) => {
   return (
     <Container>
       {gkISorted.map(gkI => (
-        <Row key={`${gkI.idGeschaeft}${gkI.idKontakt}`} isPrintPreview={isPrintPreview}>
+        <Row key={`${gkI.idGeschaeft}${gkI.idKontakt}`} isPdf={isPdf}>
           <Fv>{verantwortlichData(gkI, interneOptions)}</Fv>
-          <DeleteGlyphiconDiv isPrintPreview={isPrintPreview}>
+          <DeleteGlyphiconDiv isPdf={isPdf}>
             <RemoveGlyphicon
               glyph="remove-circle"
               onClick={() => geschaeftKontaktInternRemove(activeId, gkI.idKontakt)}

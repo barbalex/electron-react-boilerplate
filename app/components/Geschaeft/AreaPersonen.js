@@ -26,7 +26,7 @@ const verwantwortlichOptions = interneOptions => {
   return options
 }
 
-const verantwortlichData = (geschaeft, interneOptions, isPrintPreview) => {
+const verantwortlichData = (geschaeft, interneOptions, isPdf) => {
   const data = interneOptions.find(o => {
     if (geschaeft && geschaeft.verantwortlich) {
       return o.kurzzeichen === geschaeft.verantwortlich
@@ -35,7 +35,7 @@ const verantwortlichData = (geschaeft, interneOptions, isPrintPreview) => {
   })
   if (!data) return ''
   let name = ''
-  if (isPrintPreview && data.name) {
+  if (isPdf && data.name) {
     name = `${data.name} ${data.vorname}, `
   }
   const abt = data.abteilung ? `${data.abteilung}` : ''
@@ -120,21 +120,21 @@ const enhance = compose(inject('store'), observer)
 const AreaPersonen = ({ store, nrOfFieldsBeforePersonen = 0, change }) => {
   const { activeId, geschaeftePlusFilteredAndSorted: geschaefte, interneOptions } = store.geschaefte
   const path = store.history.location.pathname
-  const isPrintPreview = path === '/geschaeftPdf'
+  const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
-  const Container = isPrintPreview ? ContainerPrint : ContainerView
-  const AreaPersonenDiv = isPrintPreview ? AreaPersonenDivPrint : AreaPersonenDivView
-  const Subtitle = isPrintPreview ? SubtitlePrint : SubtitleView
-  const Verantwortlich = isPrintPreview ? VerantwortlichPrint : VerantwortlichView
-  const VerantwortlichName = isPrintPreview ? VerantwortlichNamePrint : VerantwortlichNameView
-  const StyledFormcontrolStatic = isPrintPreview ? StyledFormcontrolStaticPrint : StyledFormcontrolStaticView
+  const Container = isPdf ? ContainerPrint : ContainerView
+  const AreaPersonenDiv = isPdf ? AreaPersonenDivPrint : AreaPersonenDivView
+  const Subtitle = isPdf ? SubtitlePrint : SubtitleView
+  const Verantwortlich = isPdf ? VerantwortlichPrint : VerantwortlichView
+  const VerantwortlichName = isPdf ? VerantwortlichNamePrint : VerantwortlichNameView
+  const StyledFormcontrolStatic = isPdf ? StyledFormcontrolStaticPrint : StyledFormcontrolStaticView
 
   return (
     <Container>
       <AreaPersonenDiv>
         <Title>Personen</Title>
-        {!(isPrintPreview && !geschaeft.verantwortlich) && <Subtitle>Verantwortlich</Subtitle>}
-        {!(isPrintPreview && !geschaeft.verantwortlich) && (
+        {!(isPdf && !geschaeft.verantwortlich) && <Subtitle>Verantwortlich</Subtitle>}
+        {!(isPdf && !geschaeft.verantwortlich) && (
           <Verantwortlich>
             <FormControl
               componentClass="select"
@@ -148,15 +148,15 @@ const AreaPersonen = ({ store, nrOfFieldsBeforePersonen = 0, change }) => {
             </FormControl>
           </Verantwortlich>
         )}
-        {!(isPrintPreview && !geschaeft.verantwortlich) && (
+        {!(isPdf && !geschaeft.verantwortlich) && (
           <VerantwortlichName>
-            <StyledFormcontrolStatic>{verantwortlichData(geschaeft, interneOptions, isPrintPreview)}</StyledFormcontrolStatic>
+            <StyledFormcontrolStatic>{verantwortlichData(geschaeft, interneOptions, isPdf)}</StyledFormcontrolStatic>
           </VerantwortlichName>
         )}
-        {!(isPrintPreview && geschaeft.interne.length === 0) && <Subtitle>Interne Kontakte</Subtitle>}
-        {!(isPrintPreview && geschaeft.interne.length === 0) && <KontakteIntern tabIndex={nrOfFieldsBeforePersonen + 1} />}
-        {!(isPrintPreview && geschaeft.externe.length === 0) && <Subtitle>Externe Kontakte</Subtitle>}
-        {!(isPrintPreview && geschaeft.externe.length === 0) && <KontakteExtern tabIndex={nrOfFieldsBeforePersonen + 2} />}
+        {!(isPdf && geschaeft.interne.length === 0) && <Subtitle>Interne Kontakte</Subtitle>}
+        {!(isPdf && geschaeft.interne.length === 0) && <KontakteIntern tabIndex={nrOfFieldsBeforePersonen + 1} />}
+        {!(isPdf && geschaeft.externe.length === 0) && <Subtitle>Externe Kontakte</Subtitle>}
+        {!(isPdf && geschaeft.externe.length === 0) && <KontakteExtern tabIndex={nrOfFieldsBeforePersonen + 2} />}
       </AreaPersonenDiv>
     </Container>
   )

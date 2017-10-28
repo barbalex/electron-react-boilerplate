@@ -12,9 +12,9 @@ const Container = styled.div`
   align-items: center;
 `
 // eslint-disable-next-line no-unused-vars
-const Field = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
+const Field = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 1;
-  font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+  font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
 `
 
 const enhance = compose(
@@ -32,7 +32,7 @@ const AreaZuletztMutiert = ({ store }) => {
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
   ) || {}
-  const isPrintPreview = path === '/geschaeftPdf'
+  const isPdf = path === '/geschaeftPdf'
   let zuletztMutiertText
 
   if (!geschaeft || !geschaeft.mutationsperson) {
@@ -59,7 +59,7 @@ const AreaZuletztMutiert = ({ store }) => {
 
   return (
     <Container>
-      <Field isPrintPreview={isPrintPreview}>
+      <Field isPdf={isPdf}>
         {zuletztMutiertText}
       </Field>
     </Container>

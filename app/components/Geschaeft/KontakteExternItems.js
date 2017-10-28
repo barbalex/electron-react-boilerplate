@@ -41,16 +41,16 @@ const Container = styled.div`
   grid-gap: 0;
 `
 // eslint-disable-next-line no-unused-vars
-const Row = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
+const Row = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 1 / span 1;
   display: grid;
-  grid-template-columns: ${(props) => (props.isPrintPreview ? 'calc(100% - 10px)' : 'calc(100% - 20px) 20px')};
+  grid-template-columns: ${(props) => (props.isPdf ? 'calc(100% - 10px)' : 'calc(100% - 20px) 20px')};
   grid-gap: 0;
   padding: 3px;
-  margin-right: ${(props) => (props.isPrintPreview ? '9px' : 'inherit')};
+  margin-right: ${(props) => (props.isPdf ? '9px' : 'inherit')};
   align-items: center;
-  min-height: ${(props) => (props.isPrintPreview ? 0 : '35px')};
-  font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+  min-height: ${(props) => (props.isPdf ? 0 : '35px')};
+  font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
   border-bottom: thin solid #CECBCB;
   &:first-of-type {
     border-top: thin solid #CECBCB;
@@ -60,7 +60,7 @@ const Row = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{ch
   }
 `
 // eslint-disable-next-line no-unused-vars
-const Field = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
+const Field = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 1 / span 1;
   /**
    * prevent pushing of following kontakt
@@ -70,14 +70,14 @@ const Field = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    padding: ${(props) => (props.isPrintPreview ? 0 : '7px')};
+    padding: ${(props) => (props.isPdf ? 0 : '7px')};
   }
 `
 // eslint-disable-next-line no-unused-vars
-const GlyphiconDiv = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
+const GlyphiconDiv = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 2 / span 1;
   margin-top: -2px;
-  display: ${(props) => (props.isPrintPreview ? 'none' : 'inherit')};
+  display: ${(props) => (props.isPdf ? 'none' : 'inherit')};
 `
 const StyledGlyphicon = styled(Glyphicon)`
   color: red;
@@ -95,7 +95,7 @@ const GeschaefteKontakteExtern = ({ store }) => {
   const { externeOptions, activeId } = store.geschaefte
   const path = store.history.location.pathname
   const { geschaefteKontakteExtern } = store.geschaefteKontakteExtern
-  const isPrintPreview = path === '/geschaeftPdf'
+  const isPdf = path === '/geschaeftPdf'
   // filter for this geschaeft
   const gkIFiltered = geschaefteKontakteExtern.filter(g =>
     g.idGeschaeft === activeId
@@ -113,12 +113,12 @@ const GeschaefteKontakteExtern = ({ store }) => {
         gKISorted.map(gKE =>
           <Row
             key={`${gKE.idGeschaeft}${gKE.idKontakt}`}
-            isPrintPreview={isPrintPreview}
+            isPdf={isPdf}
           >
-            <Field isPrintPreview={isPrintPreview}>
+            <Field isPdf={isPdf}>
               {verantwortlichData(gKE, externeOptions)}
             </Field>
-            <GlyphiconDiv isPrintPreview={isPrintPreview}>
+            <GlyphiconDiv isPdf={isPdf}>
               <StyledGlyphicon
                 glyph="remove-circle"
                 onClick={() =>

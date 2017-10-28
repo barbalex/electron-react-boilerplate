@@ -7,7 +7,7 @@ import compose from 'recompose/compose'
 import AreaHistoryRows from './AreaHistoryRows'
 
 // eslint-disable-next-line no-unused-vars
-const Container = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
+const Container = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-area: areaHistory;
   background-color: rgb(227, 232, 255);
   display: grid;
@@ -16,10 +16,10 @@ const Container = styled(({ isPrintPreview, children, ...rest }) => <div {...res
     "areaHistoryTitle labelVorgeschaeft fieldVorgeschaeft"
     "areaHistoryFieldsContainer areaHistoryFieldsContainer areaHistoryFieldsContainer";
   grid-column-gap: 8px;
-  grid-row-gap: ${(props) => (props.isPrintPreview ? '1px' : '8px')};
+  grid-row-gap: ${(props) => (props.isPdf ? '1px' : '8px')};
   padding: 8px;
-  border: ${(props) => (props.isPrintPreview ? '1px solid #CCC' : 'inherit')};
-  font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+  border: ${(props) => (props.isPdf ? '1px solid #CCC' : 'inherit')};
+  font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
 `
 const Title = styled.div`
   font-weight: 900;
@@ -30,9 +30,9 @@ const FieldVorgeschaeft = styled.div`
   grid-area: fieldVorgeschaeft;
 `
 // eslint-disable-next-line no-unused-vars
-const LabelVorgeschaeft = styled(({ isPrintPreview, children, ...rest }) => <ControlLabel {...rest}>{children}</ControlLabel>)`
+const LabelVorgeschaeft = styled(({ isPdf, children, ...rest }) => <ControlLabel {...rest}>{children}</ControlLabel>)`
   grid-area: labelVorgeschaeft;
-  margin-top: ${(props) => (props.isPrintPreview ? 0 : '10px')};
+  margin-top: ${(props) => (props.isPdf ? 0 : '10px')};
   text-align: right;
 `
 
@@ -54,14 +54,14 @@ const AreaHistory = ({
   const geschaeft = geschaefte.find(g =>
     g.idGeschaeft === activeId
   ) || {}
-  const isPrintPreview = path === '/geschaeftPdf'
+  const isPdf = path === '/geschaeftPdf'
 
   return (
-    <Container isPrintPreview={isPrintPreview}>
+    <Container isPdf={isPdf}>
       <Title>
         Historie
       </Title>
-      <LabelVorgeschaeft isPrintPreview={isPrintPreview}>
+      <LabelVorgeschaeft isPdf={isPdf}>
         Vorgeschäft
       </LabelVorgeschaeft>
       <FieldVorgeschaeft>
@@ -72,7 +72,7 @@ const AreaHistory = ({
           onChange={change}
           onBlur={blur}
           bsSize="small"
-          placeholder={isPrintPreview ? null : 'ID'}
+          placeholder={isPdf ? null : 'ID'}
           tabIndex={99}  // eslint-disable-line
         />
       </FieldVorgeschaeft>

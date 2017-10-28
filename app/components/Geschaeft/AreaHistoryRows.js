@@ -12,21 +12,21 @@ const FieldsContainer = styled.div`
   grid-template-columns: 100%;
 `
 // eslint-disable-next-line no-unused-vars
-const HistoryField = styled(({ isPrintPreview, children, ...rest }) => <div {...rest}>{children}</div>)`
+const HistoryField = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
   grid-column: 1;
   display: grid;
   grid-template-columns: ${(props) => (
-    props.isPrintPreview ?
+    props.isPdf ?
     '40px 65px calc(100% - 105px)' :
     '55px 75px calc(100% - 130px)'
   )};
   grid-gap: 0;
   border-bottom: thin solid #CECBCB;
-  padding-left: ${(props) => (props.isPrintPreview ? 0 : '13px')};
-  padding-top: ${(props) => (props.isPrintPreview ? '2px' : '10px')};
-  padding-bottom: ${(props) => (props.isPrintPreview ? '2px' : '10px')};
+  padding-left: ${(props) => (props.isPdf ? 0 : '13px')};
+  padding-top: ${(props) => (props.isPdf ? '2px' : '10px')};
+  padding-bottom: ${(props) => (props.isPdf ? '2px' : '10px')};
   align-items: center;
-  font-size: ${(props) => (props.isPrintPreview ? '10px' : 'inherit')};
+  font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
 
   &:first-of-type {
     border-top: thin solid #CECBCB;
@@ -57,7 +57,7 @@ const AreaHistoryRows = ({ store }) => {
     geschaeftePlusFilteredAndSorted: geschaefte,
   } = store.geschaefte
   const path = store.history.location.pathname
-  const isPrintPreview = path === '/geschaeftPdf'
+  const isPdf = path === '/geschaeftPdf'
   const history = getHistoryOfGeschaeft(geschaefte, activeId)
 
   return (
@@ -81,7 +81,7 @@ const AreaHistoryRows = ({ store }) => {
                   return geschaeftToggleActivated(id)
                 }
               }}
-              isPrintPreview={isPrintPreview}
+              isPdf={isPdf}
             >
               <IdGeschaeft>
                 {id}
