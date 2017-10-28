@@ -49,9 +49,8 @@ const Title = styled.div`
 `
 const Links = styled.div`
   grid-area: links;
-  /*pdf*/
   display: ${props => (props['data-isPdf'] ? 'grid' : 'block')};
-  display: ${props => (props['data-isPdf'] ? '100%' : 'none')};
+  grid-template-columns: ${props => (props['data-isPdf'] ? '100%' : 'none')};
 `
 const Field = styled.div`
   grid-column: 1;
@@ -88,6 +87,7 @@ const AreaLinks = ({ store, onDrop }) => {
   const { linkRemove } = store
   const { activeId, links } = store.geschaefte
   const myLinks = links.filter(l => l.idGeschaeft === activeId)
+  console.log('AreaLinks: myLinks:', myLinks)
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
   const styles = isPdf ? pdfStyles : regularStyles
