@@ -4,6 +4,7 @@ import $ from 'jquery'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
+import styled from 'styled-components'
 
 import styles from './filterFields.css'
 import AreaGeschaeft from './AreaGeschaeft'
@@ -31,7 +32,7 @@ const enhance = compose(
         value: null,
       }
       if (filterFields.forEach) {
-        filterFields.forEach((f) => {
+        filterFields.forEach(f => {
           if (f.field !== name) {
             newFilterFields.push(f)
           } else {
@@ -43,14 +44,10 @@ const enhance = compose(
       newFilterFields.push(changedField)
       geschaefteFilterByFields(newFilterFields)
     },
-    change: props => (e) => {
+    change: props => e => {
       const { geschaefteFilterByFields } = props.store
       const { filterFields } = props.store.geschaefte
-      const {
-        type,
-        name,
-        dataset,
-      } = e.target
+      const { type, name, dataset } = e.target
       const newFilterFields = []
       let changedField = {
         comparator: '=',
@@ -58,7 +55,7 @@ const enhance = compose(
         value: null,
       }
       if (filterFields.forEach) {
-        filterFields.forEach((f) => {
+        filterFields.forEach(f => {
           if (f.field !== name) {
             newFilterFields.push(f)
           } else if (f.comparator) {
@@ -87,50 +84,34 @@ const enhance = compose(
   observer
 )
 
-const FilterFields = ({
-  store,
-  changeComparator,
-  change,
-}) => {
+const FilterFields = ({ store, changeComparator, change }) => {
   let { filterFields } = store.geschaefte
   const { config } = store.app
   // build a fields hash for the values
   const values = {}
   if (filterFields.forEach) {
-    filterFields.forEach((field) => {
+    filterFields.forEach(field => {
       values[field.field] = field.value
     })
   } else {
     filterFields = []
   }
-  const showAreaParlVorstoss = (
-    values.geschaeftsart &&
-    values.geschaeftsart === 'Parlament. Vorstoss'
-  )
-  const showAreaRechtsmittel = (
-    values.geschaeftsart &&
-    values.geschaeftsart === 'Rekurs/Beschwerde'
-  )
-  const showAreaForGeschaeftsart = (
-    showAreaParlVorstoss ||
-    showAreaRechtsmittel
-  )
+  const showAreaParlVorstoss =
+    values.geschaeftsart && values.geschaeftsart === 'Parlament. Vorstoss'
+  const showAreaRechtsmittel =
+    values.geschaeftsart && values.geschaeftsart === 'Rekurs/Beschwerde'
+  const showAreaForGeschaeftsart = showAreaParlVorstoss || showAreaRechtsmittel
 
   // need width to adapt layout to differing widths
   const windowWidth = $(window).width()
   const areaFilterFieldsWidth = windowWidth - config.geschaefteColumnWidth
-  const wrapperClassBaseString = (
-    areaFilterFieldsWidth < 980 ?
-    'wrapperNarrow' :
-    'wrapperWide'
-  )
+  const wrapperClassBaseString =
+    areaFilterFieldsWidth < 980 ? 'wrapperNarrow' : 'wrapperWide'
 
   // layout needs to work with or without area for geschaeftsart
-  const wrapperClassString = (
-    showAreaForGeschaeftsart ?
-    wrapperClassBaseString :
-    `${wrapperClassBaseString}NoAreaForGeschaeftsart`
-  )
+  const wrapperClassString = showAreaForGeschaeftsart
+    ? wrapperClassBaseString
+    : `${wrapperClassBaseString}NoAreaForGeschaeftsart`
   const wrapperClass = styles[wrapperClassString]
 
   // prepare tab indexes
@@ -147,35 +128,37 @@ const FilterFields = ({
     <div className={styles.scrollContainer}>
       <div className={wrapperClass}>
         <AreaGeschaeft
-          firstTabIndex={wrapperClassBaseString === 'wrapperNarrow' ? nrOfNrFields : 0}
+          firstTabIndex={
+            wrapperClassBaseString === 'wrapperNarrow' ? nrOfNrFields : 0
+          }
           change={change}
           changeComparator={changeComparator}
           values={values}
         />
         <AreaNummern
-          firstTabIndex={wrapperClassBaseString === 'wrapperNarrow' ? 0 : nrOfGFields}
+          firstTabIndex={
+            wrapperClassBaseString === 'wrapperNarrow' ? 0 : nrOfGFields
+          }
           change={change}
           changeComparator={changeComparator}
           values={values}
         />
-        {
-          showAreaParlVorstoss &&
+        {showAreaParlVorstoss && (
           <AreaParlVorstoss
             firstTabIndex={nrOfFieldsBeforePv}
             change={change}
             changeComparator={changeComparator}
             values={values}
           />
-        }
-        {
-          showAreaRechtsmittel &&
+        )}
+        {showAreaRechtsmittel && (
           <AreaRechtsmittel
             firstTabIndex={nrOfFieldsBeforePv}
             change={change}
             changeComparator={changeComparator}
             values={values}
           />
-        }
+        )}
         <AreaFristen
           firstTabIndex={nrOfFieldsBeforeFristen}
           change={change}
