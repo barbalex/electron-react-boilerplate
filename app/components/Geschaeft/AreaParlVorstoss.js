@@ -1,11 +1,14 @@
+/**
+ * WEIRD
+ * This component is never shown when isPdf (see Geschaeft.js)
+ * but it works hard to show radios nicely in print...
+ */
 import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel, Radio } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled from 'styled-components'
 
-import regularStyles from './areaParlVorstoss.css'
-import pdfStyles from './areaParlVorstossPdf.css'
 import createOptions from '../../src/createOptions'
 
 const enhance = compose(inject('store'), observer)
@@ -122,6 +125,14 @@ const Container = styled.div`
   border-bottom: none;
   border-left: none;
 `
+const Title = styled.div`
+  font-weight: 900;
+  font-size: 16px;
+  grid-area: areaParlVorstTitle;
+`
+const FieldParlVorstossTyp = styled.div`grid-area: fieldParlVorstossTyp;`
+const FieldStufe = styled.div`grid-area: fieldStufe;`
+const FieldZustaendigkeit = styled.div`grid-area: fieldZustaendigkeit;`
 
 const AreaParlVorstoss = ({ store, nrOfFieldsBeforePv, change }) => {
   const {
@@ -132,15 +143,12 @@ const AreaParlVorstoss = ({ store, nrOfFieldsBeforePv, change }) => {
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
-  const styles = isPdf ? pdfStyles : regularStyles
 
   return (
     <Container data-isPdf={isPdf}>
-      <div className={styles.areaParlVorstTitle}>
-        Parlamentarischer Vorstoss
-      </div>
+      <Title>Parlamentarischer Vorstoss</Title>
       {!(isPdf && !geschaeft.parlVorstossTyp) && (
-        <div className={styles.fieldParlVorstossTyp}>
+        <FieldParlVorstossTyp>
           <ControlLabel>Typ</ControlLabel>
           <FormControl
             componentClass="select"
@@ -152,22 +160,22 @@ const AreaParlVorstoss = ({ store, nrOfFieldsBeforePv, change }) => {
           >
             {createOptions(parlVorstossTypOptions)}
           </FormControl>
-        </div>
+        </FieldParlVorstossTyp>
       )}
       {!(isPdf && !geschaeft.parlVorstossStufe) && (
-        <div className={styles.fieldStufe}>
+        <FieldStufe>
           {parlVorstossStufe(isPdf, geschaeft, change, nrOfFieldsBeforePv)}
-        </div>
+        </FieldStufe>
       )}
       {!(isPdf && !geschaeft.parlVorstossZustaendigkeitAwel) && (
-        <div className={styles.fieldZustaendigkeit}>
+        <FieldZustaendigkeit>
           {parlVorstossZustaendigkeit(
             isPdf,
             geschaeft,
             change,
             nrOfFieldsBeforePv
           )}
-        </div>
+        </FieldZustaendigkeit>
       )}
     </Container>
   )

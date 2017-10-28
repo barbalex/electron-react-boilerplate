@@ -166,7 +166,7 @@ class Geschaeft extends Component {
     } = store.geschaefte
     const { config } = store.app
     const path = store.history.location.pathname
-    const isPrintPreview = path === '/geschaeftPdf'
+    const isPdf = path === '/geschaeftPdf'
     const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
 
     // return immediately if no geschaeft
@@ -176,7 +176,7 @@ class Geschaeft extends Component {
     const showAreaParlVorstoss =
       geschaeft.geschaeftsart === 'Parlament. Vorstoss' &&
       !(
-        isPrintPreview &&
+        isPdf &&
         !geschaeft.parlVorstossStufe &&
         !geschaeft.parlVorstossZustaendigkeitAwel &&
         !geschaeft.parlVorstossTyp
@@ -184,7 +184,7 @@ class Geschaeft extends Component {
     const showAreaRechtsmittel =
       geschaeft.geschaeftsart === 'Rekurs/Beschwerde' &&
       !(
-        isPrintPreview &&
+        isPdf &&
         !geschaeft.rechtsmittelInstanz &&
         !geschaeft.rechtsmittelEntscheidNr &&
         !geschaeft.rechtsmittelEntscheidDatum &&
@@ -207,9 +207,9 @@ class Geschaeft extends Component {
     const nrOfFieldsBeforePersonen = nrOfFieldsBeforeFristen + 7
     const viewIsNarrow = areaGeschaefteWidth < 860
     let ScrollContainer = ScrollContainerRegular
-    if (isPrintPreview) ScrollContainer = ScrollContainerPdf
+    if (isPdf) ScrollContainer = ScrollContainerPdf
     let Wrapper
-    if (isPrintPreview) {
+    if (isPdf) {
       if (showAreaForGeschaeftsart) {
         Wrapper = WrapperWidePdf
       } else {
@@ -227,11 +227,11 @@ class Geschaeft extends Component {
       Wrapper = WrapperWideNoAreaForGeschaeftsart
     }
 
-    const showLinks = !(isPrintPreview && geschaeft.links.length === 0)
+    const showLinks = !(isPdf && geschaeft.links.length === 0)
 
     return (
       <ScrollContainer>
-        <Wrapper isPrintPreview={isPrintPreview}>
+        <Wrapper isPdf={isPdf}>
           <AreaGeschaeft
             viewIsNarrow={viewIsNarrow}
             nrOfGFields={nrOfGFields}
