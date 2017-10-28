@@ -6,7 +6,6 @@ import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
 import styled from 'styled-components'
 
-import styles from './filterFields.css'
 import AreaGeschaeft from './AreaGeschaeft'
 import AreaNummern from './AreaNummern'
 import AreaFristen from './AreaFristen'
@@ -18,6 +17,63 @@ import AreaZuletztMutiert from './AreaZuletztMutiert'
 import isDateField from '../../src/isDateField'
 
 moment.locale('de')
+
+const getTemplateAreas = (width, showAreaForGeschaeftsart) => {
+  if (width === 'narrow' && showAreaForGeschaeftsart) {
+    return `
+    "areaNummern"
+    "areaGeschaeft"
+    "areaForGeschaeftsart"
+    "areaFristen"
+    "areaPersonen"
+    "areaHistory"
+    "areaZuletztMutiert"`
+  } else if (width === 'narrow' && !showAreaForGeschaeftsart) {
+    return `
+    "areaNummern"
+    "areaGeschaeft"
+    "areaFristen"
+    "areaPersonen"
+    "areaHistory"
+    "areaZuletztMutiert"
+    `
+  } else if (width === 'wide' && showAreaForGeschaeftsart) {
+    return `
+    "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern areaNummern"
+    "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaForGeschaeftsart areaForGeschaeftsart areaForGeschaeftsart areaForGeschaeftsart areaForGeschaeftsart"
+    "areaFristen areaFristen areaFristen areaFristen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen"
+    "areaFristen areaFristen areaFristen areaFristen areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory"
+    "areaFristen areaFristen areaFristen areaFristen areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert"
+    `
+  } else {
+    // width === 'wide' && !showAreaForGeschaeftsart
+    return `
+    "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern areaNummern"
+    "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern areaNummern"
+    "areaFristen areaFristen areaFristen areaFristen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen"
+    "areaFristen areaFristen areaFristen areaFristen areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory"
+    "areaFristen areaFristen areaFristen areaFristen areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert"
+    `
+  }
+}
+
+const ScrollContainer = styled.div`
+  overflow: auto;
+  height: calc(100vh - 52px);
+`
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-columns: ${props =>
+    props['data-width'] === 'narrow'
+      ? 'repeat(1, 100%)'
+      : 'repeat(12, 8.33333%)'};
+  grid-template-rows: auto;
+  grid-template-areas: ${props =>
+    getTemplateAreas(
+      props['data-width'],
+      props['data-showAreaForGeschaeftsart']
+    )};
+`
 
 const enhance = compose(
   inject('store'),
@@ -64,7 +120,6 @@ const enhance = compose(
         })
       }
       let { value } = e.target
-      // console.log('FilterFields, value on change:', value)
       if (isDateField(name) && value) {
         value = moment(value, 'DD.MM.YYYY').format('YYYY-MM-DD')
       }
@@ -96,23 +151,18 @@ const FilterFields = ({ store, changeComparator, change }) => {
   } else {
     filterFields = []
   }
-  const showAreaParlVorstoss =
+  const showAreaParlVorstoss = !!(
     values.geschaeftsart && values.geschaeftsart === 'Parlament. Vorstoss'
-  const showAreaRechtsmittel =
+  )
+  const showAreaRechtsmittel = !!(
     values.geschaeftsart && values.geschaeftsart === 'Rekurs/Beschwerde'
+  )
   const showAreaForGeschaeftsart = showAreaParlVorstoss || showAreaRechtsmittel
 
-  // need width to adapt layout to differing widths
+  // need to adapt layout to differing widths
   const windowWidth = $(window).width()
   const areaFilterFieldsWidth = windowWidth - config.geschaefteColumnWidth
-  const wrapperClassBaseString =
-    areaFilterFieldsWidth < 980 ? 'wrapperNarrow' : 'wrapperWide'
-
-  // layout needs to work with or without area for geschaeftsart
-  const wrapperClassString = showAreaForGeschaeftsart
-    ? wrapperClassBaseString
-    : `${wrapperClassBaseString}NoAreaForGeschaeftsart`
-  const wrapperClass = styles[wrapperClassString]
+  const width = areaFilterFieldsWidth < 980 ? 'narrow' : 'wide'
 
   // prepare tab indexes
   const nrOfGFields = 10
@@ -125,20 +175,19 @@ const FilterFields = ({ store, changeComparator, change }) => {
   const nrOfFieldsBeforeZuletztMutiert = nrOfFieldsBeforeHistory + 1
 
   return (
-    <div className={styles.scrollContainer}>
-      <div className={wrapperClass}>
+    <ScrollContainer>
+      <Wrapper
+        data-width={width}
+        data-showAreaForGeschaeftsart={showAreaForGeschaeftsart}
+      >
         <AreaGeschaeft
-          firstTabIndex={
-            wrapperClassBaseString === 'wrapperNarrow' ? nrOfNrFields : 0
-          }
+          firstTabIndex={width === 'narrow' ? nrOfNrFields : 0}
           change={change}
           changeComparator={changeComparator}
           values={values}
         />
         <AreaNummern
-          firstTabIndex={
-            wrapperClassBaseString === 'wrapperNarrow' ? 0 : nrOfGFields
-          }
+          firstTabIndex={width === 'narrow' ? 0 : nrOfGFields}
           change={change}
           changeComparator={changeComparator}
           values={values}
@@ -183,8 +232,8 @@ const FilterFields = ({ store, changeComparator, change }) => {
           changeComparator={changeComparator}
           values={values}
         />
-      </div>
-    </div>
+      </Wrapper>
+    </ScrollContainer>
   )
 }
 
