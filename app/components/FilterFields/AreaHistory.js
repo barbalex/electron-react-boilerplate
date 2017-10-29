@@ -2,37 +2,41 @@ import React, { PropTypes } from 'react'
 import { ControlLabel } from 'react-bootstrap'
 import { observer } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
 import Input from './Input'
-import styles from './areaHistory.css'
 
-const enhance = compose(
-  observer
+const Container = styled.div`
+  grid-area: areaHistory;
+  background-color: white;
+  box-shadow: inset 1em 1em 2em rgb(227, 232, 255), inset -1em -1em 2em rgb(227, 232, 255);
+  outline: 1px solid #efefef;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 2px;
+  padding: 8px;
+`
+const Title = styled.div`
+  font-weight: 900;
+  font-size: 16px;
+  grid-column: 1;
+`
+const FieldVorgeschaeft = styled.div`
+  grid-column: 1;
+  width: 175px;
+`
+
+const enhance = compose(observer)
+
+const AreaHistory = ({ values, change, changeComparator, firstTabIndex }) => (
+  <Container>
+    <Title>Historie</Title>
+    <ControlLabel>Vorgeschäft</ControlLabel>
+    <FieldVorgeschaeft>
+      <Input name="idVorgeschaeft" change={change} values={values} changeComparator={changeComparator} tabIndex={1 + firstTabIndex} />
+    </FieldVorgeschaeft>
+  </Container>
 )
-
-const AreaHistory = ({
-  values,
-  change,
-  changeComparator,
-  firstTabIndex,
-}) =>
-  <div className={styles.areaHistory}>
-    <div className={styles.areaHistoryTitle}>
-      Historie
-    </div>
-    <ControlLabel>
-      Vorgeschäft
-    </ControlLabel>
-    <div className={styles.fieldVorgeschaeft}>
-      <Input
-        name="idVorgeschaeft"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={1 + firstTabIndex}
-      />
-    </div>
-  </div>
 
 AreaHistory.displayName = 'AreaHistory'
 

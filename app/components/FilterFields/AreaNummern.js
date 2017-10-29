@@ -3,36 +3,146 @@ import { ControlLabel } from 'react-bootstrap'
 import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
 import Input from './Input'
 import SelectInput from './SelectInput'
-import styles from './areaNummern.css'
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const Container = styled.div`
+  grid-area: areaNummern;
+  background-color: white;
+  box-shadow: inset 1em 1em 2em rgb(239, 239, 239), inset -1em -1em 2em rgb(239, 239, 239);
+  outline: 1px solid #efefef;
+  display: grid;
+  /* can't use 1fr for first column - does not work correctly, no idea why */
+  grid-template-columns: calc(100% - 366px) 8px 175px 8px 175px;
+  grid-template-rows: auto;
+  grid-template-areas: 'areaNummernTitle areaNummernTitle labelNr . labelJahre' 'labelIdGeschaeft . fieldIdGeschaeft . .'
+    'labelGekoNr . fieldGekoNr . .' 'labelEntscheidAwel . fieldEntscheidAwelNr slashAwel fieldEntscheidAwelJahr'
+    'labelEntscheidBdv . fieldEntscheidBdvNr slashBdv fieldEntscheidBdvJahr'
+    'labelEntscheidRrb . fieldEntscheidRrbNr slashRrb fieldEntscheidRrbJahr'
+    'labelEntscheidBvv . fieldEntscheidBvvNr slashBvv fieldEntscheidBvvJahr'
+    'labelEntscheidKr . fieldEntscheidKrNr slashKr fieldEntscheidKrJahr' 'fieldAktenstandort . fieldAktennummer . .';
+  grid-row-gap: 2px;
+  padding: 8px;
+`
+const Title = styled.div`
+  font-weight: 900;
+  font-size: 16px;
+  grid-area: areaNummernTitle;
+`
+const LabelNr = styled(ControlLabel)`
+  grid-area: labelNr;
+  position: relative;
+  min-height: 16px;
+`
+const LabelNrDiv = styled.div`
+  position: absolute;
+  bottom: 1px;
+`
+const LabelIdGeschaeft = styled(ControlLabel)`
+  margin-top: 11px;
+  text-align: right;
+  grid-area: labelIdGeschaeft;
+`
+const FieldIdGeschaeft = styled.div`grid-area: fieldIdGeschaeft;`
+const LabelGekoNr = styled(ControlLabel)`
+  margin-top: 11px;
+  text-align: right;
+  grid-area: labelGekoNr;
+`
+const FieldGekoNr = styled.div`grid-area: fieldGekoNr;`
+const LabelJahre = styled.div`
+  color: #757575;
+  font-size: 11px;
+  font-weight: 500;
+  grid-area: labelJahre;
+  position: relative;
+  min-height: 16px;
+`
+const LabelEntscheidAwel = styled(ControlLabel)`
+  margin-top: 11px;
+  text-align: right;
+  grid-area: labelEntscheidAwel;
+`
+const FieldEntscheidAwelNr = styled.div`grid-area: fieldEntscheidAwelNr;`
+const FieldSlashAwel = styled.div`
+  margin-top: 2px;
+  font-size: 22px;
+  color: #757575;
+  margin-left: 1px;
+  grid-area: slashAwel;
+`
+const FieldEntscheidAwelJahr = styled.div`grid-area: fieldEntscheidAwelJahr;`
+const LabelEntscheidBdv = styled(ControlLabel)`
+  margin-top: 11px;
+  text-align: right;
+  grid-area: labelEntscheidBdv;
+`
+const FieldEntscheidBdvNr = styled.div`grid-area: fieldEntscheidBdvNr;`
+const FieldSlashBdv = styled.div`
+  margin-top: 2px;
+  font-size: 22px;
+  color: #757575;
+  margin-left: 1px;
+  grid-area: slashBdv;
+`
+const FieldEntscheidBdvJahr = styled.div`grid-area: fieldEntscheidBdvJahr;`
+const LabelEntscheidRrb = styled(ControlLabel)`
+  margin-top: 11px;
+  text-align: right;
+  grid-area: labelEntscheidRrb;
+`
+const FieldEntscheidRrbNr = styled.div`grid-area: fieldEntscheidRrbNr;`
+const FieldSlashRrb = styled.div`
+  margin-top: 2px;
+  font-size: 22px;
+  color: #757575;
+  margin-left: 1px;
+  grid-area: slashRrb;
+`
+const FieldEntscheidRrbJahr = styled.div`grid-area: fieldEntscheidRrbJahr;`
+const LabelEntscheidBvv = styled(ControlLabel)`
+  margin-top: 11px;
+  text-align: right;
+  grid-area: labelEntscheidBvv;
+`
+const FieldEntscheidBvvNr = styled.div`grid-area: fieldEntscheidBvvNr;`
+const FieldSlashBvv = styled.div`
+  margin-top: 2px;
+  font-size: 22px;
+  color: #757575;
+  margin-left: 1px;
+  grid-area: slashBvv;
+`
+const FieldEntscheidBvvJahr = styled.div`grid-area: fieldEntscheidBvvJahr;`
+const LabelEntscheidKr = styled(ControlLabel)`
+  margin-top: 11px;
+  text-align: right;
+  grid-area: labelEntscheidKr;
+`
+const FieldEntscheidKrNr = styled.div`grid-area: fieldEntscheidKrNr;`
+const FieldSlashKr = styled.div`
+  margin-top: 2px;
+  font-size: 22px;
+  color: #757575;
+  margin-left: 1px;
+  grid-area: slashKr;
+`
+const FieldEntscheidKrJahr = styled.div`grid-area: fieldEntscheidKrJahr;`
+const FieldAktenstandort = styled.div`grid-area: fieldAktenstandort;`
+const FieldAktennummer = styled.div`grid-area: fieldAktennummer;`
 
-const AreaNummern = ({
-  store,
-  values,
-  firstTabIndex,
-  change,
-  changeComparator,
-}) =>
-  <div className={styles.areaNummern}>
-    <div className={styles.areaNummernTitle}>
-      Nummern
-    </div>
-    <ControlLabel className={styles.labelNr}>
-      <div className={styles.labelNrDiv}>
-        Nr.
-      </div>
-    </ControlLabel>
-    <ControlLabel className={styles.labelIdGeschaeft}>
-      ID
-    </ControlLabel>
-    <div className={styles.fieldIdGeschaeft}>
+const enhance = compose(inject('store'), observer)
+
+const AreaNummern = ({ store, values, firstTabIndex, change, changeComparator }) => (
+  <Container>
+    <Title>Nummern</Title>
+    <LabelNr>
+      <LabelNrDiv>Nr.</LabelNrDiv>
+    </LabelNr>
+    <LabelIdGeschaeft>ID</LabelIdGeschaeft>
+    <FieldIdGeschaeft>
       <Input
         type="number"
         name="idGeschaeft"
@@ -41,29 +151,16 @@ const AreaNummern = ({
         changeComparator={changeComparator}
         tabIndex={1 + firstTabIndex}
       />
-    </div>
-    <ControlLabel className={styles.labelGekoNr}>
-      Geko
-    </ControlLabel>
-    <div className={styles.fieldGekoNr}>
-      <Input
-        type="text"
-        name="gekoNr"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={2 + firstTabIndex}
-      />
-    </div>
-    <div className={styles.labelJahre}>
-      <div className={styles.labelNrDiv}>
-        Jahr
-      </div>
-    </div>
-    <ControlLabel className={styles.labelEntscheidAwel}>
-      AWEL
-    </ControlLabel>
-    <div className={styles.fieldEntscheidAwelNr}>
+    </FieldIdGeschaeft>
+    <LabelGekoNr>Geko</LabelGekoNr>
+    <FieldGekoNr>
+      <Input type="text" name="gekoNr" change={change} values={values} changeComparator={changeComparator} tabIndex={2 + firstTabIndex} />
+    </FieldGekoNr>
+    <LabelJahre>
+      <LabelNrDiv>Jahr</LabelNrDiv>
+    </LabelJahre>
+    <LabelEntscheidAwel>AWEL</LabelEntscheidAwel>
+    <FieldEntscheidAwelNr>
       <Input
         type="number"
         name="entscheidAwelNr"
@@ -72,11 +169,11 @@ const AreaNummern = ({
         changeComparator={changeComparator}
         tabIndex={3 + firstTabIndex}
       />
-    </div>
-    <div className={styles.slashAwel}>
+    </FieldEntscheidAwelNr>
+    <FieldSlashAwel>
       <div>/</div>
-    </div>
-    <div className={styles.fieldEntscheidAwelJahr}>
+    </FieldSlashAwel>
+    <FieldEntscheidAwelJahr>
       <Input
         type="number"
         name="entscheidAwelJahr"
@@ -85,11 +182,9 @@ const AreaNummern = ({
         changeComparator={changeComparator}
         tabIndex={4 + firstTabIndex}
       />
-    </div>
-    <ControlLabel className={styles.labelEntscheidBdv}>
-      BDV
-    </ControlLabel>
-    <div className={styles.fieldEntscheidBdvNr}>
+    </FieldEntscheidAwelJahr>
+    <LabelEntscheidBdv>BDV</LabelEntscheidBdv>
+    <FieldEntscheidBdvNr>
       <Input
         type="number"
         name="entscheidBdvNr"
@@ -98,11 +193,11 @@ const AreaNummern = ({
         changeComparator={changeComparator}
         tabIndex={5 + firstTabIndex}
       />
-    </div>
-    <div className={styles.slashBdv}>
+    </FieldEntscheidBdvNr>
+    <FieldSlashBdv>
       <div>/</div>
-    </div>
-    <div className={styles.fieldEntscheidBdvJahr}>
+    </FieldSlashBdv>
+    <FieldEntscheidBdvJahr>
       <Input
         type="number"
         name="entscheidBdvJahr"
@@ -111,11 +206,9 @@ const AreaNummern = ({
         changeComparator={changeComparator}
         tabIndex={6 + firstTabIndex}
       />
-    </div>
-    <ControlLabel className={styles.labelEntscheidRrb}>
-      RRB
-    </ControlLabel>
-    <div className={styles.fieldEntscheidRrbNr}>
+    </FieldEntscheidBdvJahr>
+    <LabelEntscheidRrb>RRB</LabelEntscheidRrb>
+    <FieldEntscheidRrbNr>
       <Input
         type="number"
         name="entscheidRrbNr"
@@ -124,11 +217,11 @@ const AreaNummern = ({
         changeComparator={changeComparator}
         tabIndex={7 + firstTabIndex}
       />
-    </div>
-    <div className={styles.slashRrb}>
+    </FieldEntscheidRrbNr>
+    <FieldSlashRrb>
       <div>/</div>
-    </div>
-    <div className={styles.fieldEntscheidRrbJahr}>
+    </FieldSlashRrb>
+    <FieldEntscheidRrbJahr>
       <Input
         type="number"
         name="entscheidRrbJahr"
@@ -137,11 +230,9 @@ const AreaNummern = ({
         changeComparator={changeComparator}
         tabIndex={8 + firstTabIndex}
       />
-    </div>
-    <ControlLabel className={styles.labelEntscheidBvv}>
-      BVV
-    </ControlLabel>
-    <div className={styles.fieldEntscheidBvvNr}>
+    </FieldEntscheidRrbJahr>
+    <LabelEntscheidBvv>BVV</LabelEntscheidBvv>
+    <FieldEntscheidBvvNr>
       <Input
         type="number"
         name="entscheidBvvNr"
@@ -150,11 +241,11 @@ const AreaNummern = ({
         changeComparator={changeComparator}
         tabIndex={9 + firstTabIndex}
       />
-    </div>
-    <div className={styles.slashBvv}>
+    </FieldEntscheidBvvNr>
+    <FieldSlashBvv>
       <div>/</div>
-    </div>
-    <div className={styles.fieldEntscheidBvvJahr}>
+    </FieldSlashBvv>
+    <FieldEntscheidBvvJahr>
       <Input
         type="number"
         name="entscheidBvvJahr"
@@ -163,11 +254,9 @@ const AreaNummern = ({
         changeComparator={changeComparator}
         tabIndex={10 + firstTabIndex}
       />
-    </div>
-    <ControlLabel className={styles.labelEntscheidKr}>
-      KR
-    </ControlLabel>
-    <div className={styles.fieldEntscheidKrNr}>
+    </FieldEntscheidBvvJahr>
+    <LabelEntscheidKr>KR</LabelEntscheidKr>
+    <FieldEntscheidKrNr>
       <Input
         type="number"
         name="entscheidKrNr"
@@ -176,11 +265,11 @@ const AreaNummern = ({
         changeComparator={changeComparator}
         tabIndex={11 + firstTabIndex}
       />
-    </div>
-    <div className={styles.slashKr}>
+    </FieldEntscheidKrNr>
+    <FieldSlashKr>
       <div>/</div>
-    </div>
-    <div className={styles.fieldEntscheidKrJahr}>
+    </FieldSlashKr>
+    <FieldEntscheidKrJahr>
       <Input
         type="number"
         name="entscheidKrJahr"
@@ -189,11 +278,9 @@ const AreaNummern = ({
         changeComparator={changeComparator}
         tabIndex={12 + firstTabIndex}
       />
-    </div>
-    <div className={styles.fieldAktenstandort}>
-      <ControlLabel>
-        Aktenstandort
-      </ControlLabel>
+    </FieldEntscheidKrJahr>
+    <FieldAktenstandort>
+      <ControlLabel>Aktenstandort</ControlLabel>
       <SelectInput
         name="aktenstandort"
         change={change}
@@ -202,11 +289,9 @@ const AreaNummern = ({
         tabIndex={13 + firstTabIndex}
         options={toJS(store.geschaefte.aktenstandortOptions)}
       />
-    </div>
-    <div className={styles.fieldAktennummer}>
-      <ControlLabel>
-        Nr.
-      </ControlLabel>
+    </FieldAktenstandort>
+    <FieldAktennummer>
+      <ControlLabel>Nr.</ControlLabel>
       <Input
         type="text"
         name="aktennummer"
@@ -215,8 +300,9 @@ const AreaNummern = ({
         changeComparator={changeComparator}
         tabIndex={14 + firstTabIndex}
       />
-    </div>
-  </div>
+    </FieldAktennummer>
+  </Container>
+)
 
 AreaNummern.displayName = 'AreaNummern'
 
