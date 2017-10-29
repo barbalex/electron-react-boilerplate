@@ -90,79 +90,102 @@ const externeData = (values, externeOptions) => {
   info = addValueToInfo(info, data.telefon)
   return <Linkify>{info}</Linkify>
 }
+const Container = styled.div`
+  grid-area: areaPersonen;
+  background-color: white;
+  box-shadow: inset 1em 1em 2em rgb(246, 255, 245), inset -1em -1em 2em rgb(246, 255, 245);
+  outline: 1px solid #efefef;
+  display: grid;
+  grid-template-columns: 360px calc((100% - 10px) - 360px);
+  grid-column-gap: 8px;
+  grid-row-gap: 2px;
+  padding: 8px;
+  align-items: end;
+`
+const SubContainer = styled.div`
+  display: grid;
+  grid-template-columns: 360px calc((100% - 10px) - 360px);
+  grid-column-gap: 8px;
+  grid-row-gap: 2px;
+  padding: 8px;
+  align-items: end;
+`
+const Title = styled.div`
+  font-weight: 900;
+  font-size: 16px;
+  grid-column: 1 / span 2;
+`
 
 const enhance = compose(inject('store'), observer)
 
 const AreaPersonen = ({ store, values, firstTabIndex = 0, change, changeComparator }) => (
-  <div className={styles.container}>
-    <div className={styles.areaPersonen}>
-      <div className={styles.areaPersonenTitle}>Personen</div>
-      <div className={styles.areaVerantwortlichSubTitle}>Verantwortlich</div>
-      <div className={styles.KontaktInternVornameName}>
-        <InputGroup>
-          <SortSelector name="verantwortlich" />
-          <ComparatorSelector name="verantwortlich" changeComparator={changeComparator} />
-          <FormControl
-            componentClass="select"
-            value={values.verantwortlich || ''}
-            name="verantwortlich"
-            onChange={change}
-            bsSize="small"
-            tabIndex={1 + firstTabIndex}
-            className={styles.narrowVerantwDropdown}
-          >
-            {verantwortlichOptionsList(store.geschaefte.interneOptions)}
-          </FormControl>
-        </InputGroup>
-      </div>
-      <div className={styles.fieldVerantwortlichName}>
-        <FormControl.Static>{verantwortlichData(values, store.geschaefte.interneOptions)}</FormControl.Static>
-      </div>
-      <div className={styles.areaInterneKontakteSubTitle}>Interne Kontakte</div>
-      <div className={styles.KontaktInternVornameName}>
-        <InputGroup>
-          <SortSelector name="kontaktInternVornameName" />
-          <ComparatorSelector name="kontaktInternVornameName" changeComparator={changeComparator} />
-          <FormControl
-            componentClass="select"
-            value={values.kontaktInternVornameName || ''}
-            name="kontaktInternVornameName"
-            onChange={change}
-            bsSize="small"
-            tabIndex={2 + firstTabIndex}
-            className={styles.narrowVerantwDropdown}
-          >
-            {interneOptionsList(store.geschaefte.interneOptions)}
-          </FormControl>
-        </InputGroup>
-      </div>
-      <div className={styles.fieldVerantwortlichName}>
-        <FormControl.Static>{interneData(values, store.geschaefte.interneOptions)}</FormControl.Static>
-      </div>
-
-      <div className={styles.areaExterneKontakteSubTitle}>Externe Kontakte</div>
-      <div className={styles.KontaktExternVornameName}>
-        <InputGroup>
-          <SortSelector name="kontaktExternNameVorname" />
-          <ComparatorSelector name="kontaktExternNameVorname" changeComparator={changeComparator} />
-          <FormControl
-            componentClass="select"
-            value={values.kontaktExternNameVorname || ''}
-            name="kontaktExternNameVorname"
-            onChange={change}
-            bsSize="small"
-            tabIndex={3 + firstTabIndex}
-            className={styles.verantwDropdown}
-          >
-            {externeOptionsList(store.geschaefte.externeOptions)}
-          </FormControl>
-        </InputGroup>
-      </div>
-      <div className={styles.fieldVerantwortlichName}>
-        <FormControl.Static>{externeData(values, store.geschaefte.externeOptions)}</FormControl.Static>
-      </div>
+  <Container>
+    <Title>Personen</Title>
+    <div className={styles.areaVerantwortlichSubTitle}>Verantwortlich</div>
+    <div className={styles.KontaktInternVornameName}>
+      <InputGroup>
+        <SortSelector name="verantwortlich" />
+        <ComparatorSelector name="verantwortlich" changeComparator={changeComparator} />
+        <FormControl
+          componentClass="select"
+          value={values.verantwortlich || ''}
+          name="verantwortlich"
+          onChange={change}
+          bsSize="small"
+          tabIndex={1 + firstTabIndex}
+          className={styles.narrowVerantwDropdown}
+        >
+          {verantwortlichOptionsList(store.geschaefte.interneOptions)}
+        </FormControl>
+      </InputGroup>
     </div>
-  </div>
+    <div className={styles.fieldVerantwortlichName}>
+      <FormControl.Static>{verantwortlichData(values, store.geschaefte.interneOptions)}</FormControl.Static>
+    </div>
+    <div className={styles.areaInterneKontakteSubTitle}>Interne Kontakte</div>
+    <div className={styles.KontaktInternVornameName}>
+      <InputGroup>
+        <SortSelector name="kontaktInternVornameName" />
+        <ComparatorSelector name="kontaktInternVornameName" changeComparator={changeComparator} />
+        <FormControl
+          componentClass="select"
+          value={values.kontaktInternVornameName || ''}
+          name="kontaktInternVornameName"
+          onChange={change}
+          bsSize="small"
+          tabIndex={2 + firstTabIndex}
+          className={styles.narrowVerantwDropdown}
+        >
+          {interneOptionsList(store.geschaefte.interneOptions)}
+        </FormControl>
+      </InputGroup>
+    </div>
+    <div className={styles.fieldVerantwortlichName}>
+      <FormControl.Static>{interneData(values, store.geschaefte.interneOptions)}</FormControl.Static>
+    </div>
+
+    <div className={styles.areaExterneKontakteSubTitle}>Externe Kontakte</div>
+    <div className={styles.KontaktExternVornameName}>
+      <InputGroup>
+        <SortSelector name="kontaktExternNameVorname" />
+        <ComparatorSelector name="kontaktExternNameVorname" changeComparator={changeComparator} />
+        <FormControl
+          componentClass="select"
+          value={values.kontaktExternNameVorname || ''}
+          name="kontaktExternNameVorname"
+          onChange={change}
+          bsSize="small"
+          tabIndex={3 + firstTabIndex}
+          className={styles.verantwDropdown}
+        >
+          {externeOptionsList(store.geschaefte.externeOptions)}
+        </FormControl>
+      </InputGroup>
+    </div>
+    <div className={styles.fieldVerantwortlichName}>
+      <FormControl.Static>{externeData(values, store.geschaefte.externeOptions)}</FormControl.Static>
+    </div>
+  </Container>
 )
 
 AreaPersonen.displayName = 'AreaPersonen'
