@@ -1,12 +1,9 @@
 import React, { PropTypes } from 'react'
-import {
-  FormControl,
-  ControlLabel,
-  InputGroup,
-} from 'react-bootstrap'
+import { FormControl, ControlLabel, InputGroup } from 'react-bootstrap'
 import moment from 'moment'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
 import ComparatorSelector from './ComparatorSelector'
 import styles from './areaRechtsmittel.css'
@@ -16,31 +13,15 @@ import Input from './Input'
 
 moment.locale('de')
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
-const AreaRechtsmittel = ({
-  store,
-  values,
-  firstTabIndex,
-  change,
-  changeComparator,
-}) =>
+const AreaRechtsmittel = ({ store, values, firstTabIndex, change, changeComparator }) => (
   <div className={styles.areaForGeschaeftsart}>
-    <div className={styles.areaRechtsmittelTitle}>
-      Rekurs / Beschwerde
-    </div>
+    <div className={styles.areaRechtsmittelTitle}>Rekurs / Beschwerde</div>
     <div className={styles.fieldInstanz}>
-      <ControlLabel>
-        Instanz
-      </ControlLabel>
+      <ControlLabel>Instanz</ControlLabel>
       <InputGroup>
-        <ComparatorSelector
-          name="rechtsmittelInstanz"
-          changeComparator={changeComparator}
-        />
+        <ComparatorSelector name="rechtsmittelInstanz" changeComparator={changeComparator} />
         <FormControl
           componentClass="select"
           value={values.rechtsmittelInstanz || ''}
@@ -54,14 +35,9 @@ const AreaRechtsmittel = ({
       </InputGroup>
     </div>
     <div className={styles.fieldEntscheidNr}>
-      <ControlLabel>
-        Entscheid Nr.
-      </ControlLabel>
+      <ControlLabel>Entscheid Nr.</ControlLabel>
       <InputGroup>
-        <ComparatorSelector
-          name="rechtsmittelEntscheidNr"
-          changeComparator={changeComparator}
-        />
+        <ComparatorSelector name="rechtsmittelEntscheidNr" changeComparator={changeComparator} />
         <FormControl
           type="number"
           value={values.rechtsmittelEntscheidNr || ''}
@@ -83,14 +59,9 @@ const AreaRechtsmittel = ({
       />
     </div>
     <div className={styles.fieldErledigung}>
-      <ControlLabel>
-        Erledigung
-      </ControlLabel>
+      <ControlLabel>Erledigung</ControlLabel>
       <InputGroup>
-        <ComparatorSelector
-          name="rechtsmittelErledigung"
-          changeComparator={changeComparator}
-        />
+        <ComparatorSelector name="rechtsmittelErledigung" changeComparator={changeComparator} />
         <FormControl
           componentClass="select"
           value={values.rechtsmittelErledigung || ''}
@@ -104,18 +75,11 @@ const AreaRechtsmittel = ({
       </InputGroup>
     </div>
     <div className={styles.fieldRechtsmittelTxt}>
-      <ControlLabel>
-        Bemerkungen
-      </ControlLabel>
-      <Input
-        name="rechtsmittelTxt"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={5 + firstTabIndex}
-      />
+      <ControlLabel>Bemerkungen</ControlLabel>
+      <Input name="rechtsmittelTxt" change={change} values={values} changeComparator={changeComparator} tabIndex={5 + firstTabIndex} />
     </div>
   </div>
+)
 
 AreaRechtsmittel.displayName = 'AreaRechtsmittel'
 
