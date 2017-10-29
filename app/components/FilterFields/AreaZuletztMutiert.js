@@ -7,7 +7,6 @@ import styled from 'styled-components'
 
 import ComparatorSelector from './ComparatorSelector'
 import SortSelector from './SortSelector'
-import styles from './areaZuletztMutiert.css'
 
 const interneOptionsList = interneOptions => {
   // sort interneOptions by kurzzeichen
@@ -41,32 +40,48 @@ const interneData = (values, interneOptions) => {
   return `${name}${abt}${eMail}${telefon}`
 }
 
+const Container = styled.div`
+  grid-area: areaZuletztMutiert;
+  background-color: white;
+  box-shadow: inset 1em 1em 2em rgb(239, 239, 239), inset -1em -1em 2em rgb(239, 239, 239);
+  outline: 1px solid #efefef;
+  display: grid;
+  grid-template-columns: 175px calc((100% - 10px) - 175px);
+  grid-column-gap: 8px;
+  grid-row-gap: 2px;
+  padding: 8px;
+  align-items: end;
+`
+const FieldVerantwortlichSelector = styled.div`grid-column: 1 / span 1;`
+const FieldVerantwortlichName = styled(FormControl.Static)`grid-column: 2 / span 1;`
+const VerantwortlichDropdown = styled(FormControl)`
+  font-family: 'Lucida Console', Monaco, monospace;
+  width: 80px;
+`
+
 const enhance = compose(inject('store'), observer)
 
 const AreaZuletztMutiert = ({ store, values, change, firstTabIndex, changeComparator }) => (
-  <div className={styles.areaZuletztMutiert}>
-    <div className={styles.fieldVerantwortlich}>
+  <Container>
+    <FieldVerantwortlichSelector>
       <ControlLabel>Mutations-Person</ControlLabel>
       <InputGroup>
         <SortSelector name="mutationsperson" />
         <ComparatorSelector name="mutationsperson" changeComparator={changeComparator} />
-        <FormControl
+        <VerantwortlichDropdown
           componentClass="select"
           value={values.mutationsperson || ''}
           name="mutationsperson"
           onChange={change}
           bsSize="small"
           tabIndex={1 + firstTabIndex}
-          className={styles.narrowVerantwDropdown}
         >
           {interneOptionsList(store.geschaefte.interneOptions)}
-        </FormControl>
+        </VerantwortlichDropdown>
       </InputGroup>
-    </div>
-    <div className={styles.fieldVerantwortlichName}>
-      <FormControl.Static>{interneData(values, store.geschaefte.interneOptions)}</FormControl.Static>
-    </div>
-  </div>
+    </FieldVerantwortlichSelector>
+    <FieldVerantwortlichName>{interneData(values, store.geschaefte.interneOptions)}</FieldVerantwortlichName>
+  </Container>
 )
 
 AreaZuletztMutiert.displayName = 'AreaZuletztMutiert'
