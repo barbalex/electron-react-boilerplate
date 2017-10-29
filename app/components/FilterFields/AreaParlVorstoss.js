@@ -5,15 +5,35 @@ import compose from 'recompose/compose'
 import styled from 'styled-components'
 
 import ComparatorSelector from './ComparatorSelector'
-import styles from './areaParlVorstoss.css'
 import createOptions from '../../src/createOptions'
+
+const Container = styled.div`
+  grid-area: areaForGeschaeftsart;
+  background-color: white;
+  box-shadow: inset 1em 1em 2em rgb(255, 237, 199), inset -1em -1em 2em rgb(255, 237, 199);
+  outline: 1px solid #efefef;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-template-rows: auto;
+  grid-template-areas: 'areaParlVorstTitle areaParlVorstTitle' 'fieldParlVorstossTyp fieldParlVorstossTyp' 'fieldStufe fieldZustaendigkeit';
+  grid-gap: 15px 8px;
+  padding: 8px;
+`
+const Title = styled.div`
+  font-weight: 900;
+  font-size: 16px;
+  grid-area: areaParlVorstTitle;
+`
+const FieldParlVorstossTyp = styled.div`grid-area: fieldParlVorstossTyp;`
+const FieldStufe = styled.div`grid-area: fieldStufe;`
+const FieldZustaendigkeit = styled.div`grid-area: fieldZustaendigkeit;`
 
 const enhance = compose(inject('store'), observer)
 
 const AreaParlVorstoss = ({ store, values, firstTabIndex, change, changeComparator }) => (
-  <div className={styles.areaForGeschaeftsart}>
-    <div className={styles.areaParlVorstTitle}>Parlamentarischer Vorstoss</div>
-    <div className={styles.fieldParlVorstossTyp}>
+  <Container>
+    <Title>Parlamentarischer Vorstoss</Title>
+    <FieldParlVorstossTyp>
       <ControlLabel>Typ</ControlLabel>
       <InputGroup>
         <ComparatorSelector name="parlVorstossTyp" changeComparator={changeComparator} />
@@ -28,8 +48,8 @@ const AreaParlVorstoss = ({ store, values, firstTabIndex, change, changeComparat
           {createOptions(store.geschaefte.parlVorstossTypOptions)}
         </FormControl>
       </InputGroup>
-    </div>
-    <div className={styles.fieldStufe}>
+    </FieldParlVorstossTyp>
+    <FieldStufe>
       <ControlLabel>Stufe</ControlLabel>
       <Radio
         data-value={1}
@@ -51,8 +71,8 @@ const AreaParlVorstoss = ({ store, values, firstTabIndex, change, changeComparat
       >
         2: überwiesen
       </Radio>
-    </div>
-    <div className={styles.fieldZustaendigkeit}>
+    </FieldStufe>
+    <FieldZustaendigkeit>
       <ControlLabel>Zuständigkeit</ControlLabel>
       <Radio
         data-value="hauptzuständig"
@@ -74,8 +94,8 @@ const AreaParlVorstoss = ({ store, values, firstTabIndex, change, changeComparat
       >
         mitbericht
       </Radio>
-    </div>
-  </div>
+    </FieldZustaendigkeit>
+  </Container>
 )
 
 AreaParlVorstoss.displayName = 'AreaParlVorstoss'
