@@ -4,9 +4,17 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled from 'styled-components'
 
-import styles from './comparatorSelector.css'
-
 const enhance = compose(inject('store'), observer)
+
+const StyledFormControl = styled(FormControl)`
+  width: 45px !important;
+  margin-right: -1px !important;
+  border-radius: 0 !important;
+  padding-left: 3px;
+  padding-right: 0;
+  font-weight: 900;
+  font-size: 14px;
+`
 
 const ComparatorSelector = ({ store, name, changeComparator }) => {
   const filterField = store.geschaefte.filterFields.find(ff => ff.field === name)
@@ -14,19 +22,14 @@ const ComparatorSelector = ({ store, name, changeComparator }) => {
 
   return (
     <InputGroup.Button>
-      <FormControl
-        componentClass="select"
-        className={styles.comparator}
-        onChange={e => changeComparator(e.target.value, name)}
-        value={comparatorValue}
-      >
+      <StyledFormControl componentClass="select" onChange={e => changeComparator(e.target.value, name)} value={comparatorValue}>
         <option value="" />
         <option value="=">&#8776;</option>
         <option value="===">=</option>
         <option value="!==">&#60;&#62;</option>
         <option value="&#60;">&#60;</option>
         <option value="&#62;">&#62;</option>
-      </FormControl>
+      </StyledFormControl>
     </InputGroup.Button>
   )
 }
