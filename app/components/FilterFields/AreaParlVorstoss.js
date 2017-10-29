@@ -2,36 +2,21 @@ import React, { PropTypes } from 'react'
 import { FormControl, ControlLabel, Radio, InputGroup } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
 import ComparatorSelector from './ComparatorSelector'
 import styles from './areaParlVorstoss.css'
 import createOptions from '../../src/createOptions'
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
-const AreaParlVorstoss = ({
-  store,
-  values,
-  firstTabIndex,
-  change,
-  changeComparator,
-}) =>
+const AreaParlVorstoss = ({ store, values, firstTabIndex, change, changeComparator }) => (
   <div className={styles.areaForGeschaeftsart}>
-    <div className={styles.areaParlVorstTitle}>
-      Parlamentarischer Vorstoss
-    </div>
+    <div className={styles.areaParlVorstTitle}>Parlamentarischer Vorstoss</div>
     <div className={styles.fieldParlVorstossTyp}>
-      <ControlLabel>
-        Typ
-      </ControlLabel>
+      <ControlLabel>Typ</ControlLabel>
       <InputGroup>
-        <ComparatorSelector
-          name="parlVorstossTyp"
-          changeComparator={changeComparator}
-        />
+        <ComparatorSelector name="parlVorstossTyp" changeComparator={changeComparator} />
         <FormControl
           componentClass="select"
           value={values.parlVorstossTyp || ''}
@@ -45,9 +30,7 @@ const AreaParlVorstoss = ({
       </InputGroup>
     </div>
     <div className={styles.fieldStufe}>
-      <ControlLabel>
-        Stufe
-      </ControlLabel>
+      <ControlLabel>Stufe</ControlLabel>
       <Radio
         data-value={1}
         checked={values.parlVorstossStufe === '1'}
@@ -70,9 +53,7 @@ const AreaParlVorstoss = ({
       </Radio>
     </div>
     <div className={styles.fieldZustaendigkeit}>
-      <ControlLabel>
-        Zuständigkeit
-      </ControlLabel>
+      <ControlLabel>Zuständigkeit</ControlLabel>
       <Radio
         data-value="hauptzuständig"
         checked={values.parlVorstossZustaendigkeitAwel === 'hauptzuständig'}
@@ -95,6 +76,7 @@ const AreaParlVorstoss = ({
       </Radio>
     </div>
   </div>
+)
 
 AreaParlVorstoss.displayName = 'AreaParlVorstoss'
 
