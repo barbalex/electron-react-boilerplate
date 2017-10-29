@@ -4,10 +4,8 @@ import moment from 'moment'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled from 'styled-components'
-import styled, { css } from 'styled-components'
 
 import ComparatorSelector from './ComparatorSelector'
-import styles from './areaRechtsmittel.css'
 import createOptions from '../../src/createOptions'
 import DateField from './DateField'
 import Input from './Input'
@@ -28,13 +26,23 @@ const Container = styled.div`
   grid-row-gap: 8px;
   padding: 8px;
 `
+const Title = styled.div`
+  font-weight: 900;
+  font-size: 16px;
+  grid-area: areaRechtsmittelTitle;
+`
+const FieldInstanz = styled.div`grid-area: fieldInstanz;`
+const FieldEntscheidNr = styled.div`grid-area: fieldEntscheidNr;`
+const FieldEntscheidDatum = styled.div`grid-area: fieldEntscheidDatum;`
+const FieldErledigung = styled.div`grid-area: fieldErledigung;`
+const FieldRechtsmittelTxt = styled.div`grid-area: fieldRechtsmittelTxt;`
 
 const enhance = compose(inject('store'), observer)
 
 const AreaRechtsmittel = ({ store, values, firstTabIndex, change, changeComparator }) => (
-  <div className={styles.areaForGeschaeftsart}>
-    <div className={styles.areaRechtsmittelTitle}>Rekurs / Beschwerde</div>
-    <div className={styles.fieldInstanz}>
+  <Container>
+    <Title>Rekurs / Beschwerde</Title>
+    <FieldInstanz>
       <ControlLabel>Instanz</ControlLabel>
       <InputGroup>
         <ComparatorSelector name="rechtsmittelInstanz" changeComparator={changeComparator} />
@@ -49,8 +57,8 @@ const AreaRechtsmittel = ({ store, values, firstTabIndex, change, changeComparat
           {createOptions(store.geschaefte.rechtsmittelInstanzOptions)}
         </FormControl>
       </InputGroup>
-    </div>
-    <div className={styles.fieldEntscheidNr}>
+    </FieldInstanz>
+    <FieldEntscheidNr>
       <ControlLabel>Entscheid Nr.</ControlLabel>
       <InputGroup>
         <ComparatorSelector name="rechtsmittelEntscheidNr" changeComparator={changeComparator} />
@@ -63,8 +71,8 @@ const AreaRechtsmittel = ({ store, values, firstTabIndex, change, changeComparat
           tabIndex={2 + firstTabIndex}
         />
       </InputGroup>
-    </div>
-    <div className={styles.fieldEntscheidDatum}>
+    </FieldEntscheidNr>
+    <FieldEntscheidDatum>
       <DateField
         name="rechtsmittelEntscheidDatum"
         label="Entscheid Datum"
@@ -73,8 +81,8 @@ const AreaRechtsmittel = ({ store, values, firstTabIndex, change, changeComparat
         change={change}
         changeComparator={changeComparator}
       />
-    </div>
-    <div className={styles.fieldErledigung}>
+    </FieldEntscheidDatum>
+    <FieldErledigung>
       <ControlLabel>Erledigung</ControlLabel>
       <InputGroup>
         <ComparatorSelector name="rechtsmittelErledigung" changeComparator={changeComparator} />
@@ -89,12 +97,12 @@ const AreaRechtsmittel = ({ store, values, firstTabIndex, change, changeComparat
           {createOptions(store.geschaefte.rechtsmittelErledigungOptions)}
         </FormControl>
       </InputGroup>
-    </div>
-    <div className={styles.fieldRechtsmittelTxt}>
+    </FieldErledigung>
+    <FieldRechtsmittelTxt>
       <ControlLabel>Bemerkungen</ControlLabel>
       <Input name="rechtsmittelTxt" change={change} values={values} changeComparator={changeComparator} tabIndex={5 + firstTabIndex} />
-    </div>
-  </div>
+    </FieldRechtsmittelTxt>
+  </Container>
 )
 
 AreaRechtsmittel.displayName = 'AreaRechtsmittel'
