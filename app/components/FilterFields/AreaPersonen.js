@@ -4,12 +4,13 @@ import _ from 'lodash'
 import Linkify from 'react-linkify'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import styled from 'styled-components'
 
 import ComparatorSelector from './ComparatorSelector'
 import SortSelector from './SortSelector'
 import styles from './areaPersonen.css'
 
-const interneOptionsList = (interneOptions) => {
+const interneOptionsList = interneOptions => {
   // sort interneOptions by kurzzeichen
   const interneOptionsSorted = _.sortBy(interneOptions, o => {
     const sort = `${o.name || 'zz'} ${o.vorname || 'zz'} (${o.kurzzeichen})`
@@ -18,10 +19,7 @@ const interneOptionsList = (interneOptions) => {
   const options = interneOptionsSorted.map((o, index) => {
     const name = `${o.vorname || ''} ${o.name || ''}`
     return (
-      <option
-        key={index + 1}
-        value={name}
-      >
+      <option key={index + 1} value={name}>
         {`${o.name || '(kein Name)'} ${o.vorname || '(kein Vorname)'} (${o.kurzzeichen})`}
       </option>
     )
@@ -30,17 +28,14 @@ const interneOptionsList = (interneOptions) => {
   return options
 }
 
-const verantwortlichOptionsList = (interneOptions) => {
+const verantwortlichOptionsList = interneOptions => {
   // sort interneOptions by kurzzeichen
   const interneOptionsSorted = _.sortBy(interneOptions, o => {
     const sort = `${o.name || 'zz'} ${o.vorname || 'zz'} (${o.kurzzeichen})`
     return sort.toLowerCase()
   })
   const options = interneOptionsSorted.map((o, index) => (
-    <option
-      key={index + 1}
-      value={o.kurzzeichen}
-    >
+    <option key={index + 1} value={o.kurzzeichen}>
       {`${o.name || '(kein Name)'} ${o.vorname || '(kein Vorname)'} (${o.kurzzeichen})`}
     </option>
   ))
@@ -48,32 +43,20 @@ const verantwortlichOptionsList = (interneOptions) => {
   return options
 }
 
-const externeOptionsList = (externeOptions) => {
+const externeOptionsList = externeOptions => {
   // sort externeOptions by nameVorname
-  const externeOptionsSorted = _.sortBy(externeOptions, o =>
-    o.nameVorname.toLowerCase()
-  )
-  const options = externeOptionsSorted.map((o, index) =>
-    <option
-      key={index + 1}
-      value={o.nameVorname}
-    >
+  const externeOptionsSorted = _.sortBy(externeOptions, o => o.nameVorname.toLowerCase())
+  const options = externeOptionsSorted.map((o, index) => (
+    <option key={index + 1} value={o.nameVorname}>
       {o.nameVorname}
     </option>
-  )
-  options.unshift(
-    <option
-      key={0}
-      value=""
-    />
-  )
+  ))
+  options.unshift(<option key={0} value="" />)
   return options
 }
 
 const verantwortlichData = (values, interneOptions) => {
-  const data = interneOptions.find(o =>
-    o.kurzzeichen === values.verantwortlich
-  )
+  const data = interneOptions.find(o => o.kurzzeichen === values.verantwortlich)
   if (!data) return ''
   const abt = data.abteilung ? `${data.abteilung}` : ''
   const eMail = data.eMail ? `, ${data.eMail}` : ''
@@ -82,7 +65,7 @@ const verantwortlichData = (values, interneOptions) => {
 }
 
 const interneData = (values, interneOptions) => {
-  const data = interneOptions.find((o) => {
+  const data = interneOptions.find(o => {
     const name = `${o.vorname || ''} ${o.name || ''}`
     return name === values.kontaktInternVornameName
   })
@@ -99,9 +82,7 @@ const externeData = (values, externeOptions) => {
     if (info) return `${info}, ${value}`
     return value
   }
-  const data = externeOptions.find(o =>
-    o.nameVorname === values.kontaktExternNameVorname
-  )
+  const data = externeOptions.find(o => o.nameVorname === values.kontaktExternNameVorname)
   if (!data) return ''
   let info = ''
   info = addValueToInfo(info, data.firma)
@@ -110,35 +91,17 @@ const externeData = (values, externeOptions) => {
   return <Linkify>{info}</Linkify>
 }
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
-const AreaPersonen = ({
-  store,
-  values,
-  firstTabIndex = 0,
-  change,
-  changeComparator,
-}) =>
+const AreaPersonen = ({ store, values, firstTabIndex = 0, change, changeComparator }) => (
   <div className={styles.container}>
     <div className={styles.areaPersonen}>
-      <div className={styles.areaPersonenTitle}>
-        Personen
-      </div>
-      <div className={styles.areaVerantwortlichSubTitle}>
-        Verantwortlich
-      </div>
+      <div className={styles.areaPersonenTitle}>Personen</div>
+      <div className={styles.areaVerantwortlichSubTitle}>Verantwortlich</div>
       <div className={styles.KontaktInternVornameName}>
         <InputGroup>
-          <SortSelector
-            name="verantwortlich"
-          />
-          <ComparatorSelector
-            name="verantwortlich"
-            changeComparator={changeComparator}
-          />
+          <SortSelector name="verantwortlich" />
+          <ComparatorSelector name="verantwortlich" changeComparator={changeComparator} />
           <FormControl
             componentClass="select"
             value={values.verantwortlich || ''}
@@ -153,22 +116,13 @@ const AreaPersonen = ({
         </InputGroup>
       </div>
       <div className={styles.fieldVerantwortlichName}>
-        <FormControl.Static>
-          {verantwortlichData(values, store.geschaefte.interneOptions)}
-        </FormControl.Static>
+        <FormControl.Static>{verantwortlichData(values, store.geschaefte.interneOptions)}</FormControl.Static>
       </div>
-      <div className={styles.areaInterneKontakteSubTitle}>
-        Interne Kontakte
-      </div>
+      <div className={styles.areaInterneKontakteSubTitle}>Interne Kontakte</div>
       <div className={styles.KontaktInternVornameName}>
         <InputGroup>
-          <SortSelector
-            name="kontaktInternVornameName"
-          />
-          <ComparatorSelector
-            name="kontaktInternVornameName"
-            changeComparator={changeComparator}
-          />
+          <SortSelector name="kontaktInternVornameName" />
+          <ComparatorSelector name="kontaktInternVornameName" changeComparator={changeComparator} />
           <FormControl
             componentClass="select"
             value={values.kontaktInternVornameName || ''}
@@ -183,23 +137,14 @@ const AreaPersonen = ({
         </InputGroup>
       </div>
       <div className={styles.fieldVerantwortlichName}>
-        <FormControl.Static>
-          {interneData(values, store.geschaefte.interneOptions)}
-        </FormControl.Static>
+        <FormControl.Static>{interneData(values, store.geschaefte.interneOptions)}</FormControl.Static>
       </div>
 
-      <div className={styles.areaExterneKontakteSubTitle}>
-        Externe Kontakte
-      </div>
+      <div className={styles.areaExterneKontakteSubTitle}>Externe Kontakte</div>
       <div className={styles.KontaktExternVornameName}>
         <InputGroup>
-          <SortSelector
-            name="kontaktExternNameVorname"
-          />
-          <ComparatorSelector
-            name="kontaktExternNameVorname"
-            changeComparator={changeComparator}
-          />
+          <SortSelector name="kontaktExternNameVorname" />
+          <ComparatorSelector name="kontaktExternNameVorname" changeComparator={changeComparator} />
           <FormControl
             componentClass="select"
             value={values.kontaktExternNameVorname || ''}
@@ -214,12 +159,11 @@ const AreaPersonen = ({
         </InputGroup>
       </div>
       <div className={styles.fieldVerantwortlichName}>
-        <FormControl.Static>
-          {externeData(values, store.geschaefte.externeOptions)}
-        </FormControl.Static>
+        <FormControl.Static>{externeData(values, store.geschaefte.externeOptions)}</FormControl.Static>
       </div>
     </div>
   </div>
+)
 
 AreaPersonen.displayName = 'AreaPersonen'
 
