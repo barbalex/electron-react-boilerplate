@@ -7,27 +7,12 @@ import ComparatorSelector from './ComparatorSelector'
 import SortSelector from './SortSelector'
 import createOptions from '../../src/createOptions'
 
-const enhance = compose(
-  observer
-)
+const enhance = compose(observer)
 
-const SelectInput = ({
-  name,
-  change,
-  values,
-  changeComparator,
-  tabIndex,
-  autoFocus = false,
-  options = [],
-}) =>
+const SelectInput = ({ name, change, values, changeComparator, tabIndex, autoFocus = false, options = [] }) => (
   <InputGroup>
-    <SortSelector
-      name={name}
-    />
-    <ComparatorSelector
-      name={name}
-      changeComparator={changeComparator}
-    />
+    <SortSelector name={name} />
+    <ComparatorSelector name={name} changeComparator={changeComparator} />
     <FormControl
       componentClass="select"
       value={values[name] || ''}
@@ -40,6 +25,7 @@ const SelectInput = ({
       {createOptions(options)}
     </FormControl>
   </InputGroup>
+)
 
 SelectInput.displayName = 'SelectInput'
 
