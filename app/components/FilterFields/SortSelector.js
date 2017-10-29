@@ -4,7 +4,18 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled from 'styled-components'
 
-import styles from './sortSelector.css'
+const StyledFormControl = styled(FormControl)`
+  width: 45px !important;
+  margin-right: -1px !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-top-left-radius: 4px !important;
+  border-bottom-left-radius: 4px !important;
+  padding-left: 6px;
+  padding-right: 0;
+  font-weight: 900;
+  font-size: 14px;
+`
 
 const enhance = compose(inject('store'), observer)
 
@@ -14,16 +25,11 @@ const SortSelector = ({ store, name }) => {
 
   return (
     <InputGroup.Button>
-      <FormControl
-        componentClass="select"
-        className={styles.sortSelector}
-        onChange={e => store.geschaefteSortByFields(name, e.target.value)}
-        value={direction}
-      >
+      <StyledFormControl componentClass="select" onChange={e => store.geschaefteSortByFields(name, e.target.value)} value={direction}>
         <option value="" />
         <option value="ASCENDING">&#8679;</option>
         <option value="DESCENDING">&#8681;</option>
-      </FormControl>
+      </StyledFormControl>
     </InputGroup.Button>
   )
 }
