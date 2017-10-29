@@ -6,12 +6,17 @@ import { observer } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled from 'styled-components'
 
-import styles from './dateField.css'
 import ComparatorSelector from './ComparatorSelector'
 import SortSelector from './SortSelector'
 import getDateValidationStateDate from '../../src/getDateValidationStateDate'
 
 moment.locale('de')
+
+const StyledDateRangePicker = styled(DateRangePicker)`cursor: pointer;`
+const StyledFormGroup = styled(FormGroup)`
+  grid-area: ${props => (props['data-name'] === 'rechtsmittelEntscheidDatum' ? 'fieldEntscheidDatum' : 'unset')};
+  grid-column: ${props => (props['data-name'] === 'rechtsmittelEntscheidDatum' ? 'unset' : 1)};
+`
 
 const enhance = compose(observer)
 
@@ -113,8 +118,9 @@ class DateField extends Component {
     }
 
     return (
-      <FormGroup
-        className={name === 'rechtsmittelEntscheidDatum' ? styles.fieldEntscheidDatum : styles.field}
+      <StyledFormGroup
+        data-name={name}
+        // className={name === 'rechtsmittelEntscheidDatum' ? styles.fieldEntscheidDatum : styles.field}
         validationState={getDateValidationStateDate(value)}
       >
         <ControlLabel>{label}</ControlLabel>
@@ -131,12 +137,12 @@ class DateField extends Component {
             tabIndex={tabIndex}
           />
           <InputGroup.Addon style={datePickerAddonStyle}>
-            <DateRangePicker singleDatePicker drops="up" opens="left" onApply={this.onChangeDatePicker} className={styles.datePicker}>
+            <StyledDateRangePicker singleDatePicker drops="up" opens="left" onApply={this.onChangeDatePicker}>
               <Glyphicon glyph="calendar" style={datePickerCalendarStyle} />
-            </DateRangePicker>
+            </StyledDateRangePicker>
           </InputGroup.Addon>
         </InputGroup>
-      </FormGroup>
+      </StyledFormGroup>
     )
   }
 }
