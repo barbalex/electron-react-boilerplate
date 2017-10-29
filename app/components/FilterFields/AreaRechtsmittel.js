@@ -4,6 +4,7 @@ import moment from 'moment'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import ComparatorSelector from './ComparatorSelector'
 import styles from './areaRechtsmittel.css'
@@ -12,6 +13,21 @@ import DateField from './DateField'
 import Input from './Input'
 
 moment.locale('de')
+
+const Container = styled.div`
+  grid-area: areaForGeschaeftsart;
+  background-color: white;
+  box-shadow: inset 1em 1em 2em rgb(255, 237, 199), inset -1em -1em 2em rgb(255, 237, 199);
+  outline: 1px solid #efefef;
+  display: grid;
+  grid-template-columns: calc((100% - 8px) * 0.4) calc((100% - 8px) * 0.6);
+  grid-template-rows: auto;
+  grid-template-areas: 'areaRechtsmittelTitle areaRechtsmittelTitle' 'fieldInstanz fieldInstanz' 'fieldEntscheidNr fieldEntscheidDatum'
+    'fieldErledigung fieldErledigung' 'fieldRechtsmittelTxt fieldRechtsmittelTxt';
+  grid-column-gap: 8px;
+  grid-row-gap: 8px;
+  padding: 8px;
+`
 
 const enhance = compose(inject('store'), observer)
 
