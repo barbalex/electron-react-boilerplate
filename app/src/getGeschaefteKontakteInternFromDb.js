@@ -6,7 +6,7 @@ export default function (db) {
       FROM
         geschaefteKontakteIntern`
 
-    db.all(sql, (error, geschaefteKontakteIntern) => {
+    db.query(sql, (error, geschaefteKontakteIntern) => {
       if (error) reject(error)
       resolve(geschaefteKontakteIntern)
     })

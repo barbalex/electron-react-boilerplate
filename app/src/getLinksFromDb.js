@@ -9,7 +9,7 @@ export default function (db) {
         idGeschaeft,
         url`
 
-    db.all(sql, (error, links) => {
+    db.query(sql, (error, links) => {
       if (error) reject(error)
 
       resolve(links)

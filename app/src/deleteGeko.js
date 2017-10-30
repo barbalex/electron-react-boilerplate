@@ -7,7 +7,7 @@ export default function (db, idGeschaeft, gekoNr) {
         idGeschaeft = ${idGeschaeft} AND
         gekoNr = '${gekoNr}'`
 
-    db.run(sql, (error) => {
+    db.query(sql, error => {
       if (error) reject(error)
       resolve(true)
     })

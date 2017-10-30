@@ -9,7 +9,7 @@ export default function (db) {
         idGeschaeft,
         gekoNr`
 
-    db.all(sql, (error, geko) => {
+    db.query(sql, (error, geko) => {
       if (error) reject(error)
 
       resolve(geko)

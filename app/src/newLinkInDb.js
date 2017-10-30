@@ -1,6 +1,6 @@
 import getLinkFromDb from './getLinkFromDb'
 
-export default function(db, idGeschaeft, url) {
+export default function (db, idGeschaeft, url) {
   return new Promise((resolve, reject) => {
     const sql = `
       INSERT INTO
@@ -8,7 +8,7 @@ export default function(db, idGeschaeft, url) {
       VALUES
         (${idGeschaeft}, '${url}')`
 
-    db.run(sql, error => {
+    db.query(sql, error => {
       if (error) reject(error)
       // return full dataset
       getLinkFromDb(db, idGeschaeft, url)

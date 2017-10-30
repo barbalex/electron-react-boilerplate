@@ -8,7 +8,7 @@ export default function (db) {
       WHERE
         geschaeftKannFaelligSein = 1`
 
-    db.all(sql, (error, result) => {
+    db.query(sql, (error, result) => {
       if (error) reject(error)
       const options = result.map(res => res.status)
       resolve(options)

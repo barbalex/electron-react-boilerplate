@@ -6,7 +6,7 @@ export default function (db, table) {
       FROM
         ${table}`
 
-    db.all(sql, (error, result) => {
+    db.query(sql, (error, result) => {
       if (error) reject(error)
       resolve(result)
     })

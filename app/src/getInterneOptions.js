@@ -8,7 +8,7 @@ export default function (db) {
       ORDER BY
         kurzzeichen`
 
-    db.all(sql, (error, options) => {
+    db.query(sql, (error, options) => {
       if (error) reject(error)
       resolve(options)
     })

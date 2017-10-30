@@ -8,12 +8,10 @@ export default function (db, idGeschaeft, idKontakt) {
       VALUES
         (${idGeschaeft}, ${idKontakt})`
 
-    db.run(sql, (error) => {
+    db.query(sql, error => {
       if (error) reject(error)
       getGeschaeftKontaktExternFromDb(db, idGeschaeft, idKontakt)
-        .then(geschaeftKontaktExtern =>
-          resolve(geschaeftKontaktExtern)
-        )
+        .then(geschaeftKontaktExtern => resolve(geschaeftKontaktExtern))
         .catch(err => reject(err))
     })
   })

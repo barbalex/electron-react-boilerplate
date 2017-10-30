@@ -17,7 +17,7 @@ export default function (db, username) {
      * NOT in the result
      * so DO NOT USE ARROW FUNCTION
      */
-    db.run(sql, function callback(error) {
+    db.query(sql, function callback(error) {
       if (error) reject(error)
       const idGeschaeft = this.lastID
       // return full dataset

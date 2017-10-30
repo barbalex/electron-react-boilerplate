@@ -1,10 +1,4 @@
-export default function (
-  db,
-  table,
-  id,
-  field,
-  value,
-) {
+export default function (db, table, id, field, value) {
   return new Promise((resolve, reject) => {
     const sql = `
       UPDATE
@@ -14,7 +8,7 @@ export default function (
       WHERE
         id = ${id}`
 
-    db.run(sql, (error) => {
+    db.query(sql, error => {
       if (error) reject(error)
       resolve(true)
     })
