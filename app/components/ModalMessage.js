@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { Modal } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'

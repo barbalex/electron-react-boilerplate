@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { FormControl, ControlLabel } from 'react-bootstrap'
 import Textarea from 'react-textarea-autosize'
 import styled from 'styled-components'
@@ -19,7 +20,7 @@ const StyledTextarea = styled(Textarea)`
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 `
 const ContainerBase = styled.div`
-  grid-area: areaNummern
+  grid-area: areaNummern;
   display: grid;
   grid-template-rows: auto;
   padding: 8px;

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import SplitPane from 'react-split-pane'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'

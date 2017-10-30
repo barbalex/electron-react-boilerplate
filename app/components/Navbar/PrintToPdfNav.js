@@ -1,6 +1,7 @@
 import { remote, shell } from 'electron'
 import fs from 'fs'
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { NavItem, Glyphicon } from 'react-bootstrap'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'

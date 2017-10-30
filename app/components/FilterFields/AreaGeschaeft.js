@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { ControlLabel } from 'react-bootstrap'
 import { toJS } from 'mobx'
 import { observer, inject } from 'mobx-react'

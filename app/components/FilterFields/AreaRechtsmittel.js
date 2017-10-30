@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { FormControl, ControlLabel, InputGroup } from 'react-bootstrap'
 import moment from 'moment'
 import { observer, inject } from 'mobx-react'

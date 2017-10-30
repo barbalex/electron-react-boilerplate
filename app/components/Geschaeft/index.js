@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import moment from 'moment'
 import $ from 'jquery'
 import styled from 'styled-components'
