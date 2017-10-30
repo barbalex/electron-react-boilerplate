@@ -11,8 +11,6 @@ import chooseDb from '../../src/chooseDb'
 
 const dblite = require('dblite')
 
-dblite.bin = '../../etc/sqlite3.win.dll'
-
 export default store => ({
   configSetKey: action((key, value) => {
     const { config } = store.app
