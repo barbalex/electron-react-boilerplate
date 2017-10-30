@@ -9,7 +9,7 @@ export default function (db) {
         name,
         vorname`
 
-    db.query(sql, (error, options) => {
+    db.all(sql, (error, options) => {
       if (error) reject(error)
       resolve(options)
     })

@@ -9,9 +9,9 @@ export default function (db, idGeschaeft, gekoNr) {
         idGeschaeft = ${idGeschaeft} AND
         gekoNr = '${gekoNr}'`
 
-    db.query(sql, (error, result) => {
+    db.get(sql, (error, result) => {
       if (error) reject(error)
-      resolve(result[0])
+      resolve(result)
     })
   })
 }

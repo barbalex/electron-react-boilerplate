@@ -7,7 +7,7 @@ export default function (db, idGeschaeft, url) {
         idGeschaeft = ${idGeschaeft} AND
         url = '${url}'`
 
-    db.query(sql, error => {
+    db.run(sql, (error) => {
       if (error) reject(error)
       resolve(true)
     })

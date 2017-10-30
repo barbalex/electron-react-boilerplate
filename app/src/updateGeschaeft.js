@@ -2,7 +2,13 @@ import moment from 'moment'
 import isDateField from './isDateField'
 import convertDateToYyyyMmDd from './convertDateToYyyyMmDd'
 
-export default function (db, idGeschaeft, field, value, username) {
+export default function (
+  db,
+  idGeschaeft,
+  field,
+  value,
+  username,
+) {
   return new Promise((resolve, reject) => {
     /**
      * if field is date field
@@ -23,7 +29,7 @@ export default function (db, idGeschaeft, field, value, username) {
       WHERE
         idGeschaeft = ${idGeschaeft}`
 
-    db.query(sql, error => {
+    db.run(sql, (error) => {
       if (error) reject(error)
       resolve(true)
     })

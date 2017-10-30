@@ -15,7 +15,7 @@ export default function (db, table) {
      * NOT in the result
      * so DO NOT USE ARROW FUNCTION
      */
-    db.query(sql, function callback(error) {
+    db.run(sql, function callback(error) {
       if (error) reject(error)
       const id = this.lastID
       // return full dataset

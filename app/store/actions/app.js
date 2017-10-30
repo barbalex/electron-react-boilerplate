@@ -9,7 +9,7 @@ import filterForFaelligeGeschaefte from '../../src/filterForFaelligeGeschaefte'
 import saveConfig from '../../src/saveConfig'
 import chooseDb from '../../src/chooseDb'
 
-const dblite = require('dblite')
+const sqlite3 = require('sqlite3').verbose()
 
 export default store => ({
   configSetKey: action((key, value) => {
@@ -27,7 +27,7 @@ export default store => ({
     store.app.errorFetchingDb = null
     chooseDb()
       .then(dbPath => {
-        const db = dblite(dbPath)
+        const db = new sqlite3.Database(dbPath)
         store.dbChooseSuccess(dbPath, db)
         store.configSetKey('dbPath', dbPath)
       })
@@ -68,7 +68,7 @@ export default store => ({
     // need function that tests if db exists at standard path
     const standardDbExists = fs.existsSync(standardDbPath)
     if (standardDbExists) {
-      const db = dblite(standardDbPath)
+      const db = new sqlite3.Database(standardDbPath)
       store.dbChooseSuccess(standardDbPath, db)
       store.configSetKey('dbPath', standardDbPath)
     } else {
@@ -77,7 +77,7 @@ export default store => ({
       store.app.errorFetchingDb = null
       chooseDb()
         .then(dbPath => {
-          const db = dblite(dbPath)
+          const db = new sqlite3.Database(dbPath)
           store.dbChooseSuccess(dbPath, db)
           store.configSetKey('dbPath', dbPath)
         })
@@ -98,7 +98,7 @@ export default store => ({
         if (!dbExists) {
           return store.dbGetAtStandardpathIfPossible()
         }
-        const db = dblite(dbPath)
+        const db = new sqlite3.Database(dbPath)
         store.dbChooseSuccess(dbPath, db)
       })
       .catch(error => console.error(error)),

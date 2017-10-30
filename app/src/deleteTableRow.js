@@ -6,7 +6,7 @@ export default function (db, table, id) {
       WHERE
         id = ${id}`
 
-    db.query(sql, error => {
+    db.run(sql, (error) => {
       if (error) reject(error)
       resolve(true)
     })

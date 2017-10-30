@@ -10,7 +10,7 @@ export default function (db, name) {
       ORDER BY
         sort`
 
-    db.query(sql, (error, result) => {
+    db.all(sql, (error, result) => {
       if (error) reject(error)
       const options = result.map(res => res[name])
       resolve(options)

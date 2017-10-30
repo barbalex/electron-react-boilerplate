@@ -8,16 +8,15 @@ export default function (db, table, id) {
       WHERE
         id = ${id}`
 
-    db.query(sql, (error, row) => {
+    db.get(sql, (error, row) => {
       if (error) reject(error)
-      const result = row[0]
       // react does not want to get null values
-      Object.keys(result).forEach(key => {
-        if (result[key] === null) {
-          result[key] = ''
+      Object.keys(row).forEach((key) => {
+        if (row[key] === null) {
+          row[key] = ''
         }
       })
-      resolve(result)
+      resolve(row)
     })
   })
 }

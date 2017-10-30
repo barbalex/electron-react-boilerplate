@@ -8,7 +8,7 @@ export default function (db, idGeschaeft, gekoNr) {
       VALUES
         (${idGeschaeft}, '${gekoNr}')`
 
-    db.query(sql, error => {
+    db.run(sql, (error) => {
       if (error) reject(error)
       // return full dataset
       getSingleGekoFromDb(db, idGeschaeft, gekoNr)
