@@ -4,6 +4,7 @@ import { Provider } from 'mobx-react'
 import app from 'ampersand-app'
 
 import App from './components/App'
+
 // loading store from separate file does not work for server rendering
 // see: http://stackoverflow.com/questions/33643290/how-do-i-get-a-hold-of-the-store-dispatch-in-react-router-onenter
 // but I need to fetch it from wrapComponentInProvider.js
@@ -23,5 +24,5 @@ render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 )

@@ -4,32 +4,27 @@ import SplitPane from 'react-split-pane'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
+import styled from 'styled-components'
 
 import FilterFields from './FilterFields'
 import Geschaefte from './Geschaefte'
 
+const StyledSplitPane = styled(SplitPane)`top: 52px;`
+
 const enhance = compose(
   inject('store'),
   withHandlers({
-    onChange: props => size =>
-      props.store.configSetKey('geschaefteColumnWidth', size),
+    onChange: props => size => props.store.configSetKey('geschaefteColumnWidth', size),
   }),
-  observer
+  observer,
 )
 
-const FilterFieldsLayout = ({
-  store,
-  onChange,
-}) =>
-  <SplitPane
-    split="vertical"
-    minSize={100}
-    defaultSize={store.app.config.geschaefteColumnWidth}
-    onChange={onChange}
-  >
+const FilterFieldsLayout = ({ store, onChange }) => (
+  <StyledSplitPane split="vertical" minSize={100} defaultSize={store.app.config.geschaefteColumnWidth} onChange={onChange}>
     <Geschaefte />
     <FilterFields />
-  </SplitPane>
+  </StyledSplitPane>
+)
 
 FilterFieldsLayout.propTypes = {
   store: PropTypes.object.isRequired,

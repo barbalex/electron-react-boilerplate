@@ -1,5 +1,6 @@
+@import '../node_modules/bootstrap/dist/css/bootstrap.css';
 @import '../node_modules/react-bootstrap-daterangepicker/css/daterangepicker.css';
-@import "~font-awesome/css/font-awesome.css";
+@import '~font-awesome/css/font-awesome.css';
 
 body {
   position: relative;
@@ -28,7 +29,7 @@ body {
   margin-bottom: 0;
 }
 /* make sure radio label is horizontally even with input */
-.radio > label > input[type=radio] {
+.radio > label > input[type='radio'] {
   margin-top: 2px;
 }
 
@@ -66,18 +67,17 @@ textarea::-webkit-scrollbar {
 }
 
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 2px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 ::-webkit-scrollbar-corner {
-  background: rgba(0,0,0,0);
+  background: rgba(0, 0, 0, 0);
 }
-
 
 /**
  * need to apply this here because
@@ -102,12 +102,11 @@ textarea::-webkit-scrollbar {
     padding: 0 !important;
     height: auto !important;
     overflow: visible !important;
-  }/*
+  } /*
   * {
     transition: none !important;
   }*/
 }
-
 
 /* SplitPane */
 
@@ -143,7 +142,7 @@ textarea::-webkit-scrollbar {
 
 .Resizer {
   background: #000;
-  opacity: .2;
+  opacity: 0.2;
   z-index: 1;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -153,12 +152,12 @@ textarea::-webkit-scrollbar {
   background-clip: padding-box;
 }
 
- .Resizer:hover {
+.Resizer:hover {
   -webkit-transition: all 2s ease;
   transition: all 2s ease;
 }
 
- .Resizer.horizontal {
+.Resizer.horizontal {
   height: 11px;
   margin: -5px 0;
   border-top: 5px solid rgba(255, 255, 255, 0);
@@ -184,10 +183,10 @@ textarea::-webkit-scrollbar {
   border-left: 5px solid rgba(0, 0, 0, 0.5);
   border-right: 5px solid rgba(0, 0, 0, 0.5);
 }
-Resizer.disabled {
+resizer.disabled {
   cursor: not-allowed;
 }
-Resizer.disabled:hover {
+resizer.disabled:hover {
   border-color: transparent;
 }
 
