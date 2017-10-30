@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "ampersand-app": "2.0.0",
+    "bootstrap": "3.3.7",
     "electron-debug": "1.4.0",
     "exceljs": "0.6.2",
     "font-awesome": "4.7.0",
@@ -22,20 +23,20 @@
     "mobx": "3.3.1",
     "mobx-react": "4.3.3",
     "moment": "2.19.1",
-    "prop-types": "^15.6.0",
+    "prop-types": "15.6.0",
     "react": "15.6.1",
-    "react-bootstrap": "0.31.3",
+    "react-bootstrap": "0.31.5",
     "react-bootstrap-daterangepicker": "~3.2.2",
     "react-dom": "15.6.1",
     "react-dropzone": "4.2.1",
     "react-linkify": "0.2.1",
-    "react-split-pane": "0.1.66",
+    "react-split-pane": "0.1.68",
     "react-textarea-autosize": "5.1.0",
     "react-virtualized": "9.12.0",
     "recompose": "0.26.0",
-    "source-map-support": "0.4.16",
+    "source-map-support": "0.5.0",
     "sqlite3": "3.1.13",
-    "styled-components": "2.2.1",
+    "styled-components": "2.2.3",
     "username": "~2.3.0"
   }
 }
