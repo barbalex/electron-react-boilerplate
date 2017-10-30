@@ -137,7 +137,6 @@ const AreaPersonen = ({ store, values, firstTabIndex = 0, change, changeComparat
         value={values.verantwortlich || ''}
         name="verantwortlich"
         onChange={change}
-        bsSize="small"
         tabIndex={1 + firstTabIndex}
       >
         {verantwortlichOptionsList(store.geschaefte.interneOptions)}
@@ -154,7 +153,6 @@ const AreaPersonen = ({ store, values, firstTabIndex = 0, change, changeComparat
         value={values.kontaktInternVornameName || ''}
         name="kontaktInternVornameName"
         onChange={change}
-        bsSize="small"
         tabIndex={2 + firstTabIndex}
       >
         {interneOptionsList(store.geschaefte.interneOptions)}
@@ -171,7 +169,6 @@ const AreaPersonen = ({ store, values, firstTabIndex = 0, change, changeComparat
         value={values.kontaktExternNameVorname || ''}
         name="kontaktExternNameVorname"
         onChange={change}
-        bsSize="small"
         tabIndex={3 + firstTabIndex}
       >
         {externeOptionsList(store.geschaefte.externeOptions)}

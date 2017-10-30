@@ -128,15 +128,7 @@ class DateField extends Component {
         <InputGroup>
           <SortSelector name={name} />
           <ComparatorSelector name={name} changeComparator={changeComparator} />
-          <FormControl
-            type="text"
-            value={value || ''}
-            name={name}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-            bsSize="small"
-            tabIndex={tabIndex}
-          />
+          <FormControl type="text" value={value || ''} name={name} onChange={this.onChange} onBlur={this.onBlur} tabIndex={tabIndex} />
           <InputGroup.Addon style={datePickerAddonStyle}>
             <StyledDateRangePicker singleDatePicker drops="up" opens="left" onApply={this.onChangeDatePicker}>
               <Glyphicon glyph="calendar" style={datePickerCalendarStyle} />

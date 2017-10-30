@@ -14,15 +14,7 @@ const SelectInput = ({ name, change, values, changeComparator, tabIndex, autoFoc
   <InputGroup>
     <SortSelector name={name} />
     <ComparatorSelector name={name} changeComparator={changeComparator} />
-    <FormControl
-      componentClass="select"
-      value={values[name] || ''}
-      name={name}
-      onChange={change}
-      bsSize="small"
-      tabIndex={tabIndex}
-      autoFocus={autoFocus}
-    >
+    <FormControl componentClass="select" value={values[name] || ''} name={name} onChange={change} tabIndex={tabIndex} autoFocus={autoFocus}>
       {createOptions(options)}
     </FormControl>
   </InputGroup>

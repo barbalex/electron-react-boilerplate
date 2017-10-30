@@ -74,7 +74,6 @@ const AreaZuletztMutiert = ({ store, values, change, firstTabIndex, changeCompar
           value={values.mutationsperson || ''}
           name="mutationsperson"
           onChange={change}
-          bsSize="small"
           tabIndex={1 + firstTabIndex}
         >
           {interneOptionsList(store.geschaefte.interneOptions)}
