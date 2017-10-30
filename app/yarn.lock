@@ -180,12 +180,16 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bootstrap-daterangepicker@^2.1.24:
+bootstrap-daterangepicker@^2.1.25:
   version "2.1.25"
   resolved "https://registry.yarnpkg.com/bootstrap-daterangepicker/-/bootstrap-daterangepicker-2.1.25.tgz#fcd8ba0b755a054d330d7a3b7c4dd8bb855cffb7"
   dependencies:
     jquery ">=1.10"
     moment "^2.9.0"
+
+bootstrap@3.3.7:
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
 
 bowser@^1.7.3:
   version "1.8.1"
@@ -1031,7 +1035,7 @@ prop-types-extra@^1.0.1:
   dependencies:
     warning "^3.0.0"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:
@@ -1069,12 +1073,12 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-bootstrap-daterangepicker@~3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/react-bootstrap-daterangepicker/-/react-bootstrap-daterangepicker-3.2.2.tgz#798c7bec9dfeffe63e749cefb13273fdd710f157"
+react-bootstrap-daterangepicker@3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/react-bootstrap-daterangepicker/-/react-bootstrap-daterangepicker-3.4.1.tgz#a4c5ff485a21beee92700523835590c23c3589bb"
   dependencies:
-    bootstrap-daterangepicker "^2.1.24"
-    object-assign "^4.1.0"
+    bootstrap-daterangepicker "^2.1.25"
+    object-assign "^4.1.1"
 
 react-bootstrap@0.31.5:
   version "0.31.5"

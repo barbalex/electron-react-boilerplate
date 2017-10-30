@@ -1594,7 +1594,7 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
-bootstrap-daterangepicker@^2.1.24:
+bootstrap-daterangepicker@^2.1.25:
   version "2.1.25"
   resolved "https://registry.yarnpkg.com/bootstrap-daterangepicker/-/bootstrap-daterangepicker-2.1.25.tgz#fcd8ba0b755a054d330d7a3b7c4dd8bb855cffb7"
   dependencies:
@@ -6423,12 +6423,12 @@ react-addons-test-utils@15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react-addons-test-utils/-/react-addons-test-utils-15.6.2.tgz#c12b6efdc2247c10da7b8770d185080a7b047156"
 
-react-bootstrap-daterangepicker@~3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/react-bootstrap-daterangepicker/-/react-bootstrap-daterangepicker-3.2.2.tgz#798c7bec9dfeffe63e749cefb13273fdd710f157"
+react-bootstrap-daterangepicker@3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/react-bootstrap-daterangepicker/-/react-bootstrap-daterangepicker-3.4.1.tgz#a4c5ff485a21beee92700523835590c23c3589bb"
   dependencies:
-    bootstrap-daterangepicker "^2.1.24"
-    object-assign "^4.1.0"
+    bootstrap-daterangepicker "^2.1.25"
+    object-assign "^4.1.1"
 
 react-bootstrap@0.31.5:
   version "0.31.5"
