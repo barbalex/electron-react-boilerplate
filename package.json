@@ -2,29 +2,39 @@
   "name": "Kapla",
   "productName": "Kapla",
   "version": "1.0.3",
-  "description": "Instrument, mit dem die Abteilung Recht des AWEL Geschäfte erfasst und Fristen kontrolliert",
+  "description":
+    "Instrument, mit dem die Abteilung Recht des AWEL Geschäfte erfasst und Fristen kontrolliert",
   "main": "main.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --retries 2 --compilers js:babel-register --recursive --require ./test/setup.js test/**/*.spec.js",
+    "test":
+      "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --retries 2 --compilers js:babel-register --recursive --require ./test/setup.js test/**/*.spec.js",
     "test-all": "npm run lint && npm run test && npm run build",
     "test-watch": "npm test -- --watch",
-    "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --retries 2 --compilers js:babel-register --require ./test/setup.js ./test/e2e.js",
+    "test-e2e":
+      "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --retries 2 --compilers js:babel-register --require ./test/setup.js ./test/e2e.js",
     "lint": "eslint --cache --format=node_modules/eslint-formatter-pretty .",
     "lint-fix": "npm run lint -- --fix",
-    "hot-server": "cross-env NODE_ENV=development node --max_old_space_size=2096 -r babel-register server.js",
-    "build-main": "cross-env NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.electron.js --progress --profile --colors",
-    "build-renderer": "cross-env NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.production.js --progress --profile --colors",
+    "hot-server":
+      "cross-env NODE_ENV=development node --max_old_space_size=2096 -r babel-register server.js",
+    "build-main":
+      "cross-env NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.electron.js --progress --profile --colors",
+    "build-renderer":
+      "cross-env NODE_ENV=production node -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.production.js --progress --profile --colors",
     "build": "npm run build-main && npm run build-renderer",
     "start": "cross-env NODE_ENV=production electron ./app/",
-    "start-hot": "cross-env HOT=1 NODE_ENV=development electron -r babel-register -r babel-polyfill ./app/main.development",
-    "postinstall": "concurrently \"install-app-deps\" \"node node_modules/fbjs-scripts/node/check-dev-engines.js package.json\"",
+    "start-hot":
+      "cross-env HOT=1 NODE_ENV=development electron -r babel-register -r babel-polyfill ./app/main.development",
+    "postinstall":
+      "concurrently \"install-app-deps\" \"node node_modules/fbjs-scripts/node/check-dev-engines.js package.json\"",
     "dev": "npm run hot-server -- --start-hot",
     "package": "npm run build && build --publish never",
     "package-win": "npm run build && build --win --x64",
     "package-linux": "npm run build && build --linux",
     "package-all": "npm run build && build -mwl",
-    "build-sqlite3-win64": "cd node_modules/sqlite3 && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/node-v57-win32-x64 && node-gyp rebuild --target=1.7.9 --arch=x64 --target_platform=win32 --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.7-win32-x64",
-    "build-sqlite3-mac": "cd node_modules/sqlite3 && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/node-v57-darwin-x64 && node-gyp rebuild --target=1.7.9 --arch=x64 --target_platform=darwin --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.7-darwin-x64"
+    "build-sqlite3-win64":
+      "cd node_modules/sqlite3 && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/node-v57-win32-x64 && node-gyp rebuild --target=1.7.9 --arch=x64 --target_platform=win32 --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.7-win32-x64",
+    "build-sqlite3-mac":
+      "cd node_modules/sqlite3 && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/node-v57-darwin-x64 && node-gyp rebuild --target=1.7.9 --arch=x64 --target_platform=darwin --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.7-darwin-x64"
   },
   "browserslist": "electron 1.7",
   "build": {
@@ -54,18 +64,13 @@
       "package.json"
     ],
     "win": {
-      "target": [
-        "nsis"
-      ]
+      "target": ["nsis"]
     },
     "mac": {
       "category": "public.app-category.business"
     },
     "linux": {
-      "target": [
-        "deb",
-        "AppImage"
-      ]
+      "target": ["deb", "AppImage"]
     },
     "directories": {
       "buildResources": "resources",
@@ -148,7 +153,7 @@
   },
   "dependencies": {
     "ampersand-app": "2.0.0",
-    "dblite": "^0.8.0",
+    "dblite": "0.8.0",
     "electron-debug": "1.4.0",
     "exceljs": "0.6.2",
     "font-awesome": "4.7.0",
@@ -158,10 +163,11 @@
     "mobx": "3.3.1",
     "mobx-react": "4.3.3",
     "moment": "2.19.1",
-    "react": "16.0.0",
+    "prop-types": "15.6.0",
+    "react": "15.6.1",
     "react-bootstrap": "0.31.3",
     "react-bootstrap-daterangepicker": "~3.2.2",
-    "react-dom": "16.0.0",
+    "react-dom": "15.6.1",
     "react-dropzone": "4.2.1",
     "react-linkify": "0.2.1",
     "react-split-pane": "0.1.66",
