@@ -14,18 +14,14 @@ const Container = styled.div`
   background-color: rgb(255, 237, 199);
   display: grid;
   grid-template-columns: ${props =>
-    props['data-isPdf']
-      ? 'calc((100% - 8px) * 0.4) calc((100% - 8px) * 0.6)'
-      : 'calc(100% - 138px) 130px'};
+    (props['data-ispdf'] ? 'calc((100% - 8px) * 0.4) calc((100% - 8px) * 0.6)' : 'calc(100% - 138px) 130px')};
   grid-template-rows: auto;
-  grid-template-areas: 'areaRechtsmittelTitle areaRechtsmittelTitle'
-    'fieldInstanz fieldInstanz' 'fieldEntscheidNr fieldEntscheidDatum'
-    'fieldErledigung fieldErledigung'
-    'fieldRechtsmittelTxt fieldRechtsmittelTxt';
+  grid-template-areas: 'areaRechtsmittelTitle areaRechtsmittelTitle' 'fieldInstanz fieldInstanz' 'fieldEntscheidNr fieldEntscheidDatum'
+    'fieldErledigung fieldErledigung' 'fieldRechtsmittelTxt fieldRechtsmittelTxt';
   grid-column-gap: 8px;
   grid-row-gap: 8px;
   padding: 8px;
-  border: ${props => (props['data-isPdf'] ? '1px solid #ccc' : 'none')};
+  border: ${props => (props['data-ispdf'] ? '1px solid #ccc' : 'none')};
   border-bottom: none;
   border-left: none;
 `
@@ -51,20 +47,13 @@ const StyledTextarea = styled(Textarea)`
   &:focus {
     border-color: #66afe9;
     outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-      0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
   }
 `
 
 const enhance = compose(inject('store'), observer)
 
-const AreaRechtsmittel = ({
-  store,
-  nrOfFieldsBeforePv,
-  change,
-  blur,
-  onChangeDatePicker,
-}) => {
+const AreaRechtsmittel = ({ store, nrOfFieldsBeforePv, change, blur, onChangeDatePicker }) => {
   const {
     activeId,
     geschaeftePlusFilteredAndSorted: geschaefte,
@@ -76,7 +65,7 @@ const AreaRechtsmittel = ({
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
 
   return (
-    <Container data-isPdf={isPdf}>
+    <Container data-ispdf={isPdf}>
       <Title>Rekurs / Beschwerde</Title>
       {!(isPdf && !geschaeft.rechtsmittelInstanz) && (
         <FieldInstanz>

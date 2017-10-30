@@ -10,21 +10,16 @@ import styled from 'styled-components'
 
 const Container = styled.div`
   grid-area: areaLinks;
-  background-color: ${props =>
-    props['data-isPdf'] ? 'rgb(227, 232, 255)' : '#e3fff0'};
+  background-color: ${props => (props['data-ispdf'] ? 'rgb(227, 232, 255)' : '#e3fff0')};
   display: grid;
-  grid-template-columns: ${props =>
-    props['data-isPdf'] ? '100%' : 'calc(100% - 308px) 300px'};
-  grid-template-areas: ${props =>
-    props['data-isPdf']
-      ? `'title' 'links'`
-      : `'title dropzone' 'links dropzone'`};
+  grid-template-columns: ${props => (props['data-ispdf'] ? '100%' : 'calc(100% - 308px) 300px')};
+  grid-template-areas: ${props => (props['data-ispdf'] ? '\'title\' \'links\'' : '\'title dropzone\' \'links dropzone\'')};
   grid-column-gap: 8px;
-  grid-row-gap: ${props => (props['data-isPdf'] ? '1px' : '8px')};
+  grid-row-gap: ${props => (props['data-ispdf'] ? '1px' : '8px')};
   padding: 8px;
-  border: ${props => (props['data-isPdf'] ? '1px solid #ccc' : 'none')};
+  border: ${props => (props['data-ispdf'] ? '1px solid #ccc' : 'none')};
   border-bottom: none;
-  font-size: ${props => (props['data-isPdf'] ? '10px' : 'inherit')};
+  font-size: ${props => (props['data-ispdf'] ? '10px' : 'inherit')};
 `
 const Title = styled.div`
   font-weight: 900;
@@ -33,8 +28,8 @@ const Title = styled.div`
 `
 const Links = styled.div`
   grid-area: links;
-  display: ${props => (props['data-isPdf'] ? 'grid' : 'block')};
-  grid-template-columns: ${props => (props['data-isPdf'] ? '100%' : 'none')};
+  display: ${props => (props['data-ispdf'] ? 'grid' : 'block')};
+  grid-template-columns: ${props => (props['data-ispdf'] ? '100%' : 'none')};
 `
 const Field = styled.div`
   grid-column: 1;
@@ -44,7 +39,7 @@ const Field = styled.div`
   border-bottom: thin solid #cecbcb;
   padding: 3px;
   align-items: center;
-  min-height: ${props => (props['data-isPdf'] ? 0 : '35px')};
+  min-height: ${props => (props['data-ispdf'] ? 0 : '35px')};
   &:first-of-type {
     border-top: thin solid #cecbcb;
   }
@@ -59,19 +54,19 @@ const UrlDiv = styled.div`
 const RemoveGlyphiconDiv = styled.div`
   grid-column: 2 / span 1;
   margin-top: -2px;
-  display: ${props => (props['data-isPdf'] ? 'none' : 'block')};
+  display: ${props => (props['data-ispdf'] ? 'none' : 'block')};
 `
 const RemoveGlyphicon = styled(Glyphicon)`
   color: red;
   font-size: 18px;
   cursor: pointer;
-  display: ${props => (props['data-isPdf'] ? 'none' : 'block')};
+  display: ${props => (props['data-ispdf'] ? 'none' : 'block')};
 `
 const DropzoneContainer = styled.div`
   grid-area: dropzone;
   width: 100%;
   height: 100%;
-  display: ${props => (props['data-isPdf'] ? 'none' : 'block')};
+  display: ${props => (props['data-ispdf'] ? 'none' : 'block')};
 `
 const StyledDropzone = styled(Dropzone)`
   width: 100%;
@@ -98,7 +93,7 @@ const enhance = compose(
       linkNewCreate(activeId, files[0].path)
     },
   }),
-  observer
+  observer,
 )
 
 const AreaLinks = ({ store, onDrop }) => {
@@ -109,11 +104,11 @@ const AreaLinks = ({ store, onDrop }) => {
   const isPdf = path === '/geschaeftPdf'
 
   return (
-    <Container data-isPdf={isPdf}>
+    <Container data-ispdf={isPdf}>
       <Title>Links</Title>
-      <Links data-isPdf={isPdf}>
+      <Links data-ispdf={isPdf}>
         {myLinks.map(link => (
-          <Field key={`${link.idGeschaeft}${link.url}`} data-isPdf={isPdf}>
+          <Field key={`${link.idGeschaeft}${link.url}`} data-ispdf={isPdf}>
             <UrlDiv>
               <a
                 href={link.url}
@@ -125,17 +120,13 @@ const AreaLinks = ({ store, onDrop }) => {
                 {link.url}
               </a>
             </UrlDiv>
-            <RemoveGlyphiconDiv data-isPdf={isPdf}>
-              <RemoveGlyphicon
-                glyph="remove-circle"
-                onClick={() => linkRemove(activeId, link.url)}
-                title="Link entfernen"
-              />
+            <RemoveGlyphiconDiv data-ispdf={isPdf}>
+              <RemoveGlyphicon glyph="remove-circle" onClick={() => linkRemove(activeId, link.url)} title="Link entfernen" />
             </RemoveGlyphiconDiv>
           </Field>
         ))}
       </Links>
-      <DropzoneContainer data-isPdf={isPdf}>
+      <DropzoneContainer data-ispdf={isPdf}>
         <StyledDropzone onDrop={onDrop}>
           {({ isDragActive, isDragReject }) => {
             if (isDragActive) {

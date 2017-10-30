@@ -11,8 +11,8 @@ import filterForFaelligeGeschaefte from '../../src/filterForFaelligeGeschaefte'
 
 // eslint-disable-next-line no-unused-vars
 const StyledNavDropdown = styled(NavDropdown)`
-  border-left: ${props => (props['data-showBerichteNavs'] ? 'solid grey 1px' : 'dotted #505050 1px')};
-  border-right: ${props => (props['data-showBerichteNavs'] ? 'none' : 'dotted #505050 1px')};
+  border-left: ${props => (props['data-showberichtenavs'] ? 'solid grey 1px' : 'dotted #505050 1px')};
+  border-right: ${props => (props['data-showberichtenavs'] ? 'none' : 'dotted #505050 1px')};
   /**
    * in react-bootstrap the active
    * prop of NavDropdown does not work
@@ -41,7 +41,7 @@ const BerichteNav = ({ store, showBerichteNavs }) => {
   const title = isActive ? name : 'Berichte'
   return (
     <StyledNavDropdown
-      data-showBerichteNavs={showBerichteNavs}
+      data-showberichtenavs={showBerichteNavs}
       eventKey={7}
       title={title}
       id="reports-nav-dropdown"

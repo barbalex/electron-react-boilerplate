@@ -29,8 +29,8 @@ const stammdatenTitle = (table, rows) => {
 
 // eslint-disable-next-line no-unused-vars
 const StyledNavDropdown = styled(NavDropdown)`
-  border-left: ${props => (props['data-showTableNavs'] ? 'solid grey 1px' : 'dotted #505050 1px')};
-  border-right: ${props => (props['data-showTableNavs'] ? 'none' : 'dotted #505050 1px')};
+  border-left: ${props => (props['data-showtablenavs'] ? 'solid grey 1px' : 'dotted #505050 1px')};
+  border-right: ${props => (props['data-showtablenavs'] ? 'none' : 'dotted #505050 1px')};
 `
 
 const enhance = compose(inject('store'), observer)
@@ -40,7 +40,7 @@ const NavbarStammdatenNav = ({ store, showTableNavs }) => {
   const { table, rows } = store.table
 
   return (
-    <StyledNavDropdown title={stammdatenTitle(table, rows)} id="stammdaten-nav-dropdown" data-showTableNavs={showTableNavs}>
+    <StyledNavDropdown title={stammdatenTitle(table, rows)} id="stammdaten-nav-dropdown" data-showtablenavs={showTableNavs}>
       <MenuItem onClick={() => getTable('interne')} active={table === 'interne'}>
         Interne
       </MenuItem>

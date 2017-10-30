@@ -17,8 +17,8 @@ const Container = styled.div`
   grid-template-columns: 100%;
   grid-gap: 2px;
   padding: 8px;
-  border: ${props => (props['data-isPdf'] ? '1px solid #CCC' : 'none')};
-  border-bottom: ${props => (props['data-isPdf'] ? 'none' : 'inherit')};
+  border: ${props => (props['data-ispdf'] ? '1px solid #CCC' : 'none')};
+  border-bottom: ${props => (props['data-ispdf'] ? 'none' : 'inherit')};
 `
 const Title = styled.div`
   font-weight: 900;
@@ -37,7 +37,7 @@ const StyledFristDauerBisMitarbeiter = styled(FormControl.Static)`
   padding-top: 0;
   padding-bottom: ${props => (props.isPdf ? 0 : 'inherit')};
   margin-top: 0;
-  margin-bottom: ${props => (props['data-isPdf'] ? '-12px' : 'inherit')};
+  margin-bottom: ${props => (props['data-ispdf'] ? '-12px' : 'inherit')};
   -webkit-text-stroke-color: black;
   -webkit-text-stroke-width: 1px;
   -webkit-text-fill-color: ${props => props.color};
@@ -45,17 +45,8 @@ const StyledFristDauerBisMitarbeiter = styled(FormControl.Static)`
 
 const enhance = compose(inject('store'), observer)
 
-const AreaFristen = ({
-  store,
-  blur,
-  change,
-  nrOfFieldsBeforeFristen,
-  onChangeDatePicker,
-}) => {
-  const {
-    activeId,
-    geschaeftePlusFilteredAndSorted: geschaefte,
-  } = store.geschaefte
+const AreaFristen = ({ store, blur, change, nrOfFieldsBeforeFristen, onChangeDatePicker }) => {
+  const { activeId, geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
@@ -69,7 +60,7 @@ const AreaFristen = ({
   }
 
   return (
-    <Container data-isPdf={isPdf}>
+    <Container data-ispdf={isPdf}>
       <Title>Fristen</Title>
       {!(!geschaeft.datumEingangAwel && isPdf) && (
         <DateField
@@ -121,19 +112,14 @@ const AreaFristen = ({
           tabIndex={5 + nrOfFieldsBeforeFristen}
         />
       )}
-      {(!!geschaeft.dauerBisFristMitarbeiter ||
-        geschaeft.dauerBisFristMitarbeiter === 0) && (
-          <FieldFristDauerBisMitarbeiter>
-            <ControlLabel>Tage bis Frist Mitarbeiter</ControlLabel>
-            <StyledFristDauerBisMitarbeiter
-              color={colorDauerBisFristMitarbeiter}
-              data-isPdf={isPdf}
-              className="formControlStatic"
-            >
-              {geschaeft.dauerBisFristMitarbeiter}
-            </StyledFristDauerBisMitarbeiter>
-          </FieldFristDauerBisMitarbeiter>
-        )}
+      {(!!geschaeft.dauerBisFristMitarbeiter || geschaeft.dauerBisFristMitarbeiter === 0) && (
+        <FieldFristDauerBisMitarbeiter>
+          <ControlLabel>Tage bis Frist Mitarbeiter</ControlLabel>
+          <StyledFristDauerBisMitarbeiter color={colorDauerBisFristMitarbeiter} data-ispdf={isPdf} className="formControlStatic">
+            {geschaeft.dauerBisFristMitarbeiter}
+          </StyledFristDauerBisMitarbeiter>
+        </FieldFristDauerBisMitarbeiter>
+      )}
       {!(!geschaeft.datumAusgangAwel && isPdf) && (
         <DateField
           name="datumAusgangAwel"

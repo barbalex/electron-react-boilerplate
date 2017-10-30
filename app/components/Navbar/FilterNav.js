@@ -18,13 +18,13 @@ const StyledVolltextControl = styled(FormControl)`
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   width: 186px !important;
-  background-color: ${props => (props['data-dataIsFilteredByFulltext'] ? '#FFBF73' : 'white')};
+  background-color: ${props => (props['data-dataisfilteredbyfulltext'] ? '#FFBF73' : 'white')};
 `
 const StyledFilterDropdown = styled(SplitButton)`
   border-radius: 0;
   min-width: 160px;
   font-weight: 700;
-  background-color: ${props => (props['data-dataIsFilteredByFields'] ? '#FFBF73' : 'white')};
+  background-color: ${props => (props['data-dataisfilteredbyfields'] ? '#FFBF73' : 'white')};
 `
 const StyledCriteria = styled.span`
   cursor: default !important;
@@ -72,13 +72,13 @@ const FilterNav = ({ store }) => {
           placeholder="Volltext filtern"
           value={filterFulltext}
           onChange={e => geschaefteFilterByFulltext(e.target.value)}
-          data-dataIsFilteredByFulltext={dataIsFilteredByFulltext}
+          data-dataisfilteredbyfulltext={dataIsFilteredByFulltext}
           title="Zum Filtern drücken Sie die Enter-Taste"
         />
         <StyledFilterDropdown
           id="field-filter-dropdown"
           title={title}
-          data-dataIsFilteredByFields={dataIsFilteredByFields}
+          data-dataisfilteredbyfields={dataIsFilteredByFields}
           onClick={() => {
             if (path !== '/filterFields') {
               store.history.push('/filterFields')

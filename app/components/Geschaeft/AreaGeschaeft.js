@@ -26,7 +26,7 @@ const Container = styled.div`
   grid-column-gap: 5px;
   grid-row-gap: 2px;
   padding: 8px;
-  border: ${props => (props['data-isPdf'] ? '1px solid #ccc' : 'none')};
+  border: ${props => (props['data-ispdf'] ? '1px solid #ccc' : 'none')};
   border-bottom: none;
 `
 const Title = styled.div`
@@ -46,8 +46,7 @@ const StyledTextarea = styled(Textarea)`
   &:focus {
     border-color: #66afe9;
     outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-      0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
   }
 `
 const Ausloeser = styled.div`grid-area: fieldAusloeser;`
@@ -64,20 +63,14 @@ const VermerkIntern = styled.div`grid-area: fieldVermerkIntern;`
 const enhance = compose(inject('store'), observer)
 
 const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
-  const {
-    activeId,
-    geschaeftePlusFilteredAndSorted: geschaefte,
-    statusOptions,
-    abteilungOptions,
-    geschaeftsartOptions,
-  } = store.geschaefte
+  const { activeId, geschaeftePlusFilteredAndSorted: geschaefte, statusOptions, abteilungOptions, geschaeftsartOptions } = store.geschaefte
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
   const tabsToAdd = viewIsNarrow ? nrOfGFields : 0
 
   return (
-    <Container data-isPdf={isPdf}>
+    <Container data-ispdf={isPdf}>
       <Title>Geschäft</Title>
       <Gegenstand>
         <ControlLabel>Gegenstand</ControlLabel>
@@ -93,13 +86,7 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
       {!(!geschaeft.ausloeser && isPdf) && (
         <Ausloeser>
           <ControlLabel>Auslöser</ControlLabel>
-          <StyledTextarea
-            value={geschaeft.ausloeser || ''}
-            name="ausloeser"
-            onChange={change}
-            onBlur={blur}
-            tabIndex={2 + tabsToAdd}
-          />
+          <StyledTextarea value={geschaeft.ausloeser || ''} name="ausloeser" onChange={change} onBlur={blur} tabIndex={2 + tabsToAdd} />
         </Ausloeser>
       )}
       {!(!geschaeft.ort && isPdf) && (
@@ -164,13 +151,7 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
       {!(!geschaeft.details && isPdf) && (
         <Details>
           <ControlLabel>Details</ControlLabel>
-          <StyledTextarea
-            value={geschaeft.details || ''}
-            name="details"
-            onChange={change}
-            onBlur={blur}
-            tabIndex={7 + tabsToAdd}
-          />
+          <StyledTextarea value={geschaeft.details || ''} name="details" onChange={change} onBlur={blur} tabIndex={7 + tabsToAdd} />
         </Details>
       )}
       {!(!geschaeft.naechsterSchritt && isPdf) && (
@@ -188,19 +169,11 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
       {!(!geschaeft.vermerk && isPdf) && (
         <Vermerk>
           <ControlLabel>Vermerk</ControlLabel>
-          <StyledTextarea
-            value={geschaeft.vermerk || ''}
-            name="vermerk"
-            onChange={change}
-            onBlur={blur}
-            tabIndex={9 + tabsToAdd}
-          />
+          <StyledTextarea value={geschaeft.vermerk || ''} name="vermerk" onChange={change} onBlur={blur} tabIndex={9 + tabsToAdd} />
         </Vermerk>
       )}
       <VermerkIntern>
-        <ControlLabel>
-          Vermerk intern (in Berichten nicht angezeigt)
-        </ControlLabel>
+        <ControlLabel>Vermerk intern (in Berichten nicht angezeigt)</ControlLabel>
         <StyledTextarea
           value={geschaeft.vermerkIntern || ''}
           name="vermerkIntern"
