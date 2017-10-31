@@ -15,24 +15,24 @@ import sortCriteriaToArrayOfStrings from '../../src/sortCriteriaToArrayOfStrings
 const Container = styled(Navbar.Form)`padding-right: 10px;`
 const SubContainer = styled.div`display: flex;`
 const StyledVolltextControl = styled(FormControl)`
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
   width: 186px !important;
-  background-color: ${props => (props['data-dataisfilteredbyfulltext'] ? '#FFBF73' : 'white')};
+  background-color: ${props => (props['data-dataisfilteredbyfulltext'] ? '#FFBF73 !important' : 'white')};
 `
 const StyledFilterDropdown = styled(SplitButton)`
-  border-radius: 0;
-  min-width: 160px;
-  font-weight: 700;
-  background-color: ${props => (props['data-dataisfilteredbyfields'] ? '#FFBF73' : 'white')};
+  border-radius: 0 !important;
+  min-width: 160px !important;
+  font-weight: 700 !important;
+  background-color: ${props => (props['data-dataisfilteredbyfields'] ? '#FFBF73 !important' : 'white')};
 `
 const StyledCriteria = styled.span`
   cursor: default !important;
-  font-style: italic;
+  font-style: italic !important;
 `
 const FilterRemoveButton = styled(Button)`
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
 `
 
 const enhance = compose(inject('store'), observer)
