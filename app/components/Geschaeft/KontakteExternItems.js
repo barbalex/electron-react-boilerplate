@@ -13,9 +13,7 @@ const verantwortlichData = (gKE, externeOptions) => {
     if (info) return `${info}, ${value}`
     return value
   }
-  const data = externeOptions.find(o =>
-    o.id === gKE.idKontakt
-  )
+  const data = externeOptions.find(o => o.id === gKE.idKontakt)
   if (!data) return ''
   let info = ''
   const name = `${data.name || '(kein Name)'} ${data.vorname || '(kein Vorname)'}`
@@ -27,13 +25,10 @@ const verantwortlichData = (gKE, externeOptions) => {
 }
 
 const titleText = (idKontakt, externeOptions) => {
-  const data = externeOptions.find(o =>
-    o.id === idKontakt
-  )
+  const data = externeOptions.find(o => o.id === idKontakt)
   if (!data) return 'Kontakt entfernen'
   return `${data.name} ${data.vorname} entfernen`
 }
-
 
 const Container = styled.div`
   grid-column: 1 / span 2;
@@ -42,26 +37,26 @@ const Container = styled.div`
   grid-gap: 0;
 `
 // eslint-disable-next-line no-unused-vars
-const Row = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
+const Row = styled.div`
   grid-column: 1 / span 1;
   display: grid;
-  grid-template-columns: ${(props) => (props.isPdf ? 'calc(100% - 10px)' : 'calc(100% - 20px) 20px')};
+  grid-template-columns: ${props => (props['data-ispdf'] ? 'calc(100% - 10px)' : 'calc(100% - 20px) 20px')};
   grid-gap: 0;
   padding: 3px;
-  margin-right: ${(props) => (props.isPdf ? '9px' : 'inherit')};
+  margin-right: ${props => (props['data-ispdf'] ? '9px' : 'inherit')};
   align-items: center;
-  min-height: ${(props) => (props.isPdf ? 0 : '35px')};
-  font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
-  border-bottom: thin solid #CECBCB;
+  min-height: ${props => (props['data-ispdf'] ? 0 : '35px')};
+  font-size: ${props => (props['data-ispdf'] ? '10px' : 'inherit')};
+  border-bottom: thin solid #cecbcb;
   &:first-of-type {
-    border-top: thin solid #CECBCB;
+    border-top: thin solid #cecbcb;
   }
   &:hover {
     background-color: rgba(208, 255, 202, 0.5);
   }
 `
 // eslint-disable-next-line no-unused-vars
-const Field = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
+const Field = styled.div`
   grid-column: 1 / span 1;
   /**
    * prevent pushing of following kontakt
@@ -71,14 +66,14 @@ const Field = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    padding: ${(props) => (props.isPdf ? 0 : '7px')};
+    padding: ${props => (props['data-ispdf'] ? 0 : '7px')};
   }
 `
 // eslint-disable-next-line no-unused-vars
-const GlyphiconDiv = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
+const GlyphiconDiv = styled.div`
   grid-column: 2 / span 1;
   margin-top: -2px;
-  display: ${(props) => (props.isPdf ? 'none' : 'inherit')};
+  display: ${props => (props['data-ispdf'] ? 'none' : 'inherit')};
 `
 const StyledGlyphicon = styled(Glyphicon)`
   color: red;
@@ -86,10 +81,7 @@ const StyledGlyphicon = styled(Glyphicon)`
   cursor: pointer;
 `
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 const GeschaefteKontakteExtern = ({ store }) => {
   const { geschaeftKontaktExternRemove } = store
@@ -98,39 +90,26 @@ const GeschaefteKontakteExtern = ({ store }) => {
   const { geschaefteKontakteExtern } = store.geschaefteKontakteExtern
   const isPdf = path === '/geschaeftPdf'
   // filter for this geschaeft
-  const gkIFiltered = geschaefteKontakteExtern.filter(g =>
-    g.idGeschaeft === activeId
-  )
-  const gKISorted = _.sortBy(gkIFiltered, (g) => {
-    const intOption = externeOptions.find(o =>
-      o.id === g.idKontakt
-    )
+  const gkIFiltered = geschaefteKontakteExtern.filter(g => g.idGeschaeft === activeId)
+  const gKISorted = _.sortBy(gkIFiltered, g => {
+    const intOption = externeOptions.find(o => o.id === g.idKontakt)
     return `${intOption.name} ${intOption.vorname}`.toLowerCase()
   })
 
   return (
     <Container>
-      {
-        gKISorted.map(gKE =>
-          <Row
-            key={`${gKE.idGeschaeft}${gKE.idKontakt}`}
-            isPdf={isPdf}
-          >
-            <Field isPdf={isPdf}>
-              {verantwortlichData(gKE, externeOptions)}
-            </Field>
-            <GlyphiconDiv isPdf={isPdf}>
-              <StyledGlyphicon
-                glyph="remove-circle"
-                onClick={() =>
-                  geschaeftKontaktExternRemove(activeId, gKE.idKontakt)
-                }
-                title={titleText(gKE.idKontakt, externeOptions)}
-              />
-            </GlyphiconDiv>
-          </Row>
-        )
-      }
+      {gKISorted.map(gKE => (
+        <Row key={`${gKE.idGeschaeft}${gKE.idKontakt}`} data-ispdf={isPdf}>
+          <Field data-ispdf={isPdf}>{verantwortlichData(gKE, externeOptions)}</Field>
+          <GlyphiconDiv data-ispdf={isPdf}>
+            <StyledGlyphicon
+              glyph="remove-circle"
+              onClick={() => geschaeftKontaktExternRemove(activeId, gKE.idKontakt)}
+              title={titleText(gKE.idKontakt, externeOptions)}
+            />
+          </GlyphiconDiv>
+        </Row>
+      ))}
     </Container>
   )
 }

@@ -8,55 +8,30 @@ import compose from 'recompose/compose'
 
 import KontakteInternItems from './KontakteInternItems'
 
-const onChangeNewKontaktIntern = (
-  e,
-  geschaeftKontaktInternNewCreate,
-  activeId,
-) => {
+const onChangeNewKontaktIntern = (e, geschaeftKontaktInternNewCreate, activeId) => {
   const idKontakt = e.target.value
   geschaeftKontaktInternNewCreate(activeId, idKontakt)
   // need to empty dropdown
   e.target.value = ''
 }
 
-const optionsList = (
-  interneOptions,
-  geschaefteKontakteIntern,
-  activeId,
-) => {
+const optionsList = (interneOptions, geschaefteKontakteIntern, activeId) => {
   // filter out options already choosen
-  const kontakteInternOfActiveGeschaeft = geschaefteKontakteIntern.filter(g =>
-    g.idGeschaeft === activeId
-  )
-  const idKontakteOfGkiOfActiveGeschaeft = kontakteInternOfActiveGeschaeft.map(kI =>
-    kI.idKontakt
-  )
-  const interneOptionsFiltered = interneOptions.filter(o =>
-    !idKontakteOfGkiOfActiveGeschaeft.includes(o.id)
-  )
+  const kontakteInternOfActiveGeschaeft = geschaefteKontakteIntern.filter(g => g.idGeschaeft === activeId)
+  const idKontakteOfGkiOfActiveGeschaeft = kontakteInternOfActiveGeschaeft.map(kI => kI.idKontakt)
+  const interneOptionsFiltered = interneOptions.filter(o => !idKontakteOfGkiOfActiveGeschaeft.includes(o.id))
   // sort interneOptions by kurzzeichen
-  const interneOptionsSorted = _.sortBy(
-    interneOptionsFiltered,
-    o => {
-      const name = o.name ? o.name.toLowerCase() : 'zz'
-      const vorname = o.vorname ? o.vorname.toLowerCase() : 'zz'
-      return `${name} ${vorname} ${o.kurzzeichen}`
-    }
-  )
-  const options = interneOptionsSorted.map(o =>
-    <option
-      key={o.id}
-      value={o.id}
-    >
+  const interneOptionsSorted = _.sortBy(interneOptionsFiltered, o => {
+    const name = o.name ? o.name.toLowerCase() : 'zz'
+    const vorname = o.vorname ? o.vorname.toLowerCase() : 'zz'
+    return `${name} ${vorname} ${o.kurzzeichen}`
+  })
+  const options = interneOptionsSorted.map(o => (
+    <option key={o.id} value={o.id}>
       {`${o.name ? o.name : '(kein Name)'} ${o.vorname ? o.vorname : '(kein Vorname)'} (${o.kurzzeichen})`}
     </option>
-  )
-  options.unshift(
-    <option
-      key={0}
-      value=""
-    />
-  )
+  ))
+  options.unshift(<option key={0} value="" />)
   return options
 }
 const Container = styled.div`
@@ -66,23 +41,20 @@ const Container = styled.div`
   grid-gap: 0;
 `
 // eslint-disable-next-line no-unused-vars
-const RowfVDropdown = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
+const RowfVDropdown = styled.div`
   grid-column: 1 / span 1;
   display: grid;
-  grid-template-columns: ${(props) => (props.isPdf ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)')};
+  grid-template-columns: ${props => (props['data-ispdf'] ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)')};
   grid-gap: 4px;
   margin-top: 5px;
 `
 // eslint-disable-next-line no-unused-vars
-const FvDropdown = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
+const FvDropdown = styled.div`
   grid-column: 1 / span 1;
-  display: ${(props) => (props.isPdf ? 'none' : 'inherit')};
+  display: ${props => (props['data-ispdf'] ? 'none' : 'inherit')};
 `
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 const GeschaefteKontakteIntern = ({ tabIndex, store }) => {
   const { geschaeftKontaktInternNewCreate } = store
@@ -94,28 +66,16 @@ const GeschaefteKontakteIntern = ({ tabIndex, store }) => {
   return (
     <Container>
       <KontakteInternItems />
-      <RowfVDropdown isPdf={isPdf}>
-        <FvDropdown isPdf={isPdf}>
+      <RowfVDropdown data-ispdf={isPdf}>
+        <FvDropdown data-ispdf={isPdf}>
           <FormControl
             componentClass="select"
             bsSize="small"
-            onChange={e =>
-              onChangeNewKontaktIntern(
-                e,
-                geschaeftKontaktInternNewCreate,
-                activeId,
-              )
-            }
+            onChange={e => onChangeNewKontaktIntern(e, geschaeftKontaktInternNewCreate, activeId)}
             title="Neuen Kontakt hinzufügen"
             tabIndex={tabIndex}
           >
-            {
-              optionsList(
-                interneOptions,
-                geschaefteKontakteIntern,
-                activeId,
-              )
-            }
+            {optionsList(interneOptions, geschaefteKontakteIntern, activeId)}
           </FormControl>
         </FvDropdown>
       </RowfVDropdown>

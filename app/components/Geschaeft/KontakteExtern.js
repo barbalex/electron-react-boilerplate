@@ -15,40 +15,20 @@ const onChangeNewKontaktExtern = (e, geschaeftKontaktExternNewCreate, activeId) 
   e.target.value = ''
 }
 
-const optionsList = (
-  externeOptions,
-  geschaefteKontakteExtern,
-  activeId,
-) => {
+const optionsList = (externeOptions, geschaefteKontakteExtern, activeId) => {
   // filter out options already choosen
-  const kontakteInternOfActiveGeschaeft = geschaefteKontakteExtern.filter(g =>
-    g.idGeschaeft === activeId
-  )
-  const idKontakteOfGkiOfActiveGeschaeft = kontakteInternOfActiveGeschaeft.map(kI =>
-    kI.idKontakt
-  )
-  const externeOptionsFiltered = externeOptions.filter(o =>
-    !idKontakteOfGkiOfActiveGeschaeft.includes(o.id)
-  )
+  const kontakteInternOfActiveGeschaeft = geschaefteKontakteExtern.filter(g => g.idGeschaeft === activeId)
+  const idKontakteOfGkiOfActiveGeschaeft = kontakteInternOfActiveGeschaeft.map(kI => kI.idKontakt)
+  const externeOptionsFiltered = externeOptions.filter(o => !idKontakteOfGkiOfActiveGeschaeft.includes(o.id))
   // sort externeOptions by nameVorname
-  const externeOptionsSorted = _.sortBy(externeOptionsFiltered, o =>
-    o.nameVorname.toLowerCase()
-  )
-  const options = externeOptionsSorted.map(o =>
-    <option
-      key={o.id}
-      value={o.id}
-    >
+  const externeOptionsSorted = _.sortBy(externeOptionsFiltered, o => o.nameVorname.toLowerCase())
+  const options = externeOptionsSorted.map(o => (
+    <option key={o.id} value={o.id}>
       {o.nameVorname}
     </option>
-  )
+  ))
 
-  options.unshift(
-    <option
-      key={0}
-      value=""
-    />
-  )
+  options.unshift(<option key={0} value="" />)
   return options
 }
 
@@ -59,23 +39,20 @@ const Container = styled.div`
   grid-gap: 0;
 `
 // eslint-disable-next-line no-unused-vars
-const RowFvDropdown = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
+const RowFvDropdown = styled.div`
   grid-column: 1 / span 1;
   display: grid;
-  grid-template-columns: ${(props) => (props.isPdf ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)')};
+  grid-template-columns: ${props => (props['data-ispdf'] ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)')};
   grid-gap: 4px;
   margin-top: 5px;
 `
 // eslint-disable-next-line no-unused-vars
-const FvDropdown = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
+const FvDropdown = styled.div`
   grid-column: 1 / span 1;
-  display: ${(props) => (props.isPdf ? 'none' : 'inherit')};
+  display: ${props => (props['data-ispdf'] ? 'none' : 'inherit')};
 `
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 const GeschaefteKontakteExtern = ({ store, tabIndex }) => {
   const { geschaeftKontaktExternNewCreate } = store
@@ -87,28 +64,16 @@ const GeschaefteKontakteExtern = ({ store, tabIndex }) => {
   return (
     <Container>
       <KontakteExternItems />
-      <RowFvDropdown isPdf={isPdf}>
-        <FvDropdown isPdf={isPdf}>
+      <RowFvDropdown data-ispdf={isPdf}>
+        <FvDropdown data-ispdf={isPdf}>
           <FormControl
             componentClass="select"
             bsSize="small"
-            onChange={e =>
-              onChangeNewKontaktExtern(
-                e,
-                geschaeftKontaktExternNewCreate,
-                activeId,
-              )
-            }
+            onChange={e => onChangeNewKontaktExtern(e, geschaeftKontaktExternNewCreate, activeId)}
             title="Neuen Kontakt hinzufügen"
             tabIndex={tabIndex}
           >
-            {
-              optionsList(
-                externeOptions,
-                geschaefteKontakteExtern,
-                activeId,
-              )
-            }
+            {optionsList(externeOptions, geschaefteKontakteExtern, activeId)}
           </FormControl>
         </FvDropdown>
       </RowFvDropdown>

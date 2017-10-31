@@ -6,97 +6,70 @@ import compose from 'recompose/compose'
 
 import getHistoryOfGeschaeft from '../../src/getHistoryOfGeschaeft'
 
-
 const FieldsContainer = styled.div`
   grid-area: areaHistoryFieldsContainer;
   display: grid;
   grid-template-columns: 100%;
 `
 // eslint-disable-next-line no-unused-vars
-const HistoryField = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
+const HistoryField = styled.div`
   grid-column: 1;
   display: grid;
-  grid-template-columns: ${(props) => (
-    props.isPdf ?
-    '40px 65px calc(100% - 105px)' :
-    '55px 75px calc(100% - 130px)'
-  )};
+  grid-template-columns: ${props => (props['data-ispdf'] ? '40px 65px calc(100% - 105px)' : '55px 75px calc(100% - 130px)')};
   grid-gap: 0;
-  border-bottom: thin solid #CECBCB;
-  padding-left: ${(props) => (props.isPdf ? 0 : '13px')};
-  padding-top: ${(props) => (props.isPdf ? '2px' : '10px')};
-  padding-bottom: ${(props) => (props.isPdf ? '2px' : '10px')};
+  border-bottom: thin solid #cecbcb;
+  padding-left: ${props => (props['data-ispdf'] ? 0 : '13px')};
+  padding-top: ${props => (props['data-ispdf'] ? '2px' : '10px')};
+  padding-bottom: ${props => (props['data-ispdf'] ? '2px' : '10px')};
   align-items: center;
-  font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
+  font-size: ${props => (props['data-ispdf'] ? '10px' : 'inherit')};
 
   &:first-of-type {
-    border-top: thin solid #CECBCB;
+    border-top: thin solid #cecbcb;
   }
   &:hover {
     background-color: rgb(227, 232, 255);
   }
 `
-const IdGeschaeft = styled.div`
-  grid-column: 1;
-`
-const Datum = styled.div`
-  grid-column: 2;
-`
-const Gegenstand = styled.div`
-  grid-column: 3;
-`
+const IdGeschaeft = styled.div`grid-column: 1;`
+const Datum = styled.div`grid-column: 2;`
+const Gegenstand = styled.div`grid-column: 3;`
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 const AreaHistoryRows = ({ store }) => {
   const { geschaeftToggleActivated } = store
-  const {
-    activeId,
-    geschaeftePlusFilteredAndSorted: geschaefte,
-  } = store.geschaefte
+  const { activeId, geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
   const history = getHistoryOfGeschaeft(geschaefte, activeId)
 
   return (
     <FieldsContainer>
-      {
-        history.map((id) => {
-          const geschaeft = geschaefte.find(g =>
-            g.idGeschaeft === id
-          )
-          if (!geschaeft) {
-            return null
-          }
-          return (
-            <HistoryField
-              key={id}
-              style={{
-                cursor: id === activeId ? 'default' : 'pointer'
-              }}
-              onClick={() => {
-                if (id !== activeId) {
-                  return geschaeftToggleActivated(id)
-                }
-              }}
-              isPdf={isPdf}
-            >
-              <IdGeschaeft>
-                {id}
-              </IdGeschaeft>
-              <Datum>
-                {geschaeft.datumEingangAwel}
-              </Datum>
-              <Gegenstand>
-                {geschaeft.gegenstand}
-              </Gegenstand>
-            </HistoryField>
-          )
-        })
-      }
+      {history.map(id => {
+        const geschaeft = geschaefte.find(g => g.idGeschaeft === id)
+        if (!geschaeft) {
+          return null
+        }
+        return (
+          <HistoryField
+            key={id}
+            style={{
+              cursor: id === activeId ? 'default' : 'pointer',
+            }}
+            onClick={() => {
+              if (id !== activeId) {
+                return geschaeftToggleActivated(id)
+              }
+            }}
+            data-ispdf={isPdf}
+          >
+            <IdGeschaeft>{id}</IdGeschaeft>
+            <Datum>{geschaeft.datumEingangAwel}</Datum>
+            <Gegenstand>{geschaeft.gegenstand}</Gegenstand>
+          </HistoryField>
+        )
+      })}
     </FieldsContainer>
   )
 }

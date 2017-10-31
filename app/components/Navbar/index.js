@@ -21,9 +21,9 @@ import FilterNav from './FilterNav'
 import OptionsNav from './OptionsNav'
 
 // eslint-disable-next-line no-unused-vars
-const GeschaefteNavItem = styled(({ showGeschaefteNavs, children, ...rest }) => <NavItem {...rest}>{children}</NavItem>)`
-  border-left: ${props => (props.showGeschaefteNavs ? 'solid grey 1px' : 'dotted #505050 1px')};
-  border-right: ${props => (props.showGeschaefteNavs ? 'none' : 'dotted #505050 1px')};
+const GeschaefteNavItem = styled(NavItem)`
+  border-left: ${props => (props['data-showgeschaeftenavs'] ? 'solid grey 1px' : 'dotted #505050 1px')};
+  border-right: ${props => (props['data-showgeschaeftenavs'] ? 'none' : 'dotted #505050 1px')};
 `
 const StyledBadge = styled.sup`color: ${props => (props.dataIsFiltered ? '#FF9416' : 'inherit')};`
 const StyledNavbar = styled(Navbar)`
@@ -65,11 +65,11 @@ class NavbarComponent extends Component {
         {showPagesModal && <PagesModal />}
         <StyledNavbar inverse fluid>
           <Nav>
-            <GeschaefteNavItem href="#" onClick={() => store.history.push('/geschaefte')} showGeschaefteNavs={showGeschaefteNavs}>
+            <GeschaefteNavItem href="#" onClick={() => store.history.push('/geschaefte')} data-showgeschaeftenavs={showGeschaefteNavs}>
               Geschäfte <StyledBadge dataIsFiltered={dataIsFiltered}>{geschaefte.length}</StyledBadge>
             </GeschaefteNavItem>
             {showGeschaefteNavs && <GeschaeftNeuNav />}
-            {showGeschaefteNavs && <GeschaeftLoeschenNav showGeschaefteNavs={showGeschaefteNavs} />}
+            {showGeschaefteNavs && <GeschaeftLoeschenNav data-showgeschaeftenavs={showGeschaefteNavs} />}
             {showGeschaefteAndPrint && <ExportGeschaefteNav />}
             {showGeschaefteAndPrint && <BerichteNav showBerichteNavs={showBerichteNavs} />}
             {showBerichteNavs && <PrintNav />}

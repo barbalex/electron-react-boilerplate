@@ -82,10 +82,10 @@ const LabelNrDiv = styled.div`
   bottom: 1px;
 `
 // eslint-disable-next-line no-unused-vars
-const Slash = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
-  margin-top: ${(props) => (props.isPdf ? '-3px' : '2px')};
-  font-size: ${(props) => (props.isPdf ? '18px' : '22px')};
-  height: ${(props) => (props.isPdf ? '17px' : 'auto')};
+const Slash = styled.div`
+  margin-top: ${(props) => (props['data-ispdf'] ? '-3px' : '2px')};
+  font-size: ${(props) => (props['data-ispdf'] ? '18px' : '22px')};
+  height: ${(props) => (props['data-ispdf'] ? '17px' : 'auto')};
   color: #757575;
   margin-left: 1px;
 `
@@ -99,9 +99,9 @@ const SlashKr = styled(Slash)`
   grid-area: slashKr;
 `
 // eslint-disable-next-line no-unused-vars
-const SlashBvv = styled(({ isPdf, children, ...rest }) => <Slash {...rest}>{children}</Slash>)`
+const SlashBvv = styled(Slash)`
   grid-area: slashBvv;
-  margin-top: ${(props) => (props.isPdf ? '-7px' : 'inherit')};
+  margin-top: ${(props) => (props['data-ispdf'] ? '-7px' : 'inherit')};
   div {
     margin-left: -1px;
   }
@@ -110,11 +110,11 @@ const SlashRrb = styled(Slash)`
   grid-area: slashRrb;
 `
 // eslint-disable-next-line no-unused-vars
-const LabelHorizontal = styled(({ isPdf, children, ...rest }) => <ControlLabel {...rest}>{children}</ControlLabel>)`
-  margin-top: ${(props) => (props.isPdf ? 0 : '11px')};
+const LabelHorizontal = styled(ControlLabel)`
+  margin-top: ${(props) => (props['data-ispdf'] ? 0 : '11px')};
   text-align: right;
-  font-size: ${(props) => (props.isPdf ? '10px !important' : '11px')};
-  height: ${(props) => (props.isPdf ? '17px' : 'auto')};
+  font-size: ${(props) => (props['data-ispdf'] ? '10px !important' : '11px')};
+  height: ${(props) => (props['data-ispdf'] ? '17px' : 'auto')};
 `
 const AreaNummernTitle = styled.div`
   font-weight: 900;
@@ -122,15 +122,15 @@ const AreaNummernTitle = styled.div`
   grid-area: areaNummernTitle;
 `
 // eslint-disable-next-line no-unused-vars
-const Field = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
-  height: ${(props) => (props.isPdf ? '17px' : 'auto')};
+const Field = styled.div`
+  height: ${(props) => (props['data-ispdf'] ? '17px' : 'auto')};
   input {
-    font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
+    font-size: ${(props) => (props['data-ispdf'] ? '10px' : 'inherit')};
   }
 `
-const TextareaField = styled(({ isPdf, children, ...rest }) => <div {...rest}>{children}</div>)`
+const TextareaField = styled.div`
   input {
-    font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
+    font-size: ${(props) => (props['data-ispdf'] ? '10px' : 'inherit')};
   }
 `
 const FieldIdGeschaeft = styled(Field)`
@@ -194,24 +194,24 @@ const FieldEntscheidRrbJahr = styled(Field)`
   grid-area: fieldEntscheidRrbJahr;
 `
 // eslint-disable-next-line no-unused-vars
-const FieldAktenstandort = styled(({ isPdf, children, ...rest }) => <Field {...rest}>{children}</Field>)`
-  height: ${(props) => (props.isPdf ? '29px' : 'auto')};
+const FieldAktenstandort = styled(Field)`
+  height: ${(props) => (props['data-ispdf'] ? '29px' : 'auto')};
   grid-area: fieldAktenstandort;
-  font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
+  font-size: ${(props) => (props['data-ispdf'] ? '10px' : 'inherit')};
   select, label {
-    font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
+    font-size: ${(props) => (props['data-ispdf'] ? '10px' : 'inherit')};
   }
   select {
-    height: ${(props) => (props.isPdf ? '15px !important' : '34px')};
+    height: ${(props) => (props['data-ispdf'] ? '15px !important' : '34px')};
   }
 `
 // eslint-disable-next-line no-unused-vars
-const FieldAktennummer = styled(({ isPdf, children, ...rest }) => <Field {...rest}>{children}</Field>)`
-  height: ${(props) => (props.isPdf ? '29px' : 'auto')};
+const FieldAktennummer = styled(Field)`
+  height: ${(props) => (props['data-ispdf'] ? '29px' : 'auto')};
   grid-area: fieldAktennummer;
-  font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
+  font-size: ${(props) => (props['data-ispdf'] ? '10px' : 'inherit')};
   input, label {
-    font-size: ${(props) => (props.isPdf ? '10px' : 'inherit')};
+    font-size: ${(props) => (props['data-ispdf'] ? '10px' : 'inherit')};
   }
 `
 
@@ -275,10 +275,10 @@ const AreaNummern = ({
           Nr.
         </LabelNrDiv>
       </LabelNr>
-      <LabelIdGeschaeft isPdf={isPdf}>
+      <LabelIdGeschaeft data-ispdf={isPdf}>
         ID
       </LabelIdGeschaeft>
-      <FieldIdGeschaeft isPdf={isPdf}>
+      <FieldIdGeschaeft data-ispdf={isPdf}>
         <InputIdGeschaeft
           type="number"
           value={geschaeft.idGeschaeft}
@@ -288,13 +288,13 @@ const AreaNummern = ({
       </FieldIdGeschaeft>
       {
         !(isPdf && !gekoValuesString) &&
-        <LabelGekoNr isPdf={isPdf}>
+        <LabelGekoNr data-ispdf={isPdf}>
           Geko
         </LabelGekoNr>
       }
       {
         !(isPdf && !gekoValuesString) &&
-        <FieldGekoNr isPdf={isPdf}>
+        <FieldGekoNr data-ispdf={isPdf}>
           {
             isPdf &&
             <StyledTextarea
@@ -328,13 +328,13 @@ const AreaNummern = ({
       }
       {
         !(isPdf && !geschaeft.entscheidAwelNr) &&
-        <LabelEntscheidAwel isPdf={isPdf}>
+        <LabelEntscheidAwel data-ispdf={isPdf}>
           AWEL
         </LabelEntscheidAwel>
       }
       {
         !(isPdf && !geschaeft.entscheidAwelNr) &&
-        <FieldEntscheidAwelNr isPdf={isPdf}>
+        <FieldEntscheidAwelNr data-ispdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidAwelNr || ''}
@@ -348,13 +348,13 @@ const AreaNummern = ({
       }
       {
         !(isPdf && !geschaeft.entscheidAwelNr) &&
-        <SlashAwel isPdf={isPdf}>
+        <SlashAwel data-ispdf={isPdf}>
           <div>/</div>
         </SlashAwel>
       }
       {
         !(isPdf && !geschaeft.entscheidAwelNr) &&
-        <FieldEntscheidAwelJahr isPdf={isPdf}>
+        <FieldEntscheidAwelJahr data-ispdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidAwelJahr || ''}
@@ -368,13 +368,13 @@ const AreaNummern = ({
       }
       {
         !(isPdf && !geschaeft.entscheidBdvNr) &&
-        <LabelEntscheidBdv isPdf={isPdf}>
+        <LabelEntscheidBdv data-ispdf={isPdf}>
           BDV
         </LabelEntscheidBdv>
       }
       {
         !(isPdf && !geschaeft.entscheidBdvNr) &&
-        <FieldEntscheidBdvNr isPdf={isPdf}>
+        <FieldEntscheidBdvNr data-ispdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidBdvNr || ''}
@@ -388,13 +388,13 @@ const AreaNummern = ({
       }
       {
         !(isPdf && !geschaeft.entscheidBdvNr) &&
-        <SlashBdv isPdf={isPdf}>
+        <SlashBdv data-ispdf={isPdf}>
           <div>/</div>
         </SlashBdv>
       }
       {
         !(isPdf && !geschaeft.entscheidBdvNr) &&
-        <FieldEntscheidBdvJahr isPdf={isPdf}>
+        <FieldEntscheidBdvJahr data-ispdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidBdvJahr || ''}
@@ -408,13 +408,13 @@ const AreaNummern = ({
       }
       {
         !(isPdf && !geschaeft.entscheidRrbNr) &&
-        <LabelEntscheidRrb isPdf={isPdf}>
+        <LabelEntscheidRrb data-ispdf={isPdf}>
           RRB
         </LabelEntscheidRrb>
       }
       {
         !(isPdf && !geschaeft.entscheidRrbNr) &&
-        <FieldEntscheidRrbNr isPdf={isPdf}>
+        <FieldEntscheidRrbNr data-ispdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidRrbNr || ''}
@@ -428,13 +428,13 @@ const AreaNummern = ({
       }
       {
         !(isPdf && !geschaeft.entscheidRrbNr) &&
-        <SlashRrb isPdf={isPdf}>
+        <SlashRrb data-ispdf={isPdf}>
           <div>/</div>
         </SlashRrb>
       }
       {
         !(isPdf && !geschaeft.entscheidRrbNr) &&
-        <FieldEntscheidRrbJahr isPdf={isPdf}>
+        <FieldEntscheidRrbJahr data-ispdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidRrbJahr || ''}
@@ -448,13 +448,13 @@ const AreaNummern = ({
       }
       {
         !(isPdf && !geschaeft.entscheidBvvNr) &&
-        <LabelEntscheidBvv isPdf={isPdf}>
+        <LabelEntscheidBvv data-ispdf={isPdf}>
           BVV
         </LabelEntscheidBvv>
       }
       {
         !(isPdf && !geschaeft.entscheidBvvNr) &&
-        <FieldEntscheidBvvNr isPdf={isPdf}>
+        <FieldEntscheidBvvNr data-ispdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidBvvNr || ''}
@@ -468,13 +468,13 @@ const AreaNummern = ({
       }
       {
         !(isPdf && !geschaeft.entscheidBvvNr) &&
-        <SlashBvv isPdf={isPdf}>
+        <SlashBvv data-ispdf={isPdf}>
           <div style={{ marginLeft: '-1px' }}>-</div>
         </SlashBvv>
       }
       {
         !(isPdf && !geschaeft.entscheidBvvNr) &&
-        <FieldEntscheidBvvJahr isPdf={isPdf}>
+        <FieldEntscheidBvvJahr data-ispdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidBvvJahr || ''}
@@ -488,13 +488,13 @@ const AreaNummern = ({
       }
       {
         !(isPdf && !geschaeft.entscheidKrNr) &&
-        <LabelEntscheidKr isPdf={isPdf}>
+        <LabelEntscheidKr data-ispdf={isPdf}>
           KR
         </LabelEntscheidKr>
       }
       {
         !(isPdf && !geschaeft.entscheidKrNr) &&
-        <FieldEntscheidKrNr isPdf={isPdf}>
+        <FieldEntscheidKrNr data-ispdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidKrNr || ''}
@@ -508,13 +508,13 @@ const AreaNummern = ({
       }
       {
         !(isPdf && !geschaeft.entscheidKrNr) &&
-        <SlashKr isPdf={isPdf}>
+        <SlashKr data-ispdf={isPdf}>
           <div>/</div>
         </SlashKr>
       }
       {
         !(isPdf && !geschaeft.entscheidKrNr) &&
-        <FieldEntscheidKrJahr isPdf={isPdf}>
+        <FieldEntscheidKrJahr data-ispdf={isPdf}>
           <FormControl
             type="number"
             value={geschaeft.entscheidKrJahr || ''}
@@ -528,7 +528,7 @@ const AreaNummern = ({
       }
       {
         !(isPdf && !geschaeft.aktenstandort) &&
-        <FieldAktenstandort isPdf={isPdf}>
+        <FieldAktenstandort data-ispdf={isPdf}>
           <ControlLabel>
             Aktenstandort
           </ControlLabel>
@@ -546,7 +546,7 @@ const AreaNummern = ({
       }
       {
         !(isPdf && !geschaeft.aktenstandort) &&
-        <FieldAktennummer isPdf={isPdf}>
+        <FieldAktennummer data-ispdf={isPdf}>
           <ControlLabel>
             Nr.
           </ControlLabel>
