@@ -74,14 +74,7 @@ const AreaGeschaeft = ({ store, blur, change, nrOfGFields, viewIsNarrow }) => {
       <Title>Geschäft</Title>
       <Gegenstand>
         <ControlLabel>Gegenstand</ControlLabel>
-        <StyledTextarea
-          value={geschaeft.gegenstand || ''}
-          name="gegenstand"
-          onChange={change}
-          onBlur={blur}
-          tabIndex={1 + tabsToAdd}
-          autoFocus={!viewIsNarrow && !isPdf}
-        />
+        <StyledTextarea value={geschaeft.gegenstand || ''} name="gegenstand" onChange={change} onBlur={blur} tabIndex={1 + tabsToAdd} />
       </Gegenstand>
       {!(!geschaeft.ausloeser && isPdf) && (
         <Ausloeser>
