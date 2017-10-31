@@ -63,7 +63,7 @@ const AreaRechtsmittel = ({ store, values, firstTabIndex, change, changeComparat
       <InputGroup>
         <ComparatorSelector name="rechtsmittelEntscheidNr" changeComparator={changeComparator} />
         <FormControl
-          type="number"
+          type="text"
           value={values.rechtsmittelEntscheidNr || ''}
           name="rechtsmittelEntscheidNr"
           onChange={change}
