@@ -52,7 +52,6 @@ const AreaRechtsmittel = ({ store, values, firstTabIndex, change, changeComparat
           value={values.rechtsmittelInstanz || ''}
           name="rechtsmittelInstanz"
           onChange={change}
-          bsSize="small"
           tabIndex={1 + firstTabIndex}
         >
           {createOptions(store.geschaefte.rechtsmittelInstanzOptions)}
@@ -68,7 +67,6 @@ const AreaRechtsmittel = ({ store, values, firstTabIndex, change, changeComparat
           value={values.rechtsmittelEntscheidNr || ''}
           name="rechtsmittelEntscheidNr"
           onChange={change}
-          bsSize="small"
           tabIndex={2 + firstTabIndex}
         />
       </InputGroup>
@@ -92,7 +90,6 @@ const AreaRechtsmittel = ({ store, values, firstTabIndex, change, changeComparat
           value={values.rechtsmittelErledigung || ''}
           name="rechtsmittelErledigung"
           onChange={change}
-          bsSize="small"
           tabIndex={4 + firstTabIndex}
         >
           {createOptions(store.geschaefte.rechtsmittelErledigungOptions)}

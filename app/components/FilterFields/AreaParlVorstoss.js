@@ -19,6 +19,7 @@ const Container = styled.div`
   grid-template-areas: 'areaParlVorstTitle areaParlVorstTitle' 'fieldParlVorstossTyp fieldParlVorstossTyp' 'fieldStufe fieldZustaendigkeit';
   grid-gap: 15px 8px;
   padding: 8px;
+  padding-right: 15px;
 `
 const Title = styled.div`
   font-weight: 900;
@@ -43,7 +44,6 @@ const AreaParlVorstoss = ({ store, values, firstTabIndex, change, changeComparat
           value={values.parlVorstossTyp || ''}
           name="parlVorstossTyp"
           onChange={change}
-          bsSize="small"
           tabIndex={1 + firstTabIndex}
         >
           {createOptions(store.geschaefte.parlVorstossTypOptions)}
@@ -56,7 +56,6 @@ const AreaParlVorstoss = ({ store, values, firstTabIndex, change, changeComparat
         data-value={1}
         checked={values.parlVorstossStufe === '1'}
         onChange={change}
-        bsSize="small"
         name="parlVorstossStufe"
         tabIndex={2 + firstTabIndex}
       >
@@ -67,7 +66,6 @@ const AreaParlVorstoss = ({ store, values, firstTabIndex, change, changeComparat
         checked={values.parlVorstossStufe === '2'}
         name="parlVorstossStufe"
         onChange={change}
-        bsSize="small"
         tabIndex={3 + firstTabIndex}
       >
         2: überwiesen
@@ -80,7 +78,6 @@ const AreaParlVorstoss = ({ store, values, firstTabIndex, change, changeComparat
         checked={values.parlVorstossZustaendigkeitAwel === 'hauptzuständig'}
         name="parlVorstossZustaendigkeitAwel"
         onChange={change}
-        bsSize="small"
         tabIndex={6 + firstTabIndex}
       >
         haupt
@@ -90,7 +87,6 @@ const AreaParlVorstoss = ({ store, values, firstTabIndex, change, changeComparat
         checked={values.parlVorstossZustaendigkeitAwel === 'mitberichtzuständig'}
         name="parlVorstossZustaendigkeitAwel"
         onChange={change}
-        bsSize="small"
         tabIndex={7 + firstTabIndex}
       >
         mitbericht

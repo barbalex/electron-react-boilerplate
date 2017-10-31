@@ -46,16 +46,15 @@ const getTemplateAreas = (width, showAreaForGeschaeftsart) => {
     "areaFristen areaFristen areaFristen areaFristen areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory"
     "areaFristen areaFristen areaFristen areaFristen areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert"
     `
-  } else {
-    // width === 'wide' && !showAreaForGeschaeftsart
-    return `
+  }
+  // width === 'wide' && !showAreaForGeschaeftsart
+  return `
     "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern areaNummern"
     "areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaGeschaeft areaNummern areaNummern areaNummern areaNummern areaNummern"
     "areaFristen areaFristen areaFristen areaFristen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen areaPersonen"
     "areaFristen areaFristen areaFristen areaFristen areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory areaHistory"
     "areaFristen areaFristen areaFristen areaFristen areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert"
     `
-  }
 }
 
 const ScrollContainer = styled.div`
@@ -64,16 +63,9 @@ const ScrollContainer = styled.div`
 `
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: ${props =>
-    props['data-width'] === 'narrow'
-      ? 'repeat(1, 100%)'
-      : 'repeat(12, 8.33333%)'};
+  grid-template-columns: ${props => (props['data-width'] === 'narrow' ? 'repeat(1, 100%)' : 'repeat(12, 8.33333%)')};
   grid-template-rows: auto;
-  grid-template-areas: ${props =>
-    getTemplateAreas(
-      props['data-width'],
-      props['data-showAreaForGeschaeftsart']
-    )};
+  grid-template-areas: ${props => getTemplateAreas(props['data-width'], props['data-showareaforgeschaeftsart'])};
 `
 
 const enhance = compose(
@@ -137,7 +129,7 @@ const enhance = compose(
       geschaefteFilterByFields(newFilterFields)
     },
   }),
-  observer
+  observer,
 )
 
 const FilterFields = ({ store, changeComparator, change }) => {
@@ -152,12 +144,8 @@ const FilterFields = ({ store, changeComparator, change }) => {
   } else {
     filterFields = []
   }
-  const showAreaParlVorstoss = !!(
-    values.geschaeftsart && values.geschaeftsart === 'Parlament. Vorstoss'
-  )
-  const showAreaRechtsmittel = !!(
-    values.geschaeftsart && values.geschaeftsart === 'Rekurs/Beschwerde'
-  )
+  const showAreaParlVorstoss = !!(values.geschaeftsart && values.geschaeftsart === 'Parlament. Vorstoss')
+  const showAreaRechtsmittel = !!(values.geschaeftsart && values.geschaeftsart === 'Rekurs/Beschwerde')
   const showAreaForGeschaeftsart = showAreaParlVorstoss || showAreaRechtsmittel
 
   // need to adapt layout to differing widths
@@ -177,10 +165,7 @@ const FilterFields = ({ store, changeComparator, change }) => {
 
   return (
     <ScrollContainer>
-      <Wrapper
-        data-width={width}
-        data-showAreaForGeschaeftsart={showAreaForGeschaeftsart}
-      >
+      <Wrapper data-width={width} data-showareaforgeschaeftsart={showAreaForGeschaeftsart}>
         <AreaGeschaeft
           firstTabIndex={width === 'narrow' ? nrOfNrFields : 0}
           change={change}
@@ -194,39 +179,14 @@ const FilterFields = ({ store, changeComparator, change }) => {
           values={values}
         />
         {showAreaParlVorstoss && (
-          <AreaParlVorstoss
-            firstTabIndex={nrOfFieldsBeforePv}
-            change={change}
-            changeComparator={changeComparator}
-            values={values}
-          />
+          <AreaParlVorstoss firstTabIndex={nrOfFieldsBeforePv} change={change} changeComparator={changeComparator} values={values} />
         )}
         {showAreaRechtsmittel && (
-          <AreaRechtsmittel
-            firstTabIndex={nrOfFieldsBeforePv}
-            change={change}
-            changeComparator={changeComparator}
-            values={values}
-          />
+          <AreaRechtsmittel firstTabIndex={nrOfFieldsBeforePv} change={change} changeComparator={changeComparator} values={values} />
         )}
-        <AreaFristen
-          firstTabIndex={nrOfFieldsBeforeFristen}
-          change={change}
-          changeComparator={changeComparator}
-          values={values}
-        />
-        <AreaPersonen
-          firstTabIndex={nrOfFieldsBeforePersonen}
-          change={change}
-          changeComparator={changeComparator}
-          values={values}
-        />
-        <AreaHistory
-          firstTabIndex={nrOfFieldsBeforeHistory}
-          change={change}
-          changeComparator={changeComparator}
-          values={values}
-        />
+        <AreaFristen firstTabIndex={nrOfFieldsBeforeFristen} change={change} changeComparator={changeComparator} values={values} />
+        <AreaPersonen firstTabIndex={nrOfFieldsBeforePersonen} change={change} changeComparator={changeComparator} values={values} />
+        <AreaHistory firstTabIndex={nrOfFieldsBeforeHistory} change={change} changeComparator={changeComparator} values={values} />
         <AreaZuletztMutiert
           firstTabIndex={nrOfFieldsBeforeZuletztMutiert}
           change={change}
