@@ -18,6 +18,7 @@ import geschaefteActions from './actions/geschaefte'
 import addComputedValuesToGeschaefte from '../src/addComputedValuesToGeschaefte'
 import filterGeschaeftePlus from '../src/filterGeschaeftePlus'
 import sortGeschaeftePlusFiltered from '../src/sortGeschaeftePlusFiltered'
+import getHistoryOfGeschaeft from '../src/getHistoryOfGeschaeft'
 
 function Store() {
   this.history = observablehistory
@@ -53,7 +54,7 @@ function Store() {
     externeOptions: [],
     // following: state for active geschaeft
     activeId: null,
-    historyOfActiveId: [],
+    historyOfActiveId: computed(() => getHistoryOfGeschaeft(this.geschaefte.geschaefte, this.geschaefte.activeId)),
     willDelete: false,
   })
   extendObservable(this, geschaefteActions(this))

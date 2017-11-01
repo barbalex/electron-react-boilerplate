@@ -42,12 +42,11 @@ const WrapperNarrow = styled.div`
   display: grid;
   grid-template-columns: repeat(1, 100%);
   grid-template-rows: auto;
-  grid-template-areas: 'areaNummern' 'areaGeschaeft' 'areaForGeschaeftsart'
-    'areaFristen' 'areaPersonen' 'areaLinks' 'areaHistory' 'areaZuletztMutiert';
+  grid-template-areas: 'areaNummern' 'areaGeschaeft' 'areaForGeschaeftsart' 'areaFristen' 'areaPersonen' 'areaLinks' 'areaHistory'
+    'areaZuletztMutiert';
 `
 const WrapperNarrowNoAreaForGeschaeftsart = styled(WrapperNarrow)`
-  grid-template-areas: 'areaNummern' 'areaGeschaeft' 'areaFristen'
-    'areaPersonen' 'areaLinks' 'areaHistory' 'areaZuletztMutiert';
+  grid-template-areas: 'areaNummern' 'areaGeschaeft' 'areaFristen' 'areaPersonen' 'areaLinks' 'areaHistory' 'areaZuletztMutiert';
 `
 const WrapperWide = styled.div`
   display: grid;
@@ -112,13 +111,12 @@ class Geschaeft extends Component {
   change = e => {
     const { store } = this.props
     const { changeGeschaeftInDb, geschaefteChangeState } = store
-    const {
-      activeId,
-      geschaeftePlusFilteredAndSorted: geschaefte,
-    } = store.geschaefte
+    const { activeId, geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
     const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
     const { type, name, dataset } = e.target
     let { value } = e.target
+    // need to convert numbers into numbers
+    if (!isNaN(value)) value = +value
     if (type === 'radio') {
       // need to set null if existing value was clicked
       if (geschaeft[name] === dataset.value) {
@@ -161,10 +159,7 @@ class Geschaeft extends Component {
 
   render() {
     const { store } = this.props
-    const {
-      activeId,
-      geschaeftePlusFilteredAndSorted: geschaefte,
-    } = store.geschaefte
+    const { activeId, geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
     const { config } = store.app
     const path = store.history.location.pathname
     const isPdf = path === '/geschaeftPdf'
@@ -176,12 +171,7 @@ class Geschaeft extends Component {
 
     const showAreaParlVorstoss =
       geschaeft.geschaeftsart === 'Parlament. Vorstoss' &&
-      !(
-        isPdf &&
-        !geschaeft.parlVorstossStufe &&
-        !geschaeft.parlVorstossZustaendigkeitAwel &&
-        !geschaeft.parlVorstossTyp
-      )
+      !(isPdf && !geschaeft.parlVorstossStufe && !geschaeft.parlVorstossZustaendigkeitAwel && !geschaeft.parlVorstossTyp)
     const showAreaRechtsmittel =
       geschaeft.geschaeftsart === 'Rekurs/Beschwerde' &&
       !(
@@ -192,8 +182,7 @@ class Geschaeft extends Component {
         !geschaeft.rechtsmittelErledigung &&
         !geschaeft.rechtsmittelTxt
       )
-    const showAreaForGeschaeftsart =
-      showAreaParlVorstoss || showAreaRechtsmittel
+    const showAreaForGeschaeftsart = showAreaParlVorstoss || showAreaRechtsmittel
 
     // need width to adapt layout to differing widths
     const windowWidth = $(window).width()
@@ -233,24 +222,9 @@ class Geschaeft extends Component {
     return (
       <ScrollContainer>
         <Wrapper isPdf={isPdf}>
-          <AreaGeschaeft
-            viewIsNarrow={viewIsNarrow}
-            nrOfGFields={nrOfGFields}
-            change={this.change}
-            blur={this.blur}
-          />
-          <AreaNummern
-            viewIsNarrow={viewIsNarrow}
-            nrOfGFields={nrOfGFields}
-            change={this.change}
-            blur={this.blur}
-          />
-          {showAreaParlVorstoss && (
-            <AreaParlVorstoss
-              nrOfFieldsBeforePv={nrOfFieldsBeforePv}
-              change={this.change}
-            />
-          )}
+          <AreaGeschaeft viewIsNarrow={viewIsNarrow} nrOfGFields={nrOfGFields} change={this.change} blur={this.blur} />
+          <AreaNummern viewIsNarrow={viewIsNarrow} nrOfGFields={nrOfGFields} change={this.change} blur={this.blur} />
+          {showAreaParlVorstoss && <AreaParlVorstoss nrOfFieldsBeforePv={nrOfFieldsBeforePv} change={this.change} />}
           {showAreaRechtsmittel && (
             <AreaRechtsmittel
               nrOfFieldsBeforePv={nrOfFieldsBeforePv}
@@ -265,10 +239,7 @@ class Geschaeft extends Component {
             blur={this.blur}
             onChangeDatePicker={this.onChangeDatePicker}
           />
-          <AreaPersonen
-            nrOfFieldsBeforePersonen={nrOfFieldsBeforePersonen}
-            change={this.change}
-          />
+          <AreaPersonen nrOfFieldsBeforePersonen={nrOfFieldsBeforePersonen} change={this.change} />
           {showLinks && <AreaLinks mylinks={store.geschaefte.links} />}
           <AreaHistory blur={this.blur} change={this.change} />
           <AreaZuletztMutiert />
