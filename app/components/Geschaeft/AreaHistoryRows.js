@@ -4,8 +4,6 @@ import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-import getHistoryOfGeschaeft from '../../src/getHistoryOfGeschaeft'
-
 const FieldsContainer = styled.div`
   grid-area: areaHistoryFieldsContainer;
   display: grid;
@@ -39,10 +37,11 @@ const enhance = compose(inject('store'), observer)
 
 const AreaHistoryRows = ({ store }) => {
   const { geschaeftToggleActivated } = store
-  const { activeId, geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
+  const { activeId, geschaeftePlusFilteredAndSorted: geschaefte, historyOfActiveId } = store.geschaefte
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
-  const history = getHistoryOfGeschaeft(geschaefte, activeId)
+  const history = historyOfActiveId
+  console.log('AreaHistoryRows: history:', history)
 
   return (
     <FieldsContainer>

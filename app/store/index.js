@@ -53,6 +53,7 @@ function Store() {
     externeOptions: [],
     // following: state for active geschaeft
     activeId: null,
+    historyOfActiveId: [],
     willDelete: false,
   })
   extendObservable(this, geschaefteActions(this))

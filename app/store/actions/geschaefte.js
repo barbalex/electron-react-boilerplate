@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { action } from 'mobx'
+import { action, computed, extendObservable } from 'mobx'
 import _ from 'lodash'
 import moment from 'moment'
 
@@ -19,6 +19,7 @@ import deleteGeschaeft from '../../src/deleteGeschaeft'
 import deleteGeko from '../../src/deleteGeko'
 import deleteLink from '../../src/deleteLink'
 import geschaefteSortByFieldsGetSortFields from '../../src/geschaefteSortByFieldsGetSortFields'
+import getHistoryOfGeschaeft from '../../src/getHistoryOfGeschaeft'
 
 export default store => ({
   geschaeftPdfShow: action(() => store.history.push('/geschaeftPdf')),
@@ -317,4 +318,5 @@ export default store => ({
   linkDelete: action((idGeschaeft, url) => {
     store.geschaefte.links = store.geschaefte.links.filter(l => l.idGeschaeft !== idGeschaeft || l.url !== url)
   }),
+  extendObservable(store.geschaefte, {historyOfActiveId: computed(() => getHistoryOfGeschaeft(store.geschaefte, store.activeId))})
 })
