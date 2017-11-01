@@ -41,7 +41,6 @@ const AreaHistoryRows = ({ store }) => {
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
   const history = historyOfActiveId
-  console.log('AreaHistoryRows: history:', history)
 
   return (
     <FieldsContainer>
