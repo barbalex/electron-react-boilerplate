@@ -35,7 +35,7 @@ const optionsList = (interneOptions, geschaefteKontakteIntern, activeId) => {
   return options
 }
 const Container = styled.div`
-  grid-column: 1 / span 2;
+  grid-column: ${props => (props['data-ispdf'] ? '1 / span 1' : '1 / span 2')};
   display: grid;
   grid-template-columns: 100%;
   grid-gap: 0;
@@ -43,7 +43,7 @@ const Container = styled.div`
 // eslint-disable-next-line no-unused-vars
 const RowfVDropdown = styled.div`
   grid-column: 1 / span 1;
-  display: grid;
+  display: ${props => (props['data-ispdf'] ? 'none' : 'grid')};
   grid-template-columns: ${props => (props['data-ispdf'] ? '160px calc(100% - 160px)' : '260px calc(100% - 260px)')};
   grid-gap: 4px;
   margin-top: 5px;
@@ -64,7 +64,7 @@ const GeschaefteKontakteIntern = ({ tabIndex, store }) => {
   const isPdf = path === '/geschaeftPdf'
 
   return (
-    <Container>
+    <Container data-ispdf={isPdf}>
       <KontakteInternItems />
       <RowfVDropdown data-ispdf={isPdf}>
         <FvDropdown data-ispdf={isPdf}>
