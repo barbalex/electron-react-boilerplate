@@ -14,7 +14,7 @@ const StyledFormControl = styled(FormControl)`
   padding-left: 3px !important;
   padding-right: 0 !important;
   font-weight: 900;
-  font-size: 14px;
+  font-size: 14px !important;
 `
 
 const ComparatorSelector = ({ store, name, changeComparator }) => {
