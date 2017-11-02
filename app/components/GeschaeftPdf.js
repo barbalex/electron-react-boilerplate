@@ -27,7 +27,7 @@ const Container = styled.div`
   & select {
     -webkit-appearance: none;
     border: none;
-    border-bottom: 1px solid #CCC;
+    border-bottom: 1px solid #ccc;
     border-radius: 0;
     box-shadow: none;
     padding: 0;
@@ -101,15 +101,14 @@ const Footer = styled.div`
   }
 `
 
-const GeschaeftPdf = () =>
+const GeschaeftPdf = () => (
   <Container>
     <PageContainer className="hochformat">
       <Geschaeft />
-      <Footer>
-        {moment().format('DD.MM.YYYY')}
-      </Footer>
+      <Footer>{moment().format('DD.MM.YYYY')}</Footer>
     </PageContainer>
   </Container>
+)
 
 GeschaeftPdf.displayName = 'GeschaeftPdf'
 
