@@ -8,11 +8,11 @@ import styled from 'styled-components'
 const enhance = compose(inject('store'), observer)
 
 const StyledFormControl = styled(FormControl)`
-  width: 45px !important;
+  width: 55px !important;
   margin-right: -1px !important;
   border-radius: 0 !important;
-  padding-left: 3px;
-  padding-right: 0;
+  padding-left: 3px !important;
+  padding-right: 0 !important;
   font-weight: 900;
   font-size: 14px;
 `
@@ -28,8 +28,9 @@ const ComparatorSelector = ({ store, name, changeComparator }) => {
         <option value="=">&#8776;</option>
         <option value="===">=</option>
         <option value="!==">&#60;&#62;</option>
-        <option value="&#60;">&#60;</option>
-        <option value="&#62;">&#62;</option>
+        <option value="<">&#60;</option>
+        <option value="<=">&#60;=</option>
+        <option value=">">&#62;</option>
       </StyledFormControl>
     </InputGroup.Button>
   )
