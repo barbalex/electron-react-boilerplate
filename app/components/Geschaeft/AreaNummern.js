@@ -148,6 +148,7 @@ const FieldAktenstandort = styled(Field)`
   }
   select {
     height: ${props => (props['data-ispdf'] ? '15px !important' : '34px')};
+    line-height: inherit !important;
   }
 `
 // eslint-disable-next-line no-unused-vars
