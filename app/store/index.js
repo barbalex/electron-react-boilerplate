@@ -55,6 +55,7 @@ function Store() {
     // following: state for active geschaeft
     activeId: null,
     historyOfActiveId: computed(() => getHistoryOfGeschaeft(this.geschaefte.geschaefte, this.geschaefte.activeId)),
+    gekoOfActiveId: computed(() => this.geschaefte.geko.filter(g => g.idGeschaeft === this.geschaefte.activeId)),
     willDelete: false,
   })
   extendObservable(this, geschaefteActions(this))

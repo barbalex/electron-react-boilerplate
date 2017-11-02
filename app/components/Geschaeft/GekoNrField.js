@@ -4,10 +4,7 @@ import { FormControl } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
 class GekoNrField extends Component {
   static propTypes = {
@@ -28,7 +25,7 @@ class GekoNrField extends Component {
     }
   }
 
-  onChange = (e) => {
+  onChange = e => {
     this.setState({ gekoNr: e.target.value })
   }
 
@@ -52,16 +49,7 @@ class GekoNrField extends Component {
     const { tabsToAdd } = this.props
     const { gekoNr } = this.state
 
-    return (
-      <FormControl
-        type="text"
-        value={gekoNr}
-        onChange={this.onChange}
-        onBlur={this.onBlur}
-        bsSize="small"
-        tabIndex={1 + tabsToAdd}
-      />
-    )
+    return <FormControl type="text" value={gekoNr} onChange={this.onChange} onBlur={this.onBlur} bsSize="small" tabIndex={1 + tabsToAdd} />
   }
 }
 
