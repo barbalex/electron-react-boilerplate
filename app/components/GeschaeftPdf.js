@@ -54,6 +54,7 @@ const Container = styled.div`
   }
 `
 const PageContainer = styled.div`
+  /* this part is for when page preview is shown */
   /* Divide single pages with some space and center all pages horizontally */
   /* will be removed in @media print */
   margin: 1cm auto;
@@ -74,6 +75,7 @@ const PageContainer = styled.div`
   overflow-y: visible;
 
   @media print {
+    /* this is when it is actually printed */
     height: inherit;
     width: inherit;
 

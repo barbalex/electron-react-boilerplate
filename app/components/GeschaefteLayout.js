@@ -11,7 +11,12 @@ import Pages from './Pages'
 import GeschaeftPdf from '../components/GeschaeftPdf'
 import Geschaefte from '../components/Geschaefte'
 
-const StyledSplitPane = styled(SplitPane)`top: 52px;`
+const StyledSplitPane = styled(SplitPane)`
+  top: 52px;
+  @media print {
+    top: 0;
+  }
+`
 
 const enhance = compose(
   inject('store'),
