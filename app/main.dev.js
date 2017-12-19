@@ -83,6 +83,10 @@ app.on('ready', async () => {
   }
 
   mainWindow = new BrowserWindow(browserWindowOptions)
+
+  // uncomment for prod
+  mainWindow.openDevTools()
+
   if (lastWindowState && lastWindowState.maximized) {
     mainWindow.maximize()
   }
