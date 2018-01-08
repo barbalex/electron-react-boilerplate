@@ -43,10 +43,12 @@ const ContainerView = styled(ContainerBase)`
 const ContainerPrint = styled(ContainerBase)`
   /* can't use 1fr for first column - does not work correctly, no idea why */
   /*grid-template-columns: calc(100% - 151px) 8px 105px 8px 30px;*/
-  grid-template-columns: 1fr 8px 105px 8px 30px;
+  grid-template-columns: 1fr 8px 105px;
   grid-template-areas:
-    'areaNummernTitle areaNummernTitle areaNummernTitle' '. . labelNr'
-    'labelIdGeschaeft . fieldIdGeschaeft' 'labelGekoNr . fieldGekoNr' '. . .'
+    'areaNummernTitle areaNummernTitle areaNummernTitle'
+    '. . labelNr'
+    'labelIdGeschaeft . fieldIdGeschaeft'
+    'labelGekoNr . fieldGekoNr' '. . .'
     'labelEntscheidAwel .fieldEntscheidAwel'
     'labelEntscheidBdv . fieldEntscheidBdv'
     'labelEntscheidRrb . fieldEntscheidRrb'
@@ -84,7 +86,7 @@ const SlashBvv = styled(Slash)`
 `
 // eslint-disable-next-line no-unused-vars
 const LabelHorizontal = styled(ControlLabel)`
-  margin-top: ${props => (props['data-ispdf'] ? 0 : '11px')};
+  margin-top: ${props => (props['data-ispdf'] ? '1px' : '9px')};
   text-align: right;
   font-size: ${props => (props['data-ispdf'] ? '10px !important' : '11px')};
   height: ${props => (props['data-ispdf'] ? '17px' : 'auto')};
