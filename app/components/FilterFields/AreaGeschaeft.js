@@ -18,7 +18,8 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: auto;
-  grid-template-areas: 'areaGeschaeftTitle' 'fieldGegenstand' 'fieldAusloeser'
+  grid-template-areas:
+    'areaGeschaeftTitle' 'fieldGegenstand' 'fieldAusloeser'
     'fieldOrt' 'fieldGeschaeftsart' 'fieldStatus' 'fieldAbteilung'
     'fieldDetails' 'fieldNaechsterSchritt' 'fieldVermerk' 'fieldVermerkIntern';
   grid-column-gap: 5px;
@@ -30,16 +31,36 @@ const Title = styled.div`
   font-size: 16px;
   grid-area: areaGeschaeftTitle;
 `
-const FieldGegenstand = styled.div`grid-area: fieldGegenstand;`
-const FieldAusloeser = styled.div`grid-area: fieldAusloeser;`
-const FieldOrt = styled.div`grid-area: fieldOrt;`
-const FieldGeschaeftsart = styled.div`grid-area: fieldGeschaeftsart;`
-const FieldStatus = styled.div`grid-area: fieldStatus;`
-const FieldAbteilung = styled.div`grid-area: fieldAbteilung;`
-const FieldDetails = styled.div`grid-area: fieldDetails;`
-const FieldNaechsterSchritt = styled.div`grid-area: fieldNaechsterSchritt;`
-const FieldVermerk = styled.div`grid-area: fieldVermerk;`
-const FieldVermerkIntern = styled.div`grid-area: fieldVermerkIntern;`
+const FieldGegenstand = styled.div`
+  grid-area: fieldGegenstand;
+`
+const FieldAusloeser = styled.div`
+  grid-area: fieldAusloeser;
+`
+const FieldOrt = styled.div`
+  grid-area: fieldOrt;
+`
+const FieldGeschaeftsart = styled.div`
+  grid-area: fieldGeschaeftsart;
+`
+const FieldStatus = styled.div`
+  grid-area: fieldStatus;
+`
+const FieldAbteilung = styled.div`
+  grid-area: fieldAbteilung;
+`
+const FieldDetails = styled.div`
+  grid-area: fieldDetails;
+`
+const FieldNaechsterSchritt = styled.div`
+  grid-area: fieldNaechsterSchritt;
+`
+const FieldVermerk = styled.div`
+  grid-area: fieldVermerk;
+`
+const FieldVermerkIntern = styled.div`
+  grid-area: fieldVermerkIntern;
+`
 
 const enhance = compose(inject('store'), observer)
 

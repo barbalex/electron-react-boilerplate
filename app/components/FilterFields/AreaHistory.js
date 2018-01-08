@@ -34,7 +34,7 @@ const AreaHistory = ({ values, change, changeComparator, firstTabIndex }) => (
     <Title>Historie</Title>
     <ControlLabel>Vorgeschäft</ControlLabel>
     <FieldVorgeschaeft>
-      <Input name="idVorgeschaeft" change={change} values={values} changeComparator={changeComparator} tabIndex={1 + firstTabIndex} />
+      <Input name="idVorgeschaeft" type="number" change={change} values={values} changeComparator={changeComparator} tabIndex={1 + firstTabIndex} />
     </FieldVorgeschaeft>
   </Container>
 )

@@ -88,16 +88,9 @@ CREATE TABLE geschaefte (
   fristDirektion TEXT,
   fristMitarbeiter TEXT,
   gegenstand TEXT,
-  -- gekoNr TEXT,-- to be moved to table geko after first import and dropped thereafter
   geschaeftsart TEXT REFERENCES geschaeftsart(geschaeftsart) ON UPDATE CASCADE ON DELETE RESTRICT,
   idGeschaeft INTEGER PRIMARY KEY,
-  -- idKontaktExtern_readonly TEXT,-- to be removed after not using a while
-  -- idKontaktIntern_readonly TEXT,-- to be removed after not using a while
   idVorgeschaeft INTEGER,
-	-- kontaktIntern1 TEXT,-- to be removed after transfering to geschaefteKontakteIntern
-	-- kontaktIntern2 TEXT,-- to be removed after transfering to geschaefteKontakteIntern
-	-- kontaktIntern3 TEXT,-- to be removed after transfering to geschaefteKontakteIntern
-	-- kontaktIntern4 TEXT,-- to be removed after transfering to geschaefteKontakteIntern
   mutationsdatum TEXT,
   mutationsperson TEXT,
   naechsterSchritt TEXT,
@@ -107,7 +100,7 @@ CREATE TABLE geschaefte (
   parlVorstossZustaendigkeitAwel TEXT,
   rechtsmittelInstanz TEXT REFERENCES rechtsmittelInstanz(rechtsmittelInstanz) ON UPDATE CASCADE ON DELETE RESTRICT,
   rechtsmittelErledigung TEXT REFERENCES rechtsmittelErledigung(rechtsmittelErledigung) ON UPDATE CASCADE ON DELETE RESTRICT,
-  rechtsmittelEntscheidNr INTEGER,
+  rechtsmittelEntscheidNr TEXT,
   rechtsmittelEntscheidDatum TEXT,
   rechtsmittelTxt TEXT,
   status TEXT REFERENCES status(status) ON UPDATE CASCADE ON DELETE RESTRICT,

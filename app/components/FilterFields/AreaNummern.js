@@ -17,7 +17,7 @@ const Container = styled.div`
   outline: 1px solid #efefef;
   display: grid;
   /* can't use 1fr for first column - does not work correctly, no idea why */
-  grid-template-columns: calc(100% - 366px) 8px 175px 8px 175px;
+  grid-template-columns: calc(100% - 183px) 8px 175px;
   grid-template-rows: auto;
   grid-template-areas:
     'areaNummernTitle areaNummernTitle labelNr'
@@ -151,7 +151,6 @@ const AreaNummern = ({
     <LabelEntscheidAwel>AWEL</LabelEntscheidAwel>
     <FieldEntscheidAwel>
       <Input
-        type="number"
         name="entscheidAwel"
         change={change}
         values={values}
@@ -162,7 +161,6 @@ const AreaNummern = ({
     <LabelEntscheidBdv>BDV</LabelEntscheidBdv>
     <FieldEntscheidBdv>
       <Input
-        type="number"
         name="entscheidBdv"
         change={change}
         values={values}
@@ -173,7 +171,6 @@ const AreaNummern = ({
     <LabelEntscheidRrb>RRB</LabelEntscheidRrb>
     <FieldEntscheidRrb>
       <Input
-        type="number"
         name="entscheidRrb"
         change={change}
         values={values}
@@ -184,7 +181,6 @@ const AreaNummern = ({
     <LabelEntscheidBvv>BVV</LabelEntscheidBvv>
     <FieldEntscheidBvv>
       <Input
-        type="number"
         name="entscheidBvv"
         change={change}
         values={values}
@@ -195,7 +191,6 @@ const AreaNummern = ({
     <LabelEntscheidKr>KR</LabelEntscheidKr>
     <FieldEntscheidKr>
       <Input
-        type="number"
         name="entscheidKr"
         change={change}
         values={values}

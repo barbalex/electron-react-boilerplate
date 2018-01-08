@@ -245,7 +245,7 @@ const AreaNummern = ({ store, viewIsNarrow, nrOfGFields, change, blur }) => {
       {!(isPdf && !geschaeft.entscheidAwel) && (
         <FieldEntscheidAwel data-ispdf={isPdf}>
           <FormControl
-            type="number"
+            type="text"
             value={geschaeft.entscheidAwel || ''}
             name="entscheidAwel"
             onChange={change}
@@ -261,7 +261,6 @@ const AreaNummern = ({ store, viewIsNarrow, nrOfGFields, change, blur }) => {
       {!(isPdf && !geschaeft.entscheidBdv) && (
         <FieldEntscheidBdv data-ispdf={isPdf}>
           <FormControl
-            type="number"
             value={geschaeft.entscheidBdv || ''}
             name="entscheidBdv"
             onChange={change}
@@ -277,7 +276,6 @@ const AreaNummern = ({ store, viewIsNarrow, nrOfGFields, change, blur }) => {
       {!(isPdf && !geschaeft.entscheidRrb) && (
         <FieldEntscheidRrb data-ispdf={isPdf}>
           <FormControl
-            type="number"
             value={geschaeft.entscheidRrb || ''}
             name="entscheidRrb"
             onChange={change}
@@ -293,7 +291,6 @@ const AreaNummern = ({ store, viewIsNarrow, nrOfGFields, change, blur }) => {
       {!(isPdf && !geschaeft.entscheidBvv) && (
         <FieldEntscheidBvv data-ispdf={isPdf}>
           <FormControl
-            type="number"
             value={geschaeft.entscheidBvv || ''}
             name="entscheidBvv"
             onChange={change}
@@ -309,7 +306,6 @@ const AreaNummern = ({ store, viewIsNarrow, nrOfGFields, change, blur }) => {
       {!(isPdf && !geschaeft.entscheidKr) && (
         <FieldEntscheidKr data-ispdf={isPdf}>
           <FormControl
-            type="number"
             value={geschaeft.entscheidKr || ''}
             name="entscheidKr"
             onChange={change}
