@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StyledHeader = styled.div`border-bottom: 2px solid #717171;`
+const StyledHeader = styled.div`
+  border-bottom: 2px solid #717171;
+`
 const StyledRow = styled.div`
   display: flex;
   padding: 3px;
@@ -9,13 +11,13 @@ const StyledRow = styled.div`
 const StyledId = styled.div`
   flex: 1;
   padding: 2px;
-  min-width: 50px;
-  max-width: 50px;
+  min-width: 65px;
+  max-width: 65px;
 `
 const StyledGegenstand = styled.div`
   flex: 1;
   padding: 2px;
-  width: calc(100% - 340px);
+  width: calc(100% - 355px);
 `
 const StyledStatus = styled.div`
   flex: 1;
