@@ -1,3 +1,4 @@
+-- 1. alter tables:
 alter table geschaefte add column entscheidAwel;
 update geschaefte set entscheidAwel = replace(entscheidAwelJahr, '20', '') || '-' || entscheidAwelNr where trim(entscheidAwelJahr) is not null and trim(entscheidAwelNr) is not null;
 
@@ -17,7 +18,7 @@ update geschaefte set entscheidKr = entscheidKrNr || '/' || entscheidKrJahr wher
 
 
 
-
+-- maybe use:
 update geschaefte set entscheidAwel = null;
 select idGeschaeft, entscheidAwel, entscheidAwelNr, entscheidAwelJahr from geschaefte where entscheidAwelJahr is not null and entscheidAwelNr is not null;
 
@@ -32,3 +33,8 @@ select idGeschaeft, entscheidRrb, entscheidRrbNr, entscheidRrbJahr from geschaef
 
 update geschaefte set entscheidKr = null;
 select idGeschaeft, entscheidKr, entscheidKrNr, entscheidKrJahr from geschaefte where entscheidKr is not null;
+
+-- 2. update Table geschaefte using updateTables.SQL
+-- to remove not any more used fields and alter rechtsmittelEntscheidNr to TEXT
+
+-- 3. update to new version of sqlite using howto.txt
