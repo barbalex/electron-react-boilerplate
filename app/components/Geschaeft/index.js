@@ -123,7 +123,6 @@ class Geschaeft extends Component {
     const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
     const { type, name, dataset } = e.target
     let { value } = e.target
-    console.log('e.target:', e.target)
     // need to convert numbers into numbers
     // if (!isNaN(value)) value = +value
     if (type && type === 'number') {
@@ -134,6 +133,7 @@ class Geschaeft extends Component {
       if (geschaeft[name] === dataset.value) {
         value = ''
       } else {
+        // eslint-disable-next-line prefer-destructuring
         value = dataset.value
       }
       // blur does not occur in radio
