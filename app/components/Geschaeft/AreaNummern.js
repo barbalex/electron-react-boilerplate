@@ -27,42 +27,35 @@ const ContainerBase = styled.div`
 `
 const ContainerView = styled(ContainerBase)`
   background-color: rgba(239, 239, 239, 1);
-  /* can't use 1fr for first column - does not work correctly, no idea why
-   * hm. Seems to work now?
-   */
-  /*grid-template-columns: calc(100% - 196px) 8px 120px 8px 60px;*/
-  grid-template-columns: 1fr 8px 120px 8px 60px;
-  grid-template-areas: 'areaNummernTitle areaNummernTitle labelNr . labelJahre' 'labelIdGeschaeft . fieldIdGeschaeft . .'
-    'labelGekoNr . fieldGekoNr . .' 'labelEntscheidAwel . fieldEntscheidAwelNr slashAwel fieldEntscheidAwelJahr'
-    'labelEntscheidBdv . fieldEntscheidBdvNr slashBdv fieldEntscheidBdvJahr'
-    'labelEntscheidRrb . fieldEntscheidRrbNr slashRrb fieldEntscheidRrbJahr'
-    'labelEntscheidBvv . fieldEntscheidBvvNr slashBvv fieldEntscheidBvvJahr'
-    'labelEntscheidKr . fieldEntscheidKrNr slashKr fieldEntscheidKrJahr' 'fieldAktenstandort . fieldAktennummer . .';
+  grid-template-columns: 1fr 8px 120px;
+  grid-template-areas:
+    'areaNummernTitle areaNummernTitle labelNr'
+    'labelIdGeschaeft . fieldIdGeschaeft'
+    'labelGekoNr . fieldGekoNr'
+    'labelEntscheidAwel . fieldEntscheidAwel'
+    'labelEntscheidBdv . fieldEntscheidBdv'
+    'labelEntscheidRrb . fieldEntscheidRrb'
+    'labelEntscheidBvv . fieldEntscheidBvv'
+    'labelEntscheidKr . fieldEntscheidKr'
+    'fieldAktenstandort . fieldAktennummer';
   grid-row-gap: 2px;
 `
 const ContainerPrint = styled(ContainerBase)`
   /* can't use 1fr for first column - does not work correctly, no idea why */
   /*grid-template-columns: calc(100% - 151px) 8px 105px 8px 30px;*/
   grid-template-columns: 1fr 8px 105px 8px 30px;
-  grid-template-areas: 'areaNummernTitle areaNummernTitle areaNummernTitle areaNummernTitle areaNummernTitle' '. . labelNr . labelJahre'
-    'labelIdGeschaeft . fieldIdGeschaeft . .' 'labelGekoNr . fieldGekoNr . .' '. . . . .'
-    'labelEntscheidAwel . fieldEntscheidAwelNr slashAwel fieldEntscheidAwelJahr'
-    'labelEntscheidBdv . fieldEntscheidBdvNr slashBdv fieldEntscheidBdvJahr'
-    'labelEntscheidRrb . fieldEntscheidRrbNr slashRrb fieldEntscheidRrbJahr'
-    'labelEntscheidBvv . fieldEntscheidBvvNr slashBvv fieldEntscheidBvvJahr'
-    'labelEntscheidKr . fieldEntscheidKrNr slashKr fieldEntscheidKrJahr'
-    'fieldAktenstandort fieldAktenstandort fieldAktenstandort . fieldAktennummer';
+  grid-template-areas:
+    'areaNummernTitle areaNummernTitle areaNummernTitle' '. . labelNr'
+    'labelIdGeschaeft . fieldIdGeschaeft' 'labelGekoNr . fieldGekoNr' '. . .'
+    'labelEntscheidAwel .fieldEntscheidAwel'
+    'labelEntscheidBdv . fieldEntscheidBdv'
+    'labelEntscheidRrb . fieldEntscheidRrb'
+    'labelEntscheidBvv . fieldEntscheidBvv'
+    'labelEntscheidKr . fieldEntscheidKr'
+    'fieldAktenstandort . fieldAktennummer';
   border: 1px solid #ccc;
   border-bottom: none;
   border-left: none;
-`
-const LabelJahre = styled.div`
-  grid-area: labelJahre;
-  position: relative;
-  min-height: 16px;
-  color: #757575;
-  font-size: 11px;
-  font-weight: 500;
 `
 const LabelNr = styled(ControlLabel)`
   grid-area: labelNr;
@@ -81,9 +74,6 @@ const Slash = styled.div`
   color: #757575;
   margin-left: 1px;
 `
-const SlashAwel = styled(Slash)`grid-area: slashAwel;`
-const SlashBdv = styled(Slash)`grid-area: slashBdv;`
-const SlashKr = styled(Slash)`grid-area: slashKr;`
 // eslint-disable-next-line no-unused-vars
 const SlashBvv = styled(Slash)`
   grid-area: slashBvv;
@@ -92,7 +82,6 @@ const SlashBvv = styled(Slash)`
     margin-left: -1px;
   }
 `
-const SlashRrb = styled(Slash)`grid-area: slashRrb;`
 // eslint-disable-next-line no-unused-vars
 const LabelHorizontal = styled(ControlLabel)`
   margin-top: ${props => (props['data-ispdf'] ? 0 : '11px')};
@@ -117,26 +106,51 @@ const TextareaField = styled.div`
     font-size: ${props => (props['data-ispdf'] ? '10px' : 'inherit')};
   }
 `
-const FieldIdGeschaeft = styled(Field)`grid-area: fieldIdGeschaeft;`
-const LabelIdGeschaeft = styled(LabelHorizontal)`grid-area: labelIdGeschaeft;`
-const InputIdGeschaeft = styled(FormControl)`background: transparent !important;`
-const FieldGekoNr = styled(TextareaField)`grid-area: fieldGekoNr;`
-const LabelGekoNr = styled(LabelHorizontal)`grid-area: labelGekoNr;`
-const FieldEntscheidAwelNr = styled(Field)`grid-area: fieldEntscheidAwelNr;`
-const LabelEntscheidAwel = styled(LabelHorizontal)`grid-area: labelEntscheidAwel;`
-const FieldEntscheidAwelJahr = styled(Field)`grid-area: fieldEntscheidAwelJahr;`
-const FieldEntscheidBdvNr = styled(Field)`grid-area: fieldEntscheidBdvNr;`
-const LabelEntscheidBdv = styled(LabelHorizontal)`grid-area: labelEntscheidBdv;`
-const FieldEntscheidBdvJahr = styled(Field)`grid-area: fieldEntscheidBdvJahr;`
-const FieldEntscheidKrNr = styled(Field)`grid-area: fieldEntscheidKrNr;`
-const LabelEntscheidKr = styled(LabelHorizontal)`grid-area: labelEntscheidKr;`
-const FieldEntscheidKrJahr = styled(Field)`grid-area: fieldEntscheidKrJahr;`
-const FieldEntscheidBvvNr = styled(Field)`grid-area: fieldEntscheidBvvNr;`
-const LabelEntscheidBvv = styled(LabelHorizontal)`grid-area: labelEntscheidBvv;`
-const FieldEntscheidBvvJahr = styled(Field)`grid-area: fieldEntscheidBvvJahr;`
-const FieldEntscheidRrbNr = styled(Field)`grid-area: fieldEntscheidRrbNr;`
-const LabelEntscheidRrb = styled(LabelHorizontal)`grid-area: labelEntscheidRrb;`
-const FieldEntscheidRrbJahr = styled(Field)`grid-area: fieldEntscheidRrbJahr;`
+const FieldIdGeschaeft = styled(Field)`
+  grid-area: fieldIdGeschaeft;
+`
+const LabelIdGeschaeft = styled(LabelHorizontal)`
+  grid-area: labelIdGeschaeft;
+`
+const InputIdGeschaeft = styled(FormControl)`
+  background: transparent !important;
+`
+const FieldGekoNr = styled(TextareaField)`
+  grid-area: fieldGekoNr;
+`
+const LabelGekoNr = styled(LabelHorizontal)`
+  grid-area: labelGekoNr;
+`
+const FieldEntscheidAwel = styled(Field)`
+  grid-area: fieldEntscheidAwel;
+`
+const LabelEntscheidAwel = styled(LabelHorizontal)`
+  grid-area: labelEntscheidAwel;
+`
+const FieldEntscheidBdv = styled(Field)`
+  grid-area: fieldEntscheidBdv;
+`
+const LabelEntscheidBdv = styled(LabelHorizontal)`
+  grid-area: labelEntscheidBdv;
+`
+const FieldEntscheidKr = styled(Field)`
+  grid-area: fieldEntscheidKr;
+`
+const LabelEntscheidKr = styled(LabelHorizontal)`
+  grid-area: labelEntscheidKr;
+`
+const FieldEntscheidBvv = styled(Field)`
+  grid-area: fieldEntscheidBvv;
+`
+const LabelEntscheidBvv = styled(LabelHorizontal)`
+  grid-area: labelEntscheidBvv;
+`
+const FieldEntscheidRrb = styled(Field)`
+  grid-area: fieldEntscheidRrb;
+`
+const LabelEntscheidRrb = styled(LabelHorizontal)`
+  grid-area: labelEntscheidRrb;
+`
 // eslint-disable-next-line no-unused-vars
 const FieldAktenstandort = styled(Field)`
   height: ${props => (props['data-ispdf'] ? '29px' : 'auto')};
@@ -165,7 +179,12 @@ const FieldAktennummer = styled(Field)`
 const enhance = compose(inject('store'), observer)
 
 const AreaNummern = ({ store, viewIsNarrow, nrOfGFields, change, blur }) => {
-  const { aktenstandortOptions, activeId, geschaeftePlusFilteredAndSorted: geschaefte, gekoOfActiveId } = store.geschaefte
+  const {
+    aktenstandortOptions,
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+    gekoOfActiveId,
+  } = store.geschaefte
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
   const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
@@ -173,8 +192,22 @@ const AreaNummern = ({ store, viewIsNarrow, nrOfGFields, change, blur }) => {
   const Container = isPdf ? ContainerPrint : ContainerView
   const gekoValues = gekoOfActiveId.map(g => g.gekoNr).sort()
   const gekoValuesString = gekoValues.join(', ')
-  const gekoFields = gekoValues.map(g => <GekoNrField key={g || 0} idGeschaeft={geschaeft.idGeschaeft} gekoNr={g} tabsToAdd={tabsToAdd} />)
-  gekoFields.push(<GekoNrField key={0} idGeschaeft={geschaeft.idGeschaeft} gekoNr="" tabsToAdd={tabsToAdd} />)
+  const gekoFields = gekoValues.map(g => (
+    <GekoNrField
+      key={g || 0}
+      idGeschaeft={geschaeft.idGeschaeft}
+      gekoNr={g}
+      tabsToAdd={tabsToAdd}
+    />
+  ))
+  gekoFields.push(
+    <GekoNrField
+      key={0}
+      idGeschaeft={geschaeft.idGeschaeft}
+      gekoNr=""
+      tabsToAdd={tabsToAdd}
+    />
+  )
 
   return (
     <Container>
@@ -184,186 +217,107 @@ const AreaNummern = ({ store, viewIsNarrow, nrOfGFields, change, blur }) => {
       </LabelNr>
       <LabelIdGeschaeft data-ispdf={isPdf}>ID</LabelIdGeschaeft>
       <FieldIdGeschaeft data-ispdf={isPdf}>
-        <InputIdGeschaeft type="number" value={geschaeft.idGeschaeft} bsSize="small" disabled />
+        <InputIdGeschaeft
+          type="number"
+          value={geschaeft.idGeschaeft}
+          bsSize="small"
+          disabled
+        />
       </FieldIdGeschaeft>
-      {!(isPdf && !gekoValuesString) && <LabelGekoNr data-ispdf={isPdf}>Geko</LabelGekoNr>}
+      {!(isPdf && !gekoValuesString) && (
+        <LabelGekoNr data-ispdf={isPdf}>Geko</LabelGekoNr>
+      )}
       {!(isPdf && !gekoValuesString) && (
         <FieldGekoNr data-ispdf={isPdf}>
-          {isPdf && <StyledTextarea value={gekoValuesString} name="gekoNr" tabIndex={1 + tabsToAdd} />}
+          {isPdf && (
+            <StyledTextarea
+              value={gekoValuesString}
+              name="gekoNr"
+              tabIndex={1 + tabsToAdd}
+            />
+          )}
           {!isPdf && <div>{gekoFields}</div>}
         </FieldGekoNr>
       )}
-      {!(
-        isPdf &&
-        !geschaeft.entscheidAwelNr &&
-        !geschaeft.entscheidBdvNr &&
-        !geschaeft.entscheidRrbNr &&
-        !geschaeft.entscheidBvvNr &&
-        !geschaeft.entscheidKrNr
-      ) && (
-      <LabelJahre>
-            <LabelNrDiv>Jahr</LabelNrDiv>
-          </LabelJahre>
-        )}
-      {!(isPdf && !geschaeft.entscheidAwelNr) && <LabelEntscheidAwel data-ispdf={isPdf}>AWEL</LabelEntscheidAwel>}
-      {!(isPdf && !geschaeft.entscheidAwelNr) && (
-        <FieldEntscheidAwelNr data-ispdf={isPdf}>
+      {!(isPdf && !geschaeft.entscheidAwel) && (
+        <LabelEntscheidAwel data-ispdf={isPdf}>AWEL</LabelEntscheidAwel>
+      )}
+      {!(isPdf && !geschaeft.entscheidAwel) && (
+        <FieldEntscheidAwel data-ispdf={isPdf}>
           <FormControl
             type="number"
-            value={geschaeft.entscheidAwelNr || ''}
-            name="entscheidAwelNr"
+            value={geschaeft.entscheidAwel || ''}
+            name="entscheidAwel"
             onChange={change}
             onBlur={blur}
             bsSize="small"
             tabIndex={2 + tabsToAdd}
           />
-        </FieldEntscheidAwelNr>
+        </FieldEntscheidAwel>
       )}
-      {!(isPdf && !geschaeft.entscheidAwelNr) && (
-        <SlashAwel data-ispdf={isPdf}>
-          <div>/</div>
-        </SlashAwel>
+      {!(isPdf && !geschaeft.entscheidBdv) && (
+        <LabelEntscheidBdv data-ispdf={isPdf}>BDV</LabelEntscheidBdv>
       )}
-      {!(isPdf && !geschaeft.entscheidAwelNr) && (
-        <FieldEntscheidAwelJahr data-ispdf={isPdf}>
+      {!(isPdf && !geschaeft.entscheidBdv) && (
+        <FieldEntscheidBdv data-ispdf={isPdf}>
           <FormControl
             type="number"
-            value={geschaeft.entscheidAwelJahr || ''}
-            name="entscheidAwelJahr"
-            onChange={change}
-            onBlur={blur}
-            bsSize="small"
-            tabIndex={3 + tabsToAdd}
-          />
-        </FieldEntscheidAwelJahr>
-      )}
-      {!(isPdf && !geschaeft.entscheidBdvNr) && <LabelEntscheidBdv data-ispdf={isPdf}>BDV</LabelEntscheidBdv>}
-      {!(isPdf && !geschaeft.entscheidBdvNr) && (
-        <FieldEntscheidBdvNr data-ispdf={isPdf}>
-          <FormControl
-            type="number"
-            value={geschaeft.entscheidBdvNr || ''}
-            name="entscheidBdvNr"
+            value={geschaeft.entscheidBdv || ''}
+            name="entscheidBdv"
             onChange={change}
             onBlur={blur}
             bsSize="small"
             tabIndex={4 + tabsToAdd}
           />
-        </FieldEntscheidBdvNr>
+        </FieldEntscheidBdv>
       )}
-      {!(isPdf && !geschaeft.entscheidBdvNr) && (
-        <SlashBdv data-ispdf={isPdf}>
-          <div>/</div>
-        </SlashBdv>
+      {!(isPdf && !geschaeft.entscheidRrb) && (
+        <LabelEntscheidRrb data-ispdf={isPdf}>RRB</LabelEntscheidRrb>
       )}
-      {!(isPdf && !geschaeft.entscheidBdvNr) && (
-        <FieldEntscheidBdvJahr data-ispdf={isPdf}>
+      {!(isPdf && !geschaeft.entscheidRrb) && (
+        <FieldEntscheidRrb data-ispdf={isPdf}>
           <FormControl
             type="number"
-            value={geschaeft.entscheidBdvJahr || ''}
-            name="entscheidBdvJahr"
-            onChange={change}
-            onBlur={blur}
-            bsSize="small"
-            tabIndex={5 + tabsToAdd}
-          />
-        </FieldEntscheidBdvJahr>
-      )}
-      {!(isPdf && !geschaeft.entscheidRrbNr) && <LabelEntscheidRrb data-ispdf={isPdf}>RRB</LabelEntscheidRrb>}
-      {!(isPdf && !geschaeft.entscheidRrbNr) && (
-        <FieldEntscheidRrbNr data-ispdf={isPdf}>
-          <FormControl
-            type="number"
-            value={geschaeft.entscheidRrbNr || ''}
-            name="entscheidRrbNr"
+            value={geschaeft.entscheidRrb || ''}
+            name="entscheidRrb"
             onChange={change}
             onBlur={blur}
             bsSize="small"
             tabIndex={6 + tabsToAdd}
           />
-        </FieldEntscheidRrbNr>
+        </FieldEntscheidRrb>
       )}
-      {!(isPdf && !geschaeft.entscheidRrbNr) && (
-        <SlashRrb data-ispdf={isPdf}>
-          <div>/</div>
-        </SlashRrb>
+      {!(isPdf && !geschaeft.entscheidBvv) && (
+        <LabelEntscheidBvv data-ispdf={isPdf}>BVV</LabelEntscheidBvv>
       )}
-      {!(isPdf && !geschaeft.entscheidRrbNr) && (
-        <FieldEntscheidRrbJahr data-ispdf={isPdf}>
+      {!(isPdf && !geschaeft.entscheidBvv) && (
+        <FieldEntscheidBvv data-ispdf={isPdf}>
           <FormControl
             type="number"
-            value={geschaeft.entscheidRrbJahr || ''}
-            name="entscheidRrbJahr"
-            onChange={change}
-            onBlur={blur}
-            bsSize="small"
-            tabIndex={7 + tabsToAdd}
-          />
-        </FieldEntscheidRrbJahr>
-      )}
-      {!(isPdf && !geschaeft.entscheidBvvNr) && <LabelEntscheidBvv data-ispdf={isPdf}>BVV</LabelEntscheidBvv>}
-      {!(isPdf && !geschaeft.entscheidBvvNr) && (
-        <FieldEntscheidBvvNr data-ispdf={isPdf}>
-          <FormControl
-            type="number"
-            value={geschaeft.entscheidBvvNr || ''}
-            name="entscheidBvvNr"
+            value={geschaeft.entscheidBvv || ''}
+            name="entscheidBvv"
             onChange={change}
             onBlur={blur}
             bsSize="small"
             tabIndex={8 + tabsToAdd}
           />
-        </FieldEntscheidBvvNr>
+        </FieldEntscheidBvv>
       )}
-      {!(isPdf && !geschaeft.entscheidBvvNr) && (
-        <SlashBvv data-ispdf={isPdf}>
-          <div style={{ marginLeft: '-1px' }}>-</div>
-        </SlashBvv>
+      {!(isPdf && !geschaeft.entscheidKr) && (
+        <LabelEntscheidKr data-ispdf={isPdf}>KR</LabelEntscheidKr>
       )}
-      {!(isPdf && !geschaeft.entscheidBvvNr) && (
-        <FieldEntscheidBvvJahr data-ispdf={isPdf}>
+      {!(isPdf && !geschaeft.entscheidKr) && (
+        <FieldEntscheidKr data-ispdf={isPdf}>
           <FormControl
             type="number"
-            value={geschaeft.entscheidBvvJahr || ''}
-            name="entscheidBvvJahr"
-            onChange={change}
-            onBlur={blur}
-            bsSize="small"
-            tabIndex={9 + tabsToAdd}
-          />
-        </FieldEntscheidBvvJahr>
-      )}
-      {!(isPdf && !geschaeft.entscheidKrNr) && <LabelEntscheidKr data-ispdf={isPdf}>KR</LabelEntscheidKr>}
-      {!(isPdf && !geschaeft.entscheidKrNr) && (
-        <FieldEntscheidKrNr data-ispdf={isPdf}>
-          <FormControl
-            type="number"
-            value={geschaeft.entscheidKrNr || ''}
-            name="entscheidKrNr"
+            value={geschaeft.entscheidKr || ''}
+            name="entscheidKr"
             onChange={change}
             onBlur={blur}
             bsSize="small"
             tabIndex={10 + tabsToAdd}
           />
-        </FieldEntscheidKrNr>
-      )}
-      {!(isPdf && !geschaeft.entscheidKrNr) && (
-        <SlashKr data-ispdf={isPdf}>
-          <div>/</div>
-        </SlashKr>
-      )}
-      {!(isPdf && !geschaeft.entscheidKrNr) && (
-        <FieldEntscheidKrJahr data-ispdf={isPdf}>
-          <FormControl
-            type="number"
-            value={geschaeft.entscheidKrJahr || ''}
-            name="entscheidKrJahr"
-            onChange={change}
-            onBlur={blur}
-            bsSize="small"
-            tabIndex={11 + tabsToAdd}
-          />
-        </FieldEntscheidKrJahr>
+        </FieldEntscheidKr>
       )}
       {!(isPdf && !geschaeft.aktenstandort) && (
         <FieldAktenstandort data-ispdf={isPdf}>
