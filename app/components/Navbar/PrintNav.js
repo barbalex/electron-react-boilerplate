@@ -1,14 +1,9 @@
-import { remote } from 'electron'
 import React from 'react'
 import { NavItem, Glyphicon } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
 const onClickPrint = () => {
-  console.log('hi from onClickPrint')
-  // const win = remote.getCurrentWindow()
-  // console.log('onClickPrint, win:', win)
-  // console.log('onClickPrint, win.webContents:', win.webContents)
   // https://github.com/electron/electron/blob/master/docs/api/web-contents.md#contentsprintoptions
   /**
    * PROBLEM
@@ -23,18 +18,13 @@ const onClickPrint = () => {
   window.print()
 }
 
-const enhance = compose(
-  inject('store'),
-  observer
-)
+const enhance = compose(inject('store'), observer)
 
-const NavbarPrintNav = () =>
-  <NavItem
-    onClick={onClickPrint}
-    title="Drucken"
-  >
+const NavbarPrintNav = () => (
+  <NavItem onClick={onClickPrint} title="Drucken">
     <Glyphicon glyph="print" />
   </NavItem>
+)
 
 NavbarPrintNav.displayName = 'NavbarPrintNav'
 
