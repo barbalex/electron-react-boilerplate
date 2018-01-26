@@ -19,6 +19,7 @@ import PrintNav from './PrintNav'
 import StammdatenNav from './StammdatenNav'
 import FilterNav from './FilterNav'
 import OptionsNav from './OptionsNav'
+import ErrorBoundary from '../ErrorBoundary'
 
 const Container = styled.div`
   @media print {
@@ -72,48 +73,50 @@ class NavbarComponent extends Component {
     const showTableNavs = path === '/table'
 
     return (
-      <Container>
-        {willDelete && <ModalGeschaeftDelete />}
-        {showMessageModal && <ModalMessage />}
-        {showPagesModal && <PagesModal />}
-        <StyledNavbar inverse fluid>
-          <Nav>
-            <GeschaefteNavItem
-              href="#"
-              onClick={() => store.history.push('/geschaefte')}
-              data-showgeschaeftenavs={showGeschaefteNavs}
-            >
-              Geschäfte{' '}
-              <StyledBadge dataIsFiltered={dataIsFiltered}>
-                {geschaefte.length}
-              </StyledBadge>
-            </GeschaefteNavItem>
-            {showGeschaefteNavs && <GeschaeftNeuNav />}
-            {showGeschaefteNavs && (
-              <GeschaeftLoeschenNav
+      <ErrorBoundary>
+        <Container>
+          {willDelete && <ModalGeschaeftDelete />}
+          {showMessageModal && <ModalMessage />}
+          {showPagesModal && <PagesModal />}
+          <StyledNavbar inverse fluid>
+            <Nav>
+              <GeschaefteNavItem
+                href="#"
+                onClick={() => store.history.push('/geschaefte')}
                 data-showgeschaeftenavs={showGeschaefteNavs}
-              />
-            )}
-            {showGeschaefteAndPrint && <ExportGeschaefteNav />}
-            {showGeschaefteAndPrint && (
-              <BerichteNav showBerichteNavs={showBerichteNavs} />
-            )}
-            {showBerichteNavs && <PrintNav />}
-            {showBerichteNavs && (
-              <PrintToPdfNav showBerichteNavs={showBerichteNavs} />
-            )}
-            <StammdatenNav showTableNavs={showTableNavs} />
-            {showTableNavs && <TableRowNeuNav />}
-            {showTableNavs && (
-              <TableRowDeleteNav showTableNavs={showTableNavs} />
-            )}
-          </Nav>
-          <Nav pullRight>
-            {!showTableNavs && <FilterNav />}
-            <OptionsNav />
-          </Nav>
-        </StyledNavbar>
-      </Container>
+              >
+                Geschäfte{' '}
+                <StyledBadge dataIsFiltered={dataIsFiltered}>
+                  {geschaefte.length}
+                </StyledBadge>
+              </GeschaefteNavItem>
+              {showGeschaefteNavs && <GeschaeftNeuNav />}
+              {showGeschaefteNavs && (
+                <GeschaeftLoeschenNav
+                  data-showgeschaeftenavs={showGeschaefteNavs}
+                />
+              )}
+              {showGeschaefteAndPrint && <ExportGeschaefteNav />}
+              {showGeschaefteAndPrint && (
+                <BerichteNav showBerichteNavs={showBerichteNavs} />
+              )}
+              {showBerichteNavs && <PrintNav />}
+              {showBerichteNavs && (
+                <PrintToPdfNav showBerichteNavs={showBerichteNavs} />
+              )}
+              <StammdatenNav showTableNavs={showTableNavs} />
+              {showTableNavs && <TableRowNeuNav />}
+              {showTableNavs && (
+                <TableRowDeleteNav showTableNavs={showTableNavs} />
+              )}
+            </Nav>
+            <Nav pullRight>
+              {!showTableNavs && <FilterNav />}
+              <OptionsNav />
+            </Nav>
+          </StyledNavbar>
+        </Container>
+      </ErrorBoundary>
     )
   }
 }
