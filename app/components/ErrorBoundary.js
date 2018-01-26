@@ -9,7 +9,15 @@ const ErrorTitle = styled.div`
   margin-bottom: 10px;
 `
 
-class ErrorBoundary extends Component {
+type Props = {
+  children: Array<Object>,
+}
+type State = {
+  error: Object,
+  errorInfo: Object,
+}
+
+class ErrorBoundary extends Component<Props, State> {
   constructor(props) {
     super(props)
     this.state = { error: null, errorInfo: null }
