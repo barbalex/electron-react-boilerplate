@@ -125,6 +125,7 @@ DROP INDEX IF EXISTS iGeschaefteStatus;
 CREATE INDEX iGeschaefteStatus ON geschaefte (status);
 DROP INDEX IF EXISTS iGeschaefteAktenstandort;
 CREATE INDEX iGeschaefteAktenstandort ON geschaefte (aktenstandort);
+DROP INDEX IF EXISTS iGeschaefteAbteilung;
 CREATE INDEX iGeschaefteAbteilung ON geschaefte (abteilung);
 
 -------------------------------------------
