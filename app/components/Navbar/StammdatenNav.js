@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import PropTypes from 'prop-types'
 import { NavDropdown, MenuItem } from 'react-bootstrap'
@@ -29,39 +30,72 @@ const stammdatenTitle = (table, rows) => {
 
 // eslint-disable-next-line no-unused-vars
 const StyledNavDropdown = styled(NavDropdown)`
-  border-left: ${props => (props['data-showtablenavs'] ? 'solid grey 1px' : 'dotted #505050 1px')};
-  border-right: ${props => (props['data-showtablenavs'] ? 'none' : 'dotted #505050 1px')};
+  border-left: ${props =>
+    props['data-showtablenavs'] ? 'solid grey 1px' : 'dotted #505050 1px'};
+  border-right: ${props =>
+    props['data-showtablenavs'] ? 'none' : 'dotted #505050 1px'};
 `
 
 const enhance = compose(inject('store'), observer)
 
-const NavbarStammdatenNav = ({ store, showTableNavs }) => {
+const NavbarStammdatenNav = ({
+  store,
+  showTableNavs,
+}: {
+  store: Object,
+  showTableNavs: Boolean,
+}) => {
   const { getTable } = store
   const { table, rows } = store.table
 
   return (
-    <StyledNavDropdown title={stammdatenTitle(table, rows)} id="stammdaten-nav-dropdown" data-showtablenavs={showTableNavs}>
-      <MenuItem onClick={() => getTable('interne')} active={table === 'interne'}>
+    <StyledNavDropdown
+      title={stammdatenTitle(table, rows)}
+      id="stammdaten-nav-dropdown"
+      data-showtablenavs={showTableNavs}
+    >
+      <MenuItem
+        onClick={() => getTable('interne')}
+        active={table === 'interne'}
+      >
         Interne
       </MenuItem>
-      <MenuItem onClick={() => getTable('externe')} active={table === 'externe'}>
+      <MenuItem
+        onClick={() => getTable('externe')}
+        active={table === 'externe'}
+      >
         Externe
       </MenuItem>
       <MenuItem divider />
       <MenuItem header>Auswahllisten:</MenuItem>
-      <MenuItem onClick={() => getTable('aktenstandort')} active={table === 'aktenstandort'}>
+      <MenuItem
+        onClick={() => getTable('aktenstandort')}
+        active={table === 'aktenstandort'}
+      >
         Aktenstandort
       </MenuItem>
-      <MenuItem onClick={() => getTable('geschaeftsart')} active={table === 'geschaeftsart'}>
+      <MenuItem
+        onClick={() => getTable('geschaeftsart')}
+        active={table === 'geschaeftsart'}
+      >
         Geschäftsart
       </MenuItem>
-      <MenuItem onClick={() => getTable('parlVorstossTyp')} active={table === 'parlVorstossTyp'}>
+      <MenuItem
+        onClick={() => getTable('parlVorstossTyp')}
+        active={table === 'parlVorstossTyp'}
+      >
         Parlament. Vorstoss Typ
       </MenuItem>
-      <MenuItem onClick={() => getTable('rechtsmittelInstanz')} active={table === 'rechtsmittelInstanz'}>
+      <MenuItem
+        onClick={() => getTable('rechtsmittelInstanz')}
+        active={table === 'rechtsmittelInstanz'}
+      >
         Rechtsmittel-Instanz
       </MenuItem>
-      <MenuItem onClick={() => getTable('rechtsmittelErledigung')} active={table === 'rechtsmittelErledigung'}>
+      <MenuItem
+        onClick={() => getTable('rechtsmittelErledigung')}
+        active={table === 'rechtsmittelErledigung'}
+      >
         Rechtsmittel-Erledigung
       </MenuItem>
       <MenuItem onClick={() => getTable('status')} active={table === 'status'}>
@@ -72,10 +106,5 @@ const NavbarStammdatenNav = ({ store, showTableNavs }) => {
 }
 
 NavbarStammdatenNav.displayName = 'NavbarStammdatenNav'
-
-NavbarStammdatenNav.propTypes = {
-  store: PropTypes.object.isRequired,
-  showTableNavs: PropTypes.bool.isRequired,
-}
 
 export default enhance(NavbarStammdatenNav)
