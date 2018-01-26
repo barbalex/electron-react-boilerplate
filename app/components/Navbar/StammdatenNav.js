@@ -1,31 +1,19 @@
 // @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import { NavDropdown, MenuItem } from 'react-bootstrap'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-const stammdatenTitle = (table, rows) => {
-  const tableNameObject = {
-    interne: 'Stammdaten: Interne',
-    externe: 'Stammdaten: Externe',
-    aktenstandort: 'Stammdaten: Aktenstandort',
-    geschaeftsart: 'Stammdaten: Geschäftsart',
-    parlVorstossTyp: 'Stammdaten: Parl. Vorstoss Typ',
-    rechtsmittelInstanz: 'Stammdaten: Rechtsmittel-Instanz',
-    rechtsmittelErledigung: 'Stammdaten: Rechtsmittel-Erledigung',
-    status: 'Stammdaten: Status',
-  }
-  const tableName = tableNameObject[table] || table
-  if (table) {
-    return (
-      <span>
-        {tableName} <sup>{rows.length}</sup>
-      </span>
-    )
-  }
-  return <span>Stammdaten</span>
+const tableNameObject = {
+  interne: 'Stammdaten: Interne',
+  externe: 'Stammdaten: Externe',
+  aktenstandort: 'Stammdaten: Aktenstandort',
+  geschaeftsart: 'Stammdaten: Geschäftsart',
+  parlVorstossTyp: 'Stammdaten: Parl. Vorstoss Typ',
+  rechtsmittelInstanz: 'Stammdaten: Rechtsmittel-Instanz',
+  rechtsmittelErledigung: 'Stammdaten: Rechtsmittel-Erledigung',
+  status: 'Stammdaten: Status',
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -43,14 +31,23 @@ const NavbarStammdatenNav = ({
   showTableNavs,
 }: {
   store: Object,
-  showTableNavs: Boolean,
+  showTableNavs: boolean,
 }) => {
   const { getTable } = store
   const { table, rows } = store.table
+  const tableName = tableNameObject[table] || table
 
   return (
     <StyledNavDropdown
-      title={stammdatenTitle(table, rows)}
+      title={
+        tableName ? (
+          <span>
+            {tableName} <sup>{rows.length}</sup>
+          </span>
+        ) : (
+          <span>Stammdaten</span>
+        )
+      }
       id="stammdaten-nav-dropdown"
       data-showtablenavs={showTableNavs}
     >

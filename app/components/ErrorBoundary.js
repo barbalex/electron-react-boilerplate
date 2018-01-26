@@ -10,7 +10,7 @@ const ErrorTitle = styled.div`
 `
 
 type Props = {
-  children: Array<Object>,
+  children: Object,
 }
 type State = {
   error: Object,
