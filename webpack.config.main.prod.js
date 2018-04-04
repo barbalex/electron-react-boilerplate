@@ -19,7 +19,6 @@ export default merge.smart(baseConfig, {
 
   entry: './app/main.dev',
 
-  // 'main.js' in root
   output: {
     path: __dirname,
     filename: './app/main.prod.js',
@@ -46,13 +45,9 @@ export default merge.smart(baseConfig, {
      * NODE_ENV should be production so that modules do not perform certain
      * development checks
      */
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(
-        process.env.NODE_ENV || 'production'
-      ),
-      'process.env.DEBUG_PROD': JSON.stringify(
-        process.env.DEBUG_PROD || 'false'
-      ),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'production',
+      DEBUG_PROD: 'false',
     }),
   ],
 

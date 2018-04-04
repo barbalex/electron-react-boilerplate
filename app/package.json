@@ -1,8 +1,7 @@
 {
   "name": "Kapla",
   "version": "2.0.0",
-  "description":
-    "Instrument, mit dem die Abteilung Recht des AWEL Geschäfte erfasst und Fristen kontrolliert",
+  "description": "Instrument, mit dem die Abteilung Recht des AWEL Geschäfte erfasst und Fristen kontrolliert",
   "main": "./main.prod.js",
   "author": {
     "name": "Alexander Gabriel",
@@ -10,8 +9,8 @@
     "url": "http://gabriel-software.ch"
   },
   "scripts": {
-    "postinstall":
-      "npm rebuild --runtime=electron --target=1.7.11 --disturl=https://atom.io/download/atom-shell --build-from-source"
+    "postinstall": "npm run electron-rebuild",
+    "electron-rebuild": "node -r babel-register ../internals/scripts/ElectronRebuild.js"
   },
   "license": "MIT",
   "dependencies": {
