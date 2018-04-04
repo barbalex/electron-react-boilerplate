@@ -1,6 +1,6 @@
 {
   "name": "kapla",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description":
     "Instrument, mit dem die Abteilung Recht des AWEL Geschäfte erfasst und Fristen kontrolliert",
   "scripts": {
