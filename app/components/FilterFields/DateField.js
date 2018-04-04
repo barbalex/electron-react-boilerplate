@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FormGroup, InputGroup, FormControl, ControlLabel, Glyphicon } from 'react-bootstrap'
+import {
+  FormGroup,
+  InputGroup,
+  FormControl,
+  ControlLabel,
+  Glyphicon,
+} from 'react-bootstrap'
 import moment from 'moment'
-import DateRangePicker from 'react-bootstrap-daterangepicker'
+import DatePicker from 'react-datepicker'
 import { observer } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled from 'styled-components'
@@ -13,10 +19,50 @@ import getDateValidationStateDate from '../../src/getDateValidationStateDate'
 
 moment.locale('de')
 
-const StyledDateRangePicker = styled(DateRangePicker)`cursor: pointer;`
+const StyledDatePicker = styled(DatePicker)`
+  cursor: pointer;
+`
 const StyledFormGroup = styled(FormGroup)`
-  grid-area: ${props => (props['data-name'] === 'rechtsmittelEntscheidDatum' ? 'fieldEntscheidDatum' : 'unset')};
-  grid-column: ${props => (props['data-name'] === 'rechtsmittelEntscheidDatum' ? 'unset' : 1)};
+  grid-area: ${props =>
+    props['data-name'] === 'rechtsmittelEntscheidDatum'
+      ? 'fieldEntscheidDatum'
+      : 'unset'};
+  grid-column: ${props =>
+    props['data-name'] === 'rechtsmittelEntscheidDatum' ? 'unset' : 1};
+  .react-datepicker-popper {
+    z-index: 10;
+  }
+  .react-datepicker {
+    font-size: 1em;
+  }
+  .react-datepicker__header {
+    padding-top: 0.8em;
+  }
+  .react-datepicker__month {
+    margin: 0.4em 1em;
+  }
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    width: 1.9em;
+    line-height: 1.9em;
+    margin: 0.166em;
+  }
+  .react-datepicker__current-month {
+    font-size: 1em;
+  }
+  .react-datepicker__navigation {
+    top: 1em;
+    line-height: 1.7em;
+    border: 0.45em solid transparent;
+  }
+  .react-datepicker__navigation--previous {
+    border-right-color: #ccc;
+    left: 1em;
+  }
+  .react-datepicker__navigation--next {
+    border-left-color: #ccc;
+    right: 1em;
+  }
 `
 
 const enhance = compose(observer)
@@ -79,20 +125,20 @@ class DateField extends Component {
     }
   }
 
-  onChangeDatePicker = (e, picker) => {
+  onChangeDatePicker = date => {
     const { name } = this.props
     const rValForBlur = {
       target: {
         type: 'text',
         name,
-        value: picker.startDate,
+        value: date,
       },
     }
     const rValForChange = {
       target: {
         type: 'text',
         name,
-        value: moment(picker.startDate, 'DD.MM.YYYY').format('DD.MM.YYYY'),
+        value: moment(date, 'DD.MM.YYYY').format('DD.MM.YYYY'),
       },
     }
     this.onChange(rValForChange)
@@ -128,11 +174,26 @@ class DateField extends Component {
         <InputGroup>
           <SortSelector name={name} />
           <ComparatorSelector name={name} changeComparator={changeComparator} />
-          <FormControl type="text" value={value || ''} name={name} onChange={this.onChange} onBlur={this.onBlur} tabIndex={tabIndex} />
+          <FormControl
+            type="text"
+            value={value || ''}
+            name={name}
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+            tabIndex={tabIndex}
+          />
           <InputGroup.Addon style={datePickerAddonStyle}>
-            <StyledDateRangePicker singleDatePicker drops="up" opens="left" onApply={this.onChangeDatePicker}>
-              <Glyphicon glyph="calendar" style={datePickerCalendarStyle} />
-            </StyledDateRangePicker>
+            <StyledDatePicker
+              // selected={moment(date, 'DD.MM.YYYY')}
+              onChange={this.onChangeDatePicker}
+              // isClearable={true}
+              dateFormat="DD.MM.YYYY"
+              locale="de-CH"
+              customInput={
+                <Glyphicon glyph="calendar" style={datePickerCalendarStyle} />
+              }
+              popperPlacement="top-end"
+            />
           </InputGroup.Addon>
         </InputGroup>
       </StyledFormGroup>

@@ -102,12 +102,12 @@ class Geschaeft extends Component {
     store: PropTypes.object.isRequired,
   }
 
-  onChangeDatePicker = (name, e, picker) => {
+  onChangeDatePicker = (name, date) => {
     const rVal = {
       target: {
         type: 'text',
         name,
-        value: picker.startDate,
+        value: date,
       },
     }
     this.blur(rVal)

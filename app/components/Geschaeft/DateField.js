@@ -8,7 +8,7 @@ import {
   Glyphicon,
 } from 'react-bootstrap'
 import moment from 'moment'
-import DateRangePicker from 'react-bootstrap-daterangepicker'
+import DatePicker from 'react-datepicker'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import styled from 'styled-components'
@@ -17,8 +17,46 @@ import getDateValidationStateDate from '../../src/getDateValidationStateDate'
 
 moment.locale('de')
 
-const StyledFormGroup = styled(FormGroup)`grid-column: 1;`
-const StyledDatePicker = styled(DateRangePicker)`cursor: pointer;`
+const StyledFormGroup = styled(FormGroup)`
+  grid-column: 1;
+  .react-datepicker-popper {
+    z-index: 10;
+  }
+  .react-datepicker {
+    font-size: 1em;
+  }
+  .react-datepicker__header {
+    padding-top: 0.8em;
+  }
+  .react-datepicker__month {
+    margin: 0.4em 1em;
+  }
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    width: 1.9em;
+    line-height: 1.9em;
+    margin: 0.166em;
+  }
+  .react-datepicker__current-month {
+    font-size: 1em;
+  }
+  .react-datepicker__navigation {
+    top: 1em;
+    line-height: 1.7em;
+    border: 0.45em solid transparent;
+  }
+  .react-datepicker__navigation--previous {
+    border-right-color: #ccc;
+    left: 1em;
+  }
+  .react-datepicker__navigation--next {
+    border-left-color: #ccc;
+    right: 1em;
+  }
+`
+const StyledDatePicker = styled(DatePicker)`
+  cursor: pointer;
+`
 
 const enhance = compose(inject('store'), observer)
 
@@ -69,13 +107,16 @@ const DateField = ({
         />
         <InputGroup.Addon style={datePickerAddonStyle}>
           <StyledDatePicker
-            singleDatePicker
-            drops="up"
-            opens="left"
-            onApply={onChangeDatePicker.bind(this, name)}
-          >
-            <Glyphicon glyph="calendar" style={datePickerCalendarStyle} />
-          </StyledDatePicker>
+            // selected={moment(date, 'DD.MM.YYYY')}
+            onChange={onChangeDatePicker.bind(this, name)}
+            // isClearable={true}
+            dateFormat="DD.MM.YYYY"
+            locale="de-CH"
+            customInput={
+              <Glyphicon glyph="calendar" style={datePickerCalendarStyle} />
+            }
+            popperPlacement="top-end"
+          />
         </InputGroup.Addon>
       </InputGroup>
     </StyledFormGroup>
