@@ -24,7 +24,7 @@ export default merge.smart(baseConfig, {
 
   output: {
     path: path.join(__dirname, 'app/dist'),
-    publicPath: './dist/',
+    publicPath: '../dist/',
     filename: 'renderer.prod.js',
   },
 
@@ -34,13 +34,7 @@ export default merge.smart(baseConfig, {
       {
         test: /\.global\.css$/,
         use: ExtractTextPlugin.extract({
-          publicPath: './',
-          use: {
-            loader: 'css-loader',
-            options: {
-              minimize: true,
-            },
-          },
+          use: 'css-loader',
           fallback: 'style-loader',
         }),
       },
@@ -52,7 +46,6 @@ export default merge.smart(baseConfig, {
             loader: 'css-loader',
             options: {
               modules: true,
-              minimize: true,
               importLoaders: 1,
               localIdentName: '[name]__[local]__[hash:base64:5]',
             },
@@ -61,14 +54,11 @@ export default merge.smart(baseConfig, {
       },
       // Add SASS support  - compile all .global.scss files and pipe it to style.css
       {
-        test: /\.global\.(scss|sass)$/,
+        test: /\.global\.scss$/,
         use: ExtractTextPlugin.extract({
           use: [
             {
               loader: 'css-loader',
-              options: {
-                minimize: true,
-              },
             },
             {
               loader: 'sass-loader',
@@ -79,14 +69,13 @@ export default merge.smart(baseConfig, {
       },
       // Add SASS support  - compile all other .scss files and pipe it to style.css
       {
-        test: /^((?!\.global).)*\.(scss|sass)$/,
+        test: /^((?!\.global).)*\.scss$/,
         use: ExtractTextPlugin.extract({
           use: [
             {
               loader: 'css-loader',
               options: {
                 modules: true,
-                minimize: true,
                 importLoaders: 1,
                 localIdentName: '[name]__[local]__[hash:base64:5]',
               },
@@ -164,8 +153,10 @@ export default merge.smart(baseConfig, {
      * NODE_ENV should be production so that modules do not perform certain
      * development checks
      */
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: 'production',
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(
+        process.env.NODE_ENV || 'production'
+      ),
     }),
 
     new UglifyJSPlugin({

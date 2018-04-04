@@ -23,28 +23,11 @@ export default merge.smart(baseConfig, {
   externals: ['fsevents', 'crypto-browserify'],
 
   /**
-   * Use `module` from `webpack.config.renderer.dev.js`
+   * @HACK: Copy and pasted from renderer dev config. Consider merging these
+   *        rules into the base config. May cause breaking changes.
    */
   module: {
     rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-            plugins: [
-              // Here, we include babel plugins that are only required for the
-              // renderer process. The 'transform-*' plugins must be included
-              // before react-hot-loader/babel
-              'transform-class-properties',
-              'transform-es2015-classes',
-              'react-hot-loader/babel'
-            ],
-          }
-        }
-      },
       {
         test: /\.global\.css$/,
         use: [
@@ -76,9 +59,9 @@ export default merge.smart(baseConfig, {
           },
         ]
       },
-      // SASS support - compile all .global.scss files and pipe it to style.css
+      // Add SASS support  - compile all .global.scss files and pipe it to style.css
       {
-        test: /\.global\.(scss|sass)$/,
+        test: /\.global\.scss$/,
         use: [
           {
             loader: 'style-loader'
@@ -94,9 +77,9 @@ export default merge.smart(baseConfig, {
           }
         ]
       },
-      // SASS support - compile all other .scss files and pipe it to style.css
+      // Add SASS support  - compile all other .scss files and pipe it to style.css
       {
-        test: /^((?!\.global).)*\.(scss|sass)$/,
+        test: /^((?!\.global).)*\.scss$/,
         use: [
           {
             loader: 'style-loader'
@@ -172,6 +155,12 @@ export default merge.smart(baseConfig, {
     ]
   },
 
+  resolve: {
+    modules: [
+      'app',
+    ],
+  },
+
   entry: {
     renderer: (
       Object
@@ -202,8 +191,8 @@ export default merge.smart(baseConfig, {
      * NODE_ENV should be production so that modules do not perform certain
      * development checks
      */
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development'
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     }),
 
     new webpack.LoaderOptionsPlugin({
