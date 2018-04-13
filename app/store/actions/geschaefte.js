@@ -99,6 +99,11 @@ export default store => ({
       store.geschaefte.filterFields = []
       store.geschaefte.activeId = null
       /**
+       * remove sorting after request from Lina Vitelli
+       * 13.4.2018
+       */
+      store.geschaefte.sortFields = []
+      /**
        * if pages are active,
        * initiate with new data
        */
