@@ -1,6 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { MenuItem, Button, SplitButton, Navbar, Glyphicon, FormControl } from 'react-bootstrap'
+import {
+  MenuItem,
+  Button,
+  SplitButton,
+  Navbar,
+  Glyphicon,
+  FormControl,
+} from 'react-bootstrap'
 import moment from 'moment'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
@@ -12,19 +19,25 @@ import filterForVernehmlLaeuft from '../../src/filterForVernehmlLaeuft'
 import filterCriteriaToArrayOfStrings from '../../src/filterCriteriaToArrayOfStrings'
 import sortCriteriaToArrayOfStrings from '../../src/sortCriteriaToArrayOfStrings'
 
-const Container = styled(Navbar.Form)`padding-right: 10px;`
-const SubContainer = styled.div`display: flex;`
+const Container = styled(Navbar.Form)`
+  padding-right: 10px;
+`
+const SubContainer = styled.div`
+  display: flex;
+`
 const StyledVolltextControl = styled(FormControl)`
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
   width: 186px !important;
-  background-color: ${props => (props['data-dataisfilteredbyfulltext'] ? '#FFBF73 !important' : 'white')};
+  background-color: ${props =>
+    props['data-dataisfilteredbyfulltext'] ? '#FFBF73 !important' : 'white'};
 `
 const StyledFilterDropdown = styled(SplitButton)`
   border-radius: 0 !important;
   min-width: 160px !important;
   font-weight: 700 !important;
-  background-color: ${props => (props['data-dataisfilteredbyfields'] ? '#FFBF73 !important' : 'white')};
+  background-color: ${props =>
+    props['data-dataisfilteredbyfields'] ? '#FFBF73 !important' : 'white'};
 `
 const StyledCriteria = styled.span`
   cursor: default !important;
@@ -55,15 +68,21 @@ const FilterNav = ({ store }) => {
   } = store.geschaefte
   const { username } = store.user
   const path = store.history.location.pathname
-  const dataIsFilteredByFulltext = geschaefte.length !== geschaefteUnfiltered.length && filterFulltext
-  const dataIsFilteredByFields = geschaefte.length !== geschaefteUnfiltered.length && !filterFulltext
+  const dataIsFilteredByFulltext =
+    geschaefte.length !== geschaefteUnfiltered.length && filterFulltext
+  const dataIsFilteredByFields =
+    geschaefte.length !== geschaefteUnfiltered.length && !filterFulltext
   const dataIsFiltered = geschaefte.length !== geschaefteUnfiltered.length
   const activeFiltercriteria = dataIsFilteredByFields
     ? filterCriteriaToArrayOfStrings(filterFields).join(' & ')
     : '(es werden keine Felder gefiltert)'
   const activeSortcriteria =
-    sortFields.length > 0 ? sortCriteriaToArrayOfStrings(sortFields).join(' & ') : '(die Geschäfte werden nicht sortiert)'
-  const title = filterType ? `Filter: ${filterType}` : 'Felder filtern / sortieren'
+    sortFields.length > 0
+      ? sortCriteriaToArrayOfStrings(sortFields).join(' & ')
+      : '(die Geschäfte werden nicht sortiert)'
+  const title = filterType
+    ? `Filter: ${filterType}`
+    : 'Felder filtern / sortieren'
   return (
     <Container pullLeft>
       <SubContainer>
@@ -134,39 +153,53 @@ const FilterNav = ({ store }) => {
               geschaefteSortByFields('fristMitarbeiter', 'DESCENDING')
             }}
             style={{
-              backgroundColor: filterType === 'eigene fällige' ? '#FFBF73' : null,
+              backgroundColor:
+                filterType === 'eigene fällige' ? '#FFBF73' : null,
             }}
           >
             eigene fällige Geschäfte
           </MenuItem>
           <MenuItem
             onSelect={() => {
-              geschaefteFilterByFields(filterForVernehmlAngek(), 'angekündigte Vernehmlassungen')
+              geschaefteFilterByFields(
+                filterForVernehmlAngek(),
+                'angekündigte Vernehmlassungen'
+              )
               geschaefteResetSort()
               geschaefteSortByFields('idGeschaeft', 'DESCENDING')
             }}
             style={{
-              backgroundColor: filterType === 'angekündigte Vernehmlassungen' ? '#FFBF73' : null,
+              backgroundColor:
+                filterType === 'angekündigte Vernehmlassungen'
+                  ? '#FFBF73'
+                  : null,
             }}
           >
             angekündigte Vernehmlassungen
           </MenuItem>
           <MenuItem
             onSelect={() => {
-              geschaefteFilterByFields(filterForVernehmlLaeuft(), 'laufende Vernehmlassungen')
+              geschaefteFilterByFields(
+                filterForVernehmlLaeuft(),
+                'laufende Vernehmlassungen'
+              )
               geschaefteResetSort()
               geschaefteSortByFields('fristMitarbeiter', 'DESCENDING')
               geschaefteSortByFields('idGeschaeft', 'DESCENDING')
             }}
             style={{
-              backgroundColor: filterType === 'laufende Vernehmlassungen' ? '#FFBF73' : null,
+              backgroundColor:
+                filterType === 'laufende Vernehmlassungen' ? '#FFBF73' : null,
             }}
           >
             laufende Vernehmlassungen
           </MenuItem>
         </StyledFilterDropdown>
-        <FilterRemoveButton disabled={!dataIsFiltered} onClick={() => geschaefteRemoveFilters()}>
-          <Glyphicon glyph="remove" title="Filter entfernen" />
+        <FilterRemoveButton
+          disabled={!dataIsFiltered}
+          onClick={() => geschaefteRemoveFilters()}
+        >
+          <Glyphicon glyph="remove" title="Filter und Sortierung entfernen" />
         </FilterRemoveButton>
       </SubContainer>
     </Container>
