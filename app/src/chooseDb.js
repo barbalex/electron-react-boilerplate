@@ -1,4 +1,4 @@
-const dialog = require('electron').remote.dialog
+const { dialog } = require('electron').remote
 
 const options = {
   title: 'Datenbank für Kapla wählen',
@@ -8,8 +8,9 @@ const options = {
 
 export default () =>
   new Promise((resolve, reject) => {
-    dialog.showOpenDialog(options, (result) => {
+    dialog.showOpenDialog(options, result => {
       if (result && result[0]) resolve(result[0])
+      // eslint-disable-next-line prefer-promise-reject-errors
       reject('keine Datenbank gewählt')
     })
   })
