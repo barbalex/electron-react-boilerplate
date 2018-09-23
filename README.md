@@ -93,7 +93,7 @@ Ich habe früher diverse teilweise recht anspruchsvolle Access-Anwendungen gebau
 ```
 # Ordner schaffen, z.B. "kapla"
 cd kapla
-	git clone https://github.com/barbalex/kapla3.git
+git clone https://github.com/barbalex/kapla3.git
 yarn
 yarn dev
 ```
