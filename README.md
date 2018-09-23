@@ -90,16 +90,16 @@ Ich habe früher diverse teilweise recht anspruchsvolle Access-Anwendungen gebau
 - eine JavaScript-Anwendung drängt sich geradezu auf, wenn es gut möglich ist, dass sie später erweitert wird, von sehr vielen Benutzern genutzt wird oder gar über das Internet
 
 ## Entwicklungsumgebung installieren ##
-
-	# Ordner schaffen, z.B. "kapla"
-	cd kapla
-    git clone https://github.com/barbalex/kapla3.git
-	npm install
-	npm run build-sqlite3-win64 # auf Windows
-	npm run build-sqlite3-mac  # auf macOs
-	npm run dev
+```
+# Ordner schaffen, z.B. "kapla"
+cd kapla
+	git clone https://github.com/barbalex/kapla3.git
+yarn
+yarn dev
+```
 
 ## Release produzieren ##
-
-	cd kapla
-	npm run package-win
+```
+cd kapla
+yarn package-win
+```
