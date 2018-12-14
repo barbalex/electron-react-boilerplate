@@ -1,22 +1,14 @@
-export default function (
-  db,
-  table,
-  id,
-  field,
-  value,
-) {
-  return new Promise((resolve, reject) => {
-    const sql = `
+export default function(db, table, id, field, value) {
+  const sql = `
       UPDATE
-        ${table}
+        @table
       SET
-        ${field} = '${value}'
+        @field = @value
       WHERE
-        id = ${id}`
-
-    db.run(sql, (error) => {
-      if (error) reject(error)
-      resolve(true)
-    })
-  })
+        id = @id`
+  try {
+    db.prepare(sql).run({ table, field, value, id })
+  } catch (error) {
+    throw error
+  }
 }
