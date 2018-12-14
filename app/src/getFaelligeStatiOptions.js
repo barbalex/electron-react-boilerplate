@@ -7,7 +7,7 @@ const sql = `
     geschaeftKannFaelligSein = 1`
 
 export default function(db) {
-  let options
+  let options = []
   try {
     options = db.prepare(sql).all()
   } catch (error) {

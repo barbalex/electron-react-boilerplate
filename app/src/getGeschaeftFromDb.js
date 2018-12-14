@@ -1,16 +1,17 @@
-export default function (db, idGeschaeft) {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      SELECT
-        *
-      FROM
-        geschaefte
-      WHERE
-        idGeschaeft = ${idGeschaeft}`
+export default (db, idGeschaeft) => {
+  const sql = `
+    SELECT
+      *
+    FROM
+      geschaefte
+    WHERE
+      idGeschaeft = @idGeschaeft`
 
-    db.get(sql, (error, result) => {
-      if (error) reject(error)
-      resolve(result)
-    })
-  })
+  let result = {}
+  try {
+    result = db.prepare(sql, { idGeschaeft })
+  } catch (error) {
+    throw error
+  }
+  return result
 }
