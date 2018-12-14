@@ -26,7 +26,7 @@ export default store => ({
     const { app } = store
     store.geschaefte.fetching = true
     store.geschaefte.error = []
-    let geschaefte
+    let geschaefte = []
     try {
       geschaefte = getGeschaefteFromDb(app.db)
     } catch (error) {
@@ -65,10 +65,10 @@ export default store => ({
         store.pagesInitiate(reportType)
       } else if (geschaeftePlusFilteredAndSorted.length === 1) {
         store.geschaeftToggleActivated(
-          geschaeftePlusFilteredAndSorted[0].idGeschaeft
+          geschaeftePlusFilteredAndSorted[0].idGeschaeft,
         )
       }
-    }
+    },
   ),
   geschaefteResetSort: action(() => {
     store.geschaefte.sortFields = []
@@ -78,7 +78,7 @@ export default store => ({
     const sortFields = geschaefteSortByFieldsGetSortFields(
       store,
       field,
-      direction
+      direction,
     )
     store.geschaefte.sortFields = sortFields
     /**
@@ -113,16 +113,16 @@ export default store => ({
         }
         if (geschaeftePlusFilteredAndSorted.length === 1) {
           store.geschaeftToggleActivated(
-            geschaeftePlusFilteredAndSorted[0].idGeschaeft
+            geschaeftePlusFilteredAndSorted[0].idGeschaeft,
           )
         }
       }
-    }
+    },
   ),
   geschaefteRemoveFilters: action(() => {
     store.geschaefte.GefilterteIds = _.sortBy(
       store.geschaefte.geschaefte,
-      g => g.idGeschaeft
+      g => g.idGeschaeft,
     )
       .reverse()
       .map(g => g.idGeschaeft)
@@ -135,7 +135,7 @@ export default store => ({
     const { app } = store
     store.geschaefte.fetching = true
     store.geschaefte.error = []
-    let geko
+    let geko = []
     try {
       geko = getGekoFromDb(app.db)
     } catch (error) {
@@ -188,39 +188,39 @@ export default store => ({
       app,
       geschaefteKontakteIntern,
       geschaefteKontakteExtern,
-      geschaefte
+      geschaefte,
     } = store
     deleteGeschaeft(app.db, idGeschaeft)
       .then(() => {
         store.geschaeftRemoveDeleteIntended(idGeschaeft)
         store.geschaefte.geschaefte = store.geschaefte.geschaefte.filter(
-          g => g.idGeschaeft !== idGeschaeft
+          g => g.idGeschaeft !== idGeschaeft,
         )
         // need to delete geschaefteKontakteIntern in store
         const geschaefteKontakteInternToDelete = geschaefteKontakteIntern.geschaefteKontakteIntern.filter(
-          g => g.idGeschaeft === idGeschaeft
+          g => g.idGeschaeft === idGeschaeft,
         )
         geschaefteKontakteInternToDelete.forEach(g =>
-          store.geschaeftKontaktInternDelete(idGeschaeft, g.idKontakt)
+          store.geschaeftKontaktInternDelete(idGeschaeft, g.idKontakt),
         )
         // need to delete geschaefteKontakteExtern in store
         const geschaefteKontakteExternToDelete = geschaefteKontakteExtern.geschaefteKontakteExtern.filter(
-          g => g.idGeschaeft === idGeschaeft
+          g => g.idGeschaeft === idGeschaeft,
         )
         geschaefteKontakteExternToDelete.forEach(g =>
           store.geschaefteKontakteExternActions.geschaeftKontaktExternDelete(
             idGeschaeft,
-            g.idKontakt
-          )
+            g.idKontakt,
+          ),
         )
         // need to delete geKo in store
         const gekoToRemove = geschaefte.geko.filter(
-          g => g.idGeschaeft === idGeschaeft
+          g => g.idGeschaeft === idGeschaeft,
         )
         gekoToRemove.forEach(g => store.gekoRemove(idGeschaeft, g.gekoNr))
         // need to delete links in store
         const linksToRemove = geschaefte.links.filter(
-          l => l.idGeschaeft === idGeschaeft
+          l => l.idGeschaeft === idGeschaeft,
         )
         linksToRemove.forEach(l => store.linkDelete(idGeschaeft, l.url))
       })
@@ -243,7 +243,7 @@ export default store => ({
       geschaeft.mutationsdatum = moment().format('YYYY-MM-DD HH:mm:ss')
     } else {
       store.geschaefte.error.push(
-        new Error('Das Geschäft wurde nicht aktualisiert')
+        new Error('Das Geschäft wurde nicht aktualisiert'),
       )
     }
   }),
@@ -255,15 +255,15 @@ export default store => ({
       idGeschaeft,
       field,
       value,
-      store.user.username
-    ).catch(error => store.geschaefte.error.push(error))
+      store.user.username,
+    ).catch(error => store.geschaefte.error.push(error)),
   ),
   rechtsmittelErledigungOptionsGet: action(() => {
-    let rechtsmittelErledigungOptions
+    let rechtsmittelErledigungOptions = []
     try {
       rechtsmittelErledigungOptions = getDropdownOptions(
         store.app.db,
-        'rechtsmittelErledigung'
+        'rechtsmittelErledigung',
       )
     } catch (error) {
       store.geschaefte.error.push(error)
@@ -271,11 +271,11 @@ export default store => ({
     store.geschaefte.rechtsmittelErledigungOptions = rechtsmittelErledigungOptions
   }),
   parlVorstossTypOptionsGet: action(() => {
-    let parlVorstossTypOptions
+    let parlVorstossTypOptions = []
     try {
       parlVorstossTypOptions = getDropdownOptions(
         store.app.db,
-        'parlVorstossTyp'
+        'parlVorstossTyp',
       )
     } catch (error) {
       store.geschaefte.error.push(error)
@@ -283,7 +283,7 @@ export default store => ({
     store.geschaefte.parlVorstossTypOptions = parlVorstossTypOptions
   }),
   statusOptionsGet: action(() => {
-    let statusOptions
+    let statusOptions = []
     try {
       statusOptions = getDropdownOptions(store.app.db, 'status')
     } catch (error) {
@@ -292,14 +292,16 @@ export default store => ({
     store.geschaefte.statusOptions = statusOptions
   }),
   faelligeStatiOptionsGet: action(() => {
-    getFaelligeStatiOptions(store.app.db)
-      .then(faelligeStatiOptions => {
-        store.geschaefte.faelligeStatiOptions = faelligeStatiOptions
-      })
-      .catch(error => store.geschaefte.error.push(error))
+    let options = []
+    try {
+      options = getFaelligeStatiOptions(store.app.db)
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+    store.geschaefte.faelligeStatiOptions = options
   }),
   geschaeftsartOptionsGet: action(() => {
-    let geschaeftsartOptions
+    let geschaeftsartOptions = []
     try {
       geschaeftsartOptions = getDropdownOptions(store.app.db, 'geschaeftsart')
     } catch (error) {
@@ -308,7 +310,7 @@ export default store => ({
     store.geschaefte.geschaeftsartOptions = geschaeftsartOptions
   }),
   aktenstandortOptionsGet: action(() => {
-    let aktenstandortOptions
+    let aktenstandortOptions = []
     try {
       aktenstandortOptions = getDropdownOptions(store.app.db, 'aktenstandort')
     } catch (error) {
@@ -321,21 +323,22 @@ export default store => ({
       .then(interneOptions => {
         store.geschaefte.interneOptions = interneOptions
       })
-      .catch(error => store.geschaefte.error.push(error))
+      .catch(error => store.geschaefte.error.push(error)),
   ),
-  externeOptionsGet: action(() =>
-    getExterneOptions(store.app.db)
-      .then(externeOptions => {
-        store.geschaefte.externeOptions = externeOptions
-      })
-      .catch(error => store.geschaefte.error.push(error))
-  ),
+  externeOptionsGet: action(() => {
+    let externeOptions = []
+    try {
+      externeOptions = getExterneOptions(store.app.db)
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+  }),
   rechtsmittelInstanzOptionsGet: action(() => {
-    let rechtsmittelInstanzOptions
+    let rechtsmittelInstanzOptions = []
     try {
       rechtsmittelInstanzOptions = getDropdownOptions(
         store.app.db,
-        'rechtsmittelInstanz'
+        'rechtsmittelInstanz',
       )
     } catch (error) {
       store.geschaefte.error.push(error)
@@ -343,7 +346,7 @@ export default store => ({
     store.geschaefte.rechtsmittelInstanzOptions = rechtsmittelInstanzOptions
   }),
   abteilungOptionsGet: action(() => {
-    let abteilungOptions
+    let abteilungOptions = []
     try {
       abteilungOptions = getDropdownOptions(store.app.db, 'abteilung')
     } catch (error) {
@@ -354,28 +357,28 @@ export default store => ({
   gekoNewCreate: action((idGeschaeft, gekoNr) =>
     newGekoInDb(store.app.db, idGeschaeft, gekoNr)
       .then(geko => store.geschaefte.geko.unshift(geko))
-      .catch(error => store.geschaefte.error.push(error))
+      .catch(error => store.geschaefte.error.push(error)),
   ),
   gekoRemove: action((idGeschaeft, gekoNr) =>
     deleteGeko(store.app.db, idGeschaeft, gekoNr)
       .then(() => {
         store.geschaefte.geko = store.geschaefte.geko.filter(
-          g => g.idGeschaeft !== idGeschaeft || g.gekoNr !== gekoNr
+          g => g.idGeschaeft !== idGeschaeft || g.gekoNr !== gekoNr,
         )
       })
-      .catch(error => store.geschaefte.error.push(error))
+      .catch(error => store.geschaefte.error.push(error)),
   ),
   changeGekoInDb: action((idGeschaeft, gekoNr, field, value) =>
     // no need to do something on then
     // ui was updated on GEKO_CHANGE_STATE
     updateGeko(store.app.db, idGeschaeft, gekoNr, field, value).catch(error =>
-      store.geschaefte.error.push(error)
-    )
+      store.geschaefte.error.push(error),
+    ),
   ),
   linkNewCreate: action((idGeschaeft, url) =>
     newLinkInDb(store.app.db, idGeschaeft, url)
       .then(() => store.geschaefte.links.unshift({ idGeschaeft, url }))
-      .catch(error => store.geschaefte.error.push(error))
+      .catch(error => store.geschaefte.error.push(error)),
   ),
   linkRemove: action((idGeschaeft, url) => {
     deleteLink(store.app.db, idGeschaeft, url)
@@ -386,7 +389,7 @@ export default store => ({
   }),
   linkDelete: action((idGeschaeft, url) => {
     store.geschaefte.links = store.geschaefte.links.filter(
-      l => l.idGeschaeft !== idGeschaeft || l.url !== url
+      l => l.idGeschaeft !== idGeschaeft || l.url !== url,
     )
-  })
+  }),
 })
