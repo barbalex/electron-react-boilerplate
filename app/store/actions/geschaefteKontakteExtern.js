@@ -40,11 +40,17 @@ export default store => ({
   ),
   geschaeftKontaktExternNewCreate: action((idGeschaeft, idKontakt) => {
     const { app } = store
-    newGeschaeftKontaktExternInDb(app.db, idGeschaeft, idKontakt)
-      .then(geschaeftKontaktExtern =>
-        store.geschaeftKontaktExternNew(geschaeftKontaktExtern),
+    let geschaeftKontaktExtern
+    try {
+      geschaeftKontaktExtern = newGeschaeftKontaktExternInDb(
+        app.db,
+        idGeschaeft,
+        idKontakt,
       )
-      .catch(error => store.geschaeftKontaktExternNewError(error))
+    } catch (error) {
+      return store.geschaeftKontaktExternNewError(error)
+    }
+    store.geschaeftKontaktExternNew(geschaeftKontaktExtern)
   }),
   geschaeftKontaktExternRemoveDeleteIntended: action(() => {
     store.geschaefteKontakteExtern.willDelete = false

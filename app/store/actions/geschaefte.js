@@ -357,11 +357,15 @@ export default store => ({
     }
     store.geschaefte.abteilungOptions = abteilungOptions
   }),
-  gekoNewCreate: action((idGeschaeft, gekoNr) =>
-    newGekoInDb(store.app.db, idGeschaeft, gekoNr)
-      .then(geko => store.geschaefte.geko.unshift(geko))
-      .catch(error => store.geschaefte.error.push(error)),
-  ),
+  gekoNewCreate: action((idGeschaeft, gekoNr) => {
+    let geko
+    try {
+      geko = newGekoInDb(store.app.db, idGeschaeft, gekoNr)
+    } catch (error) {
+      return store.geschaefte.error.push(error)
+    }
+    store.geschaefte.geko.unshift(geko)
+  }),
   gekoRemove: action((idGeschaeft, gekoNr) => {
     try {
       deleteGeko(store.app.db, idGeschaeft, gekoNr)

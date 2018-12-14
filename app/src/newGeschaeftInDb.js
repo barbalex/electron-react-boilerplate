@@ -1,26 +1,33 @@
 import moment from 'moment'
-import getGeschaeftFromDb from './getGeschaeftFromDb'
 
-export default function(db, username) {
+const sql1 = `
+  INSERT INTO
+    geschaefte (mutationsdatum, mutationsperson)
+  VALUES
+    (@now, @username)`
+const sql2 = `
+  SELECT
+    *
+  FROM
+    geschaefte
+  WHERE
+    idGeschaeft = @idGeschaeft`
+
+export default (db, username) => {
   const now = moment().format('YYYY-MM-DD HH:mm:ss')
-  const sql = `
-      INSERT INTO
-        geschaefte (mutationsdatum, mutationsperson)
-      VALUES
-        (@now, @username)`
 
   let result
   try {
-    result = db.prepare(sql).run({ now, username })
+    result = db.prepare(sql1).run({ now, username })
   } catch (error) {
     throw error
   }
   const idGeschaeft = result.lastInsertRowid
 
   // return full dataset
-  let geschaeft
+  let geschaeft = {}
   try {
-    geschaeft = getGeschaeftFromDb(db, idGeschaeft)
+    geschaeft = db.prepare(sql2).get({ idGeschaeft })
   } catch (error) {
     throw error
   }
