@@ -3,12 +3,15 @@ import PropTypes from 'prop-types'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-import GeschaefteLayout from '../components/GeschaefteLayout'
-import FilterFieldsLayout from '../components/FilterFieldsLayout'
-import TableLayout from '../components/TableLayout'
-import Navbar from '../components/Navbar'
+import GeschaefteLayout from './GeschaefteLayout'
+import FilterFieldsLayout from './FilterFieldsLayout'
+import TableLayout from './TableLayout'
+import Navbar from './Navbar'
 
-const enhance = compose(inject('store'), observer)
+const enhance = compose(
+  inject('store'),
+  observer
+)
 
 const App = ({ store }) => {
   // setting ref according to this:
@@ -18,9 +21,19 @@ const App = ({ store }) => {
     app = passedApp
   }
   const { pathname } = store.history.location
-  const showGeschaefteLayout = ['/geschaefte', '/pages', '/geschaeftPdf'].includes(pathname)
+  const showGeschaefteLayout = [
+    '/geschaefte',
+    '/pages',
+    '/geschaeftPdf'
+  ].includes(pathname)
   const showFilterFieldsLayout = pathname === '/filterFields'
   const showTableLayout = pathname === '/table'
+  console.log('App rendering', {
+    showGeschaefteLayout,
+    showFilterFieldsLayout,
+    showTableLayout
+  })
+
   return (
     <div ref={setRef}>
       <Navbar />
@@ -31,7 +44,7 @@ const App = ({ store }) => {
   )
 }
 App.propTypes = {
-  store: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired
 }
 
 export default enhance(App)

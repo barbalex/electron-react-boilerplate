@@ -1,27 +1,22 @@
+import app from 'ampersand-app'
 import getTableRowFromDb from './getTableRowFromDb'
 
-export default function (db, table) {
-  return new Promise((resolve, reject) => {
+export default (db, table) => new Promise((resolve, reject) => {
     const sql = `
       INSERT INTO
-        ${table} (id)
+        @table (id)
       VALUES
         (NULL)`
 
-    /*
-     * This is weird:
-     * node-sqlite3 returns the new ID
-     * in the 'this' object of the callback function,
-     * NOT in the result
-     * so DO NOT USE ARROW FUNCTION
-     */
-    db.run(sql, function callback(error) {
-      if (error) reject(error)
-      const id = this.lastID
-      // return full dataset
-      getTableRowFromDb(db, table, id)
-        .then(row => resolve(row))
-        .catch(err => reject(err))
-    })
+    let result
+    try {
+      db.prepare(sql).run({ table })
+    } catch (error) {
+      return app.store.tableGetError(error)
+    }
+    const id = result.lastInsertRowid
+    // return full dataset
+    getTableRowFromDb(db, table, id)
+      .then(row => resolve(row))
+      .catch(err => app.store.tableGetError(err))
   })
-}

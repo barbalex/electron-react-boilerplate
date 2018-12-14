@@ -22,18 +22,28 @@ export default store => ({
   getGeschaefteKontakteExtern: action(() => {
     const { app } = store
     store.geschaefteKontakteExternGet()
-    getGeschaefteKontakteExternFromDb(app.db)
-      .then(geschaefteKontakteExtern => store.geschaefteKontakteExternGetSuccess(geschaefteKontakteExtern))
-      .catch(error => store.geschaefteKontakteExternGetError(error))
+    let geschaefteKontakteExtern
+    try {
+      geschaefteKontakteExtern = getGeschaefteKontakteExternFromDb(app.db)
+    } catch (error) {
+      store.geschaefteKontakteExternGetError(error)
+    }
+    store.geschaefteKontakteExternGetSuccess(geschaefteKontakteExtern)
   }),
   geschaeftKontaktExternNew: action(geschaeftKontaktExtern =>
-    store.geschaefteKontakteExtern.geschaefteKontakteExtern.push(geschaeftKontaktExtern),
+    store.geschaefteKontakteExtern.geschaefteKontakteExtern.push(
+      geschaeftKontaktExtern
+    )
   ),
-  geschaeftKontaktExternNewError: action(error => store.geschaefteKontakteExtern.push(error)),
+  geschaeftKontaktExternNewError: action(error =>
+    store.geschaefteKontakteExtern.push(error)
+  ),
   geschaeftKontaktExternNewCreate: action((idGeschaeft, idKontakt) => {
     const { app } = store
     newGeschaeftKontaktExternInDb(app.db, idGeschaeft, idKontakt)
-      .then(geschaeftKontaktExtern => store.geschaeftKontaktExternNew(geschaeftKontaktExtern))
+      .then(geschaeftKontaktExtern =>
+        store.geschaeftKontaktExternNew(geschaeftKontaktExtern)
+      )
       .catch(error => store.geschaeftKontaktExternNewError(error))
   }),
   geschaeftKontaktExternRemoveDeleteIntended: action(() => {
@@ -41,12 +51,14 @@ export default store => ({
   }),
   geschaeftKontaktExternDelete: action((idGeschaeft, idKontakt) => {
     store.geschaefteKontakteExtern.geschaefteKontakteExtern = store.geschaefteKontakteExtern.geschaefteKontakteExtern.filter(
-      g => g.idGeschaeft !== idGeschaeft || g.idKontakt !== idKontakt,
+      g => g.idGeschaeft !== idGeschaeft || g.idKontakt !== idKontakt
     )
     store.geschaefteKontakteExtern.activeIdGeschaeft = null
     store.geschaefteKontakteExtern.activeIdKontakt = null
   }),
-  geschaeftKontaktExternDeleteError: action(error => store.geschaefteKontakteExtern.error.push(error)),
+  geschaeftKontaktExternDeleteError: action(error =>
+    store.geschaefteKontakteExtern.error.push(error)
+  ),
   geschaeftKontaktExternRemove: action((idGeschaeft, idKontakt) => {
     const { app } = store
     deleteGeschaeftKontaktExtern(app.db, idGeschaeft, idKontakt)
@@ -56,5 +68,7 @@ export default store => ({
       })
       .catch(error => store.geschaeftKontaktExternDeleteError(error))
   }),
-  geschaefteKontakteExternChangeDbError: action(error => store.geschaefteKontakteExtern.error.push(error)),
+  geschaefteKontakteExternChangeDbError: action(error =>
+    store.geschaefteKontakteExtern.error.push(error)
+  )
 })

@@ -26,19 +26,20 @@ export default store => ({
     const { app } = store
     store.geschaefte.fetching = true
     store.geschaefte.error = []
-    getGeschaefteFromDb(app.db)
-      .then(geschaefte => {
-        store.geschaefte.fetching = false
-        store.geschaefte.error = []
-        store.geschaefte.geschaefte = geschaefte
-        if (store.history.location.pathname !== '/geschaefte') {
-          store.history.push('/geschaefte')
-        }
-      })
-      .catch(error => {
-        store.geschaefte.fetching = false
-        store.geschaefte.error.push(error)
-      })
+    let geschaefte
+    try {
+      geschaefte = getGeschaefteFromDb(app.db)
+    } catch (error) {
+      store.geschaefte.fetching = false
+      store.geschaefte.error.push(error)
+    }
+    console.log('store,actions,getGeschaefte:', { geschaefte })
+    store.geschaefte.fetching = false
+    store.geschaefte.error = []
+    store.geschaefte.geschaefte = geschaefte
+    if (store.history.location.pathname !== '/geschaefte') {
+      store.history.push('/geschaefte')
+    }
   }),
   geschaeftToggleActivated: action(idGeschaeft => {
     store.geschaefte.activeId =
@@ -134,16 +135,16 @@ export default store => ({
     const { app } = store
     store.geschaefte.fetching = true
     store.geschaefte.error = []
-    getGekoFromDb(app.db)
-      .then(geko => {
-        store.geschaefte.fetching = false
-        store.geschaefte.error = []
-        store.geschaefte.geko = geko
-      })
-      .catch(error => {
-        store.geschaefte.fetching = false
-        store.geschaefte.error.push(error)
-      })
+    let geko
+    try {
+      geko = getGekoFromDb(app.db)
+    } catch (error) {
+      store.geschaefte.fetching = false
+      store.geschaefte.error.push(error)
+    }
+    store.geschaefte.fetching = false
+    store.geschaefte.error = []
+    store.geschaefte.geko = geko
   }),
   getLinks: action(() => {
     const { app } = store
@@ -187,7 +188,7 @@ export default store => ({
       app,
       geschaefteKontakteIntern,
       geschaefteKontakteExtern,
-      geschaefte,
+      geschaefte
     } = store
     deleteGeschaeft(app.db, idGeschaeft)
       .then(() => {
@@ -364,5 +365,5 @@ export default store => ({
     store.geschaefte.links = store.geschaefte.links.filter(
       l => l.idGeschaeft !== idGeschaeft || l.url !== url
     )
-  }),
+  })
 })

@@ -11,7 +11,11 @@ import RowRenderer from './RowRenderer'
 import NoRowsRenderer from './NoRowsRenderer'
 
 const Container = styled.div`
-  background-image: linear-gradient(45deg, rgba(235, 255, 229, 0.5) 10%, rgba(216, 255, 200, 0.7));
+  background-image: linear-gradient(
+    45deg,
+    rgba(235, 255, 229, 0.5) 10%,
+    rgba(216, 255, 200, 0.7)
+  );
   height: 100vh;
 `
 const StyledTable = styled.div`
@@ -68,9 +72,10 @@ const StyledBody = styled.div`
 const enhance = compose(
   inject('store'),
   withHandlers({
-    onChange: props => size => props.store.configSetKey('geschaefteColumnWidth', size),
+    onChange: props => size =>
+      props.store.configSetKey('geschaefteColumnWidth', size)
   }),
-  observer,
+  observer
 )
 
 /**
@@ -80,16 +85,23 @@ const enhance = compose(
  */
 class Geschaefte extends Component {
   static propTypes = {
-    store: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired
   }
 
   render() {
     const { store } = this.props
     const { setGeschaefteListOverflowing } = store
     const { geschaefteListOverflowing } = store.ui
-    const { activeId, geschaeftePlusFilteredAndSorted: geschaefte } = store.geschaefte
+    console.log('Geschaefte', { store })
+    const {
+      activeId,
+      geschaeftePlusFilteredAndSorted: geschaefte
+    } = store.geschaefte
     // get index of active id
-    const indexOfActiveId = _.findIndex(geschaefte, g => g.idGeschaeft === activeId)
+    const indexOfActiveId = _.findIndex(
+      geschaefte,
+      g => g.idGeschaeft === activeId
+    )
 
     return (
       <Container>

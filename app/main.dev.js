@@ -64,7 +64,7 @@ const browserWindowOptions = {
 
 // get last window state
 // and set it again
-const lastWindowState = getConfigSync().lastWindowState
+const {lastWindowState} = getConfigSync()
 if (lastWindowState) {
   if (lastWindowState.width) browserWindowOptions.width = lastWindowState.width
   if (lastWindowState.height) {
