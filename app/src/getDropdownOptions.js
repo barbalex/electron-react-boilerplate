@@ -8,7 +8,7 @@ export default function(db, name) {
       historisch = 0
     ORDER BY
       sort`
-  let result
+  let result = []
   try {
     result = db.prepare(sql).all()
   } catch (error) {

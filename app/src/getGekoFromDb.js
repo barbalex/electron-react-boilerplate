@@ -8,7 +8,7 @@ const sql = `
     gekoNr`
 
 export default db => {
-  let geko
+  let geko = []
   try {
     geko = db.prepare(sql).all()
   } catch (error) {
