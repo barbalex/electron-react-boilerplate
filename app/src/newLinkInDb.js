@@ -12,7 +12,7 @@ const sql2 = `
     idGeschaeft = @idGeschaeft AND
     url = @url`
 
-export default function(db, idGeschaeft, url) {
+export default (db, idGeschaeft, url) => {
   try {
     db.prepare(sql1).run({ idGeschaeft, url })
   } catch (error) {

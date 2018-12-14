@@ -7,7 +7,7 @@ const sql = `
     idGeschaeft = @idGeschaeft AND
     gekoNr = @gekoNr`
 
-export default function(db, idGeschaeft, gekoNr, field, value) {
+export default (db, idGeschaeft, gekoNr, field, value) => {
   try {
     db.prepare(sql).run({ field, value, idGeschaeft, gekoNr })
   } catch (error) {
