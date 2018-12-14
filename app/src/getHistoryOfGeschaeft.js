@@ -1,7 +1,7 @@
 import getIdVorgeschaeft from './getIdVorgeschaeft'
 import getIdNachgeschaeft from './getIdNachgeschaeft'
 
-export default function (geschaefte, activeId) {
+export default (geschaefte, activeId) => {
   const history = activeId ? [activeId] : []
   let idVorgeschaeft = getIdVorgeschaeft(geschaefte, activeId)
   if (idVorgeschaeft) history.unshift(idVorgeschaeft)
@@ -15,6 +15,7 @@ export default function (geschaefte, activeId) {
       idVorgeschaeft = null
     }
   }
+
   let idNachgeschaeft = getIdNachgeschaeft(geschaefte, activeId)
   if (idNachgeschaeft) history.push(idNachgeschaeft)
   while (idNachgeschaeft) {

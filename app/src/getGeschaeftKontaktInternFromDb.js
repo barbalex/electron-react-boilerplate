@@ -1,13 +1,13 @@
-export default function(db, idGeschaeft, idKontakt) {
-  const sql = `
-    SELECT
-      *
-    FROM
-      geschaefteKontakteIntern
-    WHERE
-      idGeschaeft = @idGeschaeft
-      AND idKontakt = @idKontakt`
+const sql = `
+  SELECT
+    *
+  FROM
+    geschaefteKontakteIntern
+  WHERE
+    idGeschaeft = @idGeschaeft
+    AND idKontakt = @idKontakt`
 
+export default (db, idGeschaeft, idKontakt) => {
   let result = {}
   try {
     result = db.prepare(sql).get({ idGeschaeft, idKontakt })
