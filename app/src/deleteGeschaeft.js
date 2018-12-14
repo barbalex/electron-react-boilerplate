@@ -1,26 +1,19 @@
-export default function (db, idGeschaeft) {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      DELETE FROM
-        geschaefte
-      WHERE
-        idGeschaeft = $id`
+export default function(db, idGeschaeft) {
+  const sql = `
+    DELETE FROM
+      geschaefte
+    WHERE
+      idGeschaeft = $idGeschaeft`
+  try {
+    db.pragma('foreign_keys = ON')
+  } catch (error) {
+    throw error
+  }
 
-    db.run(
-      'PRAGMA foreign_keys = ON;',
-      (error) => {
-        if (error) reject(error)
-        db.run(
-          sql,
-          {
-            $id: idGeschaeft,
-          },
-          (err) => {
-            if (err) reject(err)
-            resolve(true)
-          }
-        )
-      }
-    )
-  })
+  try {
+    db.prepare(sql).run({ idGeschaeft })
+  } catch (error) {
+    throw error
+  }
+  return true
 }
