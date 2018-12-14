@@ -150,7 +150,7 @@ export default store => ({
     const { app } = store
     store.geschaefte.fetching = true
     store.geschaefte.error = []
-    getLinkFromDb(app.db)
+    getLinksFromDb(app.db)
       .then(links => {
         store.geschaefte.fetching = false
         store.geschaefte.error = []
@@ -372,13 +372,15 @@ export default store => ({
       })
       .catch(error => store.geschaefte.error.push(error)),
   ),
-  changeGekoInDb: action((idGeschaeft, gekoNr, field, value) =>
+  changeGekoInDb: action((idGeschaeft, gekoNr, field, value) => {
     // no need to do something on then
     // ui was updated on GEKO_CHANGE_STATE
-    updateGeko(store.app.db, idGeschaeft, gekoNr, field, value).catch(error =>
-      store.geschaefte.error.push(error),
-    ),
-  ),
+    try {
+      updateGeko(store.app.db, idGeschaeft, gekoNr, field, value)
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+  }),
   linkNewCreate: action((idGeschaeft, url) =>
     newLinkInDb(store.app.db, idGeschaeft, url)
       .then(() => store.geschaefte.links.unshift({ idGeschaeft, url }))
