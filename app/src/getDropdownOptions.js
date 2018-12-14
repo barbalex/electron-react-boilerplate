@@ -1,4 +1,4 @@
-export default function(db, name) {
+export default (db, name) => {
   const sql = `
     SELECT
       @name
