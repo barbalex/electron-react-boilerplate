@@ -1,19 +1,29 @@
-import getLinkFromDb from './getLinkFromDb'
+const sql1 = `
+  INSERT INTO
+    links (idGeschaeft, url)
+  VALUES
+    (@idGeschaeft, @url)`
+const sql2 = `
+  SELECT
+    *
+  FROM
+    links
+  WHERE
+    idGeschaeft = @idGeschaeft AND
+    url = @url`
 
 export default function(db, idGeschaeft, url) {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      INSERT INTO
-        links (idGeschaeft, url)
-      VALUES
-        (${idGeschaeft}, '${url}')`
-
-    db.run(sql, error => {
-      if (error) reject(error)
-      // return full dataset
-      getLinkFromDb(db, idGeschaeft, url)
-        .then(link => resolve(link))
-        .catch(err => reject(err))
-    })
-  })
+  try {
+    db.prepare(sql1).run({ idGeschaeft, url })
+  } catch (error) {
+    throw error
+  }
+  // return full dataset
+  let result
+  try {
+    result = db.prepare(sql2).get({ idGeschaeft, url })
+  } catch (error) {
+    throw error
+  }
+  return result
 }
