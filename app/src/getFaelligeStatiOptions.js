@@ -1,17 +1,18 @@
-export default function (db) {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      SELECT
-        status
-      FROM
-        status
-      WHERE
-        geschaeftKannFaelligSein = 1`
+const sql = `
+  SELECT
+    status
+  FROM
+    status
+  WHERE
+    geschaeftKannFaelligSein = 1`
 
-    db.all(sql, (error, result) => {
-      if (error) reject(error)
-      const options = result.map(res => res.status)
-      resolve(options)
-    })
-  })
+export default function(db) {
+  let options
+  try {
+    options = db.prepare(sql).all()
+  } catch (error) {
+    throw error
+  }
+  const options = result.map(res => res.status)
+  return options
 }
