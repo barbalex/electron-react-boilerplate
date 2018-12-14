@@ -4,7 +4,7 @@ const sql = `
   FROM
     geschaefteKontakteIntern`
 
-export default function(db) {
+export default db => {
   let geschaefteKontakteIntern = []
   try {
     geschaefteKontakteIntern = db.prepare(sql).all()

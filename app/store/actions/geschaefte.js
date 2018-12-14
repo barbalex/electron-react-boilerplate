@@ -150,16 +150,16 @@ export default store => ({
     const { app } = store
     store.geschaefte.fetching = true
     store.geschaefte.error = []
-    getLinksFromDb(app.db)
-      .then(links => {
-        store.geschaefte.fetching = false
-        store.geschaefte.error = []
-        store.geschaefte.links = links
-      })
-      .catch(error => {
-        store.geschaefte.fetching = false
-        store.geschaefte.error.push(error)
-      })
+    let links = []
+    try {
+      links = getLinksFromDb(app.db)
+    } catch (error) {
+      store.geschaefte.fetching = false
+      return store.geschaefte.error.push(error)
+    }
+    store.geschaefte.fetching = false
+    store.geschaefte.error = []
+    store.geschaefte.links = links
   }),
   /*
    * GESCHAEFT
