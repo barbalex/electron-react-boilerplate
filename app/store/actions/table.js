@@ -32,14 +32,16 @@ export default store => ({
   getTable: action(table => {
     const { app } = store
     store.tableGet(table)
-    getTableFromDb(app.db, table)
-      .then(rows => {
-        store.tableGetSuccess(table, rows)
-        if (store.history.location.pathname !== '/table') {
-          store.history.push('/table')
-        }
-      })
-      .catch(error => store.tableGetError(error))
+    let rows
+    try {
+      rows = getTableFromDb(app.db, table)
+    } catch (error) {
+      return store.tableGetError(error)
+    }
+    store.tableGetSuccess(table, rows)
+    if (store.history.location.pathname !== '/table') {
+      store.history.push('/table')
+    }
   }),
   /*
    * ROW
