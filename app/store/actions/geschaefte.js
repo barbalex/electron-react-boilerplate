@@ -5,7 +5,7 @@ import moment from 'moment'
 
 import getGeschaefteFromDb from '../../src/getGeschaefteFromDb'
 import getGekoFromDb from '../../src/getGekoFromDb'
-import getLinkFromDb from '../../src/getLinksFromDb'
+import getLinksFromDb from '../../src/getLinksFromDb'
 import getDropdownOptions from '../../src/getDropdownOptions'
 import getFaelligeStatiOptions from '../../src/getFaelligeStatiOptions'
 import getInterneOptions from '../../src/getInterneOptions'
