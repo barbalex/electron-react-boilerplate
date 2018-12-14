@@ -1,25 +1,27 @@
-import getGeschaeftKontaktExternFromDb from './getGeschaeftKontaktExternFromDb'
+const sql1 = `
+  INSERT INTO
+    geschaefteKontakteExtern (idGeschaeft, idKontakt)
+  VALUES
+    (@idGeschaeft, @idKontakt)`
+const sql2 = `
+  SELECT
+    *
+  FROM
+    geschaefteKontakteExtern
+  WHERE
+    idGeschaeft = @idGeschaeft
+    AND idKontakt = @idKontakt`
 
-export default function(db, idGeschaeft, idKontakt) {
-  const sql = `
-    INSERT INTO
-      geschaefteKontakteExtern (idGeschaeft, idKontakt)
-    VALUES
-      (@idGeschaeft, @idKontakt)`
-
+export default (db, idGeschaeft, idKontakt) => {
   try {
-    db.prepare(sql).run({ idGeschaeft, idKontakt })
+    db.prepare(sql1).run({ idGeschaeft, idKontakt })
   } catch (error) {
     throw error
   }
 
-  let geschaeftKontaktExtern
+  let geschaeftKontaktExtern = {}
   try {
-    geschaeftKontaktExtern = getGeschaeftKontaktExternFromDb(
-      db,
-      idGeschaeft,
-      idKontakt,
-    )
+    geschaeftKontaktExtern = db.prepare(sql2).get({ idGeschaeft, idKontakt })
   } catch (error) {
     throw error
   }

@@ -1,4 +1,4 @@
-export default function isDateField(fieldName) {
+export default fieldName => {
   const dateFieldNames = [
     'datumEingangAwel',
     'fristAwel',
