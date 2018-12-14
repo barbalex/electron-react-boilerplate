@@ -8,9 +8,9 @@ export default function(db, idGeschaeft, idKontakt) {
         idGeschaeft = @idGeschaeft
         AND idKontakt = @idKontakt`
 
-  let result = []
+  let result = {}
   try {
-    result = db.prepare(sql).all({ idGeschaeft, idKontakt })
+    result = db.prepare(sql).get({ idGeschaeft, idKontakt })
   } catch (error) {
     throw error
   }

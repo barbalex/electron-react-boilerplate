@@ -1,16 +1,17 @@
-export default function (db) {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      SELECT
-        *
-      FROM
-        interne
-      ORDER BY
-        kurzzeichen`
+const sql = `
+  SELECT
+    *
+  FROM
+    interne
+  ORDER BY
+    kurzzeichen`
 
-    db.all(sql, (error, options) => {
-      if (error) reject(error)
-      resolve(options)
-    })
-  })
+export default function(db) {
+  let options = []
+  try {
+    options = db.prepare(sql).all()
+  } catch (error) {
+    throw error
+  }
+  return options
 }

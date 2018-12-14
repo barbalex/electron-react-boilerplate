@@ -9,7 +9,7 @@ export default (db, idGeschaeft) => {
 
   let result = {}
   try {
-    result = db.prepare(sql, { idGeschaeft })
+    result = db.prepare(sql).get({ idGeschaeft })
   } catch (error) {
     throw error
   }

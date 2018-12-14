@@ -320,13 +320,15 @@ export default store => ({
     }
     store.geschaefte.aktenstandortOptions = aktenstandortOptions
   }),
-  interneOptionsGet: action(() =>
-    getInterneOptions(store.app.db)
-      .then(interneOptions => {
-        store.geschaefte.interneOptions = interneOptions
-      })
-      .catch(error => store.geschaefte.error.push(error)),
-  ),
+  interneOptionsGet: action(() => {
+    let interneOptions = []
+    try {
+      interneOptions = getInterneOptions(store.app.db)
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+    store.geschaefte.interneOptions = interneOptions
+  }),
   externeOptionsGet: action(() => {
     let externeOptions = []
     try {
