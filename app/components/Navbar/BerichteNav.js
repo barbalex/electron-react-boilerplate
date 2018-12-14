@@ -11,8 +11,10 @@ import filterForFaelligeGeschaefte from '../../src/filterForFaelligeGeschaefte'
 
 // eslint-disable-next-line no-unused-vars
 const StyledNavDropdown = styled(NavDropdown)`
-  border-left: ${props => (props['data-showberichtenavs'] ? 'solid grey 1px' : 'dotted #505050 1px')};
-  border-right: ${props => (props['data-showberichtenavs'] ? 'none' : 'dotted #505050 1px')};
+  border-left: ${props =>
+    props['data-showberichtenavs'] ? 'solid grey 1px' : 'dotted #505050 1px'};
+  border-right: ${props =>
+    props['data-showberichtenavs'] ? 'none' : 'dotted #505050 1px'};
   /**
    * in react-bootstrap the active
    * prop of NavDropdown does not work
@@ -24,10 +26,20 @@ const StyledNavDropdown = styled(NavDropdown)`
   }
 `
 
-const enhance = compose(inject('store'), observer)
+const enhance = compose(
+  inject('store'),
+  observer,
+)
 
 const BerichteNav = ({ store, showBerichteNavs }) => {
-  const { pages, pagesInitiate, geschaeftPdfShow, geschaefteFilterByFields, geschaefteSortByFields, geschaefteResetSort } = store
+  const {
+    pages,
+    pagesInitiate,
+    geschaeftPdfShow,
+    geschaefteFilterByFields,
+    geschaefteSortByFields,
+    geschaefteResetSort,
+  } = store
   const { activeId } = store.geschaefte
   const path = store.history.location.pathname
   const isActive = path === '/pages'
@@ -61,7 +73,7 @@ const BerichteNav = ({ store, showBerichteNavs }) => {
         }
         if (eventKey === 7.7) {
           setTimeout(() => {
-            geschaefteFilterByFields(filterForFaelligeGeschaefte(), 'fällige')
+            geschaefteFilterByFields(filterForFaelligeGeschaefte, 'fällige')
             // only do this after former is finished
             setTimeout(() => {
               geschaefteResetSort()
@@ -72,7 +84,10 @@ const BerichteNav = ({ store, showBerichteNavs }) => {
         }
         if (eventKey === 7.3) {
           setTimeout(() => {
-            geschaefteFilterByFields(filterForVernehmlAngek(), 'angekündigte Vernehmlassungen')
+            geschaefteFilterByFields(
+              filterForVernehmlAngek,
+              'angekündigte Vernehmlassungen',
+            )
             // only do this after former is finished
             setTimeout(() => {
               geschaefteResetSort()
@@ -83,7 +98,10 @@ const BerichteNav = ({ store, showBerichteNavs }) => {
         }
         if (eventKey === 7.4) {
           setTimeout(() => {
-            geschaefteFilterByFields(filterForVernehmlLaeuft(), 'laufende Vernehmlassungen')
+            geschaefteFilterByFields(
+              filterForVernehmlLaeuft,
+              'laufende Vernehmlassungen',
+            )
             // only do this after former is finished
             setTimeout(() => {
               pagesInitiate('laufendeVernehml')
@@ -101,12 +119,16 @@ const BerichteNav = ({ store, showBerichteNavs }) => {
       }}
     >
       <MenuItem header>
-        Vorlagen,<br />übernehmen den gesetzten Filter:
+        Vorlagen,
+        <br />
+        übernehmen den gesetzten Filter:
       </MenuItem>
       <MenuItem eventKey={7.2}>{'Vorlage "einfache Liste"'}</MenuItem>
       <MenuItem divider />
       <MenuItem header>
-        Vorbereitete,<br />setzen einen eigenen Filter:
+        Vorbereitete,
+        <br />
+        setzen einen eigenen Filter:
       </MenuItem>
       <MenuItem eventKey={7.7}>fällige Geschäfte</MenuItem>
       <MenuItem eventKey={7.3}>angekündigte Vernehmlassungen</MenuItem>
