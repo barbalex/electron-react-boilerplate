@@ -1,12 +1,12 @@
-export default (db, idGeschaeft) => {
-  const sql = `
-    SELECT
-      *
-    FROM
-      geschaefte
-    WHERE
-      idGeschaeft = @idGeschaeft`
+const sql = `
+  SELECT
+    *
+  FROM
+    geschaefte
+  WHERE
+    idGeschaeft = @idGeschaeft`
 
+export default (db, idGeschaeft) => {
   let result = {}
   try {
     result = db.prepare(sql).get({ idGeschaeft })

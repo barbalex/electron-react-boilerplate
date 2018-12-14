@@ -1,9 +1,10 @@
-export default function(db, idGeschaeft) {
-  const sql = `
-    DELETE FROM
-      geschaefte
-    WHERE
-      idGeschaeft = $idGeschaeft`
+const sql = `
+  DELETE FROM
+    geschaefte
+  WHERE
+    idGeschaeft = $idGeschaeft`
+
+export default (db, idGeschaeft) => {
   try {
     db.pragma('foreign_keys = ON')
   } catch (error) {
