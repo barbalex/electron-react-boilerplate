@@ -4,7 +4,17 @@ import app from 'ampersand-app'
 import isDateField from './isDateField'
 import convertDateToYyyyMmDd from './convertDateToYyyyMmDd'
 
-export default function(db, idGeschaeft, field, value, username) {
+const sql = `
+  UPDATE
+    geschaefte
+  SET
+    @field = @value2,
+    mutationsdatum = @now,
+    mutationsperson = @username
+  WHERE
+    idGeschaeft = @idGeschaeft`
+
+export default (db, idGeschaeft, field, value, username) => {
   const { store } = app
   /**
    * if field is date field
@@ -15,15 +25,7 @@ export default function(db, idGeschaeft, field, value, username) {
     value2 = convertDateToYyyyMmDd(value)
   }
   const now = moment().format('YYYY-MM-DD HH:mm:ss')
-  const sql = `
-    UPDATE
-      geschaefte
-    SET
-      @field = @value2,
-      mutationsdatum = @now,
-      mutationsperson = @username
-    WHERE
-      idGeschaeft = @idGeschaeft`
+
   try {
     db.prepare(sql).run({ field, value2, now, username })
   } catch (error) {
