@@ -1,17 +1,18 @@
-export default function (db) {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      SELECT
-        *, name || ' ' || vorname AS nameVorname
-      FROM
-        externe
-      ORDER BY
-        name,
-        vorname`
+const sql = `
+  SELECT
+    *, name || ' ' || vorname AS nameVorname
+  FROM
+    externe
+  ORDER BY
+    name,
+    vorname`
 
-    db.all(sql, (error, options) => {
-      if (error) reject(error)
-      resolve(options)
-    })
-  })
+export default function(db) {
+  let options
+  try {
+    options = db.prepare(sql).all()
+  } catch (error) {
+    throw error
+  }
+  return options
 }
