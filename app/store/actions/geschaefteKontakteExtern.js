@@ -32,17 +32,17 @@ export default store => ({
   }),
   geschaeftKontaktExternNew: action(geschaeftKontaktExtern =>
     store.geschaefteKontakteExtern.geschaefteKontakteExtern.push(
-      geschaeftKontaktExtern
-    )
+      geschaeftKontaktExtern,
+    ),
   ),
   geschaeftKontaktExternNewError: action(error =>
-    store.geschaefteKontakteExtern.push(error)
+    store.geschaefteKontakteExtern.push(error),
   ),
   geschaeftKontaktExternNewCreate: action((idGeschaeft, idKontakt) => {
     const { app } = store
     newGeschaeftKontaktExternInDb(app.db, idGeschaeft, idKontakt)
       .then(geschaeftKontaktExtern =>
-        store.geschaeftKontaktExternNew(geschaeftKontaktExtern)
+        store.geschaeftKontaktExternNew(geschaeftKontaktExtern),
       )
       .catch(error => store.geschaeftKontaktExternNewError(error))
   }),
@@ -51,24 +51,25 @@ export default store => ({
   }),
   geschaeftKontaktExternDelete: action((idGeschaeft, idKontakt) => {
     store.geschaefteKontakteExtern.geschaefteKontakteExtern = store.geschaefteKontakteExtern.geschaefteKontakteExtern.filter(
-      g => g.idGeschaeft !== idGeschaeft || g.idKontakt !== idKontakt
+      g => g.idGeschaeft !== idGeschaeft || g.idKontakt !== idKontakt,
     )
     store.geschaefteKontakteExtern.activeIdGeschaeft = null
     store.geschaefteKontakteExtern.activeIdKontakt = null
   }),
   geschaeftKontaktExternDeleteError: action(error =>
-    store.geschaefteKontakteExtern.error.push(error)
+    store.geschaefteKontakteExtern.error.push(error),
   ),
   geschaeftKontaktExternRemove: action((idGeschaeft, idKontakt) => {
     const { app } = store
-    deleteGeschaeftKontaktExtern(app.db, idGeschaeft, idKontakt)
-      .then(() => {
-        store.geschaeftKontaktExternRemoveDeleteIntended(idGeschaeft, idKontakt)
-        store.geschaeftKontaktExternDelete(idGeschaeft, idKontakt)
-      })
-      .catch(error => store.geschaeftKontaktExternDeleteError(error))
+    try {
+      deleteGeschaeftKontaktExtern(app.db, idGeschaeft, idKontakt)
+    } catch (error) {
+      return store.geschaeftKontaktExternDeleteError(error)
+    }
+    store.geschaeftKontaktExternRemoveDeleteIntended(idGeschaeft, idKontakt)
+    store.geschaeftKontaktExternDelete(idGeschaeft, idKontakt)
   }),
   geschaefteKontakteExternChangeDbError: action(error =>
-    store.geschaefteKontakteExtern.error.push(error)
-  )
+    store.geschaefteKontakteExtern.error.push(error),
+  ),
 })
