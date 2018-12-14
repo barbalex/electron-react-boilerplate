@@ -3,7 +3,7 @@
 export default function(db) {
   let result = []
   try {
-    result = db.prepare('PRAGMA table_info(geschaefte)').all()
+    result = db.pragma('table_info(geschaefte)')
   } catch (error) {
     throw error
   }
