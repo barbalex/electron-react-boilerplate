@@ -1,14 +1,15 @@
-export default function (db) {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      SELECT
-        *
-      FROM
-        geschaefteKontakteIntern`
+const sql = `
+  SELECT
+    *
+  FROM
+    geschaefteKontakteIntern`
 
-    db.all(sql, (error, geschaefteKontakteIntern) => {
-      if (error) reject(error)
-      resolve(geschaefteKontakteIntern)
-    })
-  })
+export default function(db) {
+  let geschaefteKontakteIntern = []
+  try {
+    geschaefteKontakteIntern = db.prepare(sql).all()
+  } catch (error) {
+    throw error
+  }
+  return geschaefteKontakteIntern
 }
