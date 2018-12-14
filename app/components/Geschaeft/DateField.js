@@ -112,7 +112,6 @@ const DateField = ({
           <StyledDatePicker
             onChange={onChangeDatePicker.bind(this, name)}
             dateFormat="DD.MM.YYYY"
-            //locale="de-CH"
             customInput={
               <Glyphicon glyph="calendar" style={datePickerCalendarStyle} />
             }
