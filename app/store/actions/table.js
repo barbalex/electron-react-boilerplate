@@ -76,13 +76,14 @@ export default store => ({
   }),
   tableRowRemove: action((table, id) => {
     const { app } = store
-    deleteTableRow(app.db, table, id)
-      .then(() => {
-        store.tableRowToggleActivated(table, null)
-        store.tableRowRemoveDeleteIntended()
-        store.tableRowDelete(table, id)
-      })
-      .catch(error => store.tableChangeDbError(error))
+    try {
+      deleteTableRow(app.db, table, id)
+    } catch (error) {
+      return store.tableChangeDbError(error)
+    }
+    store.tableRowToggleActivated(table, null)
+    store.tableRowRemoveDeleteIntended()
+    store.tableRowDelete(table, id)
   }),
   tableChangeState: action((id, field, value) => {
     const row = store.table.rows.find(r => r.id === id)
