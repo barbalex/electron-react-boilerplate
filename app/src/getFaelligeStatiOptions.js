@@ -13,6 +13,6 @@ export default function(db) {
   } catch (error) {
     throw error
   }
-  const options = result.map(res => res.status)
+  options = result.map(res => res.status)
   return options
 }

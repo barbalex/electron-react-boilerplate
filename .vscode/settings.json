@@ -16,7 +16,6 @@
   "typescript.validate.enable": false,
   "typescript.format.enable": false,
 
-  "flow.useNPMPackagedFlow": true,
   "search.exclude": {
     ".git": true,
     ".eslintcache": true,

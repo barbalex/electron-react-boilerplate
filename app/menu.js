@@ -1,15 +1,17 @@
-// @flow
 import { app, Menu, shell, BrowserWindow } from 'electron'
 
 export default class MenuBuilder {
-  mainWindow: BrowserWindow
+  mainWindow
 
-  constructor(mainWindow: BrowserWindow) {
+  constructor(mainWindow) {
     this.mainWindow = mainWindow
   }
 
   buildMenu() {
-    if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.DEBUG_PROD === 'true'
+    ) {
       this.setupDevelopmentEnvironment()
     }
 
@@ -47,12 +49,23 @@ export default class MenuBuilder {
     const subMenuAbout = {
       label: 'Electron',
       submenu: [
-        { label: 'About ElectronReact', selector: 'orderFrontStandardAboutPanel:' },
+        {
+          label: 'About ElectronReact',
+          selector: 'orderFrontStandardAboutPanel:',
+        },
         { type: 'separator' },
         { label: 'Services', submenu: [] },
         { type: 'separator' },
-        { label: 'Hide ElectronReact', accelerator: 'Command+H', selector: 'hide:' },
-        { label: 'Hide Others', accelerator: 'Command+Shift+H', selector: 'hideOtherApplications:' },
+        {
+          label: 'Hide ElectronReact',
+          accelerator: 'Command+H',
+          selector: 'hide:',
+        },
+        {
+          label: 'Hide Others',
+          accelerator: 'Command+Shift+H',
+          selector: 'hideOtherApplications:',
+        },
         { label: 'Show All', selector: 'unhideAllApplications:' },
         { type: 'separator' },
         {
@@ -73,7 +86,11 @@ export default class MenuBuilder {
         { label: 'Cut', accelerator: 'Command+X', selector: 'cut:' },
         { label: 'Copy', accelerator: 'Command+C', selector: 'copy:' },
         { label: 'Paste', accelerator: 'Command+V', selector: 'paste:' },
-        { label: 'Select All', accelerator: 'Command+A', selector: 'selectAll:' },
+        {
+          label: 'Select All',
+          accelerator: 'Command+A',
+          selector: 'selectAll:',
+        },
       ],
     }
     const subMenuViewDev = {
@@ -117,7 +134,11 @@ export default class MenuBuilder {
     const subMenuWindow = {
       label: 'Window',
       submenu: [
-        { label: 'Minimize', accelerator: 'Command+M', selector: 'performMiniaturize:' },
+        {
+          label: 'Minimize',
+          accelerator: 'Command+M',
+          selector: 'performMiniaturize:',
+        },
         { label: 'Close', accelerator: 'Command+W', selector: 'performClose:' },
         { type: 'separator' },
         { label: 'Bring All to Front', selector: 'arrangeInFront:' },
@@ -135,7 +156,9 @@ export default class MenuBuilder {
         {
           label: 'Documentation',
           click() {
-            shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme')
+            shell.openExternal(
+              'https://github.com/atom/electron/tree/master/docs#readme',
+            )
           },
         },
         {
@@ -153,7 +176,8 @@ export default class MenuBuilder {
       ],
     }
 
-    const subMenuView = process.env.NODE_ENV === 'development' ? subMenuViewDev : subMenuViewProd
+    const subMenuView =
+      process.env.NODE_ENV === 'development' ? subMenuViewDev : subMenuViewProd
 
     return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp]
   }
@@ -181,37 +205,41 @@ export default class MenuBuilder {
         submenu:
           process.env.NODE_ENV === 'development'
             ? [
-              {
-                label: '&Reload',
-                accelerator: 'Ctrl+R',
-                click: () => {
-                  this.mainWindow.webContents.reload()
+                {
+                  label: '&Reload',
+                  accelerator: 'Ctrl+R',
+                  click: () => {
+                    this.mainWindow.webContents.reload()
+                  },
                 },
-              },
-              {
-                label: 'Toggle &Full Screen',
-                accelerator: 'F11',
-                click: () => {
-                  this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen())
+                {
+                  label: 'Toggle &Full Screen',
+                  accelerator: 'F11',
+                  click: () => {
+                    this.mainWindow.setFullScreen(
+                      !this.mainWindow.isFullScreen(),
+                    )
+                  },
                 },
-              },
-              {
-                label: 'Toggle &Developer Tools',
-                accelerator: 'Alt+Ctrl+I',
-                click: () => {
-                  this.mainWindow.toggleDevTools()
+                {
+                  label: 'Toggle &Developer Tools',
+                  accelerator: 'Alt+Ctrl+I',
+                  click: () => {
+                    this.mainWindow.toggleDevTools()
+                  },
                 },
-              },
-            ]
+              ]
             : [
-              {
-                label: 'Toggle &Full Screen',
-                accelerator: 'F11',
-                click: () => {
-                  this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen())
+                {
+                  label: 'Toggle &Full Screen',
+                  accelerator: 'F11',
+                  click: () => {
+                    this.mainWindow.setFullScreen(
+                      !this.mainWindow.isFullScreen(),
+                    )
+                  },
                 },
-              },
-            ],
+              ],
       },
       {
         label: 'Help',
@@ -225,7 +253,9 @@ export default class MenuBuilder {
           {
             label: 'Documentation',
             click() {
-              shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme')
+              shell.openExternal(
+                'https://github.com/atom/electron/tree/master/docs#readme',
+              )
             },
           },
           {

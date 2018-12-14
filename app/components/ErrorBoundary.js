@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
@@ -9,15 +8,7 @@ const ErrorTitle = styled.div`
   margin-bottom: 10px;
 `
 
-type Props = {
-  children: Object,
-}
-type State = {
-  error: Object,
-  errorInfo: Object,
-}
-
-class ErrorBoundary extends Component<Props, State> {
+class ErrorBoundary extends Component {
   constructor(props) {
     super(props)
     this.state = { error: null, errorInfo: null }
@@ -46,7 +37,7 @@ class ErrorBoundary extends Component<Props, State> {
     }
     const { children } = this.props
     var childrenWithProps = React.Children.map(children, child =>
-      React.cloneElement(child, { ...this.props })
+      React.cloneElement(child, { ...this.props }),
     )
 
     // Normally, just render children

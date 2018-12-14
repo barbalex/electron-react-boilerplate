@@ -1,20 +1,29 @@
-import getGeschaeftKontaktInternFromDb from './getGeschaeftKontaktInternFromDb'
+const sql1 = `
+    INSERT INTO
+      geschaefteKontakteIntern (idGeschaeft, idKontakt)
+    VALUES
+      (@idGeschaeft, @idKontakt)`
+const sql2 = `
+    SELECT
+      *
+    FROM
+      geschaefteKontakteIntern
+    WHERE
+      idGeschaeft = @idGeschaeft
+      AND idKontakt = @idKontakt`
 
-export default function (db, idGeschaeft, idKontakt) {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      INSERT INTO
-        geschaefteKontakteIntern (idGeschaeft, idKontakt)
-      VALUES
-        (${idGeschaeft}, ${idKontakt})`
-
-    db.run(sql, (error) => {
-      if (error) reject(error)
-      getGeschaeftKontaktInternFromDb(db, idGeschaeft, idKontakt)
-        .then(geschaeftKontaktIntern =>
-          resolve(geschaeftKontaktIntern)
-        )
-        .catch(err => reject(err))
-    })
-  })
+export default function(db, idGeschaeft, idKontakt) {
+  try {
+    db.prepare(sql1).run({ idGeschaeft, idKontakt })
+  } catch (error) {
+    throw error
+  }
+  // return full dataset
+  let result
+  try {
+    result = db.prepare(sql2).all({ idGeschaeft, idKontakt })
+  } catch (error) {
+    throw error
+  }
+  return result
 }

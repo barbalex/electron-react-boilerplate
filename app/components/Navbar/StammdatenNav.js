@@ -1,4 +1,3 @@
-// @flow
 import React from 'react'
 import { NavDropdown, MenuItem } from 'react-bootstrap'
 import styled from 'styled-components'
@@ -29,9 +28,6 @@ const enhance = compose(inject('store'), observer)
 const NavbarStammdatenNav = ({
   store,
   showTableNavs,
-}: {
-  store: Object,
-  showTableNavs: boolean,
 }) => {
   const { getTable } = store
   const { table, rows } = store.table

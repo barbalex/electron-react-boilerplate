@@ -8,7 +8,6 @@
  * When running `npm run build` or `npm run build-main`, this file is compiled to
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  *
- * @flow
  */
 import { app, BrowserWindow } from 'electron'
 import MenuBuilder from './menu'
@@ -39,7 +38,7 @@ const installExtensions = async () => {
   const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS']
 
   return Promise.all(
-    extensions.map(name => installer.default(installer[name], forceDownload))
+    extensions.map(name => installer.default(installer[name], forceDownload)),
   ).catch(console.log)
 }
 
@@ -64,7 +63,7 @@ const browserWindowOptions = {
 
 // get last window state
 // and set it again
-const {lastWindowState} = getConfigSync()
+const { lastWindowState } = getConfigSync()
 if (lastWindowState) {
   if (lastWindowState.width) browserWindowOptions.width = lastWindowState.width
   if (lastWindowState.height) {
