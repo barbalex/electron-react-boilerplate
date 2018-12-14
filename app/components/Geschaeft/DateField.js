@@ -1,21 +1,21 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   FormGroup,
   InputGroup,
   FormControl,
   ControlLabel,
-  Glyphicon,
-} from 'react-bootstrap'
-import moment from 'moment'
-import DatePicker from 'react-datepicker'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import styled from 'styled-components'
+  Glyphicon
+} from 'react-bootstrap';
+import moment from 'moment';
+import DatePicker from 'react-datepicker';
+import { observer, inject } from 'mobx-react';
+import compose from 'recompose/compose';
+import styled from 'styled-components';
 
-import getDateValidationStateDate from '../../src/getDateValidationStateDate'
+import getDateValidationStateDate from '../../src/getDateValidationStateDate';
 
-moment.locale('de')
+moment.locale('de');
 
 const StyledFormGroup = styled(FormGroup)`
   grid-column: 1;
@@ -53,12 +53,15 @@ const StyledFormGroup = styled(FormGroup)`
     border-left-color: #ccc;
     right: 1em;
   }
-`
+`;
 const StyledDatePicker = styled(DatePicker)`
   cursor: pointer;
-`
+`;
 
-const enhance = compose(inject('store'), observer)
+const enhance = compose(
+  inject('store'),
+  observer
+);
 
 const DateField = ({
   store,
@@ -67,13 +70,13 @@ const DateField = ({
   change,
   blur,
   onChangeDatePicker,
-  tabIndex,
+  tabIndex
 }) => {
   const {
     activeId,
-    geschaeftePlusFilteredAndSorted: geschaefte,
-  } = store.geschaefte
-  const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
+    geschaeftePlusFilteredAndSorted: geschaefte
+  } = store.geschaefte;
+  const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {};
   /**
    * need to give addon no padding
    * and the originally addon's padding to the glyphicon
@@ -81,14 +84,14 @@ const DateField = ({
    * for opening calendar
    */
   const datePickerAddonStyle = {
-    padding: 0,
-  }
+    padding: 0
+  };
   const datePickerCalendarStyle = {
     paddingTop: 6,
     paddingBottom: 6,
     paddingLeft: 12,
-    paddingRight: 12,
-  }
+    paddingRight: 12
+  };
 
   return (
     <StyledFormGroup
@@ -107,11 +110,9 @@ const DateField = ({
         />
         <InputGroup.Addon style={datePickerAddonStyle}>
           <StyledDatePicker
-            // selected={moment(date, 'DD.MM.YYYY')}
             onChange={onChangeDatePicker.bind(this, name)}
-            // isClearable={true}
             dateFormat="DD.MM.YYYY"
-            locale="de-CH"
+            //locale="de-CH"
             customInput={
               <Glyphicon glyph="calendar" style={datePickerCalendarStyle} />
             }
@@ -120,10 +121,10 @@ const DateField = ({
         </InputGroup.Addon>
       </InputGroup>
     </StyledFormGroup>
-  )
-}
+  );
+};
 
-DateField.displayName = 'DateField'
+DateField.displayName = 'DateField';
 
 DateField.propTypes = {
   store: PropTypes.object.isRequired,
@@ -132,7 +133,7 @@ DateField.propTypes = {
   change: PropTypes.func.isRequired,
   blur: PropTypes.func.isRequired,
   onChangeDatePicker: PropTypes.func.isRequired,
-  tabIndex: PropTypes.number.isRequired,
-}
+  tabIndex: PropTypes.number.isRequired
+};
 
-export default enhance(DateField)
+export default enhance(DateField);
