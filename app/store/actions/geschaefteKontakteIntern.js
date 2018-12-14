@@ -58,12 +58,13 @@ export default store => ({
   }),
   geschaeftKontaktInternRemove: action((idGeschaeft, idKontakt) => {
     const { app } = store
-    deleteGeschaeftKontaktIntern(app.db, idGeschaeft, idKontakt)
-      .then(() => {
-        store.geschaeftKontaktInternRemoveDeleteIntended()
-        store.geschaeftKontaktInternDelete(idGeschaeft, idKontakt)
-      })
-      .catch(error => store.geschaeftKontaktInternDeleteError(error))
+    try {
+      deleteGeschaeftKontaktIntern(app.db, idGeschaeft, idKontakt)
+    } catch (error) {
+      return store.geschaeftKontaktInternDeleteError(error)
+    }
+    store.geschaeftKontaktInternRemoveDeleteIntended()
+    store.geschaeftKontaktInternDelete(idGeschaeft, idKontakt)
   }),
   geschaeftKontaktInternDeleteError: action(error =>
     store.geschaeftKontaktInternDelete.push(error),
