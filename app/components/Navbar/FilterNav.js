@@ -48,7 +48,10 @@ const FilterRemoveButton = styled(Button)`
   border-bottom-left-radius: 0 !important;
 `
 
-const enhance = compose(inject('store'), observer)
+const enhance = compose(
+  inject('store'),
+  observer,
+)
 
 const FilterNav = ({ store }) => {
   const {
@@ -116,7 +119,7 @@ const FilterNav = ({ store }) => {
           <MenuItem header>vorbereitete Filter:</MenuItem>
           <MenuItem
             onSelect={() => {
-              geschaefteFilterByFields(filterForFaelligeGeschaefte(), 'fällige')
+              geschaefteFilterByFields(filterForFaelligeGeschaefte, 'fällige')
               // order by frist desc
               geschaefteResetSort()
               geschaefteSortByFields('fristMitarbeiter', 'DESCENDING')
@@ -162,8 +165,8 @@ const FilterNav = ({ store }) => {
           <MenuItem
             onSelect={() => {
               geschaefteFilterByFields(
-                filterForVernehmlAngek(),
-                'angekündigte Vernehmlassungen'
+                filterForVernehmlAngek,
+                'angekündigte Vernehmlassungen',
               )
               geschaefteResetSort()
               geschaefteSortByFields('idGeschaeft', 'DESCENDING')
@@ -180,8 +183,8 @@ const FilterNav = ({ store }) => {
           <MenuItem
             onSelect={() => {
               geschaefteFilterByFields(
-                filterForVernehmlLaeuft(),
-                'laufende Vernehmlassungen'
+                filterForVernehmlLaeuft,
+                'laufende Vernehmlassungen',
               )
               geschaefteResetSort()
               geschaefteSortByFields('fristMitarbeiter', 'DESCENDING')
