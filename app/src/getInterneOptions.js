@@ -6,7 +6,7 @@ const sql = `
   ORDER BY
     kurzzeichen`
 
-export default function(db) {
+export default db => {
   let options = []
   try {
     options = db.prepare(sql).all()

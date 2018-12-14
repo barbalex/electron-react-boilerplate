@@ -1,4 +1,4 @@
-export default function (db, idGeschaeft, gekoNr) {
+export default (db, idGeschaeft, gekoNr) => {
   return new Promise((resolve, reject) => {
     const sql = `
       SELECT
