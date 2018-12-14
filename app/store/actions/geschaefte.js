@@ -192,41 +192,42 @@ export default store => ({
       geschaefteKontakteExtern,
       geschaefte,
     } = store
-    deleteGeschaeft(app.db, idGeschaeft)
-      .then(() => {
-        store.geschaeftRemoveDeleteIntended(idGeschaeft)
-        store.geschaefte.geschaefte = store.geschaefte.geschaefte.filter(
-          g => g.idGeschaeft !== idGeschaeft,
-        )
-        // need to delete geschaefteKontakteIntern in store
-        const geschaefteKontakteInternToDelete = geschaefteKontakteIntern.geschaefteKontakteIntern.filter(
-          g => g.idGeschaeft === idGeschaeft,
-        )
-        geschaefteKontakteInternToDelete.forEach(g =>
-          store.geschaeftKontaktInternDelete(idGeschaeft, g.idKontakt),
-        )
-        // need to delete geschaefteKontakteExtern in store
-        const geschaefteKontakteExternToDelete = geschaefteKontakteExtern.geschaefteKontakteExtern.filter(
-          g => g.idGeschaeft === idGeschaeft,
-        )
-        geschaefteKontakteExternToDelete.forEach(g =>
-          store.geschaefteKontakteExternActions.geschaeftKontaktExternDelete(
-            idGeschaeft,
-            g.idKontakt,
-          ),
-        )
-        // need to delete geKo in store
-        const gekoToRemove = geschaefte.geko.filter(
-          g => g.idGeschaeft === idGeschaeft,
-        )
-        gekoToRemove.forEach(g => store.gekoRemove(idGeschaeft, g.gekoNr))
-        // need to delete links in store
-        const linksToRemove = geschaefte.links.filter(
-          l => l.idGeschaeft === idGeschaeft,
-        )
-        linksToRemove.forEach(l => store.linkDelete(idGeschaeft, l.url))
-      })
-      .catch(error => store.geschaefte.error.push(error))
+    try {
+      deleteGeschaeft(app.db, idGeschaeft)
+    } catch (error) {
+      return store.geschaefte.error.push(error)
+    }
+    store.geschaeftRemoveDeleteIntended(idGeschaeft)
+    store.geschaefte.geschaefte = store.geschaefte.geschaefte.filter(
+      g => g.idGeschaeft !== idGeschaeft,
+    )
+    // need to delete geschaefteKontakteIntern in store
+    const geschaefteKontakteInternToDelete = geschaefteKontakteIntern.geschaefteKontakteIntern.filter(
+      g => g.idGeschaeft === idGeschaeft,
+    )
+    geschaefteKontakteInternToDelete.forEach(g =>
+      store.geschaeftKontaktInternDelete(idGeschaeft, g.idKontakt),
+    )
+    // need to delete geschaefteKontakteExtern in store
+    const geschaefteKontakteExternToDelete = geschaefteKontakteExtern.geschaefteKontakteExtern.filter(
+      g => g.idGeschaeft === idGeschaeft,
+    )
+    geschaefteKontakteExternToDelete.forEach(g =>
+      store.geschaefteKontakteExternActions.geschaeftKontaktExternDelete(
+        idGeschaeft,
+        g.idKontakt,
+      ),
+    )
+    // need to delete geKo in store
+    const gekoToRemove = geschaefte.geko.filter(
+      g => g.idGeschaeft === idGeschaeft,
+    )
+    gekoToRemove.forEach(g => store.gekoRemove(idGeschaeft, g.gekoNr))
+    // need to delete links in store
+    const linksToRemove = geschaefte.links.filter(
+      l => l.idGeschaeft === idGeschaeft,
+    )
+    linksToRemove.forEach(l => store.linkDelete(idGeschaeft, l.url))
   }),
   geschaeftRemoveDeleteIntended: action(() => {
     store.geschaefte.willDelete = false
@@ -250,15 +251,13 @@ export default store => ({
     }
   }),
   changeGeschaeftInDb: action((idGeschaeft, field, value) =>
-    // no need to do something on then
-    // ui was updated on GESCHAEFTE_CHANGE_STATE
     updateGeschaeft(
       store.app.db,
       idGeschaeft,
       field,
       value,
       store.user.username,
-    ).catch(error => store.geschaefte.error.push(error)),
+    ),
   ),
   rechtsmittelErledigungOptionsGet: action(() => {
     let rechtsmittelErledigungOptions = []
@@ -363,15 +362,16 @@ export default store => ({
       .then(geko => store.geschaefte.geko.unshift(geko))
       .catch(error => store.geschaefte.error.push(error)),
   ),
-  gekoRemove: action((idGeschaeft, gekoNr) =>
-    deleteGeko(store.app.db, idGeschaeft, gekoNr)
-      .then(() => {
-        store.geschaefte.geko = store.geschaefte.geko.filter(
-          g => g.idGeschaeft !== idGeschaeft || g.gekoNr !== gekoNr,
-        )
-      })
-      .catch(error => store.geschaefte.error.push(error)),
-  ),
+  gekoRemove: action((idGeschaeft, gekoNr) => {
+    try {
+      deleteGeko(store.app.db, idGeschaeft, gekoNr)
+    } catch (error) {
+      return store.geschaefte.error.push(error)
+    }
+    store.geschaefte.geko = store.geschaefte.geko.filter(
+      g => g.idGeschaeft !== idGeschaeft || g.gekoNr !== gekoNr,
+    )
+  }),
   changeGekoInDb: action((idGeschaeft, gekoNr, field, value) => {
     // no need to do something on then
     // ui was updated on GEKO_CHANGE_STATE
@@ -387,11 +387,12 @@ export default store => ({
       .catch(error => store.geschaefte.error.push(error)),
   ),
   linkRemove: action((idGeschaeft, url) => {
-    deleteLink(store.app.db, idGeschaeft, url)
-      .then(() => {
-        store.linkDelete(idGeschaeft, url)
-      })
-      .catch(error => store.geschaefte.error.push(error))
+    try {
+      deleteLink(store.app.db, idGeschaeft, url)
+    } catch (error) {
+      return store.geschaefte.error.push(error)
+    }
+    store.linkDelete(idGeschaeft, url)
   }),
   linkDelete: action((idGeschaeft, url) => {
     store.geschaefte.links = store.geschaefte.links.filter(
