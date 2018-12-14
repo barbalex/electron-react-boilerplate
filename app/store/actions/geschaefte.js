@@ -258,27 +258,39 @@ export default store => ({
       store.user.username
     ).catch(error => store.geschaefte.error.push(error))
   ),
-  rechtsmittelErledigungOptionsGet: action(() =>
-    getDropdownOptions(store.app.db, 'rechtsmittelErledigung')
-      .then(rechtsmittelErledigungOptions => {
-        store.geschaefte.rechtsmittelErledigungOptions = rechtsmittelErledigungOptions
-      })
-      .catch(error => store.geschaefte.error.push(error))
-  ),
-  parlVorstossTypOptionsGet: action(() =>
-    getDropdownOptions(store.app.db, 'parlVorstossTyp')
-      .then(parlVorstossTypOptions => {
-        store.geschaefte.parlVorstossTypOptions = parlVorstossTypOptions
-      })
-      .catch(error => store.geschaefte.error.push(error))
-  ),
-  statusOptionsGet: action(() =>
-    getDropdownOptions(store.app.db, 'status')
-      .then(statusOptions => {
-        store.geschaefte.statusOptions = statusOptions
-      })
-      .catch(error => store.geschaefte.error.push(error))
-  ),
+  rechtsmittelErledigungOptionsGet: action(() => {
+    let rechtsmittelErledigungOptions
+    try {
+      rechtsmittelErledigungOptions = getDropdownOptions(
+        store.app.db,
+        'rechtsmittelErledigung'
+      )
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+    store.geschaefte.rechtsmittelErledigungOptions = rechtsmittelErledigungOptions
+  }),
+  parlVorstossTypOptionsGet: action(() => {
+    let parlVorstossTypOptions
+    try {
+      parlVorstossTypOptions = getDropdownOptions(
+        store.app.db,
+        'parlVorstossTyp'
+      )
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+    store.geschaefte.parlVorstossTypOptions = parlVorstossTypOptions
+  }),
+  statusOptionsGet: action(() => {
+    let statusOptions
+    try {
+      statusOptions = getDropdownOptions(store.app.db, 'status')
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+    store.geschaefte.statusOptions = statusOptions
+  }),
   faelligeStatiOptionsGet: action(() => {
     getFaelligeStatiOptions(store.app.db)
       .then(faelligeStatiOptions => {
@@ -286,20 +298,24 @@ export default store => ({
       })
       .catch(error => store.geschaefte.error.push(error))
   }),
-  geschaeftsartOptionsGet: action(() =>
-    getDropdownOptions(store.app.db, 'geschaeftsart')
-      .then(geschaeftsartOptions => {
-        store.geschaefte.geschaeftsartOptions = geschaeftsartOptions
-      })
-      .catch(error => store.geschaefte.error.push(error))
-  ),
-  aktenstandortOptionsGet: action(() =>
-    getDropdownOptions(store.app.db, 'aktenstandort')
-      .then(aktenstandortOptions => {
-        store.geschaefte.aktenstandortOptions = aktenstandortOptions
-      })
-      .catch(error => store.geschaefte.error.push(error))
-  ),
+  geschaeftsartOptionsGet: action(() => {
+    let geschaeftsartOptions
+    try {
+      geschaeftsartOptions = getDropdownOptions(store.app.db, 'geschaeftsart')
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+    store.geschaefte.geschaeftsartOptions = geschaeftsartOptions
+  }),
+  aktenstandortOptionsGet: action(() => {
+    let aktenstandortOptions
+    try {
+      aktenstandortOptions = getDropdownOptions(store.app.db, 'aktenstandort')
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+    store.geschaefte.aktenstandortOptions = aktenstandortOptions
+  }),
   interneOptionsGet: action(() =>
     getInterneOptions(store.app.db)
       .then(interneOptions => {
@@ -314,20 +330,27 @@ export default store => ({
       })
       .catch(error => store.geschaefte.error.push(error))
   ),
-  rechtsmittelInstanzOptionsGet: action(() =>
-    getDropdownOptions(store.app.db, 'rechtsmittelInstanz')
-      .then(rechtsmittelInstanzOptions => {
-        store.geschaefte.rechtsmittelInstanzOptions = rechtsmittelInstanzOptions
-      })
-      .catch(error => store.geschaefte.error.push(error))
-  ),
-  abteilungOptionsGet: action(() =>
-    getDropdownOptions(store.app.db, 'abteilung')
-      .then(abteilungOptions => {
-        store.geschaefte.abteilungOptions = abteilungOptions
-      })
-      .catch(error => store.geschaefte.error.push(error))
-  ),
+  rechtsmittelInstanzOptionsGet: action(() => {
+    let rechtsmittelInstanzOptions
+    try {
+      rechtsmittelInstanzOptions = getDropdownOptions(
+        store.app.db,
+        'rechtsmittelInstanz'
+      )
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+    store.geschaefte.rechtsmittelInstanzOptions = rechtsmittelInstanzOptions
+  }),
+  abteilungOptionsGet: action(() => {
+    let abteilungOptions
+    try {
+      abteilungOptions = getDropdownOptions(store.app.db, 'abteilung')
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+    store.geschaefte.abteilungOptions = abteilungOptions
+  }),
   gekoNewCreate: action((idGeschaeft, gekoNr) =>
     newGekoInDb(store.app.db, idGeschaeft, gekoNr)
       .then(geko => store.geschaefte.geko.unshift(geko))
