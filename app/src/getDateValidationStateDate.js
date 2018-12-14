@@ -1,6 +1,6 @@
 import validateDate from './validateDate'
 
-export default function (date) {
+export default date => {
   switch (validateDate(date)) {
     case true:
       return null
