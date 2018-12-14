@@ -1,18 +1,18 @@
 const sql1 = `
-    INSERT INTO
-      geschaefteKontakteIntern (idGeschaeft, idKontakt)
-    VALUES
-      (@idGeschaeft, @idKontakt)`
+  INSERT INTO
+    geschaefteKontakteIntern (idGeschaeft, idKontakt)
+  VALUES
+    (@idGeschaeft, @idKontakt)`
 const sql2 = `
-    SELECT
-      *
-    FROM
-      geschaefteKontakteIntern
-    WHERE
-      idGeschaeft = @idGeschaeft
-      AND idKontakt = @idKontakt`
+  SELECT
+    *
+  FROM
+    geschaefteKontakteIntern
+  WHERE
+    idGeschaeft = @idGeschaeft
+    AND idKontakt = @idKontakt`
 
-export default function(db, idGeschaeft, idKontakt) {
+export default (db, idGeschaeft, idKontakt) => {
   try {
     db.prepare(sql1).run({ idGeschaeft, idKontakt })
   } catch (error) {
