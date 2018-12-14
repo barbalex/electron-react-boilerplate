@@ -22,18 +22,28 @@ export default store => ({
   getGeschaefteKontakteIntern: action(() => {
     const { app } = store
     store.geschaefteKontakteInternGet()
-    getGeschaefteKontakteInternFromDb(app.db)
-      .then(geschaefteKontakteIntern => store.geschaefteKontakteInternGetSuccess(geschaefteKontakteIntern))
-      .catch(error => store.geschaefteKontakteInternGetError(error))
+    let geschaefteKontakteIntern = []
+    try {
+      geschaefteKontakteIntern = getGeschaefteKontakteInternFromDb(app.db)
+    } catch (error) {
+      store.geschaefteKontakteInternGetError(error)
+    }
+    store.geschaefteKontakteInternGetSuccess(geschaefteKontakteIntern)
   }),
   geschaeftKontaktInternNew: action(geschaeftKontaktIntern =>
-    store.geschaefteKontakteIntern.geschaefteKontakteIntern.push(geschaeftKontaktIntern),
+    store.geschaefteKontakteIntern.geschaefteKontakteIntern.push(
+      geschaeftKontaktIntern,
+    ),
   ),
-  geschaeftKontaktInternNewError: action(error => store.geschaefteKontakteIntern.error.push(error)),
+  geschaeftKontaktInternNewError: action(error =>
+    store.geschaefteKontakteIntern.error.push(error),
+  ),
   geschaeftKontaktInternNewCreate: action((idGeschaeft, idKontakt) => {
     const { app } = store
     newGeschaeftKontaktInternInDb(app.db, idGeschaeft, idKontakt)
-      .then(geschaeftKontaktIntern => store.geschaeftKontaktInternNew(geschaeftKontaktIntern))
+      .then(geschaeftKontaktIntern =>
+        store.geschaeftKontaktInternNew(geschaeftKontaktIntern),
+      )
       .catch(error => store.geschaeftKontaktInternNewError(error))
   }),
   geschaeftKontaktInternRemoveDeleteIntended: action(() => {
@@ -55,11 +65,15 @@ export default store => ({
       })
       .catch(error => store.geschaeftKontaktInternDeleteError(error))
   }),
-  geschaeftKontaktInternDeleteError: action(error => store.geschaeftKontaktInternDelete.push(error)),
+  geschaeftKontaktInternDeleteError: action(error =>
+    store.geschaeftKontaktInternDelete.push(error),
+  ),
   geschaeftKontaktInternSetDeleteIntended: action((idGeschaeft, idKontakt) => {
     store.geschaefteKontakteIntern.willDelete = true
     store.geschaefteKontakteIntern.activeIdGeschaeft = idGeschaeft
     store.geschaefteKontakteIntern.activeIdKontakt = idKontakt
   }),
-  geschaefteKontakteInternChangeDbError: action(error => store.geschaefteKontakteIntern.error.push(error)),
+  geschaefteKontakteInternChangeDbError: action(error =>
+    store.geschaefteKontakteIntern.error.push(error),
+  ),
 })

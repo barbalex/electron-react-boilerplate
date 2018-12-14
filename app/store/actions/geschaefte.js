@@ -166,22 +166,24 @@ export default store => ({
    */
   geschaeftNewCreate: action(() => {
     const { app, user } = store
-    newGeschaeftInDb(app.db, user.username)
-      .then(geschaeft => {
-        store.geschaefte.geschaefte.unshift(geschaeft)
-        /**
-         * need to remove filters
-         */
-        store.geschaefte.filterFields = []
-        store.geschaefte.filterType = null
-        store.geschaefte.filterFulltext = ''
-        store.geschaefte.sortFields = []
-        store.geschaeftToggleActivated(geschaeft.idGeschaeft)
-        if (store.history.location.pathname !== '/geschaefte') {
-          store.history.push('/geschaefte')
-        }
-      })
-      .catch(error => store.geschaefte.error.push(error))
+    let geschaeft = {}
+    try {
+      geschaeft = newGeschaeftInDb(app.db, user.username)
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+    store.geschaefte.geschaefte.unshift(geschaeft)
+    /**
+     * need to remove filters
+     */
+    store.geschaefte.filterFields = []
+    store.geschaefte.filterType = null
+    store.geschaefte.filterFulltext = ''
+    store.geschaefte.sortFields = []
+    store.geschaeftToggleActivated(geschaeft.idGeschaeft)
+    if (store.history.location.pathname !== '/geschaefte') {
+      store.history.push('/geschaefte')
+    }
   }),
   geschaeftRemove: action(idGeschaeft => {
     const {
