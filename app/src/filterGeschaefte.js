@@ -1,11 +1,7 @@
 import filterGeschaefteByFulltext from './filterGeschaefteByFulltext'
 import filterGeschaefteByFilterFields from './filterGeschaefteByFilterFields'
 
-export default function (
-  geschaefte,
-  filterFulltext,
-  filterFields,
-) {
+export default (geschaefte, filterFulltext, filterFields) => {
   const existsFilterFulltext = !!filterFulltext
   const existsFilterFields = Object.keys(filterFields).length > 0
   let geschaefteGefiltert = geschaefte
@@ -13,9 +9,10 @@ export default function (
   if (existsFilterFulltext) {
     geschaefteGefiltert = filterGeschaefteByFulltext(geschaefte, filterFulltext)
   } else if (existsFilterFields) {
-    geschaefteGefiltert = filterGeschaefteByFilterFields(geschaefte, filterFields)
+    geschaefteGefiltert = filterGeschaefteByFilterFields(
+      geschaefte,
+      filterFields,
+    )
   }
-  return geschaefteGefiltert.map(g =>
-    g.idGeschaeft
-  )
+  return geschaefteGefiltert.map(g => g.idGeschaeft)
 }
