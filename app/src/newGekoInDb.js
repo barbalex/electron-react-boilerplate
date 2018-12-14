@@ -1,19 +1,30 @@
-import getSingleGekoFromDb from './getSingleGekoFromDb'
+const sql1 = `
+  INSERT INTO
+    geko (idGeschaeft, gekoNr)
+  VALUES
+    (@idGeschaeft, @gekoNr)`
+const sql2 = `
+  SELECT
+    *
+  FROM
+    geko
+  WHERE
+    idGeschaeft = @idGeschaeft AND
+    gekoNr = @gekoNr`
 
-export default function (db, idGeschaeft, gekoNr) {
-  return new Promise((resolve, reject) => {
-    const sql = `
-      INSERT INTO
-        geko (idGeschaeft, gekoNr)
-      VALUES
-        (${idGeschaeft}, '${gekoNr}')`
+export default (db, idGeschaeft, gekoNr) => {
+  try {
+    db.prepare(sql1).run({ idGeschaeft, gekoNr })
+  } catch (error) {
+    throw error
+  }
 
-    db.run(sql, (error) => {
-      if (error) reject(error)
-      // return full dataset
-      getSingleGekoFromDb(db, idGeschaeft, gekoNr)
-        .then(geko => resolve(geko))
-        .catch(err => reject(err))
-    })
-  })
+  // return full dataset
+  let geko
+  try {
+    geko = db.prepare(sql2).get({ idGeschaeft, gekoNr })
+  } catch (error) {
+    throw error
+  }
+  return geko
 }
