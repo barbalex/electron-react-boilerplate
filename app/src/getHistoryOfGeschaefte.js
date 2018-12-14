@@ -1,10 +1,12 @@
 import _ from 'lodash'
 
-export default function (geschaefte) {
+export default geschaefte => {
   // build a map
   const historyMap = new Map(
     geschaefte.map(g => {
-      const idArray = g.idVorgeschaeft ? [g.idVorgeschaeft, g.idGeschaeft] : [g.idGeschaeft]
+      const idArray = g.idVorgeschaeft
+        ? [g.idVorgeschaeft, g.idGeschaeft]
+        : [g.idGeschaeft]
       return [g.idGeschaeft, idArray]
     }),
   )
