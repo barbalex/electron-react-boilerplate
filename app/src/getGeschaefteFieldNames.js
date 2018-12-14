@@ -1,8 +1,11 @@
-export default function (db) {
-  return new Promise((resolve, reject) => {
-    db.all('PRAGMA table_info(geschaefte)', (error, result) => {
-      if (error) reject(error)
-      resolve(result)
-    })
-  })
+// seems not to be in use
+
+export default function(db) {
+  let result = []
+  try {
+    result = db.prepare('PRAGMA table_info(geschaefte)').all()
+  } catch (error) {
+    throw error
+  }
+  return result
 }

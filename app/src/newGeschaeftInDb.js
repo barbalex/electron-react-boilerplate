@@ -1,29 +1,28 @@
 import moment from 'moment'
 import getGeschaeftFromDb from './getGeschaeftFromDb'
 
-export default function (db, username) {
-  return new Promise((resolve, reject) => {
-    const now = moment().format('YYYY-MM-DD HH:mm:ss')
-    const sql = `
+export default function(db, username) {
+  const now = moment().format('YYYY-MM-DD HH:mm:ss')
+  const sql = `
       INSERT INTO
         geschaefte (mutationsdatum, mutationsperson)
       VALUES
-        ('${now}', '${username}')`
+        (@now, @username)`
 
-    /*
-     * This is weird:
-     * node-sqlite3 returns the new ID
-     * in the 'this' object of the callback function,
-     * NOT in the result
-     * so DO NOT USE ARROW FUNCTION
-     */
-    db.run(sql, function callback(error) {
-      if (error) reject(error)
-      const idGeschaeft = this.lastID
-      // return full dataset
-      getGeschaeftFromDb(db, idGeschaeft)
-        .then(geschaeft => resolve(geschaeft))
-        .catch(err => reject(err))
-    })
-  })
+  let result
+  try {
+    result = db.prepare(sql).run({ now, username })
+  } catch (error) {
+    throw error
+  }
+  const idGeschaeft = result.lastInsertRowid
+
+  // return full dataset
+  let geschaeft
+  try {
+    geschaeft = getGeschaeftFromDb(db, idGeschaeft)
+  } catch (error) {
+    throw error
+  }
+  return geschaeft
 }

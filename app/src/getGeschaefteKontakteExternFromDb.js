@@ -5,7 +5,7 @@ const sql = `
     geschaefteKontakteExtern`
 
 export default db => {
-  let geschaefteKontakteExtern
+  let geschaefteKontakteExtern = []
   try {
     geschaefteKontakteExtern = db.prepare(sql).all()
   } catch (error) {
