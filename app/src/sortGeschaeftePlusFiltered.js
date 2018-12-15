@@ -3,12 +3,12 @@ import moment from 'moment'
 
 import isDateField from '../src/isDateField'
 
-export default (store) => {
+export default store => {
   const geschaeftePassed = store.geschaefte.geschaeftePlusFiltered
   const { sortFields } = store.geschaefte
   let geschaefte
-  sortFields.forEach((sf) => {
-    geschaefte = _.sortBy(geschaeftePassed, (g) => {
+  sortFields.forEach(sf => {
+    geschaefte = _.sortBy(geschaeftePassed, g => {
       if (g[sf.field]) {
         if (isDateField(sf.field)) {
           // need to reformat date
