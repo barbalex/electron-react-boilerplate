@@ -385,11 +385,14 @@ export default store => ({
       store.geschaefte.error.push(error)
     }
   }),
-  linkNewCreate: action((idGeschaeft, url) =>
-    newLinkInDb(store.app.db, idGeschaeft, url)
-      .then(() => store.geschaefte.links.unshift({ idGeschaeft, url }))
-      .catch(error => store.geschaefte.error.push(error)),
-  ),
+  linkNewCreate: action((idGeschaeft, url) =>{
+    try {
+      newLinkInDb(store.app.db, idGeschaeft, url)
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+    store.geschaefte.links.unshift({ idGeschaeft, url })
+  }),
   linkRemove: action((idGeschaeft, url) => {
     try {
       deleteLink(store.app.db, idGeschaeft, url)
