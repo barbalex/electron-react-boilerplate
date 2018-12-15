@@ -10,10 +10,15 @@ import styled from 'styled-components'
 
 const Container = styled.div`
   grid-area: areaLinks;
-  background-color: ${props => (props['data-ispdf'] ? 'rgb(227, 232, 255)' : '#e3fff0')};
+  background-color: ${props =>
+    props['data-ispdf'] ? 'rgb(227, 232, 255)' : '#e3fff0'};
   display: grid;
-  grid-template-columns: ${props => (props['data-ispdf'] ? '100%' : 'calc(100% - 308px) 300px')};
-  grid-template-areas: ${props => (props['data-ispdf'] ? '\'title\' \'links\'' : '\'title dropzone\' \'links dropzone\'')};
+  grid-template-columns: ${props =>
+    props['data-ispdf'] ? '100%' : 'calc(100% - 308px) 300px'};
+  grid-template-areas: ${props =>
+    props['data-ispdf']
+      ? "'title' 'links'"
+      : "'title dropzone' 'links dropzone'"};
   grid-column-gap: 8px;
   grid-row-gap: ${props => (props['data-ispdf'] ? '1px' : '8px')};
   padding: 8px;
@@ -121,30 +126,35 @@ const AreaLinks = ({ store, onDrop }) => {
               </a>
             </UrlDiv>
             <RemoveGlyphiconDiv data-ispdf={isPdf}>
-              <RemoveGlyphicon glyph="remove-circle" onClick={() => linkRemove(activeId, link.url)} title="Link entfernen" />
+              <RemoveGlyphicon
+                glyph="remove-circle"
+                onClick={() => linkRemove(activeId, link.url)}
+                title="Link entfernen"
+              />
             </RemoveGlyphiconDiv>
           </Field>
         ))}
       </Links>
       <DropzoneContainer data-ispdf={isPdf}>
         <StyledDropzone onDrop={onDrop}>
-          {({ isDragActive, isDragReject }) => {
+          {({ getRootProps, getInputProps, isDragActive, isDragReject }) => {
             if (isDragActive) {
               return (
-                <DropzoneInnerDiv>
+                <DropzoneInnerDiv {...getRootProps()}>
                   <div>jetzt fallen lassen...</div>
                 </DropzoneInnerDiv>
               )
             }
             if (isDragReject) {
               return (
-                <DropzoneInnerDiv>
+                <DropzoneInnerDiv {...getRootProps()}>
                   <div>Hm. Da ging etwas schief :-(</div>
                 </DropzoneInnerDiv>
               )
             }
             return (
-              <DropzoneInnerDiv>
+              <DropzoneInnerDiv {...getRootProps()}>
+                <input {...getInputProps()} />
                 <div>Datei hierhin ziehen...</div>
                 <div>...oder klicken, um sie zu wählen.</div>
               </DropzoneInnerDiv>

@@ -224,7 +224,7 @@
     "react-bootstrap": "0.32.4",
     "react-datepicker": "2.0.0",
     "react-dom": "16.7.0-alpha.2",
-    "react-dropzone": "4.2.9",
+    "react-dropzone": "8.0.1",
     "react-linkify": "0.2.2",
     "react-split-pane": "0.1.85",
     "react-textarea-autosize": "7.1.0",
