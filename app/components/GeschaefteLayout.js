@@ -6,10 +6,10 @@ import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
 import styled from 'styled-components'
 
-import Geschaeft from "./Geschaeft"
+import Geschaeft from './Geschaeft'
 import Pages from './Pages'
-import GeschaeftPdf from "./GeschaeftPdf"
-import Geschaefte from "./Geschaefte"
+import GeschaeftPdf from './GeschaeftPdf'
+import Geschaefte from './Geschaefte'
 
 const StyledSplitPane = styled(SplitPane)`
   top: 52px;
@@ -22,9 +22,9 @@ const enhance = compose(
   inject('store'),
   withHandlers({
     onChange: props => size =>
-      props.store.configSetKey('geschaefteColumnWidth', size)
+      props.store.configSetKey('geschaefteColumnWidth', size),
   }),
-  observer
+  observer,
 )
 
 const GeschaefteLayout = ({ store, onChange }) => {
@@ -34,12 +34,6 @@ const GeschaefteLayout = ({ store, onChange }) => {
   const showGeschaeft = path === '/geschaefte' && activeId
   const showPages = path === '/pages'
   const showGeschaeftPdf = path === '/geschaeftPdf' && activeId
-
-  console.log('GeschaefteLayout', {
-    showGeschaeft,
-    showPages,
-    showGeschaeftPdf
-  })
 
   return (
     <StyledSplitPane
@@ -60,7 +54,7 @@ const GeschaefteLayout = ({ store, onChange }) => {
 
 GeschaefteLayout.propTypes = {
   store: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 }
 
 export default enhance(GeschaefteLayout)

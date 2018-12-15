@@ -10,7 +10,7 @@ import Navbar from './Navbar'
 
 const enhance = compose(
   inject('store'),
-  observer
+  observer,
 )
 
 const App = ({ store }) => {
@@ -24,15 +24,10 @@ const App = ({ store }) => {
   const showGeschaefteLayout = [
     '/geschaefte',
     '/pages',
-    '/geschaeftPdf'
+    '/geschaeftPdf',
   ].includes(pathname)
   const showFilterFieldsLayout = pathname === '/filterFields'
   const showTableLayout = pathname === '/table'
-  console.log('App rendering', {
-    showGeschaefteLayout,
-    showFilterFieldsLayout,
-    showTableLayout
-  })
 
   return (
     <div ref={setRef}>
@@ -44,7 +39,7 @@ const App = ({ store }) => {
   )
 }
 App.propTypes = {
-  store: PropTypes.object.isRequired
+  store: PropTypes.object.isRequired,
 }
 
 export default enhance(App)

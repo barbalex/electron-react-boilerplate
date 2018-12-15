@@ -38,7 +38,6 @@ export default store => ({
     store.db = null
   }),
   dbChooseSuccess: action((dbPath, db) => {
-    console.log('app, dbChooseSuccess', { dbPath, db })
     store.app.fetchingDb = false
     store.app.db = db
     store.app.config = Object.assign({}, store.app.config, { dbPath })
@@ -64,16 +63,11 @@ export default store => ({
     store.geschaefteSortByFields('fristMitarbeiter', 'DESCENDING')
   }),
   dbGetAtStandardpathIfPossible: action(() => {
-    console.log('actions, dbGetAtStandardpathIfPossible', { standardDbPath })
     // try to open db at standard path
     // need function that tests if db exists at standard path
     const standardDbExists = fs.existsSync(standardDbPath)
-    console.log('actions, dbGetAtStandardpathIfPossible', { standardDbExists })
     if (standardDbExists) {
       const db = betterSqlite(standardDbPath, { fileMustExist: true })
-      console.log('actions, dbGetAtStandardpathIfPossible', {
-        db,
-      })
       store.dbChooseSuccess(standardDbPath, db)
       store.configSetKey('dbPath', standardDbPath)
     } else {
@@ -90,8 +84,6 @@ export default store => ({
     }
   }),
   configGet: action(() => {
-    // or "getConfig"???
-    console.log('actions, configGet')
     getConfig()
       .then(config => {
         const newConfig = config || standardConfig
