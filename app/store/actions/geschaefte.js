@@ -33,7 +33,7 @@ export default store => ({
       store.geschaefte.fetching = false
       store.geschaefte.error.push(error)
     }
-    console.log('store,actions,getGeschaefte:', { geschaefte })
+    console.log('store, actions, getGeschaefte:', { geschaefte })
     store.geschaefte.fetching = false
     store.geschaefte.error = []
     store.geschaefte.geschaefte = geschaefte
