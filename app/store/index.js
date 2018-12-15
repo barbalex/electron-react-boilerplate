@@ -1,4 +1,4 @@
-import { extendObservable, computed } from 'mobx'
+import { extendObservable } from 'mobx'
 
 import observablehistory from './observableHistory'
 import uiActions from './actions/ui'
@@ -21,6 +21,7 @@ import sortGeschaeftePlusFiltered from '../src/sortGeschaeftePlusFiltered'
 import getHistoryOfGeschaeft from '../src/getHistoryOfGeschaeft'
 
 function Store() {
+  const store = this
   this.history = observablehistory
   this.ui = {}
   extendObservable(this.ui, {
@@ -31,12 +32,22 @@ function Store() {
   extendObservable(this, appActions(this))
   this.geschaefte = {}
   extendObservable(this.geschaefte, {
+    /**
+     * TODO:
+     * this is store.geschaefte, not any more store!!!!!
+     */
     fetching: false,
     error: [],
     geschaefte: [],
-    geschaeftePlus: computed(() => addComputedValuesToGeschaefte(this)),
-    geschaeftePlusFiltered: computed(() => filterGeschaeftePlus(this)),
-    geschaeftePlusFilteredAndSorted: computed(() => sortGeschaeftePlusFiltered(this)),
+    get geschaeftePlus() {
+      return addComputedValuesToGeschaefte(store)
+    },
+    get geschaeftePlusFiltered() {
+      return filterGeschaeftePlus(store)
+    },
+    get geschaeftePlusFilteredAndSorted() {
+      return sortGeschaeftePlusFiltered(store)
+    },
     links: [],
     geko: [],
     filterFields: [],
@@ -54,8 +65,17 @@ function Store() {
     externeOptions: [],
     // following: state for active geschaeft
     activeId: null,
-    historyOfActiveId: computed(() => getHistoryOfGeschaeft(this.geschaefte.geschaefte, this.geschaefte.activeId)),
-    gekoOfActiveId: computed(() => this.geschaefte.geko.filter(g => g.idGeschaeft === this.geschaefte.activeId)),
+    get historyOfActiveId() {
+      return getHistoryOfGeschaeft(
+        store.geschaefte.geschaefte,
+        store.geschaefte.activeId,
+      )
+    },
+    get gekoOfActiveId() {
+      return store.geschaefte.geko.filter(
+        g => g.idGeschaeft === store.geschaefte.activeId,
+      )
+    },
     willDelete: false,
   })
   extendObservable(this, geschaefteActions(this))
