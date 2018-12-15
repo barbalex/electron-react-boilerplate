@@ -33,7 +33,6 @@ export default store => ({
       store.geschaefte.fetching = false
       store.geschaefte.error.push(error)
     }
-    console.log('store, actions, getGeschaefte:', { geschaefte })
     store.geschaefte.fetching = false
     store.geschaefte.error = []
     store.geschaefte.geschaefte = geschaefte
@@ -385,7 +384,7 @@ export default store => ({
       store.geschaefte.error.push(error)
     }
   }),
-  linkNewCreate: action((idGeschaeft, url) =>{
+  linkNewCreate: action((idGeschaeft, url) => {
     try {
       newLinkInDb(store.app.db, idGeschaeft, url)
     } catch (error) {
