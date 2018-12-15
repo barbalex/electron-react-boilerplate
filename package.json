@@ -115,9 +115,9 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "7.2.0",
+    "@babel/core": "7.2.2",
     "@babel/plugin-proposal-class-properties": "7.2.1",
-    "@babel/plugin-proposal-decorators": "7.2.0",
+    "@babel/plugin-proposal-decorators": "7.2.2",
     "@babel/plugin-proposal-do-expressions": "7.2.0",
     "@babel/plugin-proposal-export-default-from": "7.2.0",
     "@babel/plugin-proposal-export-namespace-from": "7.2.0",
@@ -205,7 +205,7 @@
   },
   "dependencies": {
     "ampersand-app": "2.0.0",
-    "better-sqlite3": "5.1.0",
+    "better-sqlite3": "5.2.0",
     "bootstrap": "3.4.0",
     "date-fns": "2.0.0-alpha.25",
     "electron-debug": "2.0.0",
