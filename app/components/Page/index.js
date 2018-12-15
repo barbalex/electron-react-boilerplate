@@ -1,20 +1,20 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import moment from 'moment'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import styled, { injectGlobal } from 'styled-components'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import { observer, inject } from 'mobx-react';
+import compose from 'recompose/compose';
+import styled, { injectGlobal, createGlobalStyle } from 'styled-components';
 
-import FaelligeGeschaefteHeader from './faelligeGeschaefte/Header'
-import FaelligeGeschaefteRows from './faelligeGeschaefte/Rows'
-import VernehmlassungenHeader from './vernehmlassungen/Header'
-import VernehmlassungenRows from './vernehmlassungen/Rows'
-import List1Header from './list1/Header'
-import List1Rows from './list1/Rows'
-import filterCriteriaToArrayOfStrings from '../../src/filterCriteriaToArrayOfStrings'
-import sortCriteriaToArrayOfStrings from '../../src/sortCriteriaToArrayOfStrings'
-import logoImg from '../../etc/logo.png'
-import PageTitle from './PageTitle'
+import FaelligeGeschaefteHeader from './faelligeGeschaefte/Header';
+import FaelligeGeschaefteRows from './faelligeGeschaefte/Rows';
+import VernehmlassungenHeader from './vernehmlassungen/Header';
+import VernehmlassungenRows from './vernehmlassungen/Rows';
+import List1Header from './list1/Header';
+import List1Rows from './list1/Rows';
+import filterCriteriaToArrayOfStrings from '../../src/filterCriteriaToArrayOfStrings';
+import sortCriteriaToArrayOfStrings from '../../src/sortCriteriaToArrayOfStrings';
+import logoImg from '../../etc/logo.png';
+import PageTitle from './PageTitle';
 
 /**
  * The size of PageContainer is set in Print by @page, together with portrait/landscape
@@ -65,7 +65,7 @@ const PageContainer = styled.div`
     page-break-before: always !important;
     page-break-after: always !important;
   }
-`
+`;
 /**
  * width of PageContainer is set in print by @page
  * somehow this makes positioning of its children not react as usual
@@ -83,7 +83,7 @@ const InnerPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-`
+`;
 const StyledRowsContainer = styled.div`
   max-height: 17.2cm;
   max-width: 26.7cm;
@@ -99,17 +99,17 @@ const StyledRowsContainer = styled.div`
     page-break-after: avoid !important;
     page-break-inside: avoid !important;
   }
-`
+`;
 const StyledFilterCriteria = styled.div`
   margin-top: 10px;
   margin-bottom: 0;
   padding-left: 5px;
-`
+`;
 const StyledSortCriteria = styled.div`
   margin-top: 0;
   margin-bottom: 10px;
   padding-left: 5px;
-`
+`;
 const StyledFooter = styled.div`
   height: 0.4cm !important;
   max-height: 0.4cm !important;
@@ -134,51 +134,61 @@ const StyledFooter = styled.div`
     page-break-after: avoid !important;
     page-break-inside: avoid !important;
   }
-`
+`;
 // eslint-disable-next-line no-unused-expressions
-injectGlobal`
+const GlobalStyle = createGlobalStyle`
   @page .querformat {
     size: A4 landscape;
   }
-`
+`;
 
-const enhance = compose(inject('store'), observer)
+const enhance = compose(
+  inject('store'),
+  observer
+);
 
 class Page extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
-    pageIndex: PropTypes.number.isRequired,
-  }
+    pageIndex: PropTypes.number.isRequired
+  };
 
   componentDidMount = () => {
-    this.showPagesModal()
+    this.showPagesModal();
     // wait with next stepp until message is shown
     setTimeout(() => {
-      this.nextStepp()
-    }, 100)
-  }
+      this.nextStepp();
+    }, 100);
+  };
 
   componentDidUpdate = () => {
-    const { reportType } = this.props.store.pages
-    if (['typFaelligeGeschaefte', 'angekVernehml', 'laufendeVernehml'].includes(reportType)) {
+    const { reportType } = this.props.store.pages;
+    if (
+      ['typFaelligeGeschaefte', 'angekVernehml', 'laufendeVernehml'].includes(
+        reportType
+      )
+    ) {
       // need to wait for next tick
       // otherwise in vernehmlassungen
       // some rows were only listed on second call
-      setTimeout(() => this.nextStepp())
+      setTimeout(() => this.nextStepp());
     } else {
-      this.nextStepp()
+      this.nextStepp();
     }
-  }
+  };
 
   showPagesModal = () => {
-    const { store } = this.props
-    const { pagesModalShow } = store
-    const { pages, remainingGeschaefte } = store.pages
-    const { geschaeftePlusFilteredAndSorted } = store.geschaefte
-    const msgLine2Txt = `Bisher ${pages.length} Seiten, ${remainingGeschaefte.length} Geschäfte noch zu verarbeiten`
-    const msgLine2 = geschaeftePlusFilteredAndSorted.length > 50 ? msgLine2Txt : ''
-    pagesModalShow(true, 'Der Bericht wird aufgebaut...', msgLine2)
-  }
+    const { store } = this.props;
+    const { pagesModalShow } = store;
+    const { pages, remainingGeschaefte } = store.pages;
+    const { geschaeftePlusFilteredAndSorted } = store.geschaefte;
+    const msgLine2Txt = `Bisher ${pages.length} Seiten, ${
+      remainingGeschaefte.length
+    } Geschäfte noch zu verarbeiten`;
+    const msgLine2 =
+      geschaeftePlusFilteredAndSorted.length > 50 ? msgLine2Txt : '';
+    pagesModalShow(true, 'Der Bericht wird aufgebaut...', msgLine2);
+  };
 
   nextStepp = () => {
     /**
@@ -190,45 +200,54 @@ class Page extends Component {
      *  - insert next row
      *  - render
      */
-    const { store, pageIndex } = this.props
-    const { pageAddGeschaeft, pagesMoveGeschaeftToNewPage, pagesFinishedBuilding, pagesModalShow } = store
-    const { pages, activePageIndex, remainingGeschaefte } = store.pages
+    const { store, pageIndex } = this.props;
+    const {
+      pageAddGeschaeft,
+      pagesMoveGeschaeftToNewPage,
+      pagesFinishedBuilding,
+      pagesModalShow
+    } = store;
+    const { pages, activePageIndex, remainingGeschaefte } = store.pages;
 
     // don't do anything on not active pages
     if (pageIndex === activePageIndex) {
-      const rowsContainerPageIndex = this[`rowsContainer${pageIndex}`]
-      const offsetHeight = rowsContainerPageIndex ? rowsContainerPageIndex.offsetHeight : null
-      const scrollHeight = rowsContainerPageIndex ? rowsContainerPageIndex.scrollHeight : null
-      const activePageIsFull = pages[pageIndex].full
+      const rowsContainerPageIndex = this[`rowsContainer${pageIndex}`];
+      const offsetHeight = rowsContainerPageIndex
+        ? rowsContainerPageIndex.offsetHeight
+        : null;
+      const scrollHeight = rowsContainerPageIndex
+        ? rowsContainerPageIndex.scrollHeight
+        : null;
+      const activePageIsFull = pages[pageIndex].full;
 
       if (!activePageIsFull && remainingGeschaefte.length > 0) {
         if (offsetHeight < scrollHeight) {
-          pagesMoveGeschaeftToNewPage(activePageIndex)
-          this.showPagesModal()
+          pagesMoveGeschaeftToNewPage(activePageIndex);
+          this.showPagesModal();
         } else {
-          pageAddGeschaeft()
+          pageAddGeschaeft();
         }
       }
       if (remainingGeschaefte.length === 0) {
         if (offsetHeight < scrollHeight) {
-          pagesMoveGeschaeftToNewPage(activePageIndex)
-          this.showPagesModal()
+          pagesMoveGeschaeftToNewPage(activePageIndex);
+          this.showPagesModal();
         } else {
           // for unknown reason setTimeout is needed
           setTimeout(() => {
-            pagesModalShow(false, '', '')
-            pagesFinishedBuilding()
-          })
+            pagesModalShow(false, '', '');
+            pagesFinishedBuilding();
+          });
         }
       }
     }
-  }
+  };
 
   tableRows = () => {
-    const { store, pageIndex } = this.props
-    const { reportType, pages } = store.pages
-    const geschaefte = pages[pageIndex].geschaefte
-    if (!geschaefte) return null
+    const { store, pageIndex } = this.props;
+    const { reportType, pages } = store.pages;
+    const geschaefte = pages[pageIndex].geschaefte;
+    if (!geschaefte) return null;
 
     return geschaefte.map((geschaeft, index) => {
       /**
@@ -236,43 +255,80 @@ class Page extends Component {
        * an undefined geschaeft exists
        * return null to prevent error
        */
-      if (!geschaeft) return null
+      if (!geschaeft) return null;
       if (reportType === 'typFaelligeGeschaefte') {
-        return <FaelligeGeschaefteRows geschaeft={geschaeft} key={geschaeft.idGeschaeft} rowIndex={index} />
+        return (
+          <FaelligeGeschaefteRows
+            geschaeft={geschaeft}
+            key={geschaeft.idGeschaeft}
+            rowIndex={index}
+          />
+        );
       }
       if (reportType === 'angekVernehml' || reportType === 'laufendeVernehml') {
-        return <VernehmlassungenRows geschaeft={geschaeft} key={geschaeft.idGeschaeft} rowIndex={index} />
+        return (
+          <VernehmlassungenRows
+            geschaeft={geschaeft}
+            key={geschaeft.idGeschaeft}
+            rowIndex={index}
+          />
+        );
       }
       if (reportType === 'list1') {
-        return <List1Rows geschaeft={geschaeft} key={geschaeft.idGeschaeft} rowIndex={index} />
+        return (
+          <List1Rows
+            geschaeft={geschaeft}
+            key={geschaeft.idGeschaeft}
+            rowIndex={index}
+          />
+        );
       }
-      return null
-    })
-  }
+      return null;
+    });
+  };
 
   render() {
-    const { store, pageIndex } = this.props
-    const { pages, building, reportType } = store.pages
-    const { filterFields, sortFields } = store.geschaefte
-    const firstPage = pageIndex === 0
+    const { store, pageIndex } = this.props;
+    const { pages, building, reportType } = store.pages;
+    const { filterFields, sortFields } = store.geschaefte;
+    const firstPage = pageIndex === 0;
 
     return (
       <PageContainer building={building} className="querformat">
+        <GlobalStyle />
         <InnerPageContainer>
           <StyledRowsContainer
             building={building}
-            innerRef={c => {
-              this[`rowsContainer${pageIndex}`] = c
+            ref={c => {
+              this[`rowsContainer${pageIndex}`] = c;
             }}
           >
-            {firstPage && <img src={logoImg} height="70" style={{ marginBottom: 15 }} alt="Logo" />}
+            {firstPage && (
+              <img
+                src={logoImg}
+                height="70"
+                style={{ marginBottom: 15 }}
+                alt="Logo"
+              />
+            )}
             <PageTitle firstPage={firstPage} />
             {firstPage && (
-              <StyledFilterCriteria>Filterkriterien: {filterCriteriaToArrayOfStrings(filterFields).join(' & ')}</StyledFilterCriteria>
+              <StyledFilterCriteria>
+                Filterkriterien:{' '}
+                {filterCriteriaToArrayOfStrings(filterFields).join(' & ')}
+              </StyledFilterCriteria>
             )}
-            {firstPage && <StyledSortCriteria>Sortierkriterien: {sortCriteriaToArrayOfStrings(sortFields).join(' & ')}</StyledSortCriteria>}
-            {reportType === 'typFaelligeGeschaefte' && <FaelligeGeschaefteHeader />}
-            {(reportType === 'angekVernehml' || reportType === 'laufendeVernehml') && <VernehmlassungenHeader />}
+            {firstPage && (
+              <StyledSortCriteria>
+                Sortierkriterien:{' '}
+                {sortCriteriaToArrayOfStrings(sortFields).join(' & ')}
+              </StyledSortCriteria>
+            )}
+            {reportType === 'typFaelligeGeschaefte' && (
+              <FaelligeGeschaefteHeader />
+            )}
+            {(reportType === 'angekVernehml' ||
+              reportType === 'laufendeVernehml') && <VernehmlassungenHeader />}
             {reportType === 'list1' && <List1Header />}
             {this.tableRows()}
           </StyledRowsContainer>
@@ -284,8 +340,8 @@ class Page extends Component {
           </StyledFooter>
         </InnerPageContainer>
       </PageContainer>
-    )
+    );
   }
 }
 
-export default enhance(Page)
+export default enhance(Page);

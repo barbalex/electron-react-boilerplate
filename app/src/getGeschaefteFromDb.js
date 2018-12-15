@@ -29,5 +29,6 @@ export default db => {
       }
     })
   })
+  console.log('getGeschaefteFromDb, geschaefte',geschaefte)
   return geschaefte
 }

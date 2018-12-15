@@ -1,8 +1,8 @@
-import React from 'react'
-import moment from 'moment'
-import styled, { injectGlobal } from 'styled-components'
+import React from 'react';
+import moment from 'moment';
+import styled, { injectGlobal, createGlobalStyle } from 'styled-components';
 
-import Geschaeft from './Geschaeft'
+import Geschaeft from './Geschaeft';
 
 /*
  * need defined height and overflow
@@ -52,7 +52,7 @@ const Container = styled.div`
     page-break-before: avoid;
     page-break-after: avoid;
   }
-`
+`;
 const PageContainer = styled.div`
   /* this part is for when page preview is shown */
   /* Divide single pages with some space and center all pages horizontally */
@@ -87,13 +87,13 @@ const PageContainer = styled.div`
     page-break-before: avoid !important;
     page-break-after: avoid !important;
   }
-`
+`;
 // eslint-disable-next-line no-unused-expressions
-injectGlobal`
+const GlobalStyle = createGlobalStyle`
   @page .hochformat {
     size: A4 portrait;
   }
-`
+`;
 const Footer = styled.div`
   padding-top: 5px;
   @media print {
@@ -101,17 +101,18 @@ const Footer = styled.div`
     page-break-before: avoid !important;
     page-break-after: avoid !important;
   }
-`
+`;
 
 const GeschaeftPdf = () => (
   <Container>
     <PageContainer className="hochformat">
+      <GlobalStyle />
       <Geschaeft />
       <Footer>{moment().format('DD.MM.YYYY')}</Footer>
     </PageContainer>
   </Container>
-)
+);
 
-GeschaeftPdf.displayName = 'GeschaeftPdf'
+GeschaeftPdf.displayName = 'GeschaeftPdf';
 
-export default GeschaeftPdf
+export default GeschaeftPdf;
