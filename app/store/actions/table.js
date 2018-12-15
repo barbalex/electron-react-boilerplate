@@ -57,15 +57,17 @@ export default store => ({
       history,
       tableGetError,
     } = store.app
-    newTableRowInDb(app.db, table)
-      .then(row => {
-        tableRowNew(row)
-        tableRowToggleActivated(table, row.id)
-        if (history.location.pathname !== '/table') {
-          history.push('/table')
-        }
-      })
-      .catch(error => tableGetError(error))
+    let row
+    try {
+      row = newTableRowInDb(app.db, table)
+    } catch (error) {
+      return tableGetError(error)
+    }
+    tableRowNew(row)
+    tableRowToggleActivated(table, row.id)
+    if (history.location.pathname !== '/table') {
+      history.push('/table')
+    }
   }),
   tableRowSetDeleteIntended: action(() => {
     store.table.willDelete = true
