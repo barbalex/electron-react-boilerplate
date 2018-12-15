@@ -33,8 +33,8 @@ function Store() {
   this.geschaefte = {}
   extendObservable(this.geschaefte, {
     /**
-     * TODO:
-     * this is store.geschaefte, not any more store!!!!!
+     * "this" is store.geschaefte, not any more store!!!!!
+     * so pass store copied above
      */
     fetching: false,
     error: [],
