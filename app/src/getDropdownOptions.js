@@ -1,7 +1,7 @@
-export default (db, name) => {
+export default (store, name) => {
   let result = []
   try {
-    result = db
+    result = store.app.db
       .prepare(`SELECT ${name} FROM ${name} WHERE historisch = 0 ORDER BY sort`)
       .all()
   } catch (error) {

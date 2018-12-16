@@ -10,6 +10,7 @@ import newGeschaeftInDb from '../../src/newGeschaeftInDb'
 import newLinkInDb from '../../src/newLinkInDb'
 import geschaefteSortByFieldsGetSortFields from '../../src/geschaefteSortByFieldsGetSortFields'
 import convertDateToDdMmYyyy from '../../src/convertDateToDdMmYyyy'
+import isDateField from '../../src/isDateField'
 
 export default store => ({
   geschaeftPdfShow: action(() => store.history.push('/geschaeftPdf')),
@@ -196,7 +197,6 @@ export default store => ({
   geschaeftRemove: action(idGeschaeft => {
     const {
       db,
-      app,
       geschaefteKontakteIntern,
       geschaefteKontakteExtern,
       geschaefte,
@@ -278,32 +278,29 @@ export default store => ({
     let rechtsmittelErledigungOptions = []
     try {
       rechtsmittelErledigungOptions = getDropdownOptions(
-        store.app.db,
+        store,
         'rechtsmittelErledigung',
       )
     } catch (error) {
-      store.geschaefte.error.push(error)
+      return
     }
     store.geschaefte.rechtsmittelErledigungOptions = rechtsmittelErledigungOptions
   }),
   parlVorstossTypOptionsGet: action(() => {
     let parlVorstossTypOptions = []
     try {
-      parlVorstossTypOptions = getDropdownOptions(
-        store.app.db,
-        'parlVorstossTyp',
-      )
+      parlVorstossTypOptions = getDropdownOptions(store, 'parlVorstossTyp')
     } catch (error) {
-      store.geschaefte.error.push(error)
+      return
     }
     store.geschaefte.parlVorstossTypOptions = parlVorstossTypOptions
   }),
   statusOptionsGet: action(() => {
     let statusOptions = []
     try {
-      statusOptions = getDropdownOptions(store.app.db, 'status')
+      statusOptions = getDropdownOptions(store, 'status')
     } catch (error) {
-      store.geschaefte.error.push(error)
+      return
     }
     store.geschaefte.statusOptions = statusOptions
   }),
@@ -329,18 +326,18 @@ export default store => ({
   geschaeftsartOptionsGet: action(() => {
     let geschaeftsartOptions = []
     try {
-      geschaeftsartOptions = getDropdownOptions(store.app.db, 'geschaeftsart')
+      geschaeftsartOptions = getDropdownOptions(store, 'geschaeftsart')
     } catch (error) {
-      store.geschaefte.error.push(error)
+      return
     }
     store.geschaefte.geschaeftsartOptions = geschaeftsartOptions
   }),
   aktenstandortOptionsGet: action(() => {
     let aktenstandortOptions = []
     try {
-      aktenstandortOptions = getDropdownOptions(store.app.db, 'aktenstandort')
+      aktenstandortOptions = getDropdownOptions(store, 'aktenstandort')
     } catch (error) {
-      store.geschaefte.error.push(error)
+      return
     }
     console.log(
       'actions, geschaefte, aktenstandortOptionsGet, options',
@@ -383,20 +380,20 @@ export default store => ({
     let rechtsmittelInstanzOptions = []
     try {
       rechtsmittelInstanzOptions = getDropdownOptions(
-        store.app.db,
+        store,
         'rechtsmittelInstanz',
       )
     } catch (error) {
-      store.geschaefte.error.push(error)
+      return
     }
     store.geschaefte.rechtsmittelInstanzOptions = rechtsmittelInstanzOptions
   }),
   abteilungOptionsGet: action(() => {
     let abteilungOptions = []
     try {
-      abteilungOptions = getDropdownOptions(store.app.db, 'abteilung')
+      abteilungOptions = getDropdownOptions(store, 'abteilung')
     } catch (error) {
-      store.geschaefte.error.push(error)
+      return
     }
     store.geschaefte.abteilungOptions = abteilungOptions
   }),
