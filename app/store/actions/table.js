@@ -2,7 +2,6 @@
 import { action } from 'mobx'
 import app from 'ampersand-app'
 
-import getTableFromDb from '../../src/getTableFromDb'
 import updateTableRow from '../../src/updateTableRow'
 import tableStandardState from '../../src/tableStandardState'
 import newTableRowInDb from '../../src/newTableRowInDb'
@@ -34,7 +33,7 @@ export default store => ({
     store.tableGet(table)
     let rows
     try {
-      rows = getTableFromDb(app.db, table)
+      rows = app.db.prepare(`SELECT * FROM ${table}`).all()
     } catch (error) {
       return store.tableGetError(error)
     }

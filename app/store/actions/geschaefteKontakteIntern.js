@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { action } from 'mobx'
 
-import getGeschaefteKontakteInternFromDb from '../../src/getGeschaefteKontakteInternFromDb'
 import newGeschaeftKontaktInternInDb from '../../src/newGeschaeftKontaktInternInDb'
 
 export default store => ({
@@ -23,9 +22,11 @@ export default store => ({
     store.geschaefteKontakteInternGet()
     let geschaefteKontakteIntern = []
     try {
-      geschaefteKontakteIntern = getGeschaefteKontakteInternFromDb(app.db)
+      geschaefteKontakteIntern = app.db
+        .prepare('SELECT * FROM geschaefteKontakteIntern')
+        .all()
     } catch (error) {
-      store.geschaefteKontakteInternGetError(error)
+      return store.geschaefteKontakteInternGetError(error)
     }
     store.geschaefteKontakteInternGetSuccess(geschaefteKontakteIntern)
   }),
