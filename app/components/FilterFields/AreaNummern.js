@@ -124,8 +124,6 @@ const AreaNummern = ({
   change,
   changeComparator,
 }) => {
-  console.log('store', store)
-
   return (
     <Container>
       <Title>Nummern</Title>
