@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { observer } from 'mobx-react-lite'
-import compose from 'recompose/compose'
 
 import GeschaefteLayout from './GeschaefteLayout'
 import FilterFieldsLayout from './FilterFieldsLayout'
