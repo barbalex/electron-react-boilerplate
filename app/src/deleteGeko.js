@@ -1,13 +1,13 @@
-const sql = `
-  DELETE FROM
-    geko
-  WHERE
-    idGeschaeft = @idGeschaeft AND
-    gekoNr = @gekoNr`
-
 export default (db, idGeschaeft, gekoNr) => {
   try {
-    db.prepare(sql).run({ idGeschaeft, gekoNr })
+    db.prepare(
+      `
+      DELETE FROM
+        geko
+      WHERE
+        idGeschaeft = ${idGeschaeft} AND
+        gekoNr = ${gekoNr}`,
+    ).run()
   } catch (error) {
     throw error
   }
