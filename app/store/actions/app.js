@@ -42,7 +42,6 @@ export default store => ({
     store.app.db = db
     store.app.config = Object.assign({}, store.app.config, { dbPath })
     // get data
-    console.log('dbChooseSuccess, fetching options')
     store.faelligeStatiOptionsGet()
     store.getGeko()
     store.getLinks()
