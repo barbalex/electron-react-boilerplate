@@ -1,14 +1,14 @@
-const sql = `
-  UPDATE
-    @table
-  SET
-    @field = @value
-  WHERE
-    id = @id`
-
 export default (db, table, id, field, value) => {
   try {
-    db.prepare(sql).run({ table, field, value, id })
+    db.prepare(
+      `
+      UPDATE
+        ${table}
+      SET
+        ${field} = ${value}
+      WHERE
+        id = ${id}`,
+    ).run()
   } catch (error) {
     throw error
   }

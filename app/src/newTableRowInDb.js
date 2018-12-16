@@ -1,22 +1,9 @@
 import app from 'ampersand-app'
 
-const sql1 = `
-  INSERT INTO
-    @table (id)
-  VALUES
-    (NULL)`
-const sql2 = `
-  SELECT
-    *
-  FROM
-    @table
-  WHERE
-    id = @id`
-
 export default (db, table) => {
   let result
   try {
-    db.prepare(sql1).run({ table })
+    db.prepare(`INSERT INTO ${table} (id) VALUES (NULL)`).run()
   } catch (error) {
     return app.store.tableGetError(error)
   }
@@ -24,7 +11,7 @@ export default (db, table) => {
   // return full dataset
   let row
   try {
-    row = db.prepare(sql2).all({ table, id })
+    row = db.prepare(`SELECT * FROM ${table} WHERE id = ${id}`).all()
   } catch (error) {
     throw error
   }
