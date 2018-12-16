@@ -1,9 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { action } from 'mobx'
 
-import getGeschaefteKontakteExternFromDb from '../../src/getGeschaefteKontakteExternFromDb'
-import newGeschaeftKontaktExternInDb from '../../src/newGeschaeftKontaktExternInDb'
-
 export default store => ({
   geschaefteKontakteExternGet: action(() => {
     store.geschaefteKontakteExtern.fetching = true
@@ -23,7 +20,9 @@ export default store => ({
     store.geschaefteKontakteExternGet()
     let geschaefteKontakteExtern
     try {
-      geschaefteKontakteExtern = getGeschaefteKontakteExternFromDb(app.db)
+      geschaefteKontakteExtern = app.db
+        .prepare('SELECT * FROM geschaefteKontakteExtern')
+        .all()
     } catch (error) {
       store.geschaefteKontakteExternGetError(error)
     }
@@ -41,11 +40,32 @@ export default store => ({
     const { app } = store
     let geschaeftKontaktExtern
     try {
-      geschaeftKontaktExtern = newGeschaeftKontaktExternInDb(
-        app.db,
-        idGeschaeft,
-        idKontakt,
-      )
+      app.db
+        .prepare(
+          `
+          INSERT INTO
+            geschaefteKontakteExtern (idGeschaeft, idKontakt)
+          VALUES
+            (${idGeschaeft}, ${idKontakt})`,
+        )
+        .run()
+    } catch (error) {
+      return store.geschaeftKontaktExternNewError(error)
+    }
+    // return full object
+    try {
+      geschaeftKontaktExtern = app.db
+        .prepare(
+          `
+          SELECT
+            *
+          FROM
+            geschaefteKontakteExtern
+          WHERE
+            idGeschaeft = ${idGeschaeft}
+            AND idKontakt = ${idKontakt}`,
+        )
+        .get()
     } catch (error) {
       return store.geschaeftKontaktExternNewError(error)
     }
