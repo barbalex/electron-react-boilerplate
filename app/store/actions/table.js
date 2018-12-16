@@ -2,9 +2,7 @@
 import { action } from 'mobx'
 import app from 'ampersand-app'
 
-import updateTableRow from '../../src/updateTableRow'
 import tableStandardState from '../../src/tableStandardState'
-import newTableRowInDb from '../../src/newTableRowInDb'
 
 export default store => ({
   tableReset: action(() => {
@@ -51,17 +49,31 @@ export default store => ({
   }),
   tableRowNewCreate: action(table => {
     const {
+      db,
       tableRowNew,
       tableRowToggleActivated,
       history,
       tableGetError,
     } = store.app
-    let row
     try {
-      row = newTableRowInDb(app.db, table)
+      db.prepare(`INSERT INTO ${table} (id) VALUES (NULL)`).run()
     } catch (error) {
       return tableGetError(error)
     }
+    const id = result.lastInsertRowid
+    // return full dataset
+    let row
+    try {
+      row = db.prepare(`SELECT * FROM ${table} WHERE id = ${id}`).all()
+    } catch (error) {
+      return tableGetError(error)
+    }
+    // react does not want to get null values
+    Object.keys(row).forEach(key => {
+      if (row[key] === null) {
+        row[key] = ''
+      }
+    })
     tableRowNew(row)
     tableRowToggleActivated(table, row.id)
     if (history.location.pathname !== '/table') {
@@ -103,14 +115,21 @@ export default store => ({
   }),
   tableChangeDbError: action(error => store.table.error.push(error)),
   changeTableInDb: action((table, id, field, value) => {
-    const { app } = store
     // no need to do something on then
     // ui was updated on TABLE_CHANGE_STATE
     try {
-      updateTableRow(app.db, table, id, field, value)
+      store.app.db.prepare(
+        `
+        UPDATE
+          ${table}
+        SET
+          ${field} = ${value}
+        WHERE
+          id = ${id}`,
+      )
     } catch (error) {
       // TODO: reset ui
-      store.tableChangeDbError(error)
+      return store.tableChangeDbError(error)
     }
     // need to reload this table in store
     const actionName = `${table}OptionsGet`

@@ -4,12 +4,9 @@ import _ from 'lodash'
 import moment from 'moment'
 
 import getDropdownOptions from '../../src/getDropdownOptions'
-import updateGeschaeft from '../../src/updateGeschaeft'
-import updateGeko from '../../src/updateGeko'
-import newGeschaeftInDb from '../../src/newGeschaeftInDb'
-import newLinkInDb from '../../src/newLinkInDb'
 import geschaefteSortByFieldsGetSortFields from '../../src/geschaefteSortByFieldsGetSortFields'
 import convertDateToDdMmYyyy from '../../src/convertDateToDdMmYyyy'
+import convertDateToYyyyMmDd from '../../src/convertDateToYyyyMmDd'
 import isDateField from '../../src/isDateField'
 
 export default store => ({
@@ -175,11 +172,39 @@ export default store => ({
    */
   geschaeftNewCreate: action(() => {
     const { app, user } = store
+    const now = moment().format('YYYY-MM-DD HH:mm:ss')
+    let result
+    try {
+      result = app.db
+        .prepare(
+          `
+          INSERT INTO
+            geschaefte (mutationsdatum, mutationsperson)
+          VALUES
+            (${now}, ${username})`,
+        )
+        .run()
+    } catch (error) {
+      return store.geschaefte.error.push(error)
+    }
+    const idGeschaeft = result.lastInsertRowid
+
+    // return full dataset
     let geschaeft = {}
     try {
-      geschaeft = newGeschaeftInDb(app.db, user.username)
+      geschaeft = app.db
+        .prepare(
+          `
+          SELECT
+            *
+          FROM
+            geschaefte
+          WHERE
+            idGeschaeft = ${idGeschaeft}`,
+        )
+        .get()
     } catch (error) {
-      store.geschaefte.error.push(error)
+      return store.geschaefte.error.push(error)
     }
     store.geschaefte.geschaefte.unshift(geschaeft)
     /**
@@ -265,15 +290,34 @@ export default store => ({
       )
     }
   }),
-  changeGeschaeftInDb: action((idGeschaeft, field, value) =>
-    updateGeschaeft(
-      store.app.db,
-      idGeschaeft,
-      field,
-      value,
-      store.user.username,
-    ),
-  ),
+  changeGeschaeftInDb: action((idGeschaeft, field, value) => {
+    /**
+     * if field is date field
+     * convert DD.MM.YYYY to YYYY-MM-DD
+     */
+    let value2 = value
+    if (isDateField(field)) {
+      value2 = convertDateToYyyyMmDd(value)
+    }
+    const now = moment().format('YYYY-MM-DD HH:mm:ss')
+    try {
+      store.app.db
+        .prepare(
+          `
+        UPDATE
+          geschaefte
+        SET
+          ${field} = ${value2},
+          mutationsdatum = ${now},
+          mutationsperson = ${username}
+        WHERE
+          idGeschaeft = ${idGeschaeft}`,
+        )
+        .run()
+    } catch (error) {
+      store.geschaefte.error.push(error)
+    }
+  }),
   rechtsmittelErledigungOptionsGet: action(() => {
     let rechtsmittelErledigungOptions = []
     try {
@@ -450,16 +494,35 @@ export default store => ({
     // no need to do something on then
     // ui was updated on GEKO_CHANGE_STATE
     try {
-      updateGeko(store.app.db, idGeschaeft, gekoNr, field, value)
+      store.app.db
+        .prepare(
+          `
+          UPDATE
+            geko
+          SET
+            ${field} = ${value}
+          WHERE
+            idGeschaeft = ${idGeschaeft} AND
+            gekoNr = ${gekoNr}`,
+        )
+        .run()
     } catch (error) {
       store.geschaefte.error.push(error)
     }
   }),
   linkNewCreate: action((idGeschaeft, url) => {
     try {
-      newLinkInDb(store.app.db, idGeschaeft, url)
+      store.app.db
+        .prepare(
+          `
+          INSERT INTO
+            links (idGeschaeft, url)
+          VALUES
+            (${idGeschaeft}, ${url})`,
+        )
+        .run()
     } catch (error) {
-      store.geschaefte.error.push(error)
+      return store.geschaefte.error.push(error)
     }
     store.geschaefte.links.unshift({ idGeschaeft, url })
   }),
