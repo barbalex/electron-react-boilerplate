@@ -13,6 +13,5 @@ export default db => {
   } catch (error) {
     throw error
   }
-  options = result.map(res => res.status)
-  return options
+  return options.map(res => res.status)
 }

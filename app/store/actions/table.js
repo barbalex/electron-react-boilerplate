@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { action } from 'mobx'
+import app from 'ampersand-app'
 
 import getTableFromDb from '../../src/getTableFromDb'
 import updateTableRow from '../../src/updateTableRow'
