@@ -383,10 +383,6 @@ export default store => ({
     } catch (error) {
       return
     }
-    console.log(
-      'actions, geschaefte, aktenstandortOptionsGet, options',
-      aktenstandortOptions,
-    )
     store.geschaefte.aktenstandortOptions = aktenstandortOptions
   }),
   interneOptionsGet: action(() => {
