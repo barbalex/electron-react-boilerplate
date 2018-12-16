@@ -112,7 +112,10 @@ const FieldAktennummer = styled.div`
   grid-area: fieldAktennummer;
 `
 
-const enhance = compose(inject('store'), observer)
+const enhance = compose(
+  inject('store'),
+  observer,
+)
 
 const AreaNummern = ({
   store,
@@ -120,108 +123,112 @@ const AreaNummern = ({
   firstTabIndex,
   change,
   changeComparator,
-}) => (
-  <Container>
-    <Title>Nummern</Title>
-    <LabelIdGeschaeft>ID</LabelIdGeschaeft>
-    <FieldIdGeschaeft>
-      <Input
-        type="number"
-        name="idGeschaeft"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={1 + firstTabIndex}
-      />
-    </FieldIdGeschaeft>
-    <LabelGekoNr>Geko</LabelGekoNr>
-    <FieldGekoNr>
-      <Input
-        type="text"
-        name="gekoNr"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={2 + firstTabIndex}
-      />
-    </FieldGekoNr>
-    <LabelJahre>
-      <LabelNrDiv>Jahr</LabelNrDiv>
-    </LabelJahre>
-    <LabelEntscheidAwel>AWEL</LabelEntscheidAwel>
-    <FieldEntscheidAwel>
-      <Input
-        name="entscheidAwel"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={3 + firstTabIndex}
-      />
-    </FieldEntscheidAwel>
-    <LabelEntscheidBdv>BDV</LabelEntscheidBdv>
-    <FieldEntscheidBdv>
-      <Input
-        name="entscheidBdv"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={5 + firstTabIndex}
-      />
-    </FieldEntscheidBdv>
-    <LabelEntscheidRrb>RRB</LabelEntscheidRrb>
-    <FieldEntscheidRrb>
-      <Input
-        name="entscheidRrb"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={7 + firstTabIndex}
-      />
-    </FieldEntscheidRrb>
-    <LabelEntscheidBvv>BVV</LabelEntscheidBvv>
-    <FieldEntscheidBvv>
-      <Input
-        name="entscheidBvv"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={9 + firstTabIndex}
-      />
-    </FieldEntscheidBvv>
-    <LabelEntscheidKr>KR</LabelEntscheidKr>
-    <FieldEntscheidKr>
-      <Input
-        name="entscheidKr"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={11 + firstTabIndex}
-      />
-    </FieldEntscheidKr>
-    <FieldAktenstandort>
-      <ControlLabel>Aktenstandort</ControlLabel>
-      <SelectInput
-        name="aktenstandort"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={13 + firstTabIndex}
-        options={toJS(store.geschaefte.aktenstandortOptions)}
-      />
-    </FieldAktenstandort>
-    <FieldAktennummer>
-      <ControlLabel>Nr.</ControlLabel>
-      <Input
-        type="text"
-        name="aktennummer"
-        change={change}
-        values={values}
-        changeComparator={changeComparator}
-        tabIndex={14 + firstTabIndex}
-      />
-    </FieldAktennummer>
-  </Container>
-)
+}) => {
+  console.log('store', store)
+
+  return (
+    <Container>
+      <Title>Nummern</Title>
+      <LabelIdGeschaeft>ID</LabelIdGeschaeft>
+      <FieldIdGeschaeft>
+        <Input
+          type="number"
+          name="idGeschaeft"
+          change={change}
+          values={values}
+          changeComparator={changeComparator}
+          tabIndex={1 + firstTabIndex}
+        />
+      </FieldIdGeschaeft>
+      <LabelGekoNr>Geko</LabelGekoNr>
+      <FieldGekoNr>
+        <Input
+          type="text"
+          name="gekoNr"
+          change={change}
+          values={values}
+          changeComparator={changeComparator}
+          tabIndex={2 + firstTabIndex}
+        />
+      </FieldGekoNr>
+      <LabelJahre>
+        <LabelNrDiv>Jahr</LabelNrDiv>
+      </LabelJahre>
+      <LabelEntscheidAwel>AWEL</LabelEntscheidAwel>
+      <FieldEntscheidAwel>
+        <Input
+          name="entscheidAwel"
+          change={change}
+          values={values}
+          changeComparator={changeComparator}
+          tabIndex={3 + firstTabIndex}
+        />
+      </FieldEntscheidAwel>
+      <LabelEntscheidBdv>BDV</LabelEntscheidBdv>
+      <FieldEntscheidBdv>
+        <Input
+          name="entscheidBdv"
+          change={change}
+          values={values}
+          changeComparator={changeComparator}
+          tabIndex={5 + firstTabIndex}
+        />
+      </FieldEntscheidBdv>
+      <LabelEntscheidRrb>RRB</LabelEntscheidRrb>
+      <FieldEntscheidRrb>
+        <Input
+          name="entscheidRrb"
+          change={change}
+          values={values}
+          changeComparator={changeComparator}
+          tabIndex={7 + firstTabIndex}
+        />
+      </FieldEntscheidRrb>
+      <LabelEntscheidBvv>BVV</LabelEntscheidBvv>
+      <FieldEntscheidBvv>
+        <Input
+          name="entscheidBvv"
+          change={change}
+          values={values}
+          changeComparator={changeComparator}
+          tabIndex={9 + firstTabIndex}
+        />
+      </FieldEntscheidBvv>
+      <LabelEntscheidKr>KR</LabelEntscheidKr>
+      <FieldEntscheidKr>
+        <Input
+          name="entscheidKr"
+          change={change}
+          values={values}
+          changeComparator={changeComparator}
+          tabIndex={11 + firstTabIndex}
+        />
+      </FieldEntscheidKr>
+      <FieldAktenstandort>
+        <ControlLabel>Aktenstandort</ControlLabel>
+        <SelectInput
+          name="aktenstandort"
+          change={change}
+          values={values}
+          changeComparator={changeComparator}
+          tabIndex={13 + firstTabIndex}
+          options={toJS(store.geschaefte.aktenstandortOptions)}
+        />
+      </FieldAktenstandort>
+      <FieldAktennummer>
+        <ControlLabel>Nr.</ControlLabel>
+        <Input
+          type="text"
+          name="aktennummer"
+          change={change}
+          values={values}
+          changeComparator={changeComparator}
+          tabIndex={14 + firstTabIndex}
+        />
+      </FieldAktennummer>
+    </Container>
+  )
+}
 
 AreaNummern.displayName = 'AreaNummern'
 

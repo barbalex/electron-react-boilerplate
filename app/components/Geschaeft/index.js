@@ -95,7 +95,10 @@ const WrapperWideNoAreaForGeschaeftsartPdf = styled(WrapperPdf)`
     'areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert';
 `
 
-const enhance = compose(inject('store'), observer)
+const enhance = compose(
+  inject('store'),
+  observer,
+)
 
 class Geschaeft extends Component {
   static propTypes = {
@@ -183,6 +186,8 @@ class Geschaeft extends Component {
     // return immediately if no geschaeft
     const showGeschaeft = geschaeft.idGeschaeft
     if (!showGeschaeft) return null
+
+    console.log('Geschaeft', { store })
 
     const showAreaParlVorstoss =
       geschaeft.geschaeftsart === 'Parlament. Vorstoss' &&
