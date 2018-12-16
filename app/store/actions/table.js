@@ -6,7 +6,6 @@ import getTableFromDb from '../../src/getTableFromDb'
 import updateTableRow from '../../src/updateTableRow'
 import tableStandardState from '../../src/tableStandardState'
 import newTableRowInDb from '../../src/newTableRowInDb'
-import deleteTableRow from '../../src/deleteTableRow'
 
 export default store => ({
   tableReset: action(() => {
@@ -80,9 +79,16 @@ export default store => ({
     store.table.rows = store.table.rows.filter(g => g.id !== id)
   }),
   tableRowRemove: action((table, id) => {
-    const { app } = store
     try {
-      deleteTableRow(app.db, table, id)
+      store.app.db
+        .prepare(
+          `
+          DELETE FROM
+            ${table}
+          WHERE
+            id = ${id}`,
+        )
+        .run()
     } catch (error) {
       return store.tableChangeDbError(error)
     }
