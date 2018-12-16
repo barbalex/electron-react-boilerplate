@@ -187,8 +187,6 @@ class Geschaeft extends Component {
     const showGeschaeft = geschaeft.idGeschaeft
     if (!showGeschaeft) return null
 
-    console.log('Geschaeft', { store })
-
     const showAreaParlVorstoss =
       geschaeft.geschaeftsart === 'Parlament. Vorstoss' &&
       !(
