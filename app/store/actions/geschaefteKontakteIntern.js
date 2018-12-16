@@ -3,7 +3,6 @@ import { action } from 'mobx'
 
 import getGeschaefteKontakteInternFromDb from '../../src/getGeschaefteKontakteInternFromDb'
 import newGeschaeftKontaktInternInDb from '../../src/newGeschaeftKontaktInternInDb'
-import deleteGeschaeftKontaktIntern from '../../src/deleteGeschaeftKontaktIntern'
 
 export default store => ({
   geschaefteKontakteInternGet: action(() => {
@@ -42,7 +41,11 @@ export default store => ({
     const { app } = store
     let geschaeftKontaktIntern
     try {
-      geschaeftKontaktIntern=newGeschaeftKontaktInternInDb(app.db, idGeschaeft, idKontakt)
+      geschaeftKontaktIntern = newGeschaeftKontaktInternInDb(
+        app.db,
+        idGeschaeft,
+        idKontakt,
+      )
     } catch (error) {
       return store.geschaeftKontaktInternNewError(error)
     }
@@ -59,9 +62,17 @@ export default store => ({
     store.geschaefteKontakteIntern.activeIdKontakt = null
   }),
   geschaeftKontaktInternRemove: action((idGeschaeft, idKontakt) => {
-    const { app } = store
     try {
-      deleteGeschaeftKontaktIntern(app.db, idGeschaeft, idKontakt)
+      store.app.db
+        .prepare(
+          `
+          DELETE FROM
+            geschaefteKontakteIntern
+          WHERE
+            idGeschaeft = ${idGeschaeft}
+            AND idKontakt = ${idKontakt}`,
+        )
+        .run()
     } catch (error) {
       return store.geschaeftKontaktInternDeleteError(error)
     }
