@@ -9,31 +9,20 @@ import withState from 'recompose/withState'
 
 import KontakteExternItems from './KontakteExternItems'
 
-const onChangeNewKontaktExtern = (
-  e,
-  geschaeftKontaktExternNewCreate,
-  activeId
-) => {
-  const idKontakt = e.target.value
-  geschaeftKontaktExternNewCreate(activeId, idKontakt)
-  // need to empty dropdown
-  e.target.value = ''
-}
-
 const optionsList = (externeOptions, geschaefteKontakteExtern, activeId) => {
   // filter out options already choosen
   const kontakteInternOfActiveGeschaeft = geschaefteKontakteExtern.filter(
-    g => g.idGeschaeft === activeId
+    g => g.idGeschaeft === activeId,
   )
   const idKontakteOfGkiOfActiveGeschaeft = kontakteInternOfActiveGeschaeft.map(
-    kI => kI.idKontakt
+    kI => kI.idKontakt,
   )
   const externeOptionsFiltered = externeOptions.filter(
-    o => !idKontakteOfGkiOfActiveGeschaeft.includes(o.id)
+    o => !idKontakteOfGkiOfActiveGeschaeft.includes(o.id),
   )
   // sort externeOptions by nameVorname
   const externeOptionsSorted = _.sortBy(externeOptionsFiltered, o =>
-    o.nameVorname.toLowerCase()
+    o.nameVorname.toLowerCase(),
   )
   const options = externeOptionsSorted.map(o => (
     <option key={o.id} value={o.id}>
@@ -71,7 +60,7 @@ const FvDropdown = styled.div`
 const enhance = compose(
   withState('value', 'setValue', ''),
   inject('store'),
-  observer
+  observer,
 )
 
 const GeschaefteKontakteExtern = ({ store, tabIndex, value, setValue }) => {
