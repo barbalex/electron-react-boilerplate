@@ -316,6 +316,10 @@ export default store => ({
     } catch (error) {
       store.geschaefte.error.push(error)
     }
+    console.log(
+      'actions, geschaefte, aktenstandortOptionsGet, options',
+      aktenstandortOptions,
+    )
     store.geschaefte.aktenstandortOptions = aktenstandortOptions
   }),
   interneOptionsGet: action(() => {
