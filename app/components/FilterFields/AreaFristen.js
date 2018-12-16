@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import DateField from './DateField'
@@ -22,8 +21,6 @@ const Title = styled.div`
   font-size: 16px;
   grid-column: 1;
 `
-
-const enhance = compose(inject('store'), observer)
 
 const AreaFristen = ({ values, firstTabIndex, change, changeComparator }) => (
   <Container>
@@ -96,4 +93,4 @@ AreaFristen.propTypes = {
   firstTabIndex: PropTypes.number.isRequired,
 }
 
-export default enhance(AreaFristen)
+export default observer(AreaFristen)
