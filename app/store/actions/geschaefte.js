@@ -15,9 +15,6 @@ import updateGeko from '../../src/updateGeko'
 import newGeschaeftInDb from '../../src/newGeschaeftInDb'
 import newGekoInDb from '../../src/newGekoInDb'
 import newLinkInDb from '../../src/newLinkInDb'
-import deleteGeschaeft from '../../src/deleteGeschaeft'
-import deleteGeko from '../../src/deleteGeko'
-import deleteLink from '../../src/deleteLink'
 import geschaefteSortByFieldsGetSortFields from '../../src/geschaefteSortByFieldsGetSortFields'
 
 export default store => ({
@@ -186,13 +183,20 @@ export default store => ({
   }),
   geschaeftRemove: action(idGeschaeft => {
     const {
+      db,
       app,
       geschaefteKontakteIntern,
       geschaefteKontakteExtern,
       geschaefte,
     } = store
     try {
-      deleteGeschaeft(app.db, idGeschaeft)
+      db.prepare(
+        `
+        DELETE FROM
+          geschaefte
+        WHERE
+          idGeschaeft = ${idGeschaeft}`,
+      ).run()
     } catch (error) {
       return store.geschaefte.error.push(error)
     }
@@ -372,7 +376,16 @@ export default store => ({
   }),
   gekoRemove: action((idGeschaeft, gekoNr) => {
     try {
-      deleteGeko(store.app.db, idGeschaeft, gekoNr)
+      store.app.db
+        .prepare(
+          `
+          DELETE FROM
+            geko
+          WHERE
+            idGeschaeft = ${idGeschaeft} AND
+            gekoNr = ${gekoNr}`,
+        )
+        .run()
     } catch (error) {
       return store.geschaefte.error.push(error)
     }
@@ -399,7 +412,16 @@ export default store => ({
   }),
   linkRemove: action((idGeschaeft, url) => {
     try {
-      deleteLink(store.app.db, idGeschaeft, url)
+      store.app.db
+        .prepare(
+          `
+        DELETE FROM
+          links
+        WHERE
+          idGeschaeft = ${idGeschaeft} AND
+          url = ${url}`,
+        )
+        .run()
     } catch (error) {
       return store.geschaefte.error.push(error)
     }
