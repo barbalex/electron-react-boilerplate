@@ -1,8 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { action } from 'mobx'
 
-import newGeschaeftKontaktInternInDb from '../../src/newGeschaeftKontaktInternInDb'
-
 export default store => ({
   geschaefteKontakteInternGet: action(() => {
     store.geschaefteKontakteIntern.fetching = true
@@ -40,13 +38,34 @@ export default store => ({
   ),
   geschaeftKontaktInternNewCreate: action((idGeschaeft, idKontakt) => {
     const { app } = store
+    try {
+      app.db.db
+        .prepare(
+          `
+          INSERT INTO
+            geschaefteKontakteIntern (idGeschaeft, idKontakt)
+          VALUES
+            (${idGeschaeft}, ${idKontakt})`,
+        )
+        .run()
+    } catch (error) {
+      return store.geschaeftKontaktInternNewError(error)
+    }
+    // return full object
     let geschaeftKontaktIntern
     try {
-      geschaeftKontaktIntern = newGeschaeftKontaktInternInDb(
-        app.db,
-        idGeschaeft,
-        idKontakt,
-      )
+      geschaeftKontaktIntern = app.db
+        .prepare(
+          `
+          SELECT
+            *
+          FROM
+            geschaefteKontakteIntern
+          WHERE
+            idGeschaeft = ${idGeschaeft}
+            AND idKontakt = ${idKontakt}`,
+        )
+        .all()
     } catch (error) {
       return store.geschaeftKontaktInternNewError(error)
     }
