@@ -1,20 +1,12 @@
-const sql1 = `
-  INSERT INTO
-    geko (idGeschaeft, gekoNr)
-  VALUES
-    (@idGeschaeft, @gekoNr)`
-const sql2 = `
-  SELECT
-    *
-  FROM
-    geko
-  WHERE
-    idGeschaeft = @idGeschaeft AND
-    gekoNr = @gekoNr`
-
 export default (db, idGeschaeft, gekoNr) => {
   try {
-    db.prepare(sql1).run({ idGeschaeft, gekoNr })
+    db.prepare(
+      `
+      INSERT INTO
+        geko (idGeschaeft, gekoNr)
+      VALUES
+        (${idGeschaeft}, ${gekoNr})`,
+    ).run()
   } catch (error) {
     throw error
   }
@@ -22,7 +14,18 @@ export default (db, idGeschaeft, gekoNr) => {
   // return full dataset
   let geko
   try {
-    geko = db.prepare(sql2).get({ idGeschaeft, gekoNr })
+    geko = db
+      .prepare(
+        `
+        SELECT
+          *
+        FROM
+          geko
+        WHERE
+          idGeschaeft = ${idGeschaeft} AND
+          gekoNr = ${gekoNr}`,
+      )
+      .get()
   } catch (error) {
     throw error
   }

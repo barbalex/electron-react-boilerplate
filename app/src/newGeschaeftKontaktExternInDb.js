@@ -1,27 +1,30 @@
-const sql1 = `
-  INSERT INTO
-    geschaefteKontakteExtern (idGeschaeft, idKontakt)
-  VALUES
-    (@idGeschaeft, @idKontakt)`
-const sql2 = `
-  SELECT
-    *
-  FROM
-    geschaefteKontakteExtern
-  WHERE
-    idGeschaeft = @idGeschaeft
-    AND idKontakt = @idKontakt`
-
 export default (db, idGeschaeft, idKontakt) => {
   try {
-    db.prepare(sql1).run({ idGeschaeft, idKontakt })
+    db.prepare(
+      `
+      INSERT INTO
+        geschaefteKontakteExtern (idGeschaeft, idKontakt)
+      VALUES
+        (${idGeschaeft}, ${idKontakt})`,
+    ).run()
   } catch (error) {
     throw error
   }
 
   let geschaeftKontaktExtern = {}
   try {
-    geschaeftKontaktExtern = db.prepare(sql2).get({ idGeschaeft, idKontakt })
+    geschaeftKontaktExtern = db
+      .prepare(
+        `
+        SELECT
+          *
+        FROM
+          geschaefteKontakteExtern
+        WHERE
+          idGeschaeft = ${idGeschaeft}
+          AND idKontakt = ${idKontakt}`,
+      )
+      .get()
   } catch (error) {
     throw error
   }
