@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { ControlLabel } from 'react-bootstrap'
 import { toJS } from 'mobx'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import SelectInput from './SelectInput'
 import Input from './Input'
+import storeContext from '../../storeContext'
 
 const Container = styled.div`
   grid-area: areaGeschaeft;
@@ -62,15 +62,8 @@ const FieldVermerkIntern = styled.div`
   grid-area: fieldVermerkIntern;
 `
 
-const enhance = compose(inject('store'), observer)
-
-const AreaGeschaeft = ({
-  store,
-  change,
-  values,
-  firstTabIndex,
-  changeComparator,
-}) => {
+const AreaGeschaeft = ({ change, values, firstTabIndex, changeComparator }) => {
+  const store = useContext(storeContext)
   const {
     statusOptions,
     geschaeftsartOptions,
@@ -203,4 +196,4 @@ AreaGeschaeft.propTypes = {
   changeComparator: PropTypes.func.isRequired,
 }
 
-export default enhance(AreaGeschaeft)
+export default observer(AreaGeschaeft)
