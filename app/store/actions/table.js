@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { action } from 'mobx'
-import app from 'ampersand-app'
 
 import tableStandardState from '../../src/tableStandardState'
 
@@ -55,8 +54,9 @@ export default store => ({
       history,
       tableGetError,
     } = store.app
+    let result
     try {
-      db.prepare(`INSERT INTO ${table} (id) VALUES (NULL)`).run()
+      result = db.prepare(`INSERT INTO ${table} (id) VALUES (NULL)`).run()
     } catch (error) {
       return tableGetError(error)
     }

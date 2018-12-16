@@ -181,7 +181,7 @@ export default store => ({
           INSERT INTO
             geschaefte (mutationsdatum, mutationsperson)
           VALUES
-            (${now}, ${username})`,
+            (${now}, ${user.username})`,
         )
         .run()
     } catch (error) {
@@ -309,7 +309,7 @@ export default store => ({
         SET
           ${field} = ${value2},
           mutationsdatum = ${now},
-          mutationsperson = ${username}
+          mutationsperson = ${store.user.username}
         WHERE
           idGeschaeft = ${idGeschaeft}`,
         )
