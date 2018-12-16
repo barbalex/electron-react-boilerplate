@@ -1,19 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { observer, inject } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 import compose from 'recompose/compose'
 
 import GeschaefteLayout from './GeschaefteLayout'
 import FilterFieldsLayout from './FilterFieldsLayout'
 import TableLayout from './TableLayout'
 import Navbar from './Navbar'
+import storeContext from '../storeContext'
 
-const enhance = compose(
-  inject('store'),
-  observer,
-)
-
-const App = ({ store }) => {
+const App = () => {
+  const store = useContext(storeContext)
   // setting ref according to this:
   // http://stackoverflow.com/questions/35918706/overcoming-lack-of-refs-in-stateless-components
   let app // eslint-disable-line no-unused-vars
@@ -42,4 +39,4 @@ App.propTypes = {
   store: PropTypes.object.isRequired,
 }
 
-export default enhance(App)
+export default observer(App)
