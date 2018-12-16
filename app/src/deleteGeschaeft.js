@@ -1,9 +1,3 @@
-const sql = `
-  DELETE FROM
-    geschaefte
-  WHERE
-    idGeschaeft = $idGeschaeft`
-
 export default (db, idGeschaeft) => {
   try {
     db.pragma('foreign_keys = ON')
@@ -12,7 +6,13 @@ export default (db, idGeschaeft) => {
   }
 
   try {
-    db.prepare(sql).run({ idGeschaeft })
+    db.prepare(
+      `
+      DELETE FROM
+        geschaefte
+      WHERE
+        idGeschaeft = ${idGeschaeft}`,
+    ).run()
   } catch (error) {
     throw error
   }
