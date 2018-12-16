@@ -3,19 +3,13 @@ import { action } from 'mobx'
 import _ from 'lodash'
 import moment from 'moment'
 
-import getGeschaefteFromDb from '../../src/getGeschaefteFromDb'
-import getGekoFromDb from '../../src/getGekoFromDb'
-import getLinksFromDb from '../../src/getLinksFromDb'
 import getDropdownOptions from '../../src/getDropdownOptions'
-import getFaelligeStatiOptions from '../../src/getFaelligeStatiOptions'
-import getInterneOptions from '../../src/getInterneOptions'
-import getExterneOptions from '../../src/getExterneOptions'
 import updateGeschaeft from '../../src/updateGeschaeft'
 import updateGeko from '../../src/updateGeko'
 import newGeschaeftInDb from '../../src/newGeschaeftInDb'
-import newGekoInDb from '../../src/newGekoInDb'
 import newLinkInDb from '../../src/newLinkInDb'
 import geschaefteSortByFieldsGetSortFields from '../../src/geschaefteSortByFieldsGetSortFields'
+import convertDateToDdMmYyyy from '../../src/convertDateToDdMmYyyy'
 
 export default store => ({
   geschaeftPdfShow: action(() => store.history.push('/geschaeftPdf')),
@@ -25,11 +19,25 @@ export default store => ({
     store.geschaefte.error = []
     let geschaefte = []
     try {
-      geschaefte = getGeschaefteFromDb(app.db)
+      geschaefte = app.db
+        .prepare('SELECT * FROM geschaefte ORDER BY idGeschaeft DESC')
+        .all()
     } catch (error) {
       store.geschaefte.fetching = false
       store.geschaefte.error.push(error)
     }
+    /**
+     * convert date fields
+     * from YYYY-MM-DD to DD.MM.YYYY
+     */
+    geschaefte.forEach(g => {
+      const geschaeft = g
+      Object.keys(geschaeft).forEach(field => {
+        if (isDateField(field)) {
+          geschaeft[field] = convertDateToDdMmYyyy(geschaeft[field])
+        }
+      })
+    })
     store.geschaefte.fetching = false
     store.geschaefte.error = []
     store.geschaefte.geschaefte = geschaefte
@@ -133,7 +141,9 @@ export default store => ({
     store.geschaefte.error = []
     let geko = []
     try {
-      geko = getGekoFromDb(app.db)
+      geko = app.db
+        .prepare('SELECT * FROM geko ORDER BY idGeschaeft, gekoNr')
+        .all()
     } catch (error) {
       store.geschaefte.fetching = false
       store.geschaefte.error.push(error)
@@ -148,7 +158,9 @@ export default store => ({
     store.geschaefte.error = []
     let links = []
     try {
-      links = getLinksFromDb(app.db)
+      links = app.db
+        .prepare('SELECT * FROM links ORDER BY idGeschaeft, url')
+        .all()
     } catch (error) {
       store.geschaefte.fetching = false
       return store.geschaefte.error.push(error)
@@ -298,11 +310,21 @@ export default store => ({
   faelligeStatiOptionsGet: action(() => {
     let options = []
     try {
-      options = getFaelligeStatiOptions(store.app.db)
+      options = store.app.db
+        .prepare(
+          `
+          SELECT
+            status
+          FROM
+            status
+          WHERE
+            geschaeftKannFaelligSein = 1`,
+        )
+        .all()
     } catch (error) {
-      store.geschaefte.error.push(error)
+      return store.geschaefte.error.push(error)
     }
-    store.geschaefte.faelligeStatiOptions = options
+    store.geschaefte.faelligeStatiOptions = options.map(res => res.status)
   }),
   geschaeftsartOptionsGet: action(() => {
     let geschaeftsartOptions = []
@@ -329,18 +351,31 @@ export default store => ({
   interneOptionsGet: action(() => {
     let interneOptions = []
     try {
-      interneOptions = getInterneOptions(store.app.db)
+      interneOptions = store.app.db
+        .prepare('SELECT * FROM interne ORDER BY kurzzeichen')
+        .all()
     } catch (error) {
-      store.geschaefte.error.push(error)
+      return store.geschaefte.error.push(error)
     }
     store.geschaefte.interneOptions = interneOptions
   }),
   externeOptionsGet: action(() => {
     let externeOptions = []
     try {
-      externeOptions = getExterneOptions(store.app.db)
+      externeOptions = store.app.db
+        .prepare(
+          `
+          SELECT
+            *, name || ' ' || vorname AS nameVorname
+          FROM
+            externe
+          ORDER BY
+            name,
+            vorname`,
+        )
+        .all()
     } catch (error) {
-      store.geschaefte.error.push(error)
+      return store.geschaefte.error.push(error)
     }
     store.geschaefte.externeOptions = externeOptions
   }),
@@ -368,7 +403,28 @@ export default store => ({
   gekoNewCreate: action((idGeschaeft, gekoNr) => {
     let geko
     try {
-      geko = newGekoInDb(store.app.db, idGeschaeft, gekoNr)
+      store.app.db
+        .prepare(
+          `INSERT INTO geko (idGeschaeft, gekoNr) VALUES (${idGeschaeft}, ${gekoNr})`,
+        )
+        .run()
+    } catch (error) {
+      return store.geschaefte.error.push(error)
+    }
+    // return full dataset
+    try {
+      geko = store.app.db
+        .prepare(
+          `
+          SELECT
+            *
+          FROM
+            geko
+          WHERE
+            idGeschaeft = ${idGeschaeft} AND
+            gekoNr = ${gekoNr}`,
+        )
+        .get()
     } catch (error) {
       return store.geschaefte.error.push(error)
     }
