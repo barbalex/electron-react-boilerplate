@@ -44,7 +44,8 @@
       "package.json"
     ],
     "dmg": {
-      "contents": [{
+      "contents": [
+        {
           "x": 130,
           "y": 220
         },
@@ -217,6 +218,7 @@
     "lodash": "4.17.11",
     "mobx": "^4.8.0",
     "mobx-react": "5.4.3",
+    "mobx-react-lite": "0.3.4",
     "mobx-state-tree": "3.9.0",
     "moment": "2.23.0",
     "prop-types": "15.6.2",

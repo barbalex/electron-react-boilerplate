@@ -6,6 +6,7 @@ import { registerLocale, setDefaultLocale } from 'react-datepicker'
 import { de } from 'date-fns/locale'
 
 import App from './components/App'
+import { Provider as MobxProvider } from './mobxStoreContext'
 
 // loading store from separate file does not work for server rendering
 // see: http://stackoverflow.com/questions/33643290/how-do-i-get-a-hold-of-the-store-dispatch-in-react-router-onenter
@@ -27,8 +28,10 @@ app.init()
 window.app = app
 
 render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <MobxProvider value={store}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </MobxProvider>,
   document.getElementById('root'),
 )
