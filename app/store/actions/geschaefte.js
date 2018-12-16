@@ -334,6 +334,7 @@ export default store => ({
     } catch (error) {
       store.geschaefte.error.push(error)
     }
+    store.geschaefte.externeOptions = externeOptions
   }),
   rechtsmittelInstanzOptionsGet: action(() => {
     let rechtsmittelInstanzOptions = []
