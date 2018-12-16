@@ -1,19 +1,11 @@
-const sql = `
-  SELECT
-    @name
-  FROM
-    @name
-  WHERE
-    historisch = 0
-  ORDER BY
-    sort`
-
 export default (db, name) => {
-  let result
+  let result = []
   try {
-    result = db.prepare(sql).all({ name })
+    result = db
+      .prepare(`SELECT ${name} FROM ${name} WHERE historisch = 0 ORDER BY sort`)
+      .all()
   } catch (error) {
-    throw error
+    store.geschaefte.error.push(error)
   }
   const options = result.map(res => res[name])
   return options

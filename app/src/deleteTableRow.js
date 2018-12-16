@@ -1,12 +1,12 @@
-const sql = `
-  DELETE FROM
-    @table
-  WHERE
-    id = @id`
-
 export default (db, table, id) => {
   try {
-    db.prepare(sql).run({ table, id })
+    db.prepare(
+      `
+      DELETE FROM
+        ${table}
+      WHERE
+        id = ${id}`,
+    ).run()
   } catch (error) {
     throw error
   }
