@@ -1,3 +1,7 @@
+/**
+ * using hooks here results in error:
+ * Hooks can only be called inside the body of a function component.
+ */
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
@@ -63,9 +67,16 @@ const ScrollContainer = styled.div`
 `
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: ${props => (props['data-width'] === 'narrow' ? 'repeat(1, 100%)' : 'repeat(12, 8.33333%)')};
+  grid-template-columns: ${props =>
+    props['data-width'] === 'narrow'
+      ? 'repeat(1, 100%)'
+      : 'repeat(12, 8.33333%)'};
   grid-template-rows: auto;
-  grid-template-areas: ${props => getTemplateAreas(props['data-width'], props['data-showareaforgeschaeftsart'])};
+  grid-template-areas: ${props =>
+    getTemplateAreas(
+      props['data-width'],
+      props['data-showareaforgeschaeftsart'],
+    )};
 `
 
 const enhance = compose(
@@ -144,8 +155,12 @@ const FilterFields = ({ store, changeComparator, change }) => {
   } else {
     filterFields = []
   }
-  const showAreaParlVorstoss = !!(values.geschaeftsart && values.geschaeftsart === 'Parlament. Vorstoss')
-  const showAreaRechtsmittel = !!(values.geschaeftsart && values.geschaeftsart === 'Rekurs/Beschwerde')
+  const showAreaParlVorstoss = !!(
+    values.geschaeftsart && values.geschaeftsart === 'Parlament. Vorstoss'
+  )
+  const showAreaRechtsmittel = !!(
+    values.geschaeftsart && values.geschaeftsart === 'Rekurs/Beschwerde'
+  )
   const showAreaForGeschaeftsart = showAreaParlVorstoss || showAreaRechtsmittel
 
   // need to adapt layout to differing widths
@@ -165,7 +180,10 @@ const FilterFields = ({ store, changeComparator, change }) => {
 
   return (
     <ScrollContainer>
-      <Wrapper data-width={width} data-showareaforgeschaeftsart={showAreaForGeschaeftsart}>
+      <Wrapper
+        data-width={width}
+        data-showareaforgeschaeftsart={showAreaForGeschaeftsart}
+      >
         <AreaGeschaeft
           firstTabIndex={width === 'narrow' ? nrOfNrFields : 0}
           change={change}
@@ -179,14 +197,39 @@ const FilterFields = ({ store, changeComparator, change }) => {
           values={values}
         />
         {showAreaParlVorstoss && (
-          <AreaParlVorstoss firstTabIndex={nrOfFieldsBeforePv} change={change} changeComparator={changeComparator} values={values} />
+          <AreaParlVorstoss
+            firstTabIndex={nrOfFieldsBeforePv}
+            change={change}
+            changeComparator={changeComparator}
+            values={values}
+          />
         )}
         {showAreaRechtsmittel && (
-          <AreaRechtsmittel firstTabIndex={nrOfFieldsBeforePv} change={change} changeComparator={changeComparator} values={values} />
+          <AreaRechtsmittel
+            firstTabIndex={nrOfFieldsBeforePv}
+            change={change}
+            changeComparator={changeComparator}
+            values={values}
+          />
         )}
-        <AreaFristen firstTabIndex={nrOfFieldsBeforeFristen} change={change} changeComparator={changeComparator} values={values} />
-        <AreaPersonen firstTabIndex={nrOfFieldsBeforePersonen} change={change} changeComparator={changeComparator} values={values} />
-        <AreaHistory firstTabIndex={nrOfFieldsBeforeHistory} change={change} changeComparator={changeComparator} values={values} />
+        <AreaFristen
+          firstTabIndex={nrOfFieldsBeforeFristen}
+          change={change}
+          changeComparator={changeComparator}
+          values={values}
+        />
+        <AreaPersonen
+          firstTabIndex={nrOfFieldsBeforePersonen}
+          change={change}
+          changeComparator={changeComparator}
+          values={values}
+        />
+        <AreaHistory
+          firstTabIndex={nrOfFieldsBeforeHistory}
+          change={change}
+          changeComparator={changeComparator}
+          values={values}
+        />
         <AreaZuletztMutiert
           firstTabIndex={nrOfFieldsBeforeZuletztMutiert}
           change={change}
