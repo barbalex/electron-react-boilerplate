@@ -9,18 +9,26 @@ import styled from 'styled-components'
 import FilterFields from './FilterFields'
 import Geschaefte from './Geschaefte'
 
-const StyledSplitPane = styled(SplitPane)`top: 52px;`
+const StyledSplitPane = styled(SplitPane)`
+  top: 52px;
+`
 
 const enhance = compose(
   inject('store'),
   withHandlers({
-    onChange: props => size => props.store.configSetKey('geschaefteColumnWidth', size),
+    onChange: props => size =>
+      props.store.configSetKey('geschaefteColumnWidth', size),
   }),
   observer,
 )
 
 const FilterFieldsLayout = ({ store, onChange }) => (
-  <StyledSplitPane split="vertical" minSize={100} defaultSize={store.app.config.geschaefteColumnWidth} onChange={onChange}>
+  <StyledSplitPane
+    split="vertical"
+    minSize={100}
+    defaultSize={store.app.config.geschaefteColumnWidth}
+    onChange={onChange}
+  >
     <Geschaefte />
     <FilterFields />
   </StyledSplitPane>
