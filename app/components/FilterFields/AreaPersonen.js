@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { FormControl, InputGroup } from 'react-bootstrap'
 import _ from 'lodash'
 import Linkify from 'react-linkify'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
+import { observer } from 'mobx-react'
 import styled, { css } from 'styled-components'
 
 import ComparatorSelector from './ComparatorSelector'
 import SortSelector from './SortSelector'
+import storeContext from '../../storeContext'
 
 const interneOptionsList = interneOptions => {
   // sort interneOptions by kurzzeichen
@@ -20,7 +20,9 @@ const interneOptionsList = interneOptions => {
     const name = `${o.vorname || ''} ${o.name || ''}`
     return (
       <option key={index + 1} value={name}>
-        {`${o.name || '(kein Name)'} ${o.vorname || '(kein Vorname)'} (${o.kurzzeichen})`}
+        {`${o.name || '(kein Name)'} ${o.vorname || '(kein Vorname)'} (${
+          o.kurzzeichen
+        })`}
       </option>
     )
   })
@@ -36,7 +38,9 @@ const verantwortlichOptionsList = interneOptions => {
   })
   const options = interneOptionsSorted.map((o, index) => (
     <option key={index + 1} value={o.kurzzeichen}>
-      {`${o.name || '(kein Name)'} ${o.vorname || '(kein Vorname)'} (${o.kurzzeichen})`}
+      {`${o.name || '(kein Name)'} ${o.vorname || '(kein Vorname)'} (${
+        o.kurzzeichen
+      })`}
     </option>
   ))
   options.unshift(<option key={0} value="" />)
@@ -45,7 +49,9 @@ const verantwortlichOptionsList = interneOptions => {
 
 const externeOptionsList = externeOptions => {
   // sort externeOptions by nameVorname
-  const externeOptionsSorted = _.sortBy(externeOptions, o => o.nameVorname.toLowerCase())
+  const externeOptionsSorted = _.sortBy(externeOptions, o =>
+    o.nameVorname.toLowerCase(),
+  )
   const options = externeOptionsSorted.map((o, index) => (
     <option key={index + 1} value={o.nameVorname}>
       {o.nameVorname}
@@ -82,7 +88,9 @@ const externeData = (values, externeOptions) => {
     if (info) return `${info}, ${value}`
     return value
   }
-  const data = externeOptions.find(o => o.nameVorname === values.kontaktExternNameVorname)
+  const data = externeOptions.find(
+    o => o.nameVorname === values.kontaktExternNameVorname,
+  )
   if (!data) return ''
   let info = ''
   info = addValueToInfo(info, data.firma)
@@ -93,7 +101,8 @@ const externeData = (values, externeOptions) => {
 const Container = styled.div`
   grid-area: areaPersonen;
   background-color: white;
-  box-shadow: inset 1em 1em 2em rgb(246, 255, 245), inset -1em -1em 2em rgb(246, 255, 245);
+  box-shadow: inset 1em 1em 2em rgb(246, 255, 245),
+    inset -1em -1em 2em rgb(246, 255, 245);
   outline: 1px solid #efefef;
   display: grid;
   grid-template-columns: 360px calc((100% - 10px) - 360px);
@@ -112,71 +121,113 @@ const subtitle = css`
   font-size: 12px;
   margin-top: 5px;
 `
-const VerantwortlichSubTitle = styled.div`${subtitle} grid-column: 1 / span 2;`
-const VerantwortlichSelector = styled(InputGroup)`grid-column: 1 / span 1;`
-const VerantwortlichName = styled(FormControl.Static)`grid-column: 2 / span 1;`
-const InterneKontakteSubTitle = styled.div`${subtitle} grid-column: 1 / span 2;`
-const InterneKontakteSelector = styled(InputGroup)`grid-column: 1 / span 1;`
-const InterneKontakteName = styled(FormControl.Static)`grid-column: 2 / span 1;`
-const ExterneKontakteSubTitle = styled.div`${subtitle} grid-column: 1 / span 2;`
-const ExterneKontakteSelector = styled(InputGroup)`grid-column: 1 / span 1;`
-const ExterneKontakteName = styled(FormControl.Static)`grid-column: 2 / span 1;`
-const KontakteDropdown = styled(FormControl)`width: 80px;`
+const VerantwortlichSubTitle = styled.div`
+  ${subtitle} grid-column: 1 / span 2;
+`
+const VerantwortlichSelector = styled(InputGroup)`
+  grid-column: 1 / span 1;
+`
+const VerantwortlichName = styled(FormControl.Static)`
+  grid-column: 2 / span 1;
+`
+const InterneKontakteSubTitle = styled.div`
+  ${subtitle} grid-column: 1 / span 2;
+`
+const InterneKontakteSelector = styled(InputGroup)`
+  grid-column: 1 / span 1;
+`
+const InterneKontakteName = styled(FormControl.Static)`
+  grid-column: 2 / span 1;
+`
+const ExterneKontakteSubTitle = styled.div`
+  ${subtitle} grid-column: 1 / span 2;
+`
+const ExterneKontakteSelector = styled(InputGroup)`
+  grid-column: 1 / span 1;
+`
+const ExterneKontakteName = styled(FormControl.Static)`
+  grid-column: 2 / span 1;
+`
+const KontakteDropdown = styled(FormControl)`
+  width: 80px;
+`
 
-const enhance = compose(inject('store'), observer)
+const AreaPersonen = ({
+  values,
+  firstTabIndex = 0,
+  change,
+  changeComparator,
+}) => {
+  const store = useContext(storeContext)
 
-const AreaPersonen = ({ store, values, firstTabIndex = 0, change, changeComparator }) => (
-  <Container>
-    <Title>Personen</Title>
-    <VerantwortlichSubTitle>Verantwortlich</VerantwortlichSubTitle>
-    <VerantwortlichSelector>
-      <SortSelector name="verantwortlich" />
-      <ComparatorSelector name="verantwortlich" changeComparator={changeComparator} />
-      <KontakteDropdown
-        componentClass="select"
-        value={values.verantwortlich || ''}
-        name="verantwortlich"
-        onChange={change}
-        tabIndex={1 + firstTabIndex}
-      >
-        {verantwortlichOptionsList(store.geschaefte.interneOptions)}
-      </KontakteDropdown>
-    </VerantwortlichSelector>
-    <VerantwortlichName>{verantwortlichData(values, store.geschaefte.interneOptions)}</VerantwortlichName>
+  return (
+    <Container>
+      <Title>Personen</Title>
+      <VerantwortlichSubTitle>Verantwortlich</VerantwortlichSubTitle>
+      <VerantwortlichSelector>
+        <SortSelector name="verantwortlich" />
+        <ComparatorSelector
+          name="verantwortlich"
+          changeComparator={changeComparator}
+        />
+        <KontakteDropdown
+          componentClass="select"
+          value={values.verantwortlich || ''}
+          name="verantwortlich"
+          onChange={change}
+          tabIndex={1 + firstTabIndex}
+        >
+          {verantwortlichOptionsList(store.geschaefte.interneOptions)}
+        </KontakteDropdown>
+      </VerantwortlichSelector>
+      <VerantwortlichName>
+        {verantwortlichData(values, store.geschaefte.interneOptions)}
+      </VerantwortlichName>
 
-    <InterneKontakteSubTitle>Interne Kontakte</InterneKontakteSubTitle>
-    <InterneKontakteSelector>
-      <SortSelector name="kontaktInternVornameName" />
-      <ComparatorSelector name="kontaktInternVornameName" changeComparator={changeComparator} />
-      <KontakteDropdown
-        componentClass="select"
-        value={values.kontaktInternVornameName || ''}
-        name="kontaktInternVornameName"
-        onChange={change}
-        tabIndex={2 + firstTabIndex}
-      >
-        {interneOptionsList(store.geschaefte.interneOptions)}
-      </KontakteDropdown>
-    </InterneKontakteSelector>
-    <InterneKontakteName>{interneData(values, store.geschaefte.interneOptions)}</InterneKontakteName>
+      <InterneKontakteSubTitle>Interne Kontakte</InterneKontakteSubTitle>
+      <InterneKontakteSelector>
+        <SortSelector name="kontaktInternVornameName" />
+        <ComparatorSelector
+          name="kontaktInternVornameName"
+          changeComparator={changeComparator}
+        />
+        <KontakteDropdown
+          componentClass="select"
+          value={values.kontaktInternVornameName || ''}
+          name="kontaktInternVornameName"
+          onChange={change}
+          tabIndex={2 + firstTabIndex}
+        >
+          {interneOptionsList(store.geschaefte.interneOptions)}
+        </KontakteDropdown>
+      </InterneKontakteSelector>
+      <InterneKontakteName>
+        {interneData(values, store.geschaefte.interneOptions)}
+      </InterneKontakteName>
 
-    <ExterneKontakteSubTitle>Externe Kontakte</ExterneKontakteSubTitle>
-    <ExterneKontakteSelector>
-      <SortSelector name="kontaktExternNameVorname" />
-      <ComparatorSelector name="kontaktExternNameVorname" changeComparator={changeComparator} />
-      <KontakteDropdown
-        componentClass="select"
-        value={values.kontaktExternNameVorname || ''}
-        name="kontaktExternNameVorname"
-        onChange={change}
-        tabIndex={3 + firstTabIndex}
-      >
-        {externeOptionsList(store.geschaefte.externeOptions)}
-      </KontakteDropdown>
-    </ExterneKontakteSelector>
-    <ExterneKontakteName>{externeData(values, store.geschaefte.externeOptions)}</ExterneKontakteName>
-  </Container>
-)
+      <ExterneKontakteSubTitle>Externe Kontakte</ExterneKontakteSubTitle>
+      <ExterneKontakteSelector>
+        <SortSelector name="kontaktExternNameVorname" />
+        <ComparatorSelector
+          name="kontaktExternNameVorname"
+          changeComparator={changeComparator}
+        />
+        <KontakteDropdown
+          componentClass="select"
+          value={values.kontaktExternNameVorname || ''}
+          name="kontaktExternNameVorname"
+          onChange={change}
+          tabIndex={3 + firstTabIndex}
+        >
+          {externeOptionsList(store.geschaefte.externeOptions)}
+        </KontakteDropdown>
+      </ExterneKontakteSelector>
+      <ExterneKontakteName>
+        {externeData(values, store.geschaefte.externeOptions)}
+      </ExterneKontakteName>
+    </Container>
+  )
+}
 
 AreaPersonen.displayName = 'AreaPersonen'
 
@@ -185,11 +236,10 @@ AreaPersonen.displayName = 'AreaPersonen'
  * as they may be loaded after the component
  */
 AreaPersonen.propTypes = {
-  store: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,
   firstTabIndex: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired,
   changeComparator: PropTypes.func.isRequired,
 }
 
-export default enhance(AreaPersonen)
+export default observer(AreaPersonen)
