@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { ControlLabel } from 'react-bootstrap'
-import { toJS } from 'mobx'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import Input from './Input'
 import SelectInput from './SelectInput'
+import storeContext from '../../storeContext'
 
 const Container = styled.div`
   grid-area: areaNummern;
@@ -112,18 +111,9 @@ const FieldAktennummer = styled.div`
   grid-area: fieldAktennummer;
 `
 
-const enhance = compose(
-  inject('store'),
-  observer,
-)
+const AreaNummern = ({ values, firstTabIndex, change, changeComparator }) => {
+  const store = useContext(storeContext)
 
-const AreaNummern = ({
-  store,
-  values,
-  firstTabIndex,
-  change,
-  changeComparator,
-}) => {
   return (
     <Container>
       <Title>Nummern</Title>
@@ -210,7 +200,7 @@ const AreaNummern = ({
           values={values}
           changeComparator={changeComparator}
           tabIndex={13 + firstTabIndex}
-          options={toJS(store.geschaefte.aktenstandortOptions)}
+          options={store.geschaefte.aktenstandortOptions}
         />
       </FieldAktenstandort>
       <FieldAktennummer>
@@ -231,11 +221,10 @@ const AreaNummern = ({
 AreaNummern.displayName = 'AreaNummern'
 
 AreaNummern.propTypes = {
-  store: PropTypes.object.isRequired,
   values: PropTypes.object,
   change: PropTypes.func.isRequired,
   firstTabIndex: PropTypes.number.isRequired,
   changeComparator: PropTypes.func.isRequired,
 }
 
-export default enhance(AreaNummern)
+export default observer(AreaNummern)
