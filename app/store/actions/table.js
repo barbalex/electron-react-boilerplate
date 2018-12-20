@@ -11,17 +11,11 @@ export default store => ({
   }),
   tableGet: action(table => {
     store.table.table = table
-    store.table.fetching = true
   }),
   tableGetSuccess: action((table, rows) => {
     store.table.table = table
-    store.table.fetching = false
     store.table.rows = rows
     store.table.id = null
-  }),
-  tableGetError: action(error => {
-    store.table.fetching = false
-    store.addError(error)
   }),
   getTable: action(table => {
     const { app } = store
@@ -30,7 +24,7 @@ export default store => ({
     try {
       rows = app.db.prepare(`SELECT * FROM ${table}`).all()
     } catch (error) {
-      return store.tableGetError(error)
+      return store.addError(error)
     }
     store.tableGetSuccess(table, rows)
     if (store.history.location.pathname !== '/table') {
@@ -45,18 +39,12 @@ export default store => ({
     store.table.id = store.table.id && store.table.id === id ? null : id
   }),
   tableRowNewCreate: action(table => {
-    const {
-      db,
-      tableRowNew,
-      tableRowToggleActivated,
-      history,
-      tableGetError,
-    } = store.app
+    const { db } = store.app
     let result
     try {
       result = db.prepare(`INSERT INTO ${table} (id) VALUES (NULL)`).run()
     } catch (error) {
-      return tableGetError(error)
+      return store.addError(error)
     }
     const id = result.lastInsertRowid
     // return full dataset
@@ -64,7 +52,7 @@ export default store => ({
     try {
       row = db.prepare(`SELECT * FROM ${table} WHERE id = ${id}`).get()
     } catch (error) {
-      return tableGetError(error)
+      return store.addError(error)
     }
     // react does not want to get null values
     Object.keys(row).forEach(key => {
@@ -72,10 +60,10 @@ export default store => ({
         row[key] = ''
       }
     })
-    tableRowNew(row)
-    tableRowToggleActivated(table, row.id)
-    if (history.location.pathname !== '/table') {
-      history.push('/table')
+    store.tableRowNew(row)
+    store.tableRowToggleActivated(table, row.id)
+    if (store.history.location.pathname !== '/table') {
+      store.history.push('/table')
     }
   }),
   tableRowSetDeleteIntended: action(() => {
