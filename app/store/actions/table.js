@@ -64,7 +64,7 @@ export default store => ({
     // return full dataset
     let row
     try {
-      row = db.prepare(`SELECT * FROM ${table} WHERE id = ${id}`).all()
+      row = db.prepare(`SELECT * FROM ${table} WHERE id = ${id}`).get()
     } catch (error) {
       return tableGetError(error)
     }
