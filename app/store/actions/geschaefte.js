@@ -181,7 +181,7 @@ export default store => ({
           INSERT INTO
             geschaefte (mutationsdatum, mutationsperson)
           VALUES
-            (${now}, ${user.username})`,
+            ('${now}', '${user.username}')`,
         )
         .run()
     } catch (error) {
@@ -300,23 +300,33 @@ export default store => ({
       value2 = convertDateToYyyyMmDd(value)
     }
     const now = moment().format('YYYY-MM-DD HH:mm:ss')
+    console.log(
+      'store, changeGeschaeftInDb:',
+      idGeschaeft,
+      field,
+      value,
+      value2,
+    )
+    let result
     try {
-      store.app.db
+      result = store.app.db
         .prepare(
           `
-        UPDATE
-          geschaefte
-        SET
-          ${field} = ${value2},
-          mutationsdatum = ${now},
-          mutationsperson = ${store.user.username}
-        WHERE
-          idGeschaeft = ${idGeschaeft}`,
+          UPDATE
+            geschaefte
+          SET
+            ${field} = '${value2}',
+            mutationsdatum = '${now}',
+            mutationsperson = '${store.user.username}'
+          WHERE
+            idGeschaeft = ${idGeschaeft}`,
         )
         .run()
     } catch (error) {
+      console.log('store, changeGeschaeftInDb, error:', error)
       store.geschaefte.error.push(error)
     }
+    console.log('store, changeGeschaeftInDb, result from update:', result)
   }),
   rechtsmittelErledigungOptionsGet: action(() => {
     let rechtsmittelErledigungOptions = []
@@ -442,7 +452,7 @@ export default store => ({
     try {
       store.app.db
         .prepare(
-          `INSERT INTO geko (idGeschaeft, gekoNr) VALUES (${idGeschaeft}, ${gekoNr})`,
+          `INSERT INTO geko (idGeschaeft, gekoNr) VALUES (${idGeschaeft}, '${gekoNr}')`,
         )
         .run()
     } catch (error) {
@@ -459,7 +469,7 @@ export default store => ({
             geko
           WHERE
             idGeschaeft = ${idGeschaeft} AND
-            gekoNr = ${gekoNr}`,
+            gekoNr = '${gekoNr}'`,
         )
         .get()
     } catch (error) {
@@ -476,7 +486,7 @@ export default store => ({
             geko
           WHERE
             idGeschaeft = ${idGeschaeft} AND
-            gekoNr = ${gekoNr}`,
+            gekoNr = '${gekoNr}'`,
         )
         .run()
     } catch (error) {
@@ -496,10 +506,10 @@ export default store => ({
           UPDATE
             geko
           SET
-            ${field} = ${value}
+            ${field} = '${value}'
           WHERE
             idGeschaeft = ${idGeschaeft} AND
-            gekoNr = ${gekoNr}`,
+            gekoNr = '${gekoNr}'`,
         )
         .run()
     } catch (error) {
@@ -514,7 +524,7 @@ export default store => ({
           INSERT INTO
             links (idGeschaeft, url)
           VALUES
-            (${idGeschaeft}, ${url})`,
+            (${idGeschaeft}, '${url}')`,
         )
         .run()
     } catch (error) {
@@ -531,7 +541,7 @@ export default store => ({
           links
         WHERE
           idGeschaeft = ${idGeschaeft} AND
-          url = ${url}`,
+          url = '${url}'`,
         )
         .run()
     } catch (error) {

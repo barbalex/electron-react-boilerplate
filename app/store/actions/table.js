@@ -123,7 +123,7 @@ export default store => ({
         UPDATE
           ${table}
         SET
-          ${field} = ${value}
+          ${field} = '${value}'
         WHERE
           id = ${id}`,
       )
