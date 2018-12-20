@@ -20,7 +20,12 @@ export default (geschaefte, activeId) => {
   if (idNachgeschaeft) history.push(idNachgeschaeft)
   while (idNachgeschaeft) {
     idNachgeschaeft = getIdNachgeschaeft(geschaefte, idNachgeschaeft)
-    if (idNachgeschaeft) history.push(idNachgeschaeft)
+    // need to prevent endless loop when two geschaefte set each other as nachgeschaeft
+    if (idNachgeschaeft && !history.includes(idNachgeschaeft)) {
+      history.push(idNachgeschaeft)
+    } else if (history.includes(idNachgeschaeft)) {
+      idNachgeschaeft = null
+    }
   }
   return history
 }
