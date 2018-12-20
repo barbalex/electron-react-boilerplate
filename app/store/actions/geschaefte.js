@@ -300,16 +300,8 @@ export default store => ({
       value2 = convertDateToYyyyMmDd(value)
     }
     const now = moment().format('YYYY-MM-DD HH:mm:ss')
-    console.log(
-      'store, changeGeschaeftInDb:',
-      idGeschaeft,
-      field,
-      value,
-      value2,
-    )
-    let result
     try {
-      result = store.app.db
+      store.app.db
         .prepare(
           `
           UPDATE
@@ -323,10 +315,8 @@ export default store => ({
         )
         .run()
     } catch (error) {
-      console.log('store, changeGeschaeftInDb, error:', error)
       store.geschaefte.error.push(error)
     }
-    console.log('store, changeGeschaeftInDb, result from update:', result)
   }),
   rechtsmittelErledigungOptionsGet: action(() => {
     let rechtsmittelErledigungOptions = []
