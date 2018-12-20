@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { ControlLabel } from 'react-bootstrap'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
+import { toJS } from 'mobx'
 
 import Input from './Input'
 import SelectInput from './SelectInput'
@@ -200,7 +201,7 @@ const AreaNummern = ({ values, firstTabIndex, change, changeComparator }) => {
           values={values}
           changeComparator={changeComparator}
           tabIndex={13 + firstTabIndex}
-          options={store.geschaefte.aktenstandortOptions}
+          options={toJS(store.geschaefte.aktenstandortOptions)}
         />
       </FieldAktenstandort>
       <FieldAktennummer>
