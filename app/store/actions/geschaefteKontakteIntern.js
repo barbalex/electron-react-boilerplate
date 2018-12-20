@@ -39,7 +39,7 @@ export default store => ({
   geschaeftKontaktInternNewCreate: action((idGeschaeft, idKontakt) => {
     const { app } = store
     try {
-      app.db.db
+      app.db
         .prepare(
           `
           INSERT INTO
@@ -49,6 +49,7 @@ export default store => ({
         )
         .run()
     } catch (error) {
+      console.log({ error, idGeschaeft, idKontakt })
       return store.geschaeftKontaktInternNewError(error)
     }
     // return full object
@@ -67,6 +68,7 @@ export default store => ({
         )
         .all()
     } catch (error) {
+      console.log({ error, idGeschaeft, idKontakt })
       return store.geschaeftKontaktInternNewError(error)
     }
     store.geschaeftKontaktInternNew(geschaeftKontaktIntern)
