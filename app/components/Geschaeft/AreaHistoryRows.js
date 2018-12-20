@@ -13,7 +13,10 @@ const FieldsContainer = styled.div`
 const HistoryField = styled.div`
   grid-column: 1;
   display: grid;
-  grid-template-columns: ${props => (props['data-ispdf'] ? '40px 65px calc(100% - 105px)' : '55px 75px calc(100% - 130px)')};
+  grid-template-columns: ${props =>
+    props['data-ispdf']
+      ? '40px 65px calc(100% - 105px)'
+      : '55px 75px calc(100% - 130px)'};
   grid-gap: 0;
   border-bottom: thin solid #cecbcb;
   padding-left: ${props => (props['data-ispdf'] ? 0 : '13px')};
@@ -29,29 +32,44 @@ const HistoryField = styled.div`
     background-color: rgb(227, 232, 255);
   }
 `
-const IdGeschaeft = styled.div`grid-column: 1;`
-const Datum = styled.div`grid-column: 2;`
-const Gegenstand = styled.div`grid-column: 3;`
+const IdGeschaeft = styled.div`
+  grid-column: 1;
+`
+const Datum = styled.div`
+  grid-column: 2;
+`
+const Gegenstand = styled.div`
+  grid-column: 3;
+`
 
-const enhance = compose(inject('store'), observer)
+const enhance = compose(
+  inject('store'),
+  observer,
+)
 
 const AreaHistoryRows = ({ store }) => {
   const { geschaeftToggleActivated } = store
-  const { activeId, geschaeftePlusFilteredAndSorted: geschaefte, historyOfActiveId } = store.geschaefte
+  const {
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+    historyOfActiveId,
+  } = store.geschaefte
   const path = store.history.location.pathname
   const isPdf = path === '/geschaeftPdf'
   const history = historyOfActiveId
 
   return (
     <FieldsContainer>
-      {history.map(id => {
+      {history.map((id, index) => {
         const geschaeft = geschaefte.find(g => g.idGeschaeft === id)
         if (!geschaeft) {
           return null
         }
         return (
           <HistoryField
-            key={id}
+            // add index for cases where two geschaefte
+            // reference each other...
+            key={`${id}${index}`}
             style={{
               cursor: id === activeId ? 'default' : 'pointer',
             }}
