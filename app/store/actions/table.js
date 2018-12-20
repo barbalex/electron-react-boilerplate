@@ -12,18 +12,16 @@ export default store => ({
   tableGet: action(table => {
     store.table.table = table
     store.table.fetching = true
-    store.table.error = []
   }),
   tableGetSuccess: action((table, rows) => {
     store.table.table = table
     store.table.fetching = false
-    store.table.error = []
     store.table.rows = rows
     store.table.id = null
   }),
   tableGetError: action(error => {
     store.table.fetching = false
-    store.table.error = [...store.table.error, error]
+    store.addError(error)
   }),
   getTable: action(table => {
     const { app } = store
@@ -113,7 +111,7 @@ export default store => ({
       row[field] = value
     }
   }),
-  tableChangeDbError: action(error => store.table.error.push(error)),
+  tableChangeDbError: action(error => store.addError(error)),
   changeTableInDb: action((table, id, field, value) => {
     // no need to do something on then
     // ui was updated on TABLE_CHANGE_STATE

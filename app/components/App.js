@@ -1,12 +1,18 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { observer } from 'mobx-react-lite'
+import styled from 'styled-components'
 
 import GeschaefteLayout from './GeschaefteLayout'
 import FilterFieldsLayout from './FilterFieldsLayout'
 import TableLayout from './TableLayout'
 import Navbar from './Navbar'
+import Errors from './Errors'
 import storeContext from '../storeContext'
+
+const Container = styled.div`
+  height: 100vh;
+`
 
 const App = () => {
   const store = useContext(storeContext)
@@ -26,12 +32,13 @@ const App = () => {
   const showTableLayout = pathname === '/table'
 
   return (
-    <div ref={setRef}>
+    <Container ref={setRef}>
       <Navbar />
       {showGeschaefteLayout && <GeschaefteLayout />}
       {showFilterFieldsLayout && <FilterFieldsLayout />}
       {showTableLayout && <TableLayout />}
-    </div>
+      <Errors />
+    </Container>
   )
 }
 App.propTypes = {

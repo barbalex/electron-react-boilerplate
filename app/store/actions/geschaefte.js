@@ -14,7 +14,6 @@ export default store => ({
   getGeschaefte: action(() => {
     const { app } = store
     store.geschaefte.fetching = true
-    store.geschaefte.error = []
     let geschaefte = []
     try {
       geschaefte = app.db
@@ -22,7 +21,7 @@ export default store => ({
         .all()
     } catch (error) {
       store.geschaefte.fetching = false
-      store.geschaefte.error.push(error)
+      store.addError(error)
     }
     /**
      * convert date fields
@@ -37,7 +36,6 @@ export default store => ({
       })
     })
     store.geschaefte.fetching = false
-    store.geschaefte.error = []
     store.geschaefte.geschaefte = geschaefte
     if (store.history.location.pathname !== '/geschaefte') {
       store.history.push('/geschaefte')
@@ -136,7 +134,6 @@ export default store => ({
   getGeko: action(() => {
     const { app } = store
     store.geschaefte.fetching = true
-    store.geschaefte.error = []
     let geko = []
     try {
       geko = app.db
@@ -144,16 +141,14 @@ export default store => ({
         .all()
     } catch (error) {
       store.geschaefte.fetching = false
-      store.geschaefte.error.push(error)
+      store.addError(error)
     }
     store.geschaefte.fetching = false
-    store.geschaefte.error = []
     store.geschaefte.geko = geko
   }),
   getLinks: action(() => {
     const { app } = store
     store.geschaefte.fetching = true
-    store.geschaefte.error = []
     let links = []
     try {
       links = app.db
@@ -161,10 +156,9 @@ export default store => ({
         .all()
     } catch (error) {
       store.geschaefte.fetching = false
-      return store.geschaefte.error.push(error)
+      return store.addError(error)
     }
     store.geschaefte.fetching = false
-    store.geschaefte.error = []
     store.geschaefte.links = links
   }),
   /*
@@ -185,7 +179,7 @@ export default store => ({
         )
         .run()
     } catch (error) {
-      return store.geschaefte.error.push(error)
+      return store.addError(error)
     }
     const idGeschaeft = result.lastInsertRowid
 
@@ -204,7 +198,7 @@ export default store => ({
         )
         .get()
     } catch (error) {
-      return store.geschaefte.error.push(error)
+      return store.addError(error)
     }
     store.geschaefte.geschaefte.unshift(geschaeft)
     /**
@@ -237,7 +231,7 @@ export default store => ({
         .run()
     } catch (error) {
       console.log('geschaeftRemove error', error)
-      return store.geschaefte.error.push(error)
+      return store.addError(error)
     }
     store.geschaeftRemoveDeleteIntended(idGeschaeft)
     store.geschaefte.geschaefte = store.geschaefte.geschaefte.filter(
@@ -287,9 +281,7 @@ export default store => ({
       geschaeft.mutationsperson = username
       geschaeft.mutationsdatum = moment().format('YYYY-MM-DD HH:mm:ss')
     } else {
-      store.geschaefte.error.push(
-        new Error('Das Geschäft wurde nicht aktualisiert'),
-      )
+      store.addError(new Error('Das Geschäft wurde nicht aktualisiert'))
     }
   }),
   changeGeschaeftInDb: action((idGeschaeft, field, value) => {
@@ -317,7 +309,7 @@ export default store => ({
         )
         .run()
     } catch (error) {
-      store.geschaefte.error.push(error)
+      store.addError(error)
     }
   }),
   rechtsmittelErledigungOptionsGet: action(() => {
@@ -365,7 +357,7 @@ export default store => ({
         )
         .all()
     } catch (error) {
-      return store.geschaefte.error.push(error)
+      return store.addError(error)
     }
     store.geschaefte.faelligeStatiOptions = options.map(res => res.status)
   }),
@@ -394,7 +386,7 @@ export default store => ({
         .prepare('SELECT * FROM interne ORDER BY kurzzeichen')
         .all()
     } catch (error) {
-      return store.geschaefte.error.push(error)
+      return store.addError(error)
     }
     store.geschaefte.interneOptions = interneOptions
   }),
@@ -414,7 +406,7 @@ export default store => ({
         )
         .all()
     } catch (error) {
-      return store.geschaefte.error.push(error)
+      return store.addError(error)
     }
     store.geschaefte.externeOptions = externeOptions
   }),
@@ -448,7 +440,7 @@ export default store => ({
         )
         .run()
     } catch (error) {
-      return store.geschaefte.error.push(error)
+      return store.addError(error)
     }
     // return full dataset
     try {
@@ -465,7 +457,7 @@ export default store => ({
         )
         .get()
     } catch (error) {
-      return store.geschaefte.error.push(error)
+      return store.addError(error)
     }
     store.geschaefte.geko.unshift(geko)
   }),
@@ -482,7 +474,7 @@ export default store => ({
         )
         .run()
     } catch (error) {
-      return store.geschaefte.error.push(error)
+      return store.addError(error)
     }
     store.geschaefte.geko = store.geschaefte.geko.filter(
       g => g.idGeschaeft !== idGeschaeft || g.gekoNr !== gekoNr,
@@ -505,7 +497,7 @@ export default store => ({
         )
         .run()
     } catch (error) {
-      store.geschaefte.error.push(error)
+      store.addError(error)
     }
   }),
   linkNewCreate: action((idGeschaeft, url) => {
@@ -520,7 +512,7 @@ export default store => ({
         )
         .run()
     } catch (error) {
-      return store.geschaefte.error.push(error)
+      return store.addError(error)
     }
     store.geschaefte.links.unshift({ idGeschaeft, url })
   }),
@@ -537,7 +529,7 @@ export default store => ({
         )
         .run()
     } catch (error) {
-      return store.geschaefte.error.push(error)
+      return store.addError(error)
     }
     store.linkDelete(idGeschaeft, url)
   }),

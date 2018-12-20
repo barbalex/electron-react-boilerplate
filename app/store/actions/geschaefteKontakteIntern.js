@@ -4,16 +4,14 @@ import { action } from 'mobx'
 export default store => ({
   geschaefteKontakteInternGet: action(() => {
     store.geschaefteKontakteIntern.fetching = true
-    store.geschaefteKontakteIntern.error = []
   }),
   geschaefteKontakteInternGetSuccess: action(geschaefteKontakteIntern => {
     store.geschaefteKontakteIntern.fetching = false
-    store.geschaefteKontakteIntern.error = []
     store.geschaefteKontakteIntern.geschaefteKontakteIntern = geschaefteKontakteIntern
   }),
   geschaefteKontakteInternGetError: action(error => {
     store.geschaefteKontakteIntern.fetching = false
-    store.geschaefteKontakteIntern.error.push(error)
+    store.addError(error)
   }),
   getGeschaefteKontakteIntern: action(() => {
     const { app } = store
@@ -33,9 +31,7 @@ export default store => ({
       geschaeftKontaktIntern,
     ),
   ),
-  geschaeftKontaktInternNewError: action(error =>
-    store.geschaefteKontakteIntern.error.push(error),
-  ),
+  geschaeftKontaktInternNewError: action(error => store.addError(error)),
   geschaeftKontaktInternNewCreate: action((idGeschaeft, idKontakt) => {
     const { app } = store
     try {
@@ -110,7 +106,5 @@ export default store => ({
     store.geschaefteKontakteIntern.activeIdGeschaeft = idGeschaeft
     store.geschaefteKontakteIntern.activeIdKontakt = idKontakt
   }),
-  geschaefteKontakteInternChangeDbError: action(error =>
-    store.geschaefteKontakteIntern.error.push(error),
-  ),
+  geschaefteKontakteInternChangeDbError: action(error => store.addError(error)),
 })

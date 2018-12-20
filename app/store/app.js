@@ -11,6 +11,7 @@ extendObservable(app, {
   messageTextLine1: '',
   messageTextLine2: '',
   config: standardConfig,
+  errors: [],
 })
 
 export default app

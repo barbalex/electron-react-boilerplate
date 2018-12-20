@@ -2,6 +2,7 @@
 import { action } from 'mobx'
 import fs from 'fs'
 import betterSqlite from 'better-sqlite3'
+import uniqBy from 'lodash/uniqBy'
 
 import standardConfig from '../../src/standardConfig'
 import standardDbPath from '../../src/standardDbPath'
@@ -116,4 +117,14 @@ export default store => ({
     store.app.messageTextLine1 = messageTextLine1
     store.app.messageTextLine2 = messageTextLine2
   },
+  addError: action(error => {
+    // use uniq in case multiple same messages arrive
+    store.app.errors = uniqBy([...store.app.errors, error], 'message')
+    setTimeout(() => store.popError(), 1000 * 10)
+  }),
+  popError: action(() => {
+    // eslint-disable-next-line no-unused-vars
+    const [first, ...last] = store.app.errors
+    store.app.errors = [...last]
+  }),
 })

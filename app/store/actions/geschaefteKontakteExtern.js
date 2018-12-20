@@ -4,16 +4,14 @@ import { action } from 'mobx'
 export default store => ({
   geschaefteKontakteExternGet: action(() => {
     store.geschaefteKontakteExtern.fetching = true
-    store.geschaefteKontakteExtern.error = []
   }),
   geschaefteKontakteExternGetSuccess: action(geschaefteKontakteExtern => {
     store.geschaefteKontakteExtern.fetching = false
-    store.geschaefteKontakteExtern.error = []
     store.geschaefteKontakteExtern.geschaefteKontakteExtern = geschaefteKontakteExtern
   }),
   geschaefteKontakteExternGetError: action(error => {
     store.geschaefteKontakteExtern.fetching = false
-    store.geschaefteKontakteExtern.error.push(error)
+    store.addError(error)
   }),
   getGeschaefteKontakteExtern: action(() => {
     const { app } = store
@@ -33,9 +31,7 @@ export default store => ({
       geschaeftKontaktExtern,
     ),
   ),
-  geschaeftKontaktExternNewError: action(error =>
-    store.geschaefteKontakteExtern.error.push(error),
-  ),
+  geschaeftKontaktExternNewError: action(error => store.addError(error)),
   geschaeftKontaktExternNewCreate: action((idGeschaeft, idKontakt) => {
     const { app } = store
     let geschaeftKontaktExtern
@@ -81,9 +77,7 @@ export default store => ({
     store.geschaefteKontakteExtern.activeIdGeschaeft = null
     store.geschaefteKontakteExtern.activeIdKontakt = null
   }),
-  geschaeftKontaktExternDeleteError: action(error =>
-    store.geschaefteKontakteExtern.error.push(error),
-  ),
+  geschaeftKontaktExternDeleteError: action(error => store.addError(error)),
   geschaeftKontaktExternRemove: action((idGeschaeft, idKontakt) => {
     try {
       store.app.db
@@ -102,7 +96,5 @@ export default store => ({
     store.geschaeftKontaktExternRemoveDeleteIntended(idGeschaeft, idKontakt)
     store.geschaeftKontaktExternDelete(idGeschaeft, idKontakt)
   }),
-  geschaefteKontakteExternChangeDbError: action(error =>
-    store.geschaefteKontakteExtern.error.push(error),
-  ),
+  geschaefteKontakteExternChangeDbError: action(error => store.addError(error)),
 })
