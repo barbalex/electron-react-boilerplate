@@ -66,11 +66,12 @@ export default store => ({
             idGeschaeft = ${idGeschaeft}
             AND idKontakt = ${idKontakt}`,
         )
-        .all()
+        .get()
     } catch (error) {
       console.log({ error, idGeschaeft, idKontakt })
       return store.geschaeftKontaktInternNewError(error)
     }
+    console.log({ geschaeftKontaktIntern })
     store.geschaeftKontaktInternNew(geschaeftKontaktIntern)
   }),
   geschaeftKontaktInternRemoveDeleteIntended: action(() => {
