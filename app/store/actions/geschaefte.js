@@ -221,20 +221,22 @@ export default store => ({
   }),
   geschaeftRemove: action(idGeschaeft => {
     const {
-      db,
       geschaefteKontakteIntern,
       geschaefteKontakteExtern,
       geschaefte,
     } = store
     try {
-      db.prepare(
-        `
+      store.app.db
+        .prepare(
+          `
         DELETE FROM
           geschaefte
         WHERE
           idGeschaeft = ${idGeschaeft}`,
-      ).run()
+        )
+        .run()
     } catch (error) {
+      console.log('geschaeftRemove error', error)
       return store.geschaefte.error.push(error)
     }
     store.geschaeftRemoveDeleteIntended(idGeschaeft)
