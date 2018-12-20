@@ -1,4 +1,4 @@
-export default () => [
+export default [
   {
     field: 'geschaeftsart',
     value: 'Vernehmlassung',

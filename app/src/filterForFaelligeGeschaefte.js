@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-export default () => [
+export default [
   {
     field: 'fristMitarbeiter',
     value: moment().format('YYYY-MM-DD'),
