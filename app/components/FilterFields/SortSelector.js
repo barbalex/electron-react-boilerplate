@@ -1,3 +1,7 @@
+/**
+ * using hooks here results in error:
+ * Hooks can only be called inside the body of a function component.
+ */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { InputGroup, FormControl } from 'react-bootstrap'
@@ -18,7 +22,10 @@ const StyledFormControl = styled(FormControl)`
   font-size: 14px;
 `
 
-const enhance = compose(inject('store'), observer)
+const enhance = compose(
+  inject('store'),
+  observer,
+)
 
 const SortSelector = ({ store, name }) => {
   const filterField = store.geschaefte.sortFields.find(ff => ff.field === name)
@@ -26,7 +33,11 @@ const SortSelector = ({ store, name }) => {
 
   return (
     <InputGroup.Button>
-      <StyledFormControl componentClass="select" onChange={e => store.geschaefteSortByFields(name, e.target.value)} value={direction}>
+      <StyledFormControl
+        componentClass="select"
+        onChange={e => store.geschaefteSortByFields(name, e.target.value)}
+        value={direction}
+      >
         <option value="" />
         <option value="ASCENDING">&#8679;</option>
         <option value="DESCENDING">&#8681;</option>
