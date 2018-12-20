@@ -86,6 +86,7 @@ const FilterNav = ({ store }) => {
   const title = filterType
     ? `Filter: ${filterType}`
     : 'Felder filtern / sortieren'
+
   return (
     <Container pullLeft>
       <SubContainer>
