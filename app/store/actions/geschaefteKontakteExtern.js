@@ -34,7 +34,7 @@ export default store => ({
     ),
   ),
   geschaeftKontaktExternNewError: action(error =>
-    store.geschaefteKontakteExtern.push(error),
+    store.geschaefteKontakteExtern.error.push(error),
   ),
   geschaeftKontaktExternNewCreate: action((idGeschaeft, idKontakt) => {
     const { app } = store
