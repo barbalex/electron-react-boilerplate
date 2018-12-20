@@ -1,10 +1,18 @@
-import React, { useContext } from 'react'
+/**
+ * using hooks here results in error:
+ * Hooks can only be called inside the body of a function component.
+ */
+import React from 'react'
 import PropTypes from 'prop-types'
 import { InputGroup, FormControl } from 'react-bootstrap'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
+import compose from 'recompose/compose'
 import styled from 'styled-components'
 
-import storeContext from '../../storeContext'
+const enhance = compose(
+  inject('store'),
+  observer,
+)
 
 const StyledFormControl = styled(FormControl)`
   width: 55px !important;
@@ -16,8 +24,7 @@ const StyledFormControl = styled(FormControl)`
   font-size: 14px !important;
 `
 
-const ComparatorSelector = ({ name, changeComparator }) => {
-  const store = useContext(storeContext)
+const ComparatorSelector = ({ store, name, changeComparator }) => {
   const filterField = store.geschaefte.filterFields.find(
     ff => ff.field === name,
   )
@@ -45,8 +52,9 @@ const ComparatorSelector = ({ name, changeComparator }) => {
 ComparatorSelector.displayName = 'ComparatorSelector'
 
 ComparatorSelector.propTypes = {
+  store: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   changeComparator: PropTypes.func.isRequired,
 }
 
-export default observer(ComparatorSelector)
+export default enhance(ComparatorSelector)
