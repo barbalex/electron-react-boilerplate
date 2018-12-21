@@ -9,7 +9,7 @@
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  *
  */
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu } from 'electron'
 import MenuBuilder from './menu'
 
 let mainWindow = null
@@ -83,9 +83,6 @@ app.on('ready', async () => {
 
   mainWindow = new BrowserWindow(browserWindowOptions)
 
-  // uncomment for prod
-  mainWindow.openDevTools()
-
   if (lastWindowState && lastWindowState.maximized) {
     mainWindow.maximize()
   }
@@ -118,6 +115,11 @@ app.on('ready', async () => {
     })
   })
 
-  const menuBuilder = new MenuBuilder(mainWindow)
-  menuBuilder.buildMenu()
+  if (process.env.NODE_ENV === 'development') {
+    const menuBuilder = new MenuBuilder(mainWindow)
+    menuBuilder.buildMenu()
+    mainWindow.openDevTools()
+  } else {
+    Menu.setApplicationMenu(null)
+  }
 })
