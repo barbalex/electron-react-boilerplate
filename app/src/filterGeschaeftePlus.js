@@ -1,7 +1,7 @@
 import filterGeschaefteByFulltext from './filterGeschaefteByFulltext'
 import filterGeschaefteByFilterFields from './filterGeschaefteByFilterFields'
 
-export default (store) => {
+export default store => {
   const {
     filterFulltext,
     filterFields,
