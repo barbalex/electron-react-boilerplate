@@ -32,15 +32,39 @@ export default (geschaefte, filter) => {
     let satisfiesFilter = false
     Object.keys(geschaeft).forEach(key => {
       let data = geschaeft[key]
-      // there are lots of empty fields
-      // don't work on them
-      // 21.12.2018: add catching 0 values
+      // ignore empty fields
       if (!(data || data === 0)) return
       if (isArray(data)) {
         // set satisfiesFilter = true if any element includes filterValue
+        data.forEach(val => {
+          // ignore empty fields
+          if (!(val || val === 0)) return
+          // elements can be objects (geko, person...)
+          if (isObject(val)) {
+            Object.values(val).forEach(val2 => {
+              if (!(val2 || val2 === 0)) return
+              if (primitiveSatisfies({ data: val2, filter })) {
+                satisfiesFilter = true
+              }
+            })
+          } else {
+            if (primitiveSatisfies({ data: val, filter })) {
+              satisfiesFilter = true
+            }
+          }
+        })
       } else if (isObject(data)) {
         // set satisfiesFilter = true if any value includes filterValue
+        // does this occur?
+        Object.values(data).forEach(val => {
+          // ignore empty fields
+          if (!(val || val === 0)) return
+          if (primitiveSatisfies({ data: val, filter })) {
+            satisfiesFilter = true
+          }
+        })
       } else {
+        // data is a primitive value
         if (primitiveSatisfies({ data, filter })) {
           satisfiesFilter = true
         }
