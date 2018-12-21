@@ -43,7 +43,13 @@ function Store() {
       return addComputedValuesToGeschaefte(store)
     },
     get geschaeftePlusFiltered() {
-      return filterGeschaeftePlus(store)
+      const geschaefte = filterGeschaeftePlus(store)
+      console.log('geschaeftePlusFiltered', {
+        geschaefte,
+        store,
+        geko: store.geschaefte.geko,
+      })
+      return geschaefte
     },
     get geschaeftePlusFilteredAndSorted() {
       return sortGeschaeftePlusFiltered(store)

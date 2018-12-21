@@ -91,34 +91,32 @@ export default store => ({
       store.pagesInitiate(reportType)
     }
   }),
-  geschaefteFilterByFulltext: action(
-    (filterFulltext, filterType = 'nach Volltext') => {
-      const { pages, geschaefte } = store
-      const { geschaeftePlusFilteredAndSorted } = geschaefte
-      store.geschaefte.filterType = filterType || null
-      store.geschaefte.filterFulltext = filterFulltext
-      store.geschaefte.filterFields = []
-      store.geschaefte.activeId = null
-      /**
-       * if pages are active,
-       * initiate with new data
-       */
-      const path = store.history.location.pathname
-      if (path === '/pages') {
-        const { reportType } = pages
-        store.pagesInitiate(reportType)
-      } else {
-        if (path !== '/geschaefte') {
-          store.history.push('/geschaefte')
-        }
-        if (geschaeftePlusFilteredAndSorted.length === 1) {
-          store.geschaeftToggleActivated(
-            geschaeftePlusFilteredAndSorted[0].idGeschaeft,
-          )
-        }
+  geschaefteFilterByFulltext: action(filterFulltext => {
+    const { pages, geschaefte } = store
+    const { geschaeftePlusFilteredAndSorted } = geschaefte
+    store.geschaefte.filterType = 'nach Volltext'
+    store.geschaefte.filterFulltext = filterFulltext
+    store.geschaefte.filterFields = []
+    store.geschaefte.activeId = null
+    /**
+     * if pages are active,
+     * initiate with new data
+     */
+    const path = store.history.location.pathname
+    if (path === '/pages') {
+      const { reportType } = pages
+      store.pagesInitiate(reportType)
+    } else {
+      if (path !== '/geschaefte') {
+        store.history.push('/geschaefte')
       }
-    },
-  ),
+      if (geschaeftePlusFilteredAndSorted.length === 1) {
+        store.geschaeftToggleActivated(
+          geschaeftePlusFilteredAndSorted[0].idGeschaeft,
+        )
+      }
+    }
+  }),
   geschaefteRemoveFilters: action(() => {
     store.geschaefte.GefilterteIds = _.sortBy(
       store.geschaefte.geschaefte,
