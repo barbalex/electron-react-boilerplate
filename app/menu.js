@@ -185,15 +185,11 @@ export default class MenuBuilder {
   buildDefaultTemplate() {
     const templateDefault = [
       {
-        label: '&File',
+        label: '&Datei',
         submenu: [
           {
-            label: '&Open',
-            accelerator: 'Ctrl+O',
-          },
-          {
-            label: '&Close',
-            accelerator: 'Ctrl+W',
+            label: '&Schliessen',
+            accelerator: 'Ctrl+S',
             click: () => {
               this.mainWindow.close()
             },
@@ -201,7 +197,7 @@ export default class MenuBuilder {
         ],
       },
       {
-        label: '&View',
+        label: '&Ansicht',
         submenu:
           process.env.NODE_ENV === 'development'
             ? [
@@ -231,7 +227,7 @@ export default class MenuBuilder {
               ]
             : [
                 {
-                  label: 'Toggle &Full Screen',
+                  label: '&Full Screen ein-/ausschalten',
                   accelerator: 'F11',
                   click: () => {
                     this.mainWindow.setFullScreen(
@@ -240,37 +236,6 @@ export default class MenuBuilder {
                   },
                 },
               ],
-      },
-      {
-        label: 'Help',
-        submenu: [
-          {
-            label: 'Learn More',
-            click() {
-              shell.openExternal('http://electron.atom.io')
-            },
-          },
-          {
-            label: 'Documentation',
-            click() {
-              shell.openExternal(
-                'https://github.com/atom/electron/tree/master/docs#readme',
-              )
-            },
-          },
-          {
-            label: 'Community Discussions',
-            click() {
-              shell.openExternal('https://discuss.atom.io/c/electron')
-            },
-          },
-          {
-            label: 'Search Issues',
-            click() {
-              shell.openExternal('https://github.com/atom/electron/issues')
-            },
-          },
-        ],
       },
     ]
 
