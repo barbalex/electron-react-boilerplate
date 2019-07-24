@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
@@ -16,12 +15,6 @@ const Container = styled.div`
 
 const App = () => {
   const store = useContext(storeContext)
-  // setting ref according to this:
-  // http://stackoverflow.com/questions/35918706/overcoming-lack-of-refs-in-stateless-components
-  let app // eslint-disable-line no-unused-vars
-  const setRef = passedApp => {
-    app = passedApp
-  }
   const { pathname } = store.history.location
   const showGeschaefteLayout = [
     '/geschaefte',
@@ -32,7 +25,7 @@ const App = () => {
   const showTableLayout = pathname === '/table'
 
   return (
-    <Container ref={setRef}>
+    <Container>
       <Navbar />
       {showGeschaefteLayout && <GeschaefteLayout />}
       {showFilterFieldsLayout && <FilterFieldsLayout />}
@@ -40,9 +33,6 @@ const App = () => {
       <Errors />
     </Container>
   )
-}
-App.propTypes = {
-  store: PropTypes.object.isRequired,
 }
 
 export default observer(App)
