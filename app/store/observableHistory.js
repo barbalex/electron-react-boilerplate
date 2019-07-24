@@ -10,9 +10,9 @@
  */
 
 import { extendObservable } from 'mobx'
-import createHistory from 'history/createBrowserHistory'
+import { createBrowserHistory } from 'history'
 
-const history = createHistory()
+const history = createBrowserHistory()
 
 const History = {
   history,
