@@ -46,7 +46,7 @@ const OptionsNav = ({ store }) => {
         Projektbeschreibung herunterladen
       </MenuItem>
       <MenuItem onClick={onClickIssues}>Fehler und Wünsche melden</MenuItem>
-      <Version>Version: 2.0.2 vom 21.12.2018</Version>
+      <Version>Version: 2.0.3 vom 24.07.2019</Version>
     </NavDropdown>
   )
 }

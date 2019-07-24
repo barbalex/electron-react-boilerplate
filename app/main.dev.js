@@ -112,6 +112,9 @@ app.on('ready', async () => {
       width: bounds.width,
       height: bounds.height,
       maximized: mainWindow.isMaximized(),
+      webPreferences: {
+        nodeIntegration: true,
+      },
     })
   })
 
