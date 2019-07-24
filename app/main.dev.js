@@ -59,6 +59,9 @@ const browserWindowOptions = {
   height: 1024,
   icon: './app/etc/app.png',
   show: false,
+  webPreferences: {
+    nodeIntegration: true,
+  },
 }
 
 // get last window state
@@ -112,9 +115,6 @@ app.on('ready', async () => {
       width: bounds.width,
       height: bounds.height,
       maximized: mainWindow.isMaximized(),
-      webPreferences: {
-        nodeIntegration: true,
-      },
     })
   })
 
