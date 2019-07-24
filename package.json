@@ -205,7 +205,6 @@
     "yarn": "1.12.3"
   },
   "dependencies": {
-    "ampersand-app": "2.0.0",
     "better-sqlite3": "5.2.1",
     "bootstrap": "^3.4.0",
     "date-fns": "2.0.0-alpha.25",

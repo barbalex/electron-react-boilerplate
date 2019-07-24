@@ -1,7 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'mobx-react'
-import app from 'ampersand-app'
 import { registerLocale, setDefaultLocale } from 'react-datepicker'
 import { de } from 'date-fns/locale'
 
@@ -17,15 +16,8 @@ import './app.global.css'
 registerLocale('de', de)
 setDefaultLocale('de')
 
-app.extend({
-  init() {
-    this.store = store
-  },
-})
-app.init()
-
 // make store accessible in dev
-window.app = app
+window.store = store
 
 render(
   <MobxProvider value={store}>
