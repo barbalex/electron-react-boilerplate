@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import { Provider } from 'mobx-react'
 import { registerLocale, setDefaultLocale } from 'react-datepicker'
 import { de } from 'date-fns/locale'
+import { AppContainer as HotLoaderContainer } from 'react-hot-loader'
 
 import App from './components/App'
 import { Provider as MobxProvider } from './storeContext'
@@ -20,10 +21,12 @@ setDefaultLocale('de')
 window.store = store
 
 render(
-  <MobxProvider value={store}>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </MobxProvider>,
+  <HotLoaderContainer>
+    <MobxProvider value={store}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </MobxProvider>
+  </HotLoaderContainer>,
   document.getElementById('root'),
 )
