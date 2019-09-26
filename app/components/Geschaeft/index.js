@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { useCallback } from 'react'
 import moment from 'moment'
 import $ from 'jquery'
 import styled from 'styled-components'
@@ -100,195 +99,192 @@ const enhance = compose(
   observer,
 )
 
-class Geschaeft extends Component {
-  static propTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
-  onChangeDatePicker = (name, date) => {
-    const rVal = {
-      target: {
-        type: 'text',
-        name,
-        value: date,
-      },
-    }
-    this.blur(rVal)
-  }
-
-  change = e => {
-    const { store } = this.props
-    const { changeGeschaeftInDb, geschaefteChangeState } = store
-    const {
-      activeId,
-      geschaeftePlusFilteredAndSorted: geschaefte,
-    } = store.geschaefte
-    const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
-    const { type, name, dataset } = e.target
-    let { value } = e.target
-    // need to convert numbers into numbers
-    // if (!isNaN(value)) value = +value
-    if (type && type === 'number') {
-      value = +value
-    }
-    if (type === 'radio') {
-      // need to set null if existing value was clicked
-      if (geschaeft[name] === dataset.value) {
-        value = ''
-      } else {
-        // eslint-disable-next-line prefer-destructuring
-        value = dataset.value
+const Geschaeft = ({ store }) => {
+  const change = useCallback(
+    e => {
+      const { changeGeschaeftInDb, geschaefteChangeState, setDirty } = store
+      const {
+        activeId,
+        geschaeftePlusFilteredAndSorted: geschaefte,
+      } = store.geschaefte
+      const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
+      const { type, name, dataset } = e.target
+      let { value } = e.target
+      // need to convert numbers into numbers
+      // if (!isNaN(value)) value = +value
+      if (type && type === 'number') {
+        value = +value
       }
-      // blur does not occur in radio
-      changeGeschaeftInDb(activeId, name, value)
-    }
-    if (type === 'select-one') {
-      changeGeschaeftInDb(activeId, name, value)
-    }
-    geschaefteChangeState(activeId, name, value)
-  }
-
-  blur = e => {
-    const { store } = this.props
-    const { changeGeschaeftInDb, geschaefteChangeState } = store
-    const { activeId } = store.geschaefte
-    const { type, name, value } = e.target
-    if (type !== 'radio' && type !== 'select-one') {
-      if (isDateField(name)) {
-        if (validateDate(value)) {
-          // if correct date, save to db
-          changeGeschaeftInDb(activeId, name, value)
+      if (type === 'radio') {
+        // need to set null if existing value was clicked
+        if (geschaeft[name] === dataset.value) {
+          value = ''
+        } else {
+          // eslint-disable-next-line prefer-destructuring
+          value = dataset.value
         }
-        // else: give user hint
-        let value2 = ''
-        if (value) value2 = moment(value, 'DD.MM.YYYY').format('DD.MM.YYYY')
-        if (value2.includes('Invalid date')) {
-          value2 = value2.replace('Invalid date', 'Format: DD.MM.YYYY')
-        }
-        geschaefteChangeState(activeId, name, value2)
-      } else {
+        // blur does not occur in radio
         changeGeschaeftInDb(activeId, name, value)
       }
-    }
-  }
-
-  render() {
-    const { store } = this.props
-    const {
-      activeId,
-      geschaeftePlusFilteredAndSorted: geschaefte,
-    } = store.geschaefte
-    const { config } = store.app
-    const path = store.history.location.pathname
-    const isPdf = path === '/geschaeftPdf'
-    const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
-
-    // return immediately if no geschaeft
-    const showGeschaeft = geschaeft.idGeschaeft
-    if (!showGeschaeft) return null
-
-    const showAreaParlVorstoss =
-      geschaeft.geschaeftsart === 'Parlament. Vorstoss' &&
-      !(
-        isPdf &&
-        !geschaeft.parlVorstossStufe &&
-        !geschaeft.parlVorstossZustaendigkeitAwel &&
-        !geschaeft.parlVorstossTyp
-      )
-    const showAreaRechtsmittel =
-      geschaeft.geschaeftsart === 'Rekurs/Beschwerde' &&
-      !(
-        isPdf &&
-        !geschaeft.rechtsmittelInstanz &&
-        !geschaeft.rechtsmittelEntscheidNr &&
-        !geschaeft.rechtsmittelEntscheidDatum &&
-        !geschaeft.rechtsmittelErledigung &&
-        !geschaeft.rechtsmittelTxt
-      )
-    const showAreaForGeschaeftsart =
-      showAreaParlVorstoss || showAreaRechtsmittel
-
-    // need width to adapt layout to differing widths
-    const windowWidth = $(window).width()
-    const areaGeschaefteWidth = windowWidth - config.geschaefteColumnWidth
-
-    // prepare tab indexes
-    const nrOfGFields = 10
-    const nrOfNrFields = 13
-    const nrOfFieldsBeforePv = nrOfGFields + nrOfNrFields
-    const nrOfPvFields = 9
-    const nrOfFieldsBeforeFristen = nrOfFieldsBeforePv + nrOfPvFields
-    const nrOfFieldsBeforePersonen = nrOfFieldsBeforeFristen + 7
-    const viewIsNarrow = areaGeschaefteWidth < 860
-    let ScrollContainer = ScrollContainerRegular
-    if (isPdf) ScrollContainer = ScrollContainerPdf
-    let Wrapper
-    if (isPdf) {
-      if (showAreaForGeschaeftsart) {
-        Wrapper = WrapperWidePdf
-      } else {
-        Wrapper = WrapperWideNoAreaForGeschaeftsartPdf
+      if (type === 'select-one') {
+        changeGeschaeftInDb(activeId, name, value)
       }
-    } else if (viewIsNarrow) {
-      if (showAreaForGeschaeftsart) {
-        Wrapper = WrapperNarrow
-      } else {
-        Wrapper = WrapperNarrowNoAreaForGeschaeftsart
+      geschaefteChangeState(activeId, name, value)
+    },
+    [store],
+  )
+  const blur = useCallback(
+    e => {
+      const { changeGeschaeftInDb, geschaefteChangeState } = store
+      const { activeId } = store.geschaefte
+      const { type, name, value } = e.target
+      if (type !== 'radio' && type !== 'select-one') {
+        if (isDateField(name)) {
+          if (validateDate(value)) {
+            // if correct date, save to db
+            changeGeschaeftInDb(activeId, name, value)
+          }
+          // else: give user hint
+          let value2 = ''
+          if (value) value2 = moment(value, 'DD.MM.YYYY').format('DD.MM.YYYY')
+          if (value2.includes('Invalid date')) {
+            value2 = value2.replace('Invalid date', 'Format: DD.MM.YYYY')
+          }
+          geschaefteChangeState(activeId, name, value2)
+        } else {
+          changeGeschaeftInDb(activeId, name, value)
+        }
       }
-    } else if (showAreaForGeschaeftsart) {
-      Wrapper = WrapperWide
-    } else {
-      Wrapper = WrapperWideNoAreaForGeschaeftsart
-    }
+    },
+    [store],
+  )
+  const onChangeDatePicker = useCallback(
+    (name, date) => {
+      const rVal = {
+        target: {
+          type: 'text',
+          name,
+          value: date,
+        },
+      }
+      blur(rVal)
+    },
+    [blur],
+  )
 
-    const showLinks = !(isPdf && geschaeft.links.length === 0)
+  const {
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+  } = store.geschaefte
+  const { config } = store.app
+  const path = store.history.location.pathname
+  const isPdf = path === '/geschaeftPdf'
+  const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
 
-    return (
-      <ScrollContainer>
-        <Wrapper isPdf={isPdf}>
-          <AreaGeschaeft
-            viewIsNarrow={viewIsNarrow}
-            nrOfGFields={nrOfGFields}
-            change={this.change}
-            blur={this.blur}
-          />
-          <AreaNummern
-            viewIsNarrow={viewIsNarrow}
-            nrOfGFields={nrOfGFields}
-            change={this.change}
-            blur={this.blur}
-          />
-          {showAreaParlVorstoss && (
-            <AreaParlVorstoss
-              nrOfFieldsBeforePv={nrOfFieldsBeforePv}
-              change={this.change}
-            />
-          )}
-          {showAreaRechtsmittel && (
-            <AreaRechtsmittel
-              nrOfFieldsBeforePv={nrOfFieldsBeforePv}
-              change={this.change}
-              blur={this.blur}
-              onChangeDatePicker={this.onChangeDatePicker}
-            />
-          )}
-          <AreaFristen
-            nrOfFieldsBeforeFristen={nrOfFieldsBeforeFristen}
-            change={this.change}
-            blur={this.blur}
-            onChangeDatePicker={this.onChangeDatePicker}
-          />
-          <AreaPersonen
-            nrOfFieldsBeforePersonen={nrOfFieldsBeforePersonen}
-            change={this.change}
-          />
-          {showLinks && <AreaLinks mylinks={store.geschaefte.links} />}
-          <AreaHistory blur={this.blur} change={this.change} />
-          <AreaZuletztMutiert />
-        </Wrapper>
-      </ScrollContainer>
+  // return immediately if no geschaeft
+  const showGeschaeft = geschaeft.idGeschaeft
+  if (!showGeschaeft) return null
+
+  const showAreaParlVorstoss =
+    geschaeft.geschaeftsart === 'Parlament. Vorstoss' &&
+    !(
+      isPdf &&
+      !geschaeft.parlVorstossStufe &&
+      !geschaeft.parlVorstossZustaendigkeitAwel &&
+      !geschaeft.parlVorstossTyp
     )
+  const showAreaRechtsmittel =
+    geschaeft.geschaeftsart === 'Rekurs/Beschwerde' &&
+    !(
+      isPdf &&
+      !geschaeft.rechtsmittelInstanz &&
+      !geschaeft.rechtsmittelEntscheidNr &&
+      !geschaeft.rechtsmittelEntscheidDatum &&
+      !geschaeft.rechtsmittelErledigung &&
+      !geschaeft.rechtsmittelTxt
+    )
+  const showAreaForGeschaeftsart = showAreaParlVorstoss || showAreaRechtsmittel
+
+  // need width to adapt layout to differing widths
+  const windowWidth = $(window).width()
+  const areaGeschaefteWidth = windowWidth - config.geschaefteColumnWidth
+
+  // prepare tab indexes
+  const nrOfGFields = 10
+  const nrOfNrFields = 13
+  const nrOfFieldsBeforePv = nrOfGFields + nrOfNrFields
+  const nrOfPvFields = 9
+  const nrOfFieldsBeforeFristen = nrOfFieldsBeforePv + nrOfPvFields
+  const nrOfFieldsBeforePersonen = nrOfFieldsBeforeFristen + 7
+  const viewIsNarrow = areaGeschaefteWidth < 860
+  let ScrollContainer = ScrollContainerRegular
+  if (isPdf) ScrollContainer = ScrollContainerPdf
+  let Wrapper
+  if (isPdf) {
+    if (showAreaForGeschaeftsart) {
+      Wrapper = WrapperWidePdf
+    } else {
+      Wrapper = WrapperWideNoAreaForGeschaeftsartPdf
+    }
+  } else if (viewIsNarrow) {
+    if (showAreaForGeschaeftsart) {
+      Wrapper = WrapperNarrow
+    } else {
+      Wrapper = WrapperNarrowNoAreaForGeschaeftsart
+    }
+  } else if (showAreaForGeschaeftsart) {
+    Wrapper = WrapperWide
+  } else {
+    Wrapper = WrapperWideNoAreaForGeschaeftsart
   }
+
+  const showLinks = !(isPdf && geschaeft.links.length === 0)
+
+  return (
+    <ScrollContainer>
+      <Wrapper isPdf={isPdf}>
+        <AreaGeschaeft
+          viewIsNarrow={viewIsNarrow}
+          nrOfGFields={nrOfGFields}
+          change={change}
+          blur={blur}
+        />
+        <AreaNummern
+          viewIsNarrow={viewIsNarrow}
+          nrOfGFields={nrOfGFields}
+          change={change}
+          blur={blur}
+        />
+        {showAreaParlVorstoss && (
+          <AreaParlVorstoss
+            nrOfFieldsBeforePv={nrOfFieldsBeforePv}
+            change={change}
+          />
+        )}
+        {showAreaRechtsmittel && (
+          <AreaRechtsmittel
+            nrOfFieldsBeforePv={nrOfFieldsBeforePv}
+            change={change}
+            blur={blur}
+            onChangeDatePicker={onChangeDatePicker}
+          />
+        )}
+        <AreaFristen
+          nrOfFieldsBeforeFristen={nrOfFieldsBeforeFristen}
+          change={change}
+          blur={blur}
+          onChangeDatePicker={onChangeDatePicker}
+        />
+        <AreaPersonen
+          nrOfFieldsBeforePersonen={nrOfFieldsBeforePersonen}
+          change={change}
+        />
+        {showLinks && <AreaLinks mylinks={store.geschaefte.links} />}
+        <AreaHistory blur={blur} change={change} />
+        <AreaZuletztMutiert />
+      </Wrapper>
+    </ScrollContainer>
+  )
 }
 
 export default enhance(Geschaeft)
