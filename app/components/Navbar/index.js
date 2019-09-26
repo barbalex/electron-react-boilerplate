@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react'
-import { Navbar, Nav, NavItem } from 'react-bootstrap'
+import { Button, Navbar, Nav, NavItem } from 'react-bootstrap'
 import { FaSave } from 'react-icons/fa'
 import styled from 'styled-components'
 import { observer } from 'mobx-react'
@@ -43,6 +43,17 @@ const StyledNavbar = styled(Navbar)`
     font-weight: 700;
   }
 `
+const NavRight = styled.div`
+  display: flex;
+`
+const SaveButton = styled(Button)`
+  background-color: transparent !important;
+  border: none !important;
+  &:hover {
+    background-color: ${props =>
+      props.disabled ? 'transparent !important' : '#6c757d !important'};
+  }
+`
 
 const NavbarComponent = () => {
   const store = useContext(storeContext)
@@ -52,6 +63,7 @@ const NavbarComponent = () => {
     store.configGet()
   }, [store])
 
+  const { dirty } = store
   const { showMessageModal } = store.app
   const { showPagesModal } = store.pages
   const {
@@ -65,6 +77,8 @@ const NavbarComponent = () => {
   const showGeschaefteNavs = path === '/geschaefte' || path === '/filterFields'
   const showGeschaefteAndPrint = showBerichteNavs || showGeschaefteNavs
   const showTableNavs = path === '/table'
+
+  console.log('Navbar, dirty:', dirty)
 
   return (
     <ErrorBoundary>
@@ -105,8 +119,16 @@ const NavbarComponent = () => {
             )}
           </Nav>
           <Nav pullRight>
-            {!showTableNavs && <FilterNav />}
-            <OptionsNav />
+            <NavRight>
+              <SaveButton
+                disabled={!dirty}
+                title={dirty ? 'speichern' : 'alles ist gespeichert'}
+              >
+                <FaSave />
+              </SaveButton>
+              {!showTableNavs && <FilterNav />}
+              <OptionsNav />
+            </NavRight>
           </Nav>
         </StyledNavbar>
       </Container>
