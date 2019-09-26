@@ -9,8 +9,11 @@
     "browser": true,
     "node": true
   },
-  "rules": {},
-  "plugins": ["import", "promise", "compat", "react"],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "plugins": ["import", "promise", "compat", "react", "react-hooks"],
   "settings": {
     "import/resolver": {
       "webpack": {
