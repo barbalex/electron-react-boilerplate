@@ -29,6 +29,7 @@ function Store() {
   })
   extendObservable(this, uiActions(this))
   this.app = app
+  this.dirty = false
   extendObservable(this, appActions(this))
   this.geschaefte = {}
   extendObservable(this.geschaefte, {

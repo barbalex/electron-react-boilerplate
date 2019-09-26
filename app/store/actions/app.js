@@ -127,4 +127,5 @@ export default store => ({
     const [first, ...last] = store.app.errors
     store.app.errors = [...last]
   }),
+  setDirty: action(val => (store.dirty = val)),
 })
