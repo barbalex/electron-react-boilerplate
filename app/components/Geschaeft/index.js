@@ -1,11 +1,10 @@
 /* eslint-disable max-len */
 
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useContext } from 'react'
 import moment from 'moment'
 import $ from 'jquery'
 import styled from 'styled-components'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
+import { observer } from 'mobx-react'
 
 import isDateField from '../../src/isDateField'
 import validateDate from '../../src/validateDate'
@@ -18,6 +17,7 @@ import AreaPersonen from './AreaPersonen'
 import AreaHistory from './AreaHistory'
 import AreaLinks from './AreaLinks'
 import AreaZuletztMutiert from './AreaZuletztMutiert'
+import storeContext from '../../storeContext'
 
 moment.locale('de')
 
@@ -94,20 +94,20 @@ const WrapperWideNoAreaForGeschaeftsartPdf = styled(WrapperPdf)`
     'areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert areaZuletztMutiert';
 `
 
-const enhance = compose(
-  inject('store'),
-  observer,
-)
+const Geschaeft = () => {
+  const store = useContext(storeContext)
+  const { changeGeschaeftInDb, geschaefteChangeState, setDirty } = store
+  const {
+    activeId,
+    geschaeftePlusFilteredAndSorted: geschaefte,
+  } = store.geschaefte
+  const { config } = store.app
+  const path = store.history.location.pathname
+  const isPdf = path === '/geschaeftPdf'
+  const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
 
-const Geschaeft = ({ store }) => {
   const change = useCallback(
     e => {
-      const { changeGeschaeftInDb, geschaefteChangeState, setDirty } = store
-      const {
-        activeId,
-        geschaeftePlusFilteredAndSorted: geschaefte,
-      } = store.geschaefte
-      const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
       const { type, name, dataset } = e.target
       let { value } = e.target
       // need to convert numbers into numbers
@@ -131,12 +131,10 @@ const Geschaeft = ({ store }) => {
       }
       geschaefteChangeState(activeId, name, value)
     },
-    [store],
+    [activeId, changeGeschaeftInDb, geschaeft, geschaefteChangeState],
   )
   const blur = useCallback(
     e => {
-      const { changeGeschaeftInDb, geschaefteChangeState } = store
-      const { activeId } = store.geschaefte
       const { type, name, value } = e.target
       if (type !== 'radio' && type !== 'select-one') {
         if (isDateField(name)) {
@@ -156,7 +154,7 @@ const Geschaeft = ({ store }) => {
         }
       }
     },
-    [store],
+    [activeId, changeGeschaeftInDb, geschaefteChangeState],
   )
   const onChangeDatePicker = useCallback(
     (name, date) => {
@@ -172,14 +170,9 @@ const Geschaeft = ({ store }) => {
     [blur],
   )
 
-  const {
-    activeId,
-    geschaeftePlusFilteredAndSorted: geschaefte,
-  } = store.geschaefte
-  const { config } = store.app
-  const path = store.history.location.pathname
-  const isPdf = path === '/geschaeftPdf'
-  const geschaeft = geschaefte.find(g => g.idGeschaeft === activeId) || {}
+  useEffect(() => {
+    setDirty(false)
+  }, [geschaeft.id, setDirty])
 
   // return immediately if no geschaeft
   const showGeschaeft = geschaeft.idGeschaeft
@@ -287,4 +280,4 @@ const Geschaeft = ({ store }) => {
   )
 }
 
-export default enhance(Geschaeft)
+export default observer(Geschaeft)
