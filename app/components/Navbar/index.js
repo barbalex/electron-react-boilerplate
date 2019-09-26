@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect, useContext } from 'react'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
+import { FaSave } from 'react-icons/fa'
 import styled from 'styled-components'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
+import { observer } from 'mobx-react'
 
 import ModalGeschaeftDelete from '../ModalGeschaeftDelete'
 import ModalMessage from '../ModalMessage'
@@ -20,6 +19,7 @@ import StammdatenNav from './StammdatenNav'
 import FilterNav from './FilterNav'
 import OptionsNav from './OptionsNav'
 import ErrorBoundary from '../ErrorBoundary'
+import storeContext from '../../storeContext'
 
 const Container = styled.div`
   @media print {
@@ -44,81 +44,74 @@ const StyledNavbar = styled(Navbar)`
   }
 `
 
-const enhance = compose(inject('store'), observer)
+const NavbarComponent = () => {
+  const store = useContext(storeContext)
+  // hello
 
-class NavbarComponent extends Component {
-  static propTypes = {
-    store: PropTypes.object.isRequired,
-  }
+  useEffect(() => {
+    store.configGet()
+  }, [store])
 
-  componentWillMount() {
-    this.props.store.configGet()
-  }
+  const { showMessageModal } = store.app
+  const { showPagesModal } = store.pages
+  const {
+    geschaeftePlusFilteredAndSorted: geschaefte,
+    willDelete,
+  } = store.geschaefte
+  const path = store.history.location.pathname
+  const dataIsFiltered =
+    geschaefte.length !== store.geschaefte.geschaefte.length
+  const showBerichteNavs = path === '/pages' || path === '/geschaeftPdf'
+  const showGeschaefteNavs = path === '/geschaefte' || path === '/filterFields'
+  const showGeschaefteAndPrint = showBerichteNavs || showGeschaefteNavs
+  const showTableNavs = path === '/table'
 
-  render() {
-    const { store } = this.props
-    const { showMessageModal } = store.app
-    const { showPagesModal } = store.pages
-    const {
-      geschaeftePlusFilteredAndSorted: geschaefte,
-      willDelete,
-    } = store.geschaefte
-    const path = store.history.location.pathname
-    const dataIsFiltered =
-      geschaefte.length !== store.geschaefte.geschaefte.length
-    const showBerichteNavs = path === '/pages' || path === '/geschaeftPdf'
-    const showGeschaefteNavs =
-      path === '/geschaefte' || path === '/filterFields'
-    const showGeschaefteAndPrint = showBerichteNavs || showGeschaefteNavs
-    const showTableNavs = path === '/table'
-
-    return (
-      <ErrorBoundary>
-        <Container>
-          {willDelete && <ModalGeschaeftDelete />}
-          {showMessageModal && <ModalMessage />}
-          {showPagesModal && <PagesModal />}
-          <StyledNavbar inverse fluid>
-            <Nav>
-              <GeschaefteNavItem
-                href="#"
-                onClick={() => store.history.push('/geschaefte')}
+  return (
+    <ErrorBoundary>
+      <Container>
+        {willDelete && <ModalGeschaeftDelete />}
+        {showMessageModal && <ModalMessage />}
+        {showPagesModal && <PagesModal />}
+        <StyledNavbar inverse fluid>
+          <Nav>
+            <GeschaefteNavItem
+              href="#"
+              onClick={() => store.history.push('/geschaefte')}
+              data-showgeschaeftenavs={showGeschaefteNavs}
+            >
+              Geschäfte{' '}
+              <StyledBadge dataIsFiltered={dataIsFiltered}>
+                {geschaefte.length}
+              </StyledBadge>
+            </GeschaefteNavItem>
+            {showGeschaefteNavs && <GeschaeftNeuNav />}
+            {showGeschaefteNavs && (
+              <GeschaeftLoeschenNav
                 data-showgeschaeftenavs={showGeschaefteNavs}
-              >
-                Geschäfte{' '}
-                <StyledBadge dataIsFiltered={dataIsFiltered}>
-                  {geschaefte.length}
-                </StyledBadge>
-              </GeschaefteNavItem>
-              {showGeschaefteNavs && <GeschaeftNeuNav />}
-              {showGeschaefteNavs && (
-                <GeschaeftLoeschenNav
-                  data-showgeschaeftenavs={showGeschaefteNavs}
-                />
-              )}
-              {showGeschaefteAndPrint && <ExportGeschaefteNav />}
-              {showGeschaefteAndPrint && (
-                <BerichteNav showBerichteNavs={showBerichteNavs} />
-              )}
-              {showBerichteNavs && <PrintNav />}
-              {showBerichteNavs && (
-                <PrintToPdfNav showBerichteNavs={showBerichteNavs} />
-              )}
-              <StammdatenNav showTableNavs={showTableNavs} />
-              {showTableNavs && <TableRowNeuNav />}
-              {showTableNavs && (
-                <TableRowDeleteNav showTableNavs={showTableNavs} />
-              )}
-            </Nav>
-            <Nav pullRight>
-              {!showTableNavs && <FilterNav />}
-              <OptionsNav />
-            </Nav>
-          </StyledNavbar>
-        </Container>
-      </ErrorBoundary>
-    )
-  }
+              />
+            )}
+            {showGeschaefteAndPrint && <ExportGeschaefteNav />}
+            {showGeschaefteAndPrint && (
+              <BerichteNav showBerichteNavs={showBerichteNavs} />
+            )}
+            {showBerichteNavs && <PrintNav />}
+            {showBerichteNavs && (
+              <PrintToPdfNav showBerichteNavs={showBerichteNavs} />
+            )}
+            <StammdatenNav showTableNavs={showTableNavs} />
+            {showTableNavs && <TableRowNeuNav />}
+            {showTableNavs && (
+              <TableRowDeleteNav showTableNavs={showTableNavs} />
+            )}
+          </Nav>
+          <Nav pullRight>
+            {!showTableNavs && <FilterNav />}
+            <OptionsNav />
+          </Nav>
+        </StyledNavbar>
+      </Container>
+    </ErrorBoundary>
+  )
 }
 
-export default enhance(NavbarComponent)
+export default observer(NavbarComponent)
