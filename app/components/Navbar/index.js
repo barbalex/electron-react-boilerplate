@@ -57,7 +57,6 @@ const SaveButton = styled(Button)`
 
 const NavbarComponent = () => {
   const store = useContext(storeContext)
-  // hello
 
   useEffect(() => {
     store.configGet()
