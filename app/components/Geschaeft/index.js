@@ -173,6 +173,7 @@ const Geschaeft = () => {
   useEffect(() => {
     setDirty(false)
   }, [geschaeft.id, setDirty])
+  console.log('geschäft rendering')
 
   // return immediately if no geschaeft
   const showGeschaeft = geschaeft.idGeschaeft
